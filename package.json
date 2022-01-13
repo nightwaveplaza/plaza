@@ -1,0 +1,40 @@
+{
+  "name": "app-plaza",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "watch": "npx mix watch",
+    "dev": "npx mix",
+    "prod": "npx mix -p"
+  },
+  "devDependencies": {
+    "core-js": "^3.9.1",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.13",
+    "node-sass": "^5.0.0",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
+    "axios": "0.21.1",
+    "bootstrap": "4.6.1",
+    "js-cookie": "^2.2.1",
+    "laravel-mix": "^6.0.39",
+    "laravel-mix-polyfill": "^3.0.1",
+    "nouislider": "^14.1.1",
+    "perfect-scrollbar": "^1.4.0",
+    "plaza98.css": "https://github.com/nightwaveplaza/plaza98.css.git",
+    "postcss": "8.3.1",
+    "postcss-base64": "^0.7.1",
+    "postcss-url": "^10.1.1",
+    "url-loader": "^4.1.1",
+    "uuid": "^8.3.0",
+    "vue-axios": "3.2.2",
+    "vue-loader": "^15.9.8",
+    "vue-router": "^3.5.0",
+    "vuex": "^3.6.0"
+  }
+}

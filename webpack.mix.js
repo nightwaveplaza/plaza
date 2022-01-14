@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const path = require('path');
 const fs = require('fs');
+const ejs = require('ejs');
 require('laravel-mix-polyfill');
 
 const src = 'app/' + process.env.APP;
@@ -31,13 +32,21 @@ mix.js(src + '/js/app.js', 'js').extract().vue().polyfill({
   targets: '> 0.25%, not dead, android 4.4.4, ios 7',
 });
 
-// Ugly file copying
-mix.version().after(webpackStats => {
+// Do actions after build
+mix.version().after(() => {
+
+  // Compile EJS template
+  const template = fs.readFileSync('app/mobile/public/index.ejs', 'utf-8');
+  const html = ejs.render(template, {mix: require('./build/mix-manifest.json')});
+  fs.writeFileSync('build/index.html', html);
+  fs.unlinkSync('build/mix-manifest.json');
+
+  // Ugly file copy
   new (require('laravel-mix/src/tasks/CopyFilesTask'))({
     from: [
       path.resolve(__dirname, 'build'),
       path.resolve(__dirname, 'app/common/public'),
-      path.resolve(__dirname, src + '/public')
+      path.resolve(__dirname, src + '/public') + '/!(*.ejs)'
     ],
     to: new (require('laravel-mix/src/File'))(process.env.BUILD_PATH)
   }).run();

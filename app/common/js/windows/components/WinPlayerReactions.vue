@@ -78,7 +78,7 @@ export default {
       try {
         const res = await reactions.react(score);
         this.$store.commit('player/reactions', res.data.reactions);
-        this.$store.commit('player/reaction', score);
+        this.$store.dispatch('player/setReaction', score).then();
         this.sendTip();
       } catch (error) {
         if (error.response.status === 401) {

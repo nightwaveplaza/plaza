@@ -58,8 +58,7 @@ export const store = new Vuex.Store({
       await Native.setAuthToken(token);
     },
 
-    async setReaction(context, score) {
-      context.commit('player/reaction', score);
+    async setReactionNative(context, score) {
       await Native.setReaction(score);
     },
   },

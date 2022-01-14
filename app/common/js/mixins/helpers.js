@@ -10,7 +10,6 @@ export default {
 
   computed: {
     isMobile() {
-      // TODO use vuex
       return process.env.APP === 'mobile';
     }
   }

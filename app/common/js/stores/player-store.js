@@ -46,6 +46,17 @@ export const playerStore = {
     }
   },
 
+  actions: {
+    setReaction(context, score) {
+      context.commit('reaction', score);
+
+      // Dispatch setReactionNative for mobile root store
+      if (this._actions['setReactionNative']) {
+        context.dispatch('setReactionNative', score, {root: true}).then();
+      }
+    }
+  },
+
   getters: {
     listeners: state => state.listeners,
     currentSong: state => state.song,

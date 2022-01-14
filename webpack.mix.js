@@ -36,7 +36,7 @@ mix.js(src + '/js/app.js', 'js').extract().vue().polyfill({
 mix.version().after(() => {
 
   // Compile EJS template
-  const template = fs.readFileSync('app/mobile/public/index.ejs', 'utf-8');
+  const template = fs.readFileSync(src + '/public/index.ejs', 'utf-8');
   const html = ejs.render(template, {mix: require('./build/mix-manifest.json')});
   fs.writeFileSync('build/index.html', html);
   fs.unlinkSync('build/mix-manifest.json');

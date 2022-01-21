@@ -124,8 +124,8 @@ export default {
         this.source = this.context.createMediaElementSource(this.$refs.audio);
       }
 
-      this.$refs.audio.type = 'audio/mpeg';
-      this.$refs.audio.src = 'https://radio.plaza.one/mp3';
+      // this.$refs.audio.type = 'audio/mpeg';
+      // this.$refs.audio.src = 'https://radio.plaza.one/mp3';
 
       this.context.resume().then(() => {
         this.$refs.audio.type = 'audio/mpeg';
@@ -133,11 +133,11 @@ export default {
 
         // Can we play OGG Vorbis?
         const canPlayOGG = !!(this.$refs.audio.canPlayType &&
-            this.$refs.audio.canPlayType('audio/ogg; codecs="vorbis"').
+            this.$refs.audio.canPlayType('audio/ogg; codecs=opus').
                 replace(/no/, ''));
         if (canPlayOGG) {
-          this.$refs.audio.type = 'audio/ogg; codecs="vorbis"';
-          this.$refs.audio.src = 'https://radio.plaza.one/ogg';
+          this.$refs.audio.type = 'audio/ogg; codecs=opus';
+          this.$refs.audio.src = 'https://radio.plaza.one/opus';
         }
 
         this.$refs.audio.load();

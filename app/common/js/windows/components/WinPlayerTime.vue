@@ -52,14 +52,12 @@ export default {
     },
 
     tick() {
-      const now = Date.now();
+      // const now = Date.now();
 
       if (this.songUpdated && this.length - this.position > 0) {
         // this.actualPosition = Math.floor((now - this.songUpdated) / 1000) + this.position;
 
-        if (this.position > this.length) {
-          this.position = this.length;
-        } else {
+        if (this.position < this.length) {
           this.position += 1;
         }
       }

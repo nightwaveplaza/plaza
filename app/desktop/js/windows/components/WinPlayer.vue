@@ -127,9 +127,11 @@ export default {
       // this.$refs.audio.type = 'audio/mpeg';
       // this.$refs.audio.src = 'https://radio.plaza.one/mp3';
 
+      const noCacheStr = 'nocache=' + Date.now();
+
       this.context.resume().then(() => {
         this.$refs.audio.type = 'audio/mpeg';
-        this.$refs.audio.src = 'https://radio.plaza.one/mp3';
+        this.$refs.audio.src = 'https://radio.plaza.one/mp3?' + noCacheStr;
 
         // Can we play OGG Vorbis?
         const canPlayOGG = !!(this.$refs.audio.canPlayType &&
@@ -137,7 +139,7 @@ export default {
                 replace(/no/, ''));
         if (canPlayOGG) {
           this.$refs.audio.type = 'audio/ogg; codecs=opus';
-          this.$refs.audio.src = 'https://radio.plaza.one/opus';
+          this.$refs.audio.src = 'https://radio.plaza.one/opus?' + noCacheStr;
         }
 
         this.$refs.audio.load();

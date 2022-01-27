@@ -13,7 +13,7 @@
         <div class="player-title track-title">{{ currentSong.title }}</div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
-          <div class="col-12 col-md-7 pr-0 pr-sm-2">
+          <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
               <win-player-visual ref="visual" link="audio"/>
               <win-player-time ref="time" />

@@ -1,13 +1,8 @@
 .pagination {
-  font-size: 0;
+  width: 120px;
 
   button {
-    display: inline-block;
-    min-width: 24px;
-
-    i:before {
-      margin: 0;
-    }
+    line-height: 13px;
 
     &.active {
       box-shadow: 1px 1px 0 0 black inset;
@@ -19,7 +14,6 @@
   }
 
   input {
-    width: 30px;
     line-height: 17px;
     text-align:center;
     -moz-appearance: textfield;
@@ -29,7 +23,5 @@
       -webkit-appearance: none;
       margin: 0;
     }
-
-
   }
 }

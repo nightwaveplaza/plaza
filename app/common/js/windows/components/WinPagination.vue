@@ -1,12 +1,18 @@
 <template>
-  <div class="pagination">
-    <win-btn v-if="page > 1" class="mr-1" @click="nextPage(-1)">
-      <i class="icon-left-hand"/>
-    </win-btn>
-    <input ref="page-input" type="number" value="1" @change="setPage"/>
-    <win-btn v-if="pages > 1 && page < pages" class="ml-1" @click="nextPage(1)">
-      <i class="icon-right-hand"/>
-    </win-btn>
+  <div class="row no-gutters pagination">
+    <div class="col-4 pr-1" v-if="page > 1" >
+      <win-btn class="d-block" @click="nextPage(-1)">
+        <i class="icon-left-hand"/>
+      </win-btn>
+    </div>
+    <div class="col-4">
+      <input ref="page-input" type="number" class="d-block" value="1" @change="setPage"/>
+    </div>
+    <div class="col-4 pl-1" v-if="pages > 1 && page < pages" >
+      <win-btn class="d-block" @click="nextPage(1)">
+        <i class="icon-right-hand"/>
+      </win-btn>
+    </div>
   </div>
 </template>
 

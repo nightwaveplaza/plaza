@@ -22,7 +22,7 @@
     width: 11px;
     height: 16px;
     float: right;
-    margin: 3px 0 0 0;
+    margin: 5px 0 0 0;
     line-height: 26px;
     text-align: center;
     background: url('app/common/css/img/volume.png') no-repeat center center;
@@ -47,5 +47,9 @@
     top: 10px;
     left: 0;
     right: 18px;
+  }
+
+  .noUi-horizontal .noUi-handle {
+    right: -18px;
   }
 }

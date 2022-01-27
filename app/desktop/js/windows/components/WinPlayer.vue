@@ -13,29 +13,45 @@
         <div class="player-title track-title">{{ currentSong.title }}</div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
-          <div class="col-12 col-md-6 pr-0 pr-sm-2">
+          <div class="col-12 col-md-7 pr-0 pr-sm-2">
             <div class="text-field p-0 m-0 player-time-container">
               <win-player-visual ref="visual" link="audio"/>
               <win-player-time ref="time" />
             </div>
           </div>
 
-          <div class="col col-md-6 d-none d-md-block">
+          <div class="col col-md-5 d-none d-md-block">
             <win-player-volume @onchange="setVolume" @onload="updateVolume"/>
           </div>
         </div>
 
         <div class="row no-gutters">
-          <div class="col-5 col-md-6 col-sm-3 mb-1 mb-sm-0 pr-2">
-            <win-btn class="player-play" block @click="play()">{{ playText }}</win-btn>
+          <div class="col-6 col-md-7 pr-md-2">
+            <div class="row no-gutters">
+              <div class="col-6 col-md-8">
+                <win-btn class="player-play" block @click="play()" v-html="playText"/>
+              </div>
+              <div class="col-6 col-md-4">
+                <win-player-reactions />
+              </div>
+            </div>
           </div>
-          <div class="col-3 col-md-2 col-sm-3 pr-2">
-            <win-player-reactions />
-          </div>
-          <div class="col-4 col-md-4 col-sm-3 mb-1 mb-sm-0">
-            <win-btn block @click="openWindow('settings-background')">Settings</win-btn>
+          <div class="col-6 col-md-5">
+            <div class="row no-gutters">
+              <div class="col-6">
+                <win-btn block @click="auth ? openWindow('user') : openWindow('user-login')">
+                  <i class="icon-user mr-0" />
+                </win-btn>
+              </div>
+              <div class="col-6">
+                <win-btn block @click="openWindow('settings-background')">
+                  <i class="icon-cog mr-0" />
+                </win-btn>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -64,9 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'session'
-    ]),
+    ...mapGetters('user', ['auth']),
     ...mapGetters('player', ['currentSong']),
 
     artwork() {

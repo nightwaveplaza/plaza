@@ -15,15 +15,6 @@
           <a role="button" tabindex="3" @click="openWindow('support')"><u>S</u>upport Us</a>
         </div>
       </div>
-
-      <div class="col-auto ml-auto">
-        <div v-if="auth" class="action">
-          <a role="button" @click="openWindow('user')">My <u>P</u>laza</a>
-        </div>
-        <div v-else class="action">
-          <a role="button" @click="openWindow('user-login')"><u>S</u>ign In</a>
-        </div>
-      </div>
     </div>
   </div>
 </template>

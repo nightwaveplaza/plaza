@@ -1,5 +1,5 @@
 <template>
-  <win-btn block @click="like"><i :class="likeIcon" :style="{color: likeColor}"/>{{ likes }}</win-btn>
+  <win-btn block @click="like"><i :class="likeIcon" class="mr-1" :style="{color: likeColor}"/>{{ likes }}</win-btn>
 </template>
 
 <script>
@@ -107,7 +107,7 @@ export default {
       if (saved) return;
 
       this.alert(`You have liked the song. Nice!<br />
-                        Clicking the <i class="icon-like"></i>button twice will add song to your favorites list. Give it a try!`,
+                        Clicking the <i class="icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
           'N I C E', 'info');
 
       settings.save('reactionTip', true);

@@ -1,9 +1,9 @@
 <template>
-  <win-window ref="window" :width="480" name="user-login" title="Login">
+  <win-window ref="window" :width="480" name="user-login" title="Sign In">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
-          Type a username and password to log on to Nightwave Plaza.
+          Type a username and password to sign in to the Nightwave Plaza.
         </div>
 
         <div class="col-auto d-none d-sm-block pr-3">

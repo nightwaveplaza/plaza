@@ -24,7 +24,7 @@ mix.options({
       extensions: ['.png'],
     }),
   ],
-  manifest: false
+  manifest: false,
 })
 
 // Build styles
@@ -39,11 +39,11 @@ mix.js(src + '/js/app.js', 'js').extract().vue().polyfill({
   targets: '> 0.25%, not dead, android 4.4.4, ios 7',
 })
 
-// Copy things
-mix.copy([
-  path.resolve(__dirname, 'app/common/public'),
-  path.resolve(__dirname, src + '/public'),
-], buildPath)
+// Copy public directories
+mix.copy(path.resolve(__dirname, 'app/common/public'), buildPath)
+if (fs.existsSync(path.resolve(__dirname, src + '/public'))) {
+  mix.copy(path.resolve(__dirname, src + '/public'), buildPath)
+}
 
 // Compile EJS template after build
 mix.version().after(() => {

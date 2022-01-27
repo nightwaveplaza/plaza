@@ -1,5 +1,5 @@
 <template>
-  <win-window name="player" title="Nightwave Plaza" :width="470">
+  <win-window name="player" title="Nightwave Plaza" :width="450">
 
     <!-- Minimize button -->
     <template v-slot:header>

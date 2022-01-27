@@ -36,5 +36,6 @@ export const store = new Vuex.Store({
 
   getters: {
     token: () => Cookies.get('token'),
+    version: () => process.env.version
   },
 })

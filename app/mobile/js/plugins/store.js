@@ -66,5 +66,6 @@ export const store = new Vuex.Store({
   getters: {
     isPlaying: state => state.isPlaying,
     sleepTime: state => state.sleepTime,
+    viewVersion: () => process.env.version
   },
 });

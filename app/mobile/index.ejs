@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Nightwave Plaza</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="<%= mix['/css/dist.css'].substring(1) %>">
-    <link rel="stylesheet" type="text/css" href="<%= mix['/css/app.css'].substring(1) %>">
+    <link rel="stylesheet" type="text/css" href="css/dist.css?v=<%= process.env.version %>">
+    <link rel="stylesheet" type="text/css" href="css/app.css?v=<%= process.env.version %>">
 </head>
 <body>
     <div id="app">
@@ -28,8 +28,8 @@
         }
       };
     </script>
-    <script src="<%= mix['/js/manifest.js'].substring(1) %>"></script>
-    <script src="<%= mix['/js/vendor.js'].substring(1) %>"></script>
-    <script src="<%= mix['/js/app.js'].substring(1) %>"></script>
+    <script src="js/manifest.js?v=<%= process.env.version %>"></script>
+    <script src="js/vendor.js?v=<%= process.env.version %>"></script>
+    <script src="js/app.js?v=<%= process.env.version %>"></script>
 </body>
 </html>

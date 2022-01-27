@@ -9,7 +9,7 @@
               <p>Nightwave Plaza is a free 24/7 online vaporwave radio station. The broadcast also includes some future
                 funk
                 and experimental genres. We hope you enjoy.</p>
-              <p>Join our community <a href="/discord">Discord server</a>!</p>
+              <p>Join our community <a href="https://plaza.one/discord">Discord server</a>!</p>
 
               <p class="lead mt-3">Submissions</p>
               <p>Please use <a href="https://plaza.one/submissions" target="blank">this form</a> to send music for
@@ -19,10 +19,10 @@
               <p>Please send any enquiries you may have to <a href="mailto:mail@plaza.one">mail@plaza.one</a>.</p>
               <p>Any updates or upcoming maintenance on Nightwave Plaza can be found on our official Twitter account: <a
                   href="https://twitter.com/nightwaveplaza/" target="_blank">@NightwavePlaza</a>.</p>
-              <p>Nightwave Plaza can also be found on <a href="/youtube" target="_blank">YouTube</a>, <a
-                  href="/facebook" target="_blank">Facebook</a>,
-                <a href="/vk" target="_blank">VK</a>, <a href="/lastfm" target="_blank">Last.fm</a> and <a
-                    href="/tunein" target="_blank">TuneIn</a>.
+              <p>Nightwave Plaza can also be found on <a href="https://plaza.one/youtube" target="_blank">YouTube</a>, <a
+                  href="https://plaza.one/facebook" target="_blank">Facebook</a>,
+                <a href="https://plaza.one/vk" target="_blank">VK</a>, <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a> and <a
+                    href="https://plaza.one/tunein" target="_blank">TuneIn</a>.
               </p>
 
               <p class="lead mt-3">Streaming Links</p>
@@ -42,6 +42,13 @@
                 <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
                 <a href="http://radio.plaza.one/mp3_low" target="_blank">http://radio.plaza.one/mp3_low</a> (mp3 /
                 96kbps)<br/>
+              </p>
+
+              <p class="mt-4">
+                <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
+              </p>
+              <p class="mt-2">
+                View build: {{ viewVersion }}
               </p>
             </win-memo>
           </div>
@@ -67,7 +74,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters(['viewVersion']),
+  },
+
   methods: {
     openCredits() {
       this.openWindow('credits');

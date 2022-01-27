@@ -1,6 +1,6 @@
 <template>
   <div :id="'window-' + name" ref="frame" class="frame row align-items-center">
-    <div :class="{alert: isAlert, 'fluid-height': fluidHeight}" class="win98 col">
+    <div :class="{alert: isAlert, 'fluid-height': fluidHeight}" class="win98 col pl-0 pr-0">
       <div ref="window" :style="style" class="window" @mousedown="pullUp">
         <div class="inner">
           <div class="header header-draggable noselect" @dblclick="resetPosition" @mousedown="startMove"

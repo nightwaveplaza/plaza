@@ -14,8 +14,7 @@
                                 @bgChanged="setBackground"
                                 @themeChanged="themeChanged"
     />
-    <window-settings-lastfm v-if="isWindowOpen('settings-lastfm')"/>
-    <window-support v-if="isWindowOpen('support')"/>
+    <window-donate v-if="isWindowOpen('donate')"/>
     <window-user v-if="isWindowOpen('user')"/>
     <window-user-email v-if="isWindowOpen('user-email')"/>
     <window-user-favorites v-if="isWindowOpen('user-favorites')"/>

@@ -38,7 +38,6 @@ Vue.component('window-loading', require('./windows/WindowLoading').default);
 Vue.component('window-player', require('./windows/WindowPlayer').default);
 Vue.component('window-player-timer', require('./windows/WindowPlayerTimer').default);
 Vue.component('window-settings', require('./windows/WindowSettings').default);
-Vue.component('window-settings-lastfm', require('./windows/WindowSettingsLastfm').default);
 
 // Mobile components
 Vue.component('win-player', require('./windows/components/WinPlayer').default);

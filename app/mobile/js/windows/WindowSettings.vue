@@ -4,7 +4,6 @@
       <div class="row">
         <div class="col-10 offset-1">
           <win-btn block class="mb-2" @click="open('settings-background')">Appearance settings</win-btn>
-          <win-btn block class="mb-2" @click="open('settings-lastfm')">Last.fm scrobbling</win-btn>
           <win-btn block class="mb-2" @click="switchAudioQuality">Audio quality: <strong>{{ quality }}</strong>
           </win-btn>
         </div>

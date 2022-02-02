@@ -16,6 +16,8 @@
             </a>
           </p>
 
+          <p>Another option is donate via <a href="https://plaza.one/streamlabs" target="_blank">StreamLabs</a> (Visa, Paypal).</p>
+
           <p>Thank you for donations, they will go straight into funding the station.</p>
         </win-memo>
       </div>

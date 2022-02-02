@@ -4,7 +4,6 @@
       <div class="text-center">
         <win-memo>
           <p class="lead mb-2">Love Nightwave Plaza?</p>
-          <p>The radio station is non-profit and ad-free, but it requires some funds to stay online and develop.</p>
           <p>You can support the radio station and further updates by donating via PayPal or join our Patreon and get
             special rewards!</p>
 
@@ -22,8 +21,29 @@
       </div>
 
       <div class="text-center mt-3">
-        <win-btn class="mx-auto px-4" @click="closeWindow()">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="close()">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
+
+<script>
+export default {
+  props: {
+    direct: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    close() {
+      if (this.direct) {
+        this.$router.push({name: 'index'});
+      } else {
+        this.closeWindow();
+      }
+    }
+  }
+}
+</script>

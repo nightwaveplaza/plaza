@@ -14,7 +14,6 @@ Vue.component('window-song-info', require('@common/js/windows/WindowSongInfo').d
 Vue.component('window-settings-background', require('@common/js/windows/WindowSettingsBackground').default);
 Vue.component('window-user-password', require('@common/js/windows/WindowUserPassword').default);
 Vue.component('window-user-favorites', require('@common/js/windows/WindowUserFavorites').default);
-Vue.component('window-support', require('@common/js/windows/WindowSupport').default);
 Vue.component('window-user-login', require('@common/js/windows/WindowUserLogin').default);
 Vue.component('window-user-email', require('@common/js/windows/WindowUserEmail').default);
 Vue.component('window-user-reset', require('@common/js/windows/WindowUserReset').default);
@@ -38,6 +37,7 @@ Vue.component('window-loading', require('./windows/WindowLoading').default);
 Vue.component('window-player', require('./windows/WindowPlayer').default);
 Vue.component('window-player-timer', require('./windows/WindowPlayerTimer').default);
 Vue.component('window-settings', require('./windows/WindowSettings').default);
+Vue.component('window-donate', require('./windows/WindowDonate').default);
 
 // Mobile components
 Vue.component('win-player', require('./windows/components/WinPlayer').default);

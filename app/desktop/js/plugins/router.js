@@ -3,6 +3,7 @@ import Index from '@desktop/js/pages/Index'
 import Reset from '@desktop/js/pages/Reset'
 import Register from '@desktop/js/pages/Register'
 import PageNotFound from '@desktop/js/pages/PageNotFound'
+import Donate from '@desktop/js/pages/Donate'
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register,
+  },
+  {
+    path: '/donate',
+    name: 'donate',
+    component: Donate,
   },
   {
     path: '*',

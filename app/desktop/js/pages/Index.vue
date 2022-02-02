@@ -48,7 +48,7 @@ export default {
   },
 
   mounted: function() {
-    this.openWindow('player');
+    this.$store.commit('windows/pullUp', 'player');
 
     Background.loadOnStartup().then(this.setBackground);
     this.loadUser();

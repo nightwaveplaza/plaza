@@ -7,7 +7,7 @@
 <script>
 export default {
   mounted: function() {
-    this.openWindow('support');
+    this.$store.commit('windows/pullUp', 'support');
   }
 }
 </script>

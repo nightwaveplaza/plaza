@@ -48,6 +48,8 @@ export default {
   },
 
   mounted: function() {
+    this.openWindow('player');
+
     Background.loadOnStartup().then(this.setBackground);
     this.loadUser();
 

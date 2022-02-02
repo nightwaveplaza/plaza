@@ -74,34 +74,20 @@ export default {
           return;
         }
 
-        const res = await this.auth();
-        if (res) {
-          await Native.setLastfmToken(res.data.token, res.data.username);
+        let error = await Native.authLastfmUser(this.username, this.password);
+        if (error) {
+          this.alert(error, 'Failed');
+        } else {
           this.toast('Scrobbling enabled.');
           this.closeWindow();
         }
       } else {
-        await Native.setLastfmToken('', '');
+        await Native.logoutLastfmUser();
         this.toast('Scrobbling disabled.');
         this.closeWindow();
       }
 
-    },
-
-    async auth() {
-      this.loading = true;
-      let res = null;
-
-      try {
-        res = await scrobbler.auth(this.username, this.password);
-      } catch (err) {
-        this.alert(err.response.data.error, 'Failed');
-      } finally {
-        this.loading = false;
-      }
-
-      return res;
-    },
+    }
   },
 };
 </script>

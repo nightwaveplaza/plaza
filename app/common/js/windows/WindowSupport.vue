@@ -5,7 +5,7 @@
         <win-memo>
           <p class="lead mb-2">Love Nightwave Plaza?</p>
           <p>You can support the radio station and further updates by donating via PayPal or join our Patreon and get
-            special rewards!</p>
+            special Discord rewards!</p>
 
           <p class="my-3">
             <a href="https://www.paypal.me/nightwaveplaza" target="_blank" class="pp-link mr-4">
@@ -18,7 +18,7 @@
 
           <p>Another option is donate via <a href="https://plaza.one/streamlabs" target="_blank">StreamLabs</a> (Visa, Paypal).</p>
 
-          <p>Thank you for donations, they will go straight into funding the station.</p>
+          <p class="mt-2">Thank you for donations, they will go straight into funding the station.</p>
         </win-memo>
       </div>
 

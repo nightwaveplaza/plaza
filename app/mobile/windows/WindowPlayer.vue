@@ -1,0 +1,45 @@
+<template>
+  <win-window name="player" title="Nightwave Plaza" :width="400">
+
+    <!-- Minimize button -->
+    <template v-slot:header>
+      <div class="buttons">
+        <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
+        <win-btn class="button-maximize" @click="toggleFullscreen"><span/></win-btn>
+      </div>
+    </template>
+
+    <!-- Player -->
+    <div class="content p-2">
+      <win-player/>
+    </div>
+
+    <!-- Statusbar -->
+    <div class="statusbar row no-gutters">
+      <div class="col cell">
+        Listeners: {{ listeners }}
+      </div>
+    </div>
+  </win-window>
+</template>
+
+<script>
+import {mapGetters} from 'vuex';
+import {Native} from '@mobile/bridge/native';
+
+export default {
+  computed: {
+    ...mapGetters('player', ['listeners']),
+  },
+
+  methods: {
+    minimize() {
+      this.$store.commit('windows/minimize', true);
+    },
+
+    toggleFullscreen() {
+      Native.toggleFullscreen();
+    },
+  },
+};
+</script>

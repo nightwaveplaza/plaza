@@ -1,0 +1,50 @@
+$rainy: (
+        'name': 'rainy',
+        'font-color': #000000,
+        'font-disabled': #8a8a8a,
+        'link-color': #0645AD,
+        'inputs-bg': #ffffff,
+        'header-gradient': linear-gradient(to right, #4f647f, #677b9f),
+        'header-gradient-inactive': linear-gradient(to right, #808080, #808080),
+        'header-font-color': #ffffff,
+        'btn-bg-color': #8098b0,
+        'btn-border-left': #c0ccd8,
+        'btn-border-right': #000000,
+        'btn-shadow': (
+                inset -1px 0px 0 0 #4d6378,
+                inset -1px 1px 0 0 #8098b0,
+                inset -1px -1px 0 0 #4d6378,
+                inset 0px 0px 0 1px #8098b0
+        ),
+        'btn-active-border': #000000,
+        'btn-active-shadow': (
+                inset 0 0 0 1px #4e657c
+        ),
+        'window-border-left': #8797ae,
+        'window-border-right': #000000,
+        'window-shadow': (
+                inset -1px 0px 0 0 #4e6575,
+                inset -1px 1px 0 0 #bed0dc,
+                inset -1px -1px 0 0 #4e6575,
+                inset 0px 0px 0 1px #bed0dc
+        ),
+        'content-border-left': #4e657c,
+        'content-border-right': #c0ccd8,
+        'content-shadow': (
+                inset -1px 0px 0 0 #7d99af,
+                inset -1px 1px 0 0 #000000,
+                inset -1px -1px 0 0 #7d99af,
+                inset 0px 0px 0 1px #000000
+        ),
+        'btn-taskbar-shadow': (
+                inset -1px 0px 0 0 #8499ac,
+                inset -1px 1px 0 0 #4e657c,
+                inset -1px -1px 0 0 #8499ac,
+                inset 0px 0px 0 1px #4e657c
+        ),
+        'btn-taskbar-color': #000000,
+        'taskbar-shadow': (
+                inset 0 1px 0 0 #c0ccd8,
+        ),
+        'dots-background': #c0ccd8 !important,
+)

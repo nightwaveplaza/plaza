@@ -1,0 +1,37 @@
+@import "themes/elements";
+@import "mixins";
+
+button, .button {
+  @include font;
+  @include d3-object;
+
+  text-align: center;
+  outline: none !important;
+  padding: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: inline-block;
+  text-decoration: none !important;
+  margin: 0;
+  color: inherit;
+
+  i {
+    cursor: pointer
+  }
+
+  &:enabled {
+    @include font-color('font-color');
+  }
+
+  &:disabled {
+    @include font-color('font-disabled');
+    text-shadow: 1px 1px white;
+  }
+
+  &:active:enabled, &.active {
+    box-shadow: 1px 1px 0 0 black inset;
+    @include border-shadow('btn-active-shadow');
+    @include border-color-tl('btn-active-border');
+    @include border-color-rb('btn-active-border');
+  }
+}

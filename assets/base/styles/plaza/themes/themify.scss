@@ -1,0 +1,33 @@
+@import "theme-contrast";
+@import "theme-desert";
+@import "theme-rainy";
+@import "theme-standard";
+@import "theme-rose";
+
+// Объединение карт
+@function map-collect($maps...) {
+  $collection: ();
+
+  @each $map in $maps {
+    $t: (map-get($map, 'name'): $map);
+    $collection: map-merge($collection, $t);
+  }
+  @return $collection;
+}
+
+/// Миксин Themify
+/// @access private
+/// @author Hugo Giraudel
+/// @param {String} $property - темизируемое свойство
+/// @param {String} $key - ключ цвета, используемого из темы
+/// @param {Map} $themes [$themes] - ассоциативный массив с темами
+@mixin themify($property, $key, $themes: map-collect($contrast, $desert, $rainy, $rose, $standard)) {
+  // Проход по темам
+  @each $theme, $colors in $themes {
+    //&.theme-#{$theme},
+    .theme-#{$theme} & {
+      // Вывод декларации
+      #{$property}: map-get($colors, $key);
+    }
+  }
+}

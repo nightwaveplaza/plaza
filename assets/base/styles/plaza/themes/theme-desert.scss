@@ -1,0 +1,50 @@
+$desert: (
+        'name': 'desert',
+        'font-color': #000000,
+        'font-disabled': #8a8a8a,
+        'link-color': #0645AD,
+        'inputs-bg': #ffffff,
+        'header-gradient': linear-gradient(to right, #008080, #00abab),
+        'header-gradient-inactive': linear-gradient(to right, #a28d68, #d5ccbb),
+        'header-font-color': #ffffff,
+        'btn-bg-color': #d5ccbb,
+        'btn-border-left': #eae6dd,
+        'btn-border-right': #000000,
+        'btn-shadow': (
+                inset -1px 0px 0 0 #a28d68,
+                inset -1px 1px 0 0 #d5ccbb,
+                inset -1px -1px 0 0 #a28d68,
+                inset 0px 0px 0 1px #d5ccbb
+        ),
+        'btn-active-border': #000000,
+        'btn-active-shadow': (
+                inset 0 0 0 1px #a28d68
+        ),
+        'window-border-left': #d5ccbb,
+        'window-border-right': #000000,
+        'window-shadow': (
+                inset -1px 0px 0 0 #a28d68,
+                inset -1px 1px 0 0 #eae6dd,
+                inset -1px -1px 0 0 #a28d68,
+                inset 0px 0px 0 1px #eae6dd
+        ),
+        'content-border-left': #a28d68,
+        'content-border-right': #ede6dc,
+        'content-shadow': (
+                inset -1px 0px 0 0 #d5ccbb,
+                inset -1px 1px 0 0 #000000,
+                inset -1px -1px 0 0 #d5ccbb,
+                inset 0px 0px 0 1px #000000
+        ),
+        'btn-taskbar-shadow': (
+                inset -1px 0px 0 0 #d5ccbb,
+                inset -1px 1px 0 0 #a28d68,
+                inset -1px -1px 0 0 #d5ccbb,
+                inset 0px 0px 0 1px #a28d68
+        ),
+        'btn-taskbar-color': #000000,
+        'taskbar-shadow': (
+                inset 0 1px 0 0 #eae6dd,
+        ),
+        'dots-background': #eae6dd !important,
+)

@@ -1,0 +1,25 @@
+@import "themes/elements";
+@import "variables";
+
+@mixin font {
+  font-size: $font-size;
+  font-family: $font-family;
+  @include font-color('font-color');
+}
+
+@mixin d3-object() {
+  border: 1px solid;
+  @include border-shadow('btn-shadow');
+  @include border-color-tl('btn-border-left');
+  @include border-color-rb('btn-border-right');
+  @include background-color('btn-bg-color');
+}
+
+@mixin d3-window() {
+  border: 1px solid;
+  @include border-shadow('window-shadow');
+  @include border-color-tl('window-border-left');
+  @include border-color-rb('window-border-right');
+  @include background-color('btn-bg-color');
+}
+

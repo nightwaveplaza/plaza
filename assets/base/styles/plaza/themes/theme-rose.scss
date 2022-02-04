@@ -1,0 +1,50 @@
+$rose: (
+        'name': 'rose',
+        'font-color': #000000,
+        'font-disabled': #8a8a8a,
+        'link-color': #0645AD,
+        'inputs-bg': #ffffff,
+        'header-gradient': linear-gradient(to right, #9f6070, #ac848d),
+        'header-gradient-inactive': linear-gradient(to right, #a0a0a4, #c8c8ca),
+        'header-font-color': #ffffff,
+        'btn-bg-color': #cfafb7,
+        'btn-border-left': #e7d8dc,
+        'btn-border-right': #000000,
+        'btn-shadow': (
+                inset -1px 0px 0 0 #9f6070,
+                inset -1px 1px 0 0 #cfafb7,
+                inset -1px -1px 0 0 #9f6070,
+                inset 0px 0px 0 1px #cfafb7
+        ),
+        'btn-active-border': #000000,
+        'btn-active-shadow': (
+                inset 0 0 0 1px #9f6070
+        ),
+        'window-border-left': #cfafb7,
+        'window-border-right': #000000,
+        'window-shadow': (
+                inset -1px 0px 0 0 #9f6070,
+                inset -1px 1px 0 0 #e7d8dc,
+                inset -1px -1px 0 0 #9f6070,
+                inset 0px 0px 0 1px #e7d8dc
+        ),
+        'content-border-left': #9f6070,
+        'content-border-right': #e7d8dc,
+        'content-shadow': (
+                inset -1px 0px 0 0 #ceadb8,
+                inset -1px 1px 0 0 #000000,
+                inset -1px -1px 0 0 #ceadb8,
+                inset 0px 0px 0 1px #000000
+        ),
+        'btn-taskbar-shadow': (
+                inset -1px 0px 0 0 #e7d8dc,
+                inset -1px 1px 0 0 #9f6170,
+                inset -1px -1px 0 0 #e7d8dc,
+                inset 0px 0px 0 1px #9f6170
+        ),
+        'btn-taskbar-color': #000000,
+        'taskbar-shadow': (
+                inset 0 1px 0 0 #e9d6dc,
+        ),
+        'dots-background': #e9d6dc !important,
+)

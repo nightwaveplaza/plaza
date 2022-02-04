@@ -6,7 +6,8 @@ const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 require('laravel-mix-polyfill');
 
-const src = 'app/' + process.env.APP;
+const srcJs = 'app/' + process.env.APP;
+const srcAssets = 'assets/' + process.env.APP;
 const buildPath = path.relative('./', process.env.BUILD_PATH);
 
 // Set build date
@@ -20,19 +21,21 @@ mix.webpackConfig(require('./webpack.config'));
 mix.options({
   processCssUrls: false,
   postCss: [
-    require('postcss-base64')({
-      extensions: ['.png'],
-    }),
+      require('postcss-url')({
+        url: 'inline',
+        filter: /\.(jpg|png)$/,
+        basePath: path.resolve('./')
+      })
   ],
   manifest: false,
 });
 
 // Build styles
-mix.sass(src + '/css/dist.scss', 'css').
-    sass(src + '/css/app.scss', 'css');
+mix.sass(srcAssets + '/styles/dist.scss', 'css').
+    sass(srcAssets + '/styles/app.scss', 'css');
 
 // Compile JS
-mix.js(src + '/js/app.js', 'js').extract().vue().polyfill({
+mix.js(srcJs + '/app.js', 'js').extract().vue().polyfill({
   enabled: true,
   corejs: 3,
   useBuiltIns: 'usage',
@@ -40,14 +43,14 @@ mix.js(src + '/js/app.js', 'js').extract().vue().polyfill({
 });
 
 // Copy public directories
-mix.copy(path.resolve(__dirname, 'app/base/public'), buildPath);
-if (fs.existsSync(path.resolve(__dirname, src + '/public'))) {
-  mix.copy(path.resolve(__dirname, src + '/public'), buildPath);
+mix.copy(path.resolve(__dirname, 'assets/base/public'), buildPath);
+if (fs.existsSync(path.resolve(__dirname, srcAssets + '/public'))) {
+  mix.copy(path.resolve(__dirname, srcAssets + '/public'), buildPath);
 }
 
 // Compile EJS template after build
 mix.version().after(() => {
-  const template = fs.readFileSync(src + '/index.ejs', 'utf-8');
+  const template = fs.readFileSync(srcAssets + '/index.ejs', 'utf-8');
   const html = ejs.render(template);
   fs.writeFileSync(path.join(buildPath, 'index.html'), html);
 });

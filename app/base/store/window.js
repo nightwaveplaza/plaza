@@ -3,12 +3,9 @@ export const windowStore = {
 
   state: {
     windows: [{name: 'player'}],
+    minimized: [],
     activeWindow: 'player',
     activeZIndex: 100,
-    isPlayerMinimized: false,
-    alerts: [],
-
-    songInfoIds: [],
   },
 
   mutations: {
@@ -25,8 +22,17 @@ export const windowStore = {
       state.activeZIndex++;
     },
 
-    minimize(state, mini) {
-      state.isPlayerMinimized = mini;
+    title(state, {name, title}) {
+      const index = state.windows.map(e => e.name).indexOf(name);
+      state.windows[index].title = title;
+    },
+
+    minimize(state, name) {
+      state.minimized.push(name);
+    },
+
+    restore(state, name) {
+      state.minimized = state.minimized.filter(n => n !== name);
     },
   },
 
@@ -45,15 +51,34 @@ export const windowStore = {
         context.commit('pullUp', windows[windows.length - 1].name);
       }
     },
+
+    updateTitle(context, {name, title}) {
+      if (context.getters.isWindowOpen(name)) {
+        context.commit('title', {name, title});
+      }
+    },
+
+    minimize(context, name) {
+      if (!context.getters.isWindowMinimized(name)) {
+        context.commit('minimize', name);
+      }
+    },
+
+    restore(context, name) {
+      if (context.getters.isWindowMinimized(name)) {
+        context.commit('restore', name);
+        context.commit('pullUp', name);
+      }
+    },
   },
 
   getters: {
     windows: state => state.windows,
     isWindowOpen: state => name => state.windows.some(w => w.name === name),
+    isWindowMinimized: state => name => state.minimized.indexOf(name) >= 0,
     alerts: state => state.windows.filter(w => w.name.includes('alert-')),
     songWindows: state => state.windows.filter(w => w.name.includes('song-')),
     activeWindow: state => state.activeWindow,
     globalZ: state => state.activeZIndex,
-    isPlayerMinimized: state => state.isPlayerMinimized,
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div :class="theme" :style="styles" class="app-desktop">
     <window-loading v-if="loading"/>
-    <window-player v-show="!isPlayerMinimized && !loading"/>
+    <window-player v-show="!loading"/>
     <window-player-timer v-if="isWindowOpen('player-timer')"/>
 
     <window-about v-if="isWindowOpen('about')"/>

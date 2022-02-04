@@ -14,6 +14,9 @@
         <div class="action">
           <a role="button" tabindex="3" @click="openWindow('support')"><u>S</u>upport Us</a>
         </div>
+        <div class="action">
+          <a role="button" tabindex="4" @click="openWindow('mobile')"><u>M</u>obile</a>
+        </div>
       </div>
     </div>
   </div>

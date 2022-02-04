@@ -1,6 +1,6 @@
 <template>
   <div :style="styles" class="app-desktop" :class="theme">
-    <window-player v-show="!isPlayerMinimized"/>
+    <window-player />
 
     <window-about v-if="isWindowOpen('about')"/>
     <window-credits v-if="isWindowOpen('credits')"/>
@@ -46,7 +46,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('windows', ['isPlayerMinimized', 'isWindowOpen']),
+    ...mapGetters('windows', ['isWindowOpen']),
     ...mapGetters(['token']),
   },
 

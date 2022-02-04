@@ -1,5 +1,5 @@
 <template>
-  <div :id="'window-' + name" ref="frame" class="frame row align-items-center">
+  <div :id="'window-' + name" ref="frame" class="frame row align-items-center" v-show="!isMinimized">
     <div :class="{alert: isAlert, 'fluid-height': fluidHeight}" class="win98 col pl-0 pr-0">
       <div ref="window" :style="style" class="window" @mousedown="pullUp">
         <div class="inner">
@@ -73,10 +73,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters('windows', ['activeWindow', 'globalZ', 'isWindowOpen']),
+    ...mapGetters('windows', ['activeWindow', 'globalZ', 'isWindowOpen', 'isWindowMinimized']),
     isWindowInactive() {
       return this.activeWindow !== this.name;
     },
+    isMinimized() {
+      return this.isWindowMinimized(this.name)
+    }
   },
 
   methods: {
@@ -153,6 +156,10 @@ export default {
     close() {
       this.closeWindow(this.name);
     },
+  },
+
+  beforeMount() {
+    this.$store.dispatch('windows/updateTitle', {name: this.name, title: this.title}).then();
   },
 
   mounted() {

@@ -19,7 +19,8 @@
 
   .local-time {
     margin-right: 2px;
-    padding: 4px;
+    padding: 4px 0;
+    text-align: center;
     border: 1px solid;
     @include font-color('font-color');
     @include border-color-tl('content-border-left');
@@ -27,10 +28,20 @@
   }
 
   button {
-    padding-left: 22px;
+    max-width: 150px;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
     position: relative;
     text-align: left;
     @include font-color('taskbar-font-color');
+
+    .title {
+      padding-left: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
     img {
       width: 16px;

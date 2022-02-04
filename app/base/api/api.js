@@ -57,17 +57,7 @@ export const news = {
  */
 export const user = {
   get: () => Repository.get('user'),
-
-  login(username, password) {
-    const authStr = window.btoa(
-        unescape(encodeURIComponent(username + ':' + password)));
-    return Repository.post('user/login', {}, {
-      headers: {
-        Authorization: 'Basic ' + authStr,
-      },
-    });
-  },
-
+  auth: (data) => Repository.post('user/auth', data),
   register: (data) => Repository.post('user/register', data),
   edit: (data) => Repository.put('user', data),
   reset: (data) => Repository.post('user/reset', data),

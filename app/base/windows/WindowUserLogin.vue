@@ -23,7 +23,7 @@
               <label class="mt-0" for="username"><u>U</u>sername:</label>
             </div>
             <div class="col-12 col-sm-9">
-              <input id="username" v-model="username" class="mr-0 ml-0" type="text"/>
+              <input id="username" v-model="fields.username" class="mr-0 ml-0" type="text"/>
             </div>
           </div>
 
@@ -33,7 +33,7 @@
               <label class="mt-0" for="password"><u>P</u>assword:</label>
             </div>
             <div class="col-12 col-sm-9">
-              <input id="password" v-model="password" class="mr-0 ml-0" type="password"/>
+              <input id="password" v-model="fields.password" class="mr-0 ml-0" type="password"/>
               &nbsp;<a role="button" @click="openReset">Reset</a>
             </div>
           </div>
@@ -66,8 +66,10 @@ import {user} from '@base/api/api';
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      fields: {
+        username: '',
+        password: '',
+      },
       remember: false,
       sending: false,
     };
@@ -80,7 +82,7 @@ export default {
       }
 
       try {
-        const res = await user.login(this.username, this.password);
+        const res = await user.auth(this.fields);
 
         if (this.isMobile) {
           await this.$store.dispatch('login', res.data);
@@ -106,7 +108,7 @@ export default {
     },
 
     validate() {
-      if (this.username.length === 0 || this.password.length === 0) {
+      if (this.fields.username.length === 0 || this.fields.password.length === 0) {
         this.alert('Wrong username or password.', 'Error');
         return false;
       }

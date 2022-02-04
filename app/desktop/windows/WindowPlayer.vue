@@ -44,7 +44,7 @@ export default {
 
   methods: {
     minimize() {
-      this.$store.commit('windows/minimize', true);
+      this.$store.dispatch('windows/minimize', 'player');
     },
 
     requestFullScreen() {

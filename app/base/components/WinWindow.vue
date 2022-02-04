@@ -9,6 +9,7 @@
             {{ title }}
             <slot name="header">
               <div class="buttons">
+                <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
                 <win-btn class="button-close" @click="close"><span/></win-btn>
               </div>
             </slot>
@@ -151,6 +152,10 @@ export default {
       }
 
       this.borders = borders;
+    },
+
+    minimize() {
+      this.$store.dispatch('windows/minimize', this.name);
     },
 
     close() {

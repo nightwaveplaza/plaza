@@ -3,7 +3,7 @@
     <window-user-reset-password v-if="isWindowOpen('user-reset-password')" :token="token"/>
     <window-user-reset v-if="isWindowOpen('user-reset')"/>
 
-    <win-alert :title="a.title" :text="a.text" :name="a.name" :type="a.type" :key="a.id" v-for="a in alerts"/>
+    <win-alerts/>
   </div>
 </template>
 
@@ -18,10 +18,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('windows', ['alerts', 'isWindowOpen']),
-    changePassword() {
-      return this.$route.params.token;
-    },
+    ...mapGetters('windows', ['alerts', 'isWindowOpen'])
   },
 
   watch: {

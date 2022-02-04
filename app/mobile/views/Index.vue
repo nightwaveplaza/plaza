@@ -47,7 +47,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('windows', ['isPlayerMinimized', 'isWindowOpen']),
+    ...mapGetters('windows', ['isWindowOpen']),
     ...mapGetters('player', ['currentSong']),
 
     loading() {

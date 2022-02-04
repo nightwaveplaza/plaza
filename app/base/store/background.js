@@ -1,4 +1,4 @@
-export const backgroundStore = {
+export default {
   namespaced: true,
 
   state: {

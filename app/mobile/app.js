@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import ticker from '@base/extras/ticker';
-import {store} from '@mobile/store';
+import store from '@mobile/store';
 import {Native} from '@mobile/bridge/native';
 
 // Mobile components and windows

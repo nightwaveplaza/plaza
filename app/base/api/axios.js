@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {userStore} from '@base/store/user';
+import userStore from '@base/store/user';
 
 const baseURL = process.env.API_URL;
 const instance = axios.create({baseURL});

@@ -1,4 +1,4 @@
-export const windowStore = {
+export default {
   namespaced: true,
 
   state: {

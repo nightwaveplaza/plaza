@@ -1,4 +1,4 @@
-export const playerStore = {
+export default {
   namespaced: true,
 
   state: {

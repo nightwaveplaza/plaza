@@ -1,14 +1,14 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import Cookies from 'js-cookie';
-import {playerStore} from '@base/store/player';
-import {windowStore} from '@base/store/window';
-import {backgroundStore} from '@base/store/background';
-import {userStore} from '@base/store/user';
+import playerStore from '@base/store/player';
+import windowStore from '@base/store/window';
+import backgroundStore from '@base/store/background';
+import userStore from '@base/store/user';
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   modules: {
     windows: windowStore,
     player: playerStore,

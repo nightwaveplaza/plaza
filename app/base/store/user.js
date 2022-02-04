@@ -1,6 +1,6 @@
 import settings from '@base/extras/settings';
 
-export const userStore = {
+export default {
   namespaced: true,
 
   state: {

@@ -34,6 +34,7 @@
     padding-right: 0;
     position: relative;
     text-align: left;
+    cursor: pointer;
     @include font-color('taskbar-font-color');
 
     .title {
@@ -41,6 +42,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      cursor: pointer;
     }
 
     img {
@@ -49,6 +51,7 @@
       position: absolute;
       left: 3px;
       top: 3px;
+      cursor: pointer;
     }
 
     &.active {

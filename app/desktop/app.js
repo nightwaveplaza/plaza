@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import {store} from '@desktop/store';
+import store from '@desktop/store';
 import ticker from '@base/extras/ticker';
 import App from '@desktop/views/App';
 import router from '@desktop/router';

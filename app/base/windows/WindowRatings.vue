@@ -21,9 +21,7 @@
             <div v-if="loading" class="content-loading"></div>
             <win-list scroll ref="list">
               <tr v-for="(chart, i) in charts" class="hover">
-                <td class="text-center noselect" style="width: 37px">{{
-                    pad((page - 1) * perPage + i + 1)
-                  }}
+                <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * perPage + i + 1) }}
                 </td>
                 <td class="py-1 show-info" @click="songInfo(chart.id)">
                   <div class="artist">{{ chart.artist }}</div>

@@ -18,7 +18,8 @@
                 {{ song.title }}
               </div>
               <div>
-                <i class="i icon-clock" /> {{ songLength }} &nbsp; <i class="i icon-like" /> {{ song.likes }}
+                <i class="i icon-clock" /> {{ songLength }} &nbsp;
+                <i class="i icon-like" style="color: #c12727" /> {{ song.likes }}
               </div>
             </div>
             <div class="col-5">

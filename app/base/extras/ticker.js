@@ -36,7 +36,7 @@ export default {
   },
 
   /**
-   * Тик таймера (вызывается из requestAnimationFrame)
+   * Timer tick (requestAnimationFrame)
    */
   tick() {
     const now = Date.now();

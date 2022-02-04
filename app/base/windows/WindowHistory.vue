@@ -4,8 +4,8 @@
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
-            <div v-if="history.length > 0" class="col">Showing history: {{ shortDate(dateFrom) }} &mdash;
-              {{ shortDate(this.dateTo) }}.
+            <div v-if="history.length > 0" class="col">Showing history: {{ sd(dateFrom) }} &mdash;
+              {{ sd(this.dateTo) }}.
             </div>
             <div class="col-auto"><a href="https://plaza.one/lastfm" target="_blank">Last.fm history</a></div>
           </div>
@@ -21,8 +21,8 @@
                   <div class="title">{{ song.title }}</div>
                 </td>
                 <td class="pr-2 text-right noselect" style="width: 48px">
-                  {{ shortDate(song.played_at) }}<br/>
-                  {{ getTime(song.played_at) }}
+                  {{ sd(song.played_at) }}<br/>
+                  {{ gt(song.played_at) }}
                 </td>
               </tr>
             </win-list>
@@ -52,6 +52,7 @@
 
 <script>
 import {history} from '@base/api/api';
+import * as dayjs from 'dayjs'
 
 export default {
   data() {
@@ -102,6 +103,10 @@ export default {
       this.$nextTick(() => {
         this.scrollbar.update();
       });
+    },
+
+    gt(date) {
+      return dayjs.unix(date).format('HH:mm')
     },
   },
 

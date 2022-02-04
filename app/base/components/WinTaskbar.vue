@@ -8,7 +8,7 @@
              v-for="window in windows"
              :key="window.name"
              @click="toggleMinimize(window.name)">
-      <img src="/img/win/ball.png"/>
+      <img src="img/win/ball.png"/>
       <div class="title" v-html="window.title"/>
     </win-btn>
 

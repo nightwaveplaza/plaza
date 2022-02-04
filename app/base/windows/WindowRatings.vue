@@ -22,7 +22,7 @@
             <win-list scroll ref="list">
               <tr v-for="(chart, i) in charts" class="hover">
                 <td class="text-center noselect" style="width: 37px">{{
-                    addZeros((page - 1) * perPage + i + 1, 3)
+                    pad((page - 1) * perPage + i + 1)
                   }}
                 </td>
                 <td class="py-1 show-info" @click="songInfo(chart.id)">
@@ -30,7 +30,7 @@
                   <div class="title">{{ chart.title }}</div>
                 </td>
                 <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
-                  {{ chart.likes }}<i class="icon-like ml-1" style="color: #c12727"/></td>
+                  {{ chart.likes }}<i class="i icon-like ml-1" style="color: #c12727"/></td>
               </tr>
             </win-list>
           </div>
@@ -90,6 +90,10 @@ export default {
   },
 
   methods: {
+    pad(s) {
+      return s.toString().padStart(3, '0');
+    },
+
     changePage(page) {
       this.page = page;
     },

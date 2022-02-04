@@ -1,6 +1,6 @@
 {
   "name": "app-plaza",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "watch": "npx mix watch",
@@ -8,12 +8,9 @@
     "prod": "npx mix -p"
   },
   "devDependencies": {
-    "base64-inline-loader": "^2.0.1",
     "core-js": "^3.9.1",
-    "lodash": "^4.17.13",
     "node-sass": "^5.0.0",
     "postcss": "^8.4.5",
-    "resolve-url-loader": "^4.0.0",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "vue": "^2.6.11",

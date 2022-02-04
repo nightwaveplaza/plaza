@@ -26,7 +26,7 @@
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
             <win-btn block @click="openWindow('player-timer')">
-              <i :style="{ color: timerColor }" class="icon-clock"/>
+              <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-btn>
           </div>
 

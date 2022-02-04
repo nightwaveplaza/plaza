@@ -31,7 +31,7 @@
                       <div class="artist">{{ like.song.artist }}</div>
                       <div class="title">{{ like.song.title }}</div>
                       <div class="date">
-                        <i>{{ shortDateYear(like.created_at) }}</i>
+                        <i>{{ sdy(like.created_at) }}</i>
                       </div>
                     </td>
                     <td class="text-center noselect" style="width: 70px">
@@ -45,7 +45,7 @@
               </template>
 
               <div v-else-if="!loading" class="favorites-empty noselect">
-                <i>Your list is empty. Click the <i class="icon-like"></i> buton to add songs to this list.</i>
+                <i>Your list is empty. Click the <i class="i icon-like"></i> buton to add songs to this list.</i>
               </div>
             </win-list>
 

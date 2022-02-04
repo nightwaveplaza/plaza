@@ -77,7 +77,7 @@ export default {
 
     refreshText() {
       const t = (this.sleepTime - Date.now()) / 1000;
-      this.timeText = t < 0 ? '00:00' : this.playTime(t);
+      this.timeText = t < 0 ? '00:00' : this.dur(t);
     },
 
     add(amount) {

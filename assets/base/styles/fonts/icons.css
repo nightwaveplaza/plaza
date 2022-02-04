@@ -10,7 +10,7 @@
     font-display: block;
 }
 
-i {
+i.i {
     /* use !important to prevent issues with browser extensions that change ../fonts/icons */
     font-family: 'icons' !important;
     speak: never;

@@ -48,7 +48,7 @@
     </div>
 
     <div v-if="song !== false" class="statusbar row no-gutters noselect">
-      <div v-if="song.first_played_at" class="col cell">First played: {{ shortDateYear(song.first_played_at) }}</div>
+      <div v-if="song.first_played_at" class="col cell">First played: {{ sdy(song.first_played_at) }}</div>
     </div>
   </win-window>
 </template>
@@ -77,10 +77,10 @@ export default {
 
   computed: {
     songLength() {
-      return this.playTime(this.song.length);
+      return this.dur(this.song.length);
     },
     playText() {
-      return this.isPlaying ? 'Stop (' + this.playTime(this.playTimeLeft) + ')' : 'Play preview';
+      return this.isPlaying ? 'Stop (' + this.dur(this.playTimeLeft) + ')' : 'Play preview';
     },
     artwork() {
       return this.song.artwork_sm_src ?? 'img/dead.jpg';

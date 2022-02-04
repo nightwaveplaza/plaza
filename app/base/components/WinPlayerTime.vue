@@ -23,7 +23,7 @@ export default {
     },
 
     clock() {
-      return this.length > 0 ? this.playTime(this.actualPosition) + ' / ' + this.playTime(this.length) : '...';
+      return this.length > 0 ? this.dur(this.actualPosition) + ' / ' + this.dur(this.length) : '...';
     },
   },
 

@@ -6,7 +6,7 @@
         <div v-if="article.text !== ''" v-html="article.text"/>
         <div v-if="article.text !== ''" class="row justify-content-between">
           <div class="col-auto" v-html="article.author"></div>
-          <div class="col-auto" v-html="shortDateYear(article.created_at)"></div>
+          <div class="col-auto" v-html="sdy(article.created_at)"></div>
         </div>
       </win-memo>
 

@@ -40,12 +40,12 @@
             <div class="row no-gutters">
               <div class="col-6">
                 <win-btn block @click="auth ? openWindow('user') : openWindow('user-login')">
-                  <i class="icon-user mr-0" />
+                  <i class="i icon-user mr-0" />
                 </win-btn>
               </div>
               <div class="col-6">
                 <win-btn block @click="openWindow('settings-background')">
-                  <i class="icon-cog mr-0" />
+                  <i class="i icon-cog mr-0" />
                 </win-btn>
               </div>
             </div>
@@ -195,11 +195,6 @@ export default {
       if (this.state === STATE_PLAYING) {
         this.$refs.audio.volume = this.volume;
       }
-    },
-
-    showDisplayMessage(text) {
-      this.onDisplayTimeout = 2;
-      this.onDisplayText = text;
     },
 
     showSongInfo() {

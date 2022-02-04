@@ -2,7 +2,7 @@
   <div class="row no-gutters pagination">
     <div class="col-4 pr-1" v-if="page > 1">
       <win-btn class="d-block" @click="nextPage(-1)">
-        <i class="icon-left-hand"/>
+        <i class="i icon-left-hand"/>
       </win-btn>
     </div>
     <div class="col-4">
@@ -10,7 +10,7 @@
     </div>
     <div class="col-4 pl-1" v-if="pages > 1 && page < pages">
       <win-btn class="d-block" @click="nextPage(1)">
-        <i class="icon-right-hand"/>
+        <i class="i icon-right-hand"/>
       </win-btn>
     </div>
   </div>

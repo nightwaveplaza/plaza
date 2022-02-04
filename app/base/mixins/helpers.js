@@ -1,17 +1,23 @@
 /**
  * Global helpers
  */
-import {
-  addZeros,
-  playTime,
-  shortDate,
-  shortDateYear,
-  getTime,
-} from '@base/extras/utils';
+import * as dayjs from 'dayjs';
+import * as duration from 'dayjs/plugin/duration'
+dayjs.extend(duration)
 
 export default {
   methods: {
-    addZeros, shortDate, shortDateYear, playTime, getTime,
+    dur(seconds) {
+      return dayjs.duration(seconds * 1000).format('mm:ss')
+    },
+
+    sd(date) {
+      return dayjs.unix(date).format('MMM DD')
+    },
+
+    sdy(date) {
+      return dayjs.unix(date).format('MMM DD, YYYY')
+    }
   },
 
   computed: {

@@ -3,7 +3,7 @@
     <div class="p-2 noselect">
       <div class="row no-gutters">
         <div class="col-sm-4 d-none d-sm-block">
-          <img alt="register" class="img-register" src="/img/win/register.png"/>
+          <img alt="register" class="img-register" src="img/win/register.png"/>
         </div>
 
         <div class="col-12 col-sm-8 d-flex flex-column">

@@ -8,7 +8,9 @@
     <window-mobile v-if="isWindowOpen('mobile')"/>
     <window-news v-if="isWindowOpen('news')"/>
     <window-ratings v-if="isWindowOpen('ratings')"/>
-    <window-settings-background v-if="isWindowOpen('settings-background')" @themeChanged="themeChanged" @bgChanged="setBackground"/>
+    <window-settings-background v-if="isWindowOpen('settings-background')"
+                                @themeChanged="themeChanged"
+                                @bgChanged="setBackground"/>
     <window-support v-if="isWindowOpen('support')"/>
     <window-user v-if="isWindowOpen('user')"/>
     <window-user-email v-if="isWindowOpen('user-email')"/>
@@ -18,18 +20,19 @@
     <window-user-register v-if="isWindowOpen('user-register')"/>
     <window-user-reset v-if="isWindowOpen('user-reset')"/>
 
-    <window-song-info :id="s.id" :name="s.name" v-for="s in songInfoWindows" :key="s.id"/>
-    <win-alert :title="a.title" :text="a.text" :name="a.name" :type="a.type" :key="a.id" v-for="a in alerts"/>
+    <win-song-info />
+    <win-alerts/>
+    <win-news-loader ref="news" />
 
     <win-taskbar/>
   </div>
 </template>
 
 <script>
-import {Background} from '@common/js/extras/background';
+import {Background} from '@base/js/extras/background';
 import {mapGetters} from 'vuex';
-import settings from '@common/js/extras/settings';
-import {news, user} from '@common/js/api/api';
+import settings from '@base/js/extras/settings';
+import {news, user} from '@base/js/api/api';
 
 export default {
   data() {
@@ -43,25 +46,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters('windows', ['alerts', 'songInfoWindows', 'isPlayerMinimized', 'isWindowOpen']),
+    ...mapGetters('windows', ['isPlayerMinimized', 'isWindowOpen']),
     ...mapGetters(['token']),
   },
 
   mounted: function() {
-    this.$store.commit('windows/pullUp', 'player');
-
     Background.loadOnStartup().then(this.setBackground);
     this.loadUser();
 
-    // Load news
-    news.latest().then(result => {
-      const latestNews = settings.load('latestNews');
-      if (latestNews !== result.data.updated_at) {
-        this.openWindow('news');
-      }
-    });
-
-    // Load theme
+    this.$refs.news.loadNews();
     this.themeChanged(settings.load('theme'));
   },
 

@@ -1,10 +1,10 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import Cookies from 'js-cookie';
-import {playerStore} from '@common/js/stores/player-store';
-import {windowStore} from '@common/js/stores/window-store';
-import {backgroundStore} from '@common/js/stores/background-store';
-import {userStore} from '@common/js/stores/user-store';
+import {playerStore} from '@base/js/stores/player-store';
+import {windowStore} from '@base/js/stores/window-store';
+import {backgroundStore} from '@base/js/stores/background-store';
+import {userStore} from '@base/js/stores/user-store';
 
 Vue.use(Vuex);
 
@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
     windows: windowStore,
     player: playerStore,
     background: backgroundStore,
-    user: userStore
+    user: userStore,
   },
 
   actions: {
@@ -36,6 +36,6 @@ export const store = new Vuex.Store({
 
   getters: {
     token: () => Cookies.get('token'),
-    viewVersion: () => process.env.version
+    viewVersion: () => process.env.version,
   },
-})
+});

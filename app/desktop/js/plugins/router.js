@@ -1,9 +1,9 @@
-import VueRouter from 'vue-router'
-import Index from '@desktop/js/pages/Index'
-import Reset from '@desktop/js/pages/Reset'
-import Register from '@desktop/js/pages/Register'
-import PageNotFound from '@desktop/js/pages/PageNotFound'
-import Donate from '@desktop/js/pages/Donate'
+import VueRouter from 'vue-router';
+import Index from '@desktop/js/pages/Index';
+import Reset from '@desktop/js/pages/Reset';
+import Register from '@desktop/js/pages/Register';
+import PageNotFound from '@desktop/js/pages/PageNotFound';
+import Donate from '@desktop/js/pages/Donate';
 
 const routes = [
   {
@@ -31,12 +31,12 @@ const routes = [
     path: '*',
     component: PageNotFound,
   },
-]
+];
 
 const router = new VueRouter({
   history: true,
   mode: 'history',
   routes,
-})
+});
 
-export default router
+export default router;

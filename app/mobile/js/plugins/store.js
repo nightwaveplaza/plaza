@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {playerStore} from '@common/js/stores/player-store';
-import {windowStore} from '@common/js/stores/window-store';
-import {backgroundStore} from '@common/js/stores/background-store';
-import {userStore} from '@common/js/stores/user-store';
+import {playerStore} from '@base/js/stores/player-store';
+import {windowStore} from '@base/js/stores/window-store';
+import {backgroundStore} from '@base/js/stores/background-store';
+import {userStore} from '@base/js/stores/user-store';
 import {Native} from '@mobile/js/bridge/native';
 
 Vue.use(Vuex);
@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
     windows: windowStore,
     player: playerStore,
     background: backgroundStore,
-    user: userStore
+    user: userStore,
   },
 
   state: {
@@ -66,6 +66,6 @@ export const store = new Vuex.Store({
   getters: {
     isPlaying: state => state.isPlaying,
     sleepTime: state => state.sleepTime,
-    viewVersion: () => process.env.version
+    viewVersion: () => process.env.version,
   },
 });

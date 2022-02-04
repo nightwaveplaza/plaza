@@ -1,4 +1,4 @@
-import {Native} from '../bridge/native';
+import {Native} from '@mobile/js/bridge/native';
 
 export default {
   methods: {

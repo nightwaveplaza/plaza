@@ -1,7 +1,7 @@
 <template>
   <div class="app-desktop theme-win98">
-    <window-user-reset-password v-if="isWindowOpen('user-reset-password')" :token="token" />
-    <window-user-reset v-if="isWindowOpen('user-reset')" />
+    <window-user-reset-password v-if="isWindowOpen('user-reset-password')" :token="token"/>
+    <window-user-reset v-if="isWindowOpen('user-reset')"/>
 
     <win-alert :title="a.title" :text="a.text" :name="a.name" :type="a.type" :key="a.id" v-for="a in alerts"/>
   </div>
@@ -13,8 +13,8 @@ import {mapGetters} from 'vuex';
 export default {
   data() {
     return {
-      token: ''
-    }
+      token: '',
+    };
   },
 
   computed: {
@@ -29,7 +29,7 @@ export default {
       if (n.length === 0 && !this.isWindowOpen('user-reset-password') && !this.isWindowOpen('user-reset')) {
         this.$router.push({name: 'index'});
       }
-    }
+    },
   },
 
   mounted() {

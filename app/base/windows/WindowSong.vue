@@ -1,13 +1,10 @@
 <template>
-  <win-window ref="window" :width="342" :name="name" title="Song Info">
+  <win-window ref="window" :width="360" :name="name" title="Song Info">
     <div class="p-2 song-info">
       <div v-if="song !== false">
-        <div class="row no-gutters mb-2">
-          <div class="col-4 col-sm-auto align-self-center pr-2">
-            <img :src="artwork" alt="artwork" class="artwork simple-border">
-          </div>
-          <div class="col">
-            <div class="group-box p-2 m-0">
+        <div class="group-box p-2 m-0">
+          <div class="row">
+            <div class="col">
               <div class="mb-1">
                 <div class="noselect"><strong>Artist:</strong><br/></div>
                 {{ song.artist }}
@@ -16,25 +13,21 @@
                 <div class="noselect"><strong>Album:</strong><br/></div>
                 {{ song.album }}
               </div>
-              <div class="mb-1">
+              <div class="mb-2">
                 <div class="noselect"><strong>Title:</strong><br/></div>
                 {{ song.title }}
               </div>
-              <div class="row no-gutters">
-                <div class="col">
-                  <div class="noselect"><strong>Length:</strong><br/></div>
-                  {{ songLength }}
-                </div>
-                <div class="col">
-                  <div class="noselect"><strong>Likes:</strong><br/></div>
-                  {{ song.likes }}
-                </div>
+              <div>
+                <i class="i icon-clock" /> {{ songLength }} &nbsp; <i class="i icon-like" /> {{ song.likes }}
               </div>
+            </div>
+            <div class="col-5">
+              <img :src="artwork" alt="artwork" class="artwork simple-border">
             </div>
           </div>
         </div>
 
-        <div class="row justify-content-between">
+        <div class="row justify-content-between mt-2">
           <div class="col-5">
             <audio ref="audio" :src="song.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated"/>
             <win-btn block :disabled="song.preview_src === null" @click="play">{{ playText }}</win-btn>

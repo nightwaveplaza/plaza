@@ -18,7 +18,6 @@ export const iOSBridge = {
   setAudioQuality: (lowQuality) => sendMessage('setAudioQuality', [`${lowQuality}`]),
   toggleFullscreen: () => sendMessage('toggleFullscreen'),
   openDrawer: () => sendMessage('openDrawer'),
-  showToast: (msg) => sendMessage('showToast', [msg]),
   getUserAgent: () => sendMessage('getUserAgent'),
   getAppVersion: () => sendMessage('getAppVersion'),
   setBackground: (background) => sendMessage('setBackground', [background]),

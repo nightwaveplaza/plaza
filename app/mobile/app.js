@@ -12,7 +12,6 @@ import '@mobile/windows';
 Vue.component('app', require('@mobile/views/Index').default);
 Vue.mixin(require('@base/mixins/helpers').default);
 Vue.mixin(require('@base/mixins/windows').default);
-Vue.mixin(require('@mobile/mixins/windows-ext').default);
 
 window.Vue = new Vue({
   store,

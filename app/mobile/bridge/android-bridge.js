@@ -10,7 +10,6 @@ export const AndroidBridge = {
   setAudioQuality: (lowQuality) => AndroidInterface.setAudioQuality(lowQuality),
   toggleFullscreen: () => AndroidInterface.toggleFullscreen(),
   openDrawer: () => AndroidInterface.openDrawer(),
-  showToast: (msg) => AndroidInterface.showToast(msg),
   getUserAgent: () => AndroidInterface.getUserAgent(),
   getAppVersion: () => AndroidInterface.getVersion(),
   setBackground: (background) => AndroidInterface.setBackground(background),

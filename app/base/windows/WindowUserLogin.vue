@@ -71,8 +71,11 @@ export default {
         password: '',
       },
       remember: false,
-      sending: false,
     };
+  },
+
+  mounted() {
+    this.sending = false;
   },
 
   methods: {
@@ -81,12 +84,14 @@ export default {
         return;
       }
 
+      this.sending = true;
+
       try {
         const res = await user.auth(this.fields);
 
         if (this.isMobile) {
           await this.$store.dispatch('login', res.data);
-          this.toast('Authentication successful!');
+          this.alert('Authentication successful!', 'Success', 'info');
         } else {
           await this.$store.dispatch('login', {user: res.data, remember: this.remember});
         }
@@ -94,6 +99,8 @@ export default {
         this.closeWindow();
       } catch (err) {
         this.alert(err.response.data.error, 'Failed');
+      } finally {
+        this.sending = false;
       }
     },
 

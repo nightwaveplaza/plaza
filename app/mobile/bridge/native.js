@@ -16,7 +16,6 @@ export const Native = {
   setAudioQuality: (lowQuality) => CurrentBridge().setAudioQuality(lowQuality),
   toggleFullscreen: () => CurrentBridge().toggleFullscreen(),
   openDrawer: () => CurrentBridge().openDrawer(),
-  showToast: (msg) => CurrentBridge().showToast(msg),
   getUserAgent: () => CurrentBridge().getUserAgent(),
   getAppVersion: () => CurrentBridge().getAppVersion(),
   setBackground: (background) => CurrentBridge().setBackground(background),

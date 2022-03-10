@@ -90,15 +90,11 @@ export default {
     },
 
     async setStatus(status) {
-      if (JSON.stringify(status) === '{}') {
+      if (JSON.stringify(status) === '{}' || status.updated === 0 || status.id === '') {
         return;
       }
 
-      // Не обновляем статус, если устаревший
-      if (status.updated === 0 || status.id === '') {
-        return;
-      }
-
+      // If song has been changed
       if (status.id !== this.currentSong.id) {
         this.$store.commit('player/currentSong', {
           id: status.id,

@@ -76,6 +76,9 @@ export default {
         this.closeWindow('player-timer');
       }
     },
+    openDrawer() {
+      Native.openDrawer();
+    }
   },
 
 };

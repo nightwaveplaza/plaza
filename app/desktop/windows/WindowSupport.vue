@@ -4,19 +4,13 @@
       <div class="text-center">
         <win-memo>
           <p class="lead mb-2">Love Nightwave Plaza?</p>
-          <p>You can support the radio station and further updates by donating via PayPal or join our Patreon and get
-            special Discord rewards!</p>
+          <p>You can support the radio station and further updates by donating via Boosty and get special Discord rewards!</p>
 
           <p class="my-3">
-            <a href="https://www.paypal.me/nightwaveplaza" target="_blank" class="pp-link mr-4">
-              <img alt="paypal" src="img/paypal.png"/><br />Donate via PayPal
-            </a>
-            <a class="pp-link" href="https://www.patreon.com/nightwaveplaza" target="_blank">
-              <img alt="patreon" src="img/patreon.png"/><br />Support on Patreon
+            <a class="pp-link" href="https://boosty.to/nightwaveplaza" target="_blank">
+              <img alt="boosty" src="img/boosty.png"/><br />Support on Boosty
             </a>
           </p>
-
-          <p>Another option is donate via <a href="https://plaza.one/streamlabs" target="_blank">StreamLabs</a> (Visa, Paypal).</p>
 
           <p class="mt-2">Thank you for donations, they will go straight into funding the station.</p>
         </win-memo>

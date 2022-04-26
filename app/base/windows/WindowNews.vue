@@ -62,10 +62,6 @@ export default {
     },
   },
 
-  beforeCreate() {
-    console.log('wwww');
-  },
-
   beforeDestroy() {
     settings.save('latestNews', this.latest);
   },

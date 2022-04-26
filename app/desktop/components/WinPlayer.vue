@@ -105,6 +105,8 @@ export default {
         this.updateSong();
       }
     });
+
+    this.setMediaSessionActions();
   },
 
   methods: {
@@ -116,6 +118,7 @@ export default {
 
       if (this.state === STATE_PLAYING) {
         document.title = `${this.currentSong.artist} - ${this.currentSong.title}`;
+        this.updateMediaSession();
       }
 
       this.offline = false;
@@ -171,6 +174,8 @@ export default {
           console.log(e);
         }
         this.$refs.visual.startVisual();
+        this.updateMediaSession();
+        this.setMediaSessionState('playing');
       }
     },
 
@@ -183,6 +188,7 @@ export default {
       this.$refs.audio.src = '';
 
       this.state = STATE_IDLE;
+      this.setMediaSessionState('paused') ;
       document.title = 'Nightwave Plaza - Online Vaporwave Radio';
     },
 
@@ -203,6 +209,46 @@ export default {
         this.songInfo(this.currentSong.id);
       }
     },
+
+    updateMediaSession() {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: this.currentSong.title,
+          artist: this.currentSong.artist,
+          album: this.currentSong.album,
+          artwork: [
+            { src: this.currentSong.artwork_sm_src,   sizes: '300x300',   type: 'image/jpg' },
+            { src: this.currentSong.artwork_src, sizes: '500x500', type: 'image/jpg' }
+          ]
+        });
+      } else {
+        console.log('No media session')
+      }
+    },
+
+    setMediaSessionActions() {
+      if ('mediaSession' in navigator) {
+        const actionHandlers = [
+          ['play',          this.play],
+          ['pause',         this.play ],
+          ['stop',         this.play]
+        ];
+
+        for (const [action, handler] of actionHandlers) {
+          try {
+            navigator.mediaSession.setActionHandler(action, handler);
+          } catch (error) {
+            console.log(`The media session action "${action}" is not supported yet.`);
+          }
+        }
+      }
+    },
+
+    setMediaSessionState(state) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = state;
+      }
+    }
   },
 
 };

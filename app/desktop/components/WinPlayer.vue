@@ -134,16 +134,7 @@ export default {
     },
 
     startPlay() {
-      // Audio context
-      if (!this.context && !this.source) {
-        this.context = new (window.AudioContext || window.webkitAudioContext)();
-        this.analyser = this.context.createAnalyser();
-        this.source = this.context.createMediaElementSource(this.$refs.audio);
-      }
-
       const noCacheStr = 'nocache=' + Date.now();
-
-      //await this.context.resume();
 
       // Can we play OGG Vorbis?
       const canPlayOGG = !!(this.$refs.audio.canPlayType &&
@@ -166,8 +157,17 @@ export default {
     async audioCanPlay() {
       if (this.state === STATE_LOADING) {
         this.state = STATE_PLAYING;
+
+        // Audio context
+        if (!this.context && !this.source) {
+          this.context = new (window.AudioContext || window.webkitAudioContext)();
+          this.analyser = this.context.createAnalyser();
+          this.source = this.context.createMediaElementSource(this.$refs.audio);
+        }
+
         this.source.connect(this.context.destination);
         this.source.connect(this.analyser);
+
         try {
           await this.$refs.audio.play();
         } catch(e) {
@@ -185,7 +185,8 @@ export default {
       this.source.disconnect();
       this.$refs.audio.pause();
       this.$refs.audio.currentTime = 0;
-      this.$refs.audio.src = '';
+      // disabled for ios safari
+      // this.$refs.audio.src = '';
 
       this.state = STATE_IDLE;
       this.setMediaSessionState('paused') ;
@@ -229,9 +230,9 @@ export default {
     setMediaSessionActions() {
       if ('mediaSession' in navigator) {
         const actionHandlers = [
-          ['play',          this.play],
-          ['pause',         this.play ],
-          ['stop',         this.play]
+          ['play', this.play],
+          ['pause', this.play ],
+          ['stop', this.play]
         ];
 
         for (const [action, handler] of actionHandlers) {

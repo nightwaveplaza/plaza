@@ -159,7 +159,7 @@ export default {
         this.state = STATE_PLAYING;
 
         // Audio context
-        if (!this.context && !this.source) {
+        if (!this.context || !this.source) {
           this.context = new (window.AudioContext || window.webkitAudioContext)();
           this.analyser = this.context.createAnalyser();
           this.source = this.context.createMediaElementSource(this.$refs.audio);
@@ -185,8 +185,6 @@ export default {
       this.source.disconnect();
       this.$refs.audio.pause();
       this.$refs.audio.currentTime = 0;
-      // disabled for ios safari
-      // this.$refs.audio.src = '';
 
       this.state = STATE_IDLE;
       this.setMediaSessionState('paused') ;

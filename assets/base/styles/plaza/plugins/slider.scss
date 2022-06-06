@@ -1,0 +1,42 @@
+@import "../mixins";
+
+.noUi-target {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0 13px 0 0;
+  height: 100%;
+}
+
+.noUi-connects {
+  margin: 0 -12px;
+  width: calc(100% + 34px);
+}
+
+.noUi-handle {
+  @include d3-object;
+  margin-right: 6px;
+  width: 12px !important;
+  /*left: -6px !important;*/
+  height: 24px !important;
+  /*top: -2px !important;*/
+  border-radius: 0;
+  //background: #bfbfbf;
+  //border: 1px solid #dfdfdf;
+  //border-right-color: #808080;
+  //border-bottom-color: #808080;
+  //box-shadow: 1px 1px 0 0 #000;
+  text-align: center;
+  outline: none;
+  padding: 4px;
+  cursor: pointer !important;
+  top: 1px !important;
+
+  &:before, &:after {
+    display: none;
+  }
+
+  .noUi-touch-area {
+    cursor: pointer;
+  }
+}

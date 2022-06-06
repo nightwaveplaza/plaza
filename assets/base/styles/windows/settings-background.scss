@@ -1,0 +1,21 @@
+#window-settings-background {
+  .palette {
+    .color {
+      margin: 2px;
+      width: 20px;
+      height: 20px;
+
+      border: 1px solid;
+      //@include border-shadow('content-shadow');
+      //@include border-color-tl('content-border-left');
+      //@include border-color-rb('content-border-right');
+      //@include background-color('inputs-bg');
+    }
+
+    input {
+      margin: 2px;
+      height: 20px;
+      line-height: 100%;
+    }
+  }
+}

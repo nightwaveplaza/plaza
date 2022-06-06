@@ -1,0 +1,13 @@
+.win98.alert {
+  .alert-icon {
+    width: 32px;
+    height: 32px;
+
+    &.info {
+      background-image: url('/assets/base/icons/msg_info.png');
+    }
+    &.warn {
+      background-image: url('/assets/base/icons/msg_warning.png');
+    }
+  }
+}

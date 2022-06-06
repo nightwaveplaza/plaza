@@ -1,0 +1,54 @@
+@import "~#base/styles/base";
+@import "~#base/styles/content";
+@import "~#base/styles/pagination";
+@import "~#base/styles/utils";
+
+@import "~#base/styles/windows/about";
+@import "~#base/styles/windows/alert";
+@import "windows/loading";
+@import "~#base/styles/windows/news";
+@import "~#base/styles/windows/player";
+@import "~#base/styles/windows/ratings";
+@import "~#base/styles/windows/settings-background";
+@import "~#base/styles/windows/song-info";
+@import "~#base/styles/windows/support";
+@import "~#base/styles/windows/user-favorites";
+@import "~#base/styles/windows/user-login";
+@import "~#base/styles/windows/user-register";
+
+.btn-start {
+  background-image: url('/assets/mobile/icons/windows-0.png') !important;
+  background-size: 21px 21px !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+/**
+Android
+ */
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.win98 {
+  input {
+    font-size: 12px;
+
+    &:focus {
+      outline: none;
+      border: 1px #000000 dashed;
+    }
+  }
+
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+.statusbar table {
+  font-size: 12px;
+}

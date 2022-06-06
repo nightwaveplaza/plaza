@@ -1,0 +1,27 @@
+.pagination {
+  width: 100px;
+
+  button {
+    line-height: 13px;
+
+    &.active {
+      box-shadow: 1px 1px 0 0 black inset;
+      border-top-color: #808080;
+      border-left-color: #808080;
+      border-right-color: #dfdfdf;
+      border-bottom-color: #dfdfdf;
+    }
+  }
+
+  input {
+    line-height: 17px;
+    text-align:center;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

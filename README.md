@@ -1,4 +1,4 @@
-# Nightwave Plaza UI module
+# Nightwave Plaza App module
 
 This repository contains UI part for both the website and the mobile app shared common parts of the code.
 

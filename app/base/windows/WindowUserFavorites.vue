@@ -11,7 +11,7 @@
                 <table>
                   <tr v-if="showCurrentLike">
                     <td class="p-1 noselect" style="width: 62px">
-                      <img :src="currentSong.artwork_src ? currentSong.artwork_src : 'img/dead.jpg'" alt="artwork"/>
+                      <img :src="currentSong.artwork_src ? currentSong.artwork_src : 'https://i.plaza.one/dead.jpg'" alt="artwork"/>
                     </td>
                     <td class="pl-1">
                       <div class="artist">{{ currentSong.artist }}</div>
@@ -24,7 +24,7 @@
                   <tr v-for="(like, i) in likes" :class="{ strike: deleted.includes(like.id) }"
                       class="hover">
                     <td class="p-1 noselect" style="width: 62px">
-                      <img :src="like.song.artwork_src ? like.song.artwork_src : 'img/dead.jpg'"
+                      <img :src="like.song.artwork_src ? like.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>
                     </td>
                     <td class="pl-1 show-info" @click="songInfo(like.song.id)">

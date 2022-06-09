@@ -84,7 +84,7 @@ export default {
     ...mapGetters('player', ['currentSong']),
 
     artwork() {
-      return this.currentSong.id && this.currentSong.artwork_src ? this.currentSong.artwork_src : 'img/dead.jpg';
+      return this.currentSong.id && this.currentSong.artwork_src ? this.currentSong.artwork_src : 'https://i.plaza.one/dead.jpg';
     },
 
     playText() {

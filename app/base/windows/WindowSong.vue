@@ -80,7 +80,7 @@ export default {
       return this.isPlaying ? 'Stop (' + this.dur(this.playTimeLeft) + ')' : 'Play preview';
     },
     artwork() {
-      return this.song.artwork_sm_src ?? 'img/dead.jpg';
+      return this.song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg';
     },
     favoriteColor() {
       return this.song.favorite_id ? '#FFD300' : '';

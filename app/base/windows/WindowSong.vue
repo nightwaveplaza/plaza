@@ -115,8 +115,11 @@ export default {
           const res = await user.addFavorite(this.song.id);
           this.song.favorite_id = res.data.favorite_id;
         }
-      } catch(e) {
-          console.log("Error sending favorite");
+      } catch(error) {
+        if (error.response.status === 401) {
+          this.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error');
+        }
+        console.log("Error sending favorite");
       } finally {
         this.sending = false;
       }

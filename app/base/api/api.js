@@ -66,6 +66,7 @@ export const user = {
   favorites: (page) => Repository.get(`user/favorites/${page}`),
   deleteFavorite: (favoriteId) => Repository.delete(
       `user/favorites/${favoriteId}`),
+  addFavorite: (song_id) => Repository.post('user/favorites', {song_id})
 };
 
 /**

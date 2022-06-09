@@ -28,12 +28,15 @@
           </div>
         </div>
 
-        <div class="row justify-content-between mt-2">
-          <div class="col-5">
+        <div class="row mt-2">
+          <div class="col-4 pr-1">
             <audio ref="audio" :src="song.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated"/>
             <win-btn block :disabled="song.preview_src === null" @click="play">{{ playText }}</win-btn>
           </div>
-          <div class="col-auto">
+          <div class="col-2 pl-0">
+            <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }" /></win-btn>
+          </div>
+          <div class="col-auto ml-auto">
             <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
           </div>
         </div>
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-import {songs} from '@base/api/api';
+import {songs, user} from '@base/api/api';
 import settings from '@base/extras/settings';
 
 export default {
@@ -79,9 +82,13 @@ export default {
     artwork() {
       return this.song.artwork_sm_src ?? 'img/dead.jpg';
     },
+    favoriteColor() {
+      return this.song.favorite_id ? '#FFD300' : '';
+    },
   },
 
   mounted() {
+    this.sending = false;
     this.fetchSongInfo(this.id);
   },
 
@@ -93,6 +100,26 @@ export default {
         this.alert(error.response.data.error, 'Error');
         this.closeWindow();
       });
+    },
+
+    async favoriteSong() {
+      if (this.sending) return;
+
+      this.sending = true;
+
+      try {
+        if (this.song.favorite_id) {
+          await user.deleteFavorite(this.song.favorite_id);
+          this.song.favorite_id = null;
+        } else {
+          const res = await user.addFavorite(this.song.id);
+          this.song.favorite_id = res.data.favorite_id;
+        }
+      } catch(e) {
+          console.log("Error sending favorite");
+      } finally {
+        this.sending = false;
+      }
     },
 
     getVolume() {

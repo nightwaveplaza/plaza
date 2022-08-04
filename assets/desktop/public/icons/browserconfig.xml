@@ -2,8 +2,8 @@
 <browserconfig>
     <msapplication>
         <tile>
-            <square150x150logo src="https://plaza.one/icons/mstile-150x150.png"/>
-            <TileColor>#9f00a7</TileColor>
+            <square150x150logo src="https://plaza.one/icons/mstile-150x150.png?v=2208042"/>
+            <TileColor>#00aba9</TileColor>
         </tile>
     </msapplication>
 </browserconfig>

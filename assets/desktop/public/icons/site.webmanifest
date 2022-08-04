@@ -3,12 +3,12 @@
     "short_name": "Nightwave Plaza",
     "icons": [
         {
-            "src": "https://plaza.one/icons/android-chrome-192x192.png",
+            "src": "https://plaza.one/icons/android-chrome-192x192.png?v=2208042",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "https://plaza.one/icons/android-chrome-512x512.png",
+            "src": "https://plaza.one/icons/android-chrome-512x512.png?v=2208042",
             "sizes": "512x512",
             "type": "image/png"
         }

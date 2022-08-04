@@ -1,20 +1,20 @@
-@import "~#base/styles/base";
-@import "~#base/styles/content";
-@import "~#base/styles/pagination";
-@import "~#base/styles/utils";
+@import "~#common/styles/base";
+@import "~#common/styles/content";
+@import "~#common/styles/pagination";
+@import "~#common/styles/utils";
 
-@import "~#base/styles/windows/about";
-@import "~#base/styles/windows/alert";
+@import "~#common/styles/windows/about";
+@import "~#common/styles/windows/alert";
 @import "windows/loading";
-@import "~#base/styles/windows/news";
-@import "~#base/styles/windows/player";
-@import "~#base/styles/windows/ratings";
-@import "~#base/styles/windows/settings-background";
-@import "~#base/styles/windows/song-info";
-@import "~#base/styles/windows/support";
-@import "~#base/styles/windows/user-favorites";
-@import "~#base/styles/windows/user-login";
-@import "~#base/styles/windows/user-register";
+@import "~#common/styles/windows/news";
+@import "~#common/styles/windows/player";
+@import "~#common/styles/windows/ratings";
+@import "~#common/styles/windows/settings-background";
+@import "~#common/styles/windows/song-info";
+@import "~#common/styles/windows/support";
+@import "~#common/styles/windows/user-favorites";
+@import "~#common/styles/windows/user-login";
+@import "~#common/styles/windows/user-register";
 
 .btn-start {
   background-image: url('/assets/mobile/icons/windows-0.png') !important;

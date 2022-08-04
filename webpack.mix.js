@@ -6,7 +6,7 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 require('laravel-mix-polyfill')
 
-const srcJs = 'app/' + process.env.APP
+const srcJs = 'src/' + process.env.APP
 const srcAssets = 'assets/' + process.env.APP
 const buildPath = path.relative('./', process.env.BUILD_PATH)
 
@@ -43,7 +43,7 @@ mix.js(srcJs + '/app.js', 'js').extract().vue().polyfill({
 })
 
 // Copy public directories
-mix.copy(path.resolve(__dirname, 'assets/base/public'), buildPath)
+mix.copy(path.resolve(__dirname, 'assets/common/public'), buildPath)
 if (fs.existsSync(path.resolve(__dirname, srcAssets + '/public'))) {
   mix.copy(path.resolve(__dirname, srcAssets + '/public'), buildPath)
 }

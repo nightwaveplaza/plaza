@@ -1,0 +1,110 @@
+@import "../themes/elements";
+@import "../mixins";
+
+/*
+ * Container style
+ */
+.ps {
+  overflow: hidden !important;
+  overflow-anchor: none;
+  -ms-overflow-style: none;
+  touch-action: auto;
+  -ms-touch-action: auto;
+}
+
+.ps__rail-y {
+  margin-top: 1px;
+  display: block;
+  opacity: 100;
+  width: 16px;
+  /* there must be 'right' or 'left' for ps__rail-y */
+  right: 0;
+  background: url('/assets/common/styles/plaza/icons/bg-dots-gray.png');
+  @include background('dots-background');
+
+  image-rendering: pixelated;
+  transition: none;
+  -webkit-transition: none;
+
+  /* please don't change 'position' */
+  position: absolute;
+}
+
+.ps--active-x > .ps__rail-x,
+.ps--active-y > .ps__rail-y {
+  display: block;
+  background-color: transparent;
+}
+
+.ps:hover > .ps__rail-x,
+.ps:hover > .ps__rail-y,
+.ps--focus > .ps__rail-x,
+.ps--focus > .ps__rail-y,
+.ps--scrolling-x > .ps__rail-x,
+.ps--scrolling-y > .ps__rail-y {
+  opacity: 1;
+}
+
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+  opacity: 1;
+}
+
+/*
+ * Scrollbar thumb styles
+ */
+.ps__thumb-y {
+  @include d3-window();
+  //border: 1px solid #c3c7cb;
+  //border-right-color: black;
+  //border-bottom-color: black;
+  //box-shadow: inset 1px 1px 0 0 white, inset -1px -1px 0 0 #868a8e;
+  display: block;
+  width: 16px;
+  height: 16px;
+
+  image-rendering: pixelated;
+  background: #c3c7cb no-repeat center center;
+  border-radius: 0;
+  transition: none;
+  -webkit-transition: none;
+  right: 0;
+
+  /* there must be 'right' for ps__thumb-y */
+  /*right: 2px;*/
+  /* please don't change 'position' */
+  position: absolute;
+}
+
+//.ps__rail-x:hover > .ps__thumb-x,
+//.ps__rail-x:focus > .ps__thumb-x,
+//.ps__rail-x.ps--clicking .ps__thumb-x {
+//  background-color: #c3c7cb;
+//  opacity: 100;
+//  width: 16px;
+//}
+//
+//.ps__rail-y:hover > .ps__thumb-y,
+//.ps__rail-y:focus > .ps__thumb-y,
+//.ps__rail-y.ps--clicking .ps__thumb-y {
+//  background-color: #c3c7cb;
+//  opacity: 100;
+//  width: 16px;
+//}
+
+/* MS supports */
+@supports (-ms-overflow-style: none) {
+  .ps {
+    overflow: auto !important;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .ps {
+    overflow: auto !important;
+  }
+}

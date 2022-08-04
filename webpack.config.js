@@ -4,10 +4,10 @@ const path = require('path')
 module.exports = {
   resolve: {
     alias: {
-      '@base': path.resolve(__dirname, 'app/base'),
-      '@desktop': path.resolve(__dirname, 'app/desktop'),
-      '@mobile': path.resolve(__dirname, 'app/mobile'),
-      '#base': path.resolve(__dirname, 'assets/base'),
+      '@common': path.resolve(__dirname, 'src/common'),
+      '@desktop': path.resolve(__dirname, 'src/desktop'),
+      '@mobile': path.resolve(__dirname, 'src/mobile'),
+      '#common': path.resolve(__dirname, 'assets/common'),
       '#desktop': path.resolve(__dirname, 'assets/desktop'),
       '#mobile': path.resolve(__dirname, 'assets/mobile'),
     },

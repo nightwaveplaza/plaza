@@ -1,21 +1,21 @@
-# Nightwave Plaza App module
+# Nightwave Plaza 
 
-This repository contains UI part for both the website and the mobile app shared common parts of the code.
+Monorepo for both web app and mobile app view.
 
 ## Requirements
 ``` 
-nodejs 16+
+nodejs 16
 yarn
 ```
 
 ## Project structure
 ```
-app/
-  base/    - common code
+src/
+  common/  - common code
   desktop/ - website code
   mobile/  - code for mobile view
 assets
-  base/    - common assets (images, styles, etc)
+  common/    - common assets (images, styles, etc)
   desktop/ - website assets
   mobile/  - mobile assets
 ```

@@ -18,8 +18,8 @@
                 {{ song.title }}
               </div>
               <div>
-                <i class="i icon-clock" /> {{ songLength }} &nbsp;
-                <i class="i icon-like" style="color: #c12727" /> {{ song.likes }}
+                <i class="i icon-clock"/> {{ songLength }} &nbsp;
+                <i class="i icon-like" style="color: #c12727"/> {{ song.likes }}
               </div>
             </div>
             <div class="col-5">
@@ -34,10 +34,10 @@
             <win-btn block :disabled="song.preview_src === null" @click="play">{{ playText }}</win-btn>
           </div>
           <div class="col-2 pl-0">
-            <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }" /></win-btn>
+            <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+            <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
           </div>
         </div>
       </div>
@@ -50,126 +50,118 @@
   </win-window>
 </template>
 
-<script>
-import {songs, user} from '@common/api/api';
-import settings from '@common/extras/settings';
+<script setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { songs, user } from '@common/api/api'
+import settings from '@common/extras/settings'
+import helperComposable from '@common/composables/helperComposable'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      song: false,
-      isPlaying: false,
-      playTimeLeft: 0,
-    };
-  },
+// Props
+const props = defineProps({
+  id: String,
+  name: String,
+})
 
-  props: {
-    id: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-  },
+// Composable
+const { alert2, closeWindow2 } = windowsComposable(props.name)
+const { dur, sdy } = helperComposable()
 
-  computed: {
-    songLength() {
-      return this.dur(this.song.length);
-    },
-    playText() {
-      return this.isPlaying ? 'Stop (' + this.dur(this.playTimeLeft) + ')' : 'Play preview';
-    },
-    artwork() {
-      return this.song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg';
-    },
-    favoriteColor() {
-      return this.song.favorite_id ? '#FFD300' : '';
-    },
-  },
+// Reactive data
+const song = ref(false)
+const isPlaying = ref(false)
+const sending = ref(false)
+const playTimeLeft = ref(0)
 
-  mounted() {
-    this.sending = false;
-    this.fetchSongInfo(this.id);
-  },
+// Refs
+const audio = ref(null)
 
-  methods: {
-    fetchSongInfo(songId) {
-      songs.get(songId).then(result => {
-        this.song = result.data;
-      }).catch(error => {
-        this.alert(error.response.data.error, 'Error');
-        this.closeWindow();
-      });
-    },
+// Computed
+const songLength = computed(() => dur(song.value.length))
+const playText = computed(() => isPlaying.value ? 'Stop (' + dur(playTimeLeft.value) + ')' : 'Play preview')
+const artwork = computed(() => song.value.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
+const favoriteColor = computed(() => song.value.favorite_id ? '#FFD300' : '')
 
-    async favoriteSong() {
-      if (this.sending) return;
+// Functions
+function fetchSongInfo (songId) {
+  songs.get(songId).then(result => {
+    song.value = result.data
+  }).catch(error => {
+    alert2(error.response.data.error, 'Error')
+    closeWindow2()
+  })
+}
 
-      this.sending = true;
+function favoriteSong () {
+  if (sending.value) return
 
-      try {
-        if (this.song.favorite_id) {
-          await user.deleteFavorite(this.song.favorite_id);
-          this.song.favorite_id = null;
-        } else {
-          const res = await user.addFavorite(this.song.id);
-          this.song.favorite_id = res.data.favorite_id;
-        }
-      } catch(error) {
-        if (error.response.status === 401) {
-          this.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error');
-        }
-        console.log("Error sending favorite");
-      } finally {
-        this.sending = false;
-      }
-    },
+  sending.value = true
 
-    getVolume() {
-      const volume = settings.load('volume');
+  if (song.value.favorite_id) {
+    user.deleteFavorite(song.value.favorite_id).then(() => {
+      song.value.favorite_id = null
+    }).catch(err => showError(err)).finally(() => sending.value = false)
+  } else {
+    user.addFavorite(song.value.id).then(() => {
+      song.value.favorite_id = res.data.favorite_id
+    }).catch(err => showError(err)).finally(() => sending.value = false)
+  }
+}
 
-      if (volume === null) {
-        return 1;
-      }
+function showError (error) {
+  if (error.response.status === 401) {
+    alert2('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+  }
+}
 
-      return volume / 100;
-    },
+function getVolume () {
+  const volume = settings.load('volume')
 
-    play() {
-      if (this.isPlaying) {
-        this.stop();
-      } else {
-        this.$refs.audio.volume = this.getVolume();
-        this.$refs.audio.play();
-      }
-    },
+  if (volume === null) {
+    return 1
+  }
 
-    stop() {
-      this.isPlaying = false;
-      this.$refs.audio.pause();
-      this.$refs.audio.currentTime = 0;
-    },
+  return volume / 100
+}
 
-    onPlay() {
-      this.isPlaying = true;
-    },
+function play () {
+  if (isPlaying.value) {
+    stop()
+  } else {
+    audio.value.volume = getVolume()
+    audio.value.play()
+  }
+}
 
-    onPause() {
-      this.isPlaying = false;
-    },
+function stop () {
+  isPlaying.value = false
+  audio.value.pause()
+  audio.value.currentTime = 0
+}
 
-    timeUpdated() {
-      if (this.isPlaying) {
-        this.playTimeLeft = 30 - this.$refs.audio.currentTime;
-      }
-    },
-  },
+function onPlay () {
+  isPlaying.value = true
+}
 
-  beforeDestroy() {
-    if (this.isPlaying) {
-      this.stop();
-      this.$refs.audio = null;
-    }
-  },
-};
+function onPause () {
+  isPlaying.value = false
+}
+
+function timeUpdated () {
+  if (isPlaying.value) {
+    playTimeLeft.value = 30 - audio.value.currentTime
+  }
+}
+
+onMounted(() => {
+  fetchSongInfo(props.id)
+})
+
+onBeforeUnmount(() => {
+  if (isPlaying.value) {
+    stop()
+    audio.value = null
+  }
+})
+
 </script>

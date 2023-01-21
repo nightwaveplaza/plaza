@@ -15,8 +15,8 @@
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
-              <win-player-visual ref="visual" link="audio"/>
-              <win-player-time ref="time" />
+              <canvas ref="canvas" class="player-visual"/>
+              <win-player-time ref="time"/>
             </div>
           </div>
 
@@ -32,20 +32,20 @@
                 <win-btn class="player-play" block @click="play()" v-html="playText"/>
               </div>
               <div class="col-6 col-md-4">
-                <win-player-reactions />
+                <win-player-reactions/>
               </div>
             </div>
           </div>
           <div class="col-6 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="auth ? openWindow('user') : openWindow('user-login')">
-                  <i class="i icon-user mr-0" />
+                <win-btn block @click="auth ? openWindow2('user') : openWindow2('user-login')">
+                  <i class="i icon-user mr-0"/>
                 </win-btn>
               </div>
               <div class="col-6">
-                <win-btn block @click="openWindow('settings-background')">
-                  <i class="i icon-cog mr-0" />
+                <win-btn block @click="openWindow2('settings-background')">
+                  <i class="i icon-cog mr-0"/>
                 </win-btn>
               </div>
             </div>
@@ -55,200 +55,175 @@
       </div>
     </div>
 
-    <win-player-status ref="status" />
+    <win-player-status ref="status"/>
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import windowsComposable from '@common/composables/windowsComposable'
+import visualComposable from '@common/composables/visualComposable'
 
-const STATE_IDLE = 0;
-const STATE_LOADING = 1;
-const STATE_PLAYING = 2;
+const STATE_IDLE = 0
+const STATE_LOADING = 1
+const STATE_PLAYING = 2
 
-export default {
-  data() {
-    return {
-      offline: false,
+const store = useStore()
 
-      analyser: false,
-      context: false,
-      source: false,
-      volume: 100,
-      state: 0
-    };
-  },
+// Composable
+const { closeWindow2, openWindow2, songInfo2 } = windowsComposable()
+const { startVisual } = visualComposable()
 
-  computed: {
-    ...mapGetters('user', ['auth']),
-    ...mapGetters('player', ['currentSong']),
+// Reactive data
+const offline = ref(false)
+const volume = ref(100)
+const state = ref(STATE_IDLE)
+const auth = computed(() => store.getters['user/auth'])
+const currentSong = computed(() => store.getters['player/currentSong'])
+const artwork = computed(() => currentSong.value.id && currentSong.value.artwork_src
+    ? currentSong.value.artwork_src
+    : 'https://i.plaza.one/dead.jpg')
+const playText = computed(() => {
+  if (state.value === STATE_IDLE) return 'Play'
+  else if (state.value === STATE_LOADING) return 'Loading...'
+  else return 'Stop'
+})
 
-    artwork() {
-      return this.currentSong.id && this.currentSong.artwork_src ? this.currentSong.artwork_src : 'https://i.plaza.one/dead.jpg';
-    },
+// Refs
+const audio = ref(null)
+const time = ref(null)
+const canvas = ref(null)
 
-    playText() {
-      switch (this.state) {
-        case STATE_IDLE:
-          return 'Play';
-        case STATE_LOADING:
-          return 'Loading...';
-        case STATE_PLAYING:
-          return 'Stop';
-      }
-    },
-  },
 
-  mounted() {
-    this.$store.subscribe((mutation) => {
-      if (mutation.type === 'player/currentSong') {
-        this.updateSong();
-      }
-    });
+function updateSong () {
+  if (offline.value && state.value === STATE_PLAYING) {
+    stopPlay()
+    setTimeout(play, 2000)
+  }
 
-    this.setMediaSessionActions();
-  },
+  if (state.value === STATE_PLAYING) {
+    document.title = `${currentSong.value.artist} - ${currentSong.value.title}`
+    updateMediaSession()
+  }
 
-  methods: {
-    updateSong() {
-      if (this.offline && this.state === STATE_PLAYING) {
-        this.stopPlay();
-        setTimeout(this.play, 2000);
-      }
+  offline.value = false
+}
 
-      if (this.state === STATE_PLAYING) {
-        document.title = `${this.currentSong.artist} - ${this.currentSong.title}`;
-        this.updateMediaSession();
-      }
+function play () {
+  if (state.value === STATE_IDLE) {
+    state.value = STATE_LOADING
+    startPlay()
+  } else {
+    stopPlay()
+  }
+}
 
-      this.offline = false;
-    },
+function startPlay () {
+  const noCacheStr = 'nocache=' + Date.now()
 
-    play() {
-      if (this.state === STATE_IDLE) {
-        this.state = STATE_LOADING;
-        this.startPlay();
-      } else {
-        this.stopPlay();
-      }
-    },
+  // Can we play OGG Vorbis?
+  const canPlayOGG = !!(audio.value.canPlayType && audio.value.canPlayType('audio/ogg; codecs=opus').replace(/no/, ''))
+  if (canPlayOGG) {
+    audio.value.type = 'audio/ogg; codecs=opus'
+    audio.value.src = 'https://radio.plaza.one/ogg?' + noCacheStr
+  } else {
+    audio.value.type = 'audio/mpeg'
+    audio.value.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+  }
 
-    startPlay() {
-      const noCacheStr = 'nocache=' + Date.now();
+  audio.value.load()
+  audio.value.volume = volume.value
 
-      // Can we play OGG Vorbis?
-      const canPlayOGG = !!(this.$refs.audio.canPlayType &&
-          this.$refs.audio.canPlayType('audio/ogg; codecs=opus').
-              replace(/no/, ''));
-      if (canPlayOGG) {
-        this.$refs.audio.type = 'audio/ogg; codecs=opus';
-        this.$refs.audio.src = 'https://radio.plaza.one/ogg?' + noCacheStr;
-      } else {
-        this.$refs.audio.type = 'audio/mpeg';
-        this.$refs.audio.src = 'https://radio.plaza.one/mp3?' + noCacheStr;
-      }
+  document.title = `${currentSong.value.artist} - ${currentSong.value.title}`
+}
 
-      this.$refs.audio.load();
-      this.$refs.audio.volume = this.volume;
+function audioCanPlay () {
+  if (state.value === STATE_LOADING) {
+    state.value = STATE_PLAYING
 
-      document.title = `${this.currentSong.artist} - ${this.currentSong.title}`;
-    },
+    audio.value.play().then(() => {
+      startVisual(audio.value, canvas.value)
+      updateMediaSession()
+      setMediaSessionState('playing')
+    }).catch(err => console.log(err))
+  }
+}
 
-    async audioCanPlay() {
-      if (this.state === STATE_LOADING) {
-        this.state = STATE_PLAYING;
+function stopPlay () {
+  audio.value.pause()
+  audio.value.currentTime = 0
 
-        // Audio context
-        if (!this.context || !this.source) {
-          this.context = new (window.AudioContext || window.webkitAudioContext)();
-          this.analyser = this.context.createAnalyser();
-          this.source = this.context.createMediaElementSource(this.$refs.audio);
-        }
+  state.value = STATE_IDLE
+  setMediaSessionState('paused')
+  document.title = 'Nightwave Plaza - Online Vaporwave Radio'
+}
 
-        this.source.connect(this.context.destination);
-        this.source.connect(this.analyser);
+function setVolume (volume) {
+  updateVolume(volume)
+  time.value.showText('Volume: ' + volume + '%')
+}
 
-        try {
-          await this.$refs.audio.play();
-        } catch(e) {
-          console.log(e);
-        }
-        this.$refs.visual.startVisual();
-        this.updateMediaSession();
-        this.setMediaSessionState('playing');
-      }
-    },
+function updateVolume (newVolume) {
+  volume.value = newVolume / 100
+  if (state.value === STATE_PLAYING) {
+    audio.value.volume = volume.value
+  }
+}
 
-    stopPlay() {
-      this.$refs.visual.stopVisual();
-      this.analyser.disconnect();
-      this.source.disconnect();
-      this.$refs.audio.pause();
-      this.$refs.audio.currentTime = 0;
+function showSongInfo () {
+  if (currentSong.value.id) {
+    songInfo2(currentSong.value.id)
+  }
+}
 
-      this.state = STATE_IDLE;
-      this.setMediaSessionState('paused') ;
-      document.title = 'Nightwave Plaza - Online Vaporwave Radio';
-    },
+function updateMediaSession () {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: currentSong.value.title,
+      artist: currentSong.value.artist,
+      album: currentSong.value.album,
+      artwork: [
+        { src: currentSong.value.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
+        { src: currentSong.value.artwork_src, sizes: '500x500', type: 'image/jpg' },
+      ],
+    })
+  } else {
+    console.log('No media session')
+  }
+}
 
-    setVolume(volume) {
-      this.updateVolume(volume);
-      this.$refs.time.showText('Volume: ' + volume + '%');
-    },
+function setMediaSessionActions () {
+  if ('mediaSession' in navigator) {
+    const actionHandlers = [
+      ['play', play],
+      ['pause', play],
+      ['stop', play],
+    ]
 
-    updateVolume(volume) {
-      this.volume = volume / 100;
-      if (this.state === STATE_PLAYING) {
-        this.$refs.audio.volume = this.volume;
-      }
-    },
-
-    showSongInfo() {
-      if (this.currentSong.id) {
-        this.songInfo(this.currentSong.id);
-      }
-    },
-
-    updateMediaSession() {
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: this.currentSong.title,
-          artist: this.currentSong.artist,
-          album: this.currentSong.album,
-          artwork: [
-            { src: this.currentSong.artwork_sm_src,   sizes: '300x300',   type: 'image/jpg' },
-            { src: this.currentSong.artwork_src, sizes: '500x500', type: 'image/jpg' }
-          ]
-        });
-      } else {
-        console.log('No media session')
-      }
-    },
-
-    setMediaSessionActions() {
-      if ('mediaSession' in navigator) {
-        const actionHandlers = [
-          ['play', this.play],
-          ['pause', this.play ],
-          ['stop', this.play]
-        ];
-
-        for (const [action, handler] of actionHandlers) {
-          try {
-            navigator.mediaSession.setActionHandler(action, handler);
-          } catch (error) {
-            console.log(`The media session action "${action}" is not supported yet.`);
-          }
-        }
-      }
-    },
-
-    setMediaSessionState(state) {
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = state;
+    for (const [action, handler] of actionHandlers) {
+      try {
+        navigator.mediaSession.setActionHandler(action, handler)
+      } catch (error) {
+        console.log(`The media session action "${action}" is not supported yet.`)
       }
     }
-  },
+  }
+}
 
-};
+function setMediaSessionState (state) {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.playbackState = state.value
+  }
+}
+
+onMounted(() => {
+  store.subscribe((mutation) => {
+    if (mutation.type === 'player/currentSong') {
+      updateSong()
+    }
+  })
+
+  setMediaSessionActions()
+})
 </script>

@@ -9,7 +9,7 @@
 
           <!-- Repeat password -->
           <label for="password_repeat">Password repeat:</label>
-          <input class="d-block" id="password_repeat" type="password" v-model="password_repeat"/>
+          <input class="d-block" id="password_repeat" type="password" v-model="passwordRepeat"/>
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
@@ -17,7 +17,7 @@
               <win-btn block @click="change" class="text-bold">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="$router.push({name: 'index'})">Cancel</win-btn>
+              <win-btn block @click="router.push({name: 'index'})">Cancel</win-btn>
             </div>
           </div>
         </div>
@@ -26,57 +26,55 @@
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  props: {
-    token: {
-      type: String,
-      default: ''
-    }
+const router = useRouter()
+
+const props = defineProps({
+  token: {
+    type: String,
+    default: '',
   },
+})
 
-  data() {
-    return {
-      password: '',
-      password_repeat: '',
-      sending: false,
-    };
-  },
+const { closeWindow2, alert2 } = windowsComposable('user-reset-password')
 
-  methods: {
-    async change() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+const password = ref('')
+const passwordRepeat = ref('')
+const sending = ref(false)
 
-      this.sending = true;
+function change () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-      try {
-        await user.confirmReset({token: this.token, password: this.password});
-        this.alert('Password has changed.', 'Success', 'info');
-        this.$refs.window.close();
-      } catch(error) {
-        this.alert(error.response.data.error, 'Error');
-      } finally {
-        this.sending = false;
-      }
-    },
+  sending.value = true
 
-    validate() {
-      if (this.password.length < 3) {
-        this.alert('Password is too short.', 'Error');
-        return false;
-      }
+  user.confirmReset({ token: props.token, password: password.value }).then(() => {
+    alert2('Password has changed.', 'Success', 'info')
+    closeWindow2()
+  }).catch(err => {
+    alert2(err.response.data.error, 'Error')
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-      if (this.password !== this.password_repeat) {
-        this.alert('Passwords didn\'t match.', 'Error');
-        return false;
-      }
+function validate () {
+  if (password.value.length < 3) {
+    alert2('Password is too short.', 'Error')
+    return false
+  }
 
-      return true;
-    },
-  },
-};
+  if (password.value !== passwordRepeat.value) {
+    alert2('Passwords didn\'t match.', 'Error')
+    return false
+  }
+
+  return true
+}
 </script>

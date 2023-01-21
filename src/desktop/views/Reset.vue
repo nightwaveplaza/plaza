@@ -7,35 +7,35 @@
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      token: '',
-    };
-  },
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
 
-  computed: {
-    ...mapGetters('windows', ['alerts', 'isWindowOpen'])
-  },
+// Composable
+const { openWindow2 } = windowsComposable()
 
-  watch: {
-    alerts(n) {
-      if (n.length === 0 && !this.isWindowOpen('user-reset-password') && !this.isWindowOpen('user-reset')) {
-        this.$router.push({name: 'index'});
-      }
-    },
-  },
+const token = ref('')
+const alerts = computed(() => store.getters['windows/alerts'])
+const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 
-  mounted() {
-    if (this.$route.params.token) {
-      this.token = this.$route.params.token;
-      this.openWindow('user-reset-password');
-    } else {
-      this.openWindow('user-reset');
-    }
-  },
-};
+watch(alerts, (n) => {
+  if (n.length === 0 && !isWindowOpen.value('user-reset-password') && !isWindowOpen.value('user-reset')) {
+    router.push({ name: 'index' })
+  }
+})
+
+onMounted(() => {
+  if (route.params.token) {
+    token.value = route.params.token
+    openWindow2('user-reset-password')
+  } else {
+    openWindow2('user-reset')
+  }
+})
 </script>

@@ -6,42 +6,51 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
 import PerfectScrollbar from 'perfect-scrollbar';
 
-export default {
-  props: {
-    scroll: {
-      type: Boolean,
-      default: false,
-    },
-  },
+// Props
+const props = defineProps({
+  scroll: {
+    type: Boolean,
+    default: false,
+  }
+})
 
-  methods: {
-    scrollTop() {
-      this.$refs.list.scrollTop = 0;
-    },
+// Reactive data
+const list = ref(null)
 
-    refreshScrollbar() {
-      if (this.scroll) {
-        this.$nextTick(() => {
-          this.scrollbar.update();
-        });
-      }
-    },
-  },
+// Scrollbar
+let scrollbar = {}
 
-  mounted() {
-    if (this.scroll) {
-      this.scrollbar = new PerfectScrollbar(this.$refs.list);
-    }
-  },
+// Methods
+function scrollTop() {
+  list.scrollTop = 0;
+}
 
-  beforeDestroy() {
-    if (this.scroll) {
-      this.scrollbar.destroy();
-      this.scrollbar = null;
-    }
-  },
-};
+function refreshScrollbar() {
+  if (scroll) {
+    nextTick(() => {
+      scrollbar.update();
+    });
+  }
+}
+
+onMounted(() => {
+  if (props.scroll) {
+    scrollbar = new PerfectScrollbar(list.value);
+  }
+})
+
+onBeforeUnmount(() => {
+  if (props.scroll) {
+    scrollbar.destroy();
+    scrollbar = null;
+  }
+})
+
+defineExpose({
+  list, scrollTop, refreshScrollbar
+})
 </script>

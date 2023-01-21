@@ -10,7 +10,7 @@
           <!-- Captcha -->
           <label for="captcha">Captcha:</label>
           <input id="captcha" v-model="fields.captcha" class="d-block mb-2" type="text"/>
-          <win-captcha ref="captcha" @refresh="refreshCaptcha" />
+          <win-captcha ref="captcha" @refreshed="refreshCaptcha"/>
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
@@ -18,7 +18,7 @@
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow()">Close</win-btn>
+              <win-btn block @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -27,52 +27,51 @@
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { reactive, ref } from 'vue'
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      fields: {
-        email: '',
-        key: '',
-        captcha: ''
-      },
-      sending: false,
-    };
-  },
+// Composable
+const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-reset')
 
-  methods: {
-    async reset() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+// Reactive data
+const fields = reactive({
+  email: '',
+  key: '',
+  captcha: '',
+})
+const sending = ref(false)
+const captcha = ref(null)
 
-      this.sending = true;
-      try {
-        await user.reset(this.fields);
-        this.alert('Instructions have been sent to your email.', 'Success', 'info');
-        this.closeWindow();
-      } catch(error) {
-        this.alert(error.response.data.error, 'Error');
-        this.$refs.captcha.refresh();
-      } finally {
-        this.sending = false;
-      }
-    },
+function reset () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-    validate() {
-      if (this.fields.email.length === 0) {
-        this.alert('Enter email.', 'Error');
-        return false;
-      }
-      return true;
-    },
+  sending.value = true
 
-    async refreshCaptcha(key) {
-      this.fields.key = key;
-      this.fields.captcha = '';
-    }
-  },
-};
+  user.reset(fields).then(() => {
+    alert2('Instructions have been sent to your email.', 'Success', 'info')
+    closeWindow2()
+  }).catch(err => {
+    alert2(err.response.data.error, 'Error')
+    captcha.value.refresh()
+  }).finally(() => {
+    sending.value = false
+  })
+}
+
+function validate () {
+  if (fields.email.length === 0) {
+    alert2('Enter email.', 'Error')
+    return false
+  }
+  return true
+}
+
+function refreshCaptcha (key) {
+  fields.key = key
+  fields.captcha = ''
+}
 </script>

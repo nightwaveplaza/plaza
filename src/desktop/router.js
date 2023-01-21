@@ -1,9 +1,9 @@
-import VueRouter from 'vue-router';
-import Index from '@desktop/views/Index';
-import Reset from '@desktop/views/Reset';
-import Register from '@desktop/views/Register';
-import PageNotFound from '@desktop/views/PageNotFound';
-import Donate from '@desktop/views/Donate';
+import Index from '@desktop/views/Index'
+import Reset from '@desktop/views/Reset'
+import Register from '@desktop/views/Register'
+import PageNotFound from '@desktop/views/PageNotFound'
+import Donate from '@desktop/views/Donate'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -28,15 +28,12 @@ const routes = [
     component: Donate,
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     component: PageNotFound,
   },
-];
+]
 
-const router = new VueRouter({
-  history: true,
-  mode: 'history',
+export const router = createRouter({
+  history: createWebHistory(),
   routes,
-});
-
-export default router;
+})

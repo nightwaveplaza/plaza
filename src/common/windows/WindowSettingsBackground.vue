@@ -18,14 +18,16 @@
             <b>Background:</b> {{ currentBackground.image.num }}
           </p>
           <p>
-            <b>Source:</b>
-            <a v-if="currentBackground.image.source_link !== ''" :href="currentBackground.image.source_link">
+            <b>Source: </b>
+            <a v-if="currentBackground.image.source_link !== ''"
+               :href="currentBackground.image.source_link">
               {{ currentBackground.image.source }}
             </a>
           </p>
           <p>
-            <b>Author:</b>
-            <a v-if="currentBackground.image.author_link !== ''" :href="currentBackground.image.author_link">
+            <b>Author: </b>
+            <a v-if="currentBackground.image.author_link !== ''"
+               :href="currentBackground.image.author_link">
               {{ currentBackground.image.author }}
             </a>
           </p>
@@ -62,84 +64,87 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mx-auto px-4" @click="closeWindow()">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="closeWindow2">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-import settings from '@common/extras/settings';
-import {Background} from '@common/extras/background';
-import {background} from '@common/api/api';
+<script setup>
+import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import settings from '@common/extras/settings'
+import { Background } from '@common/extras/background'
+import { background } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      currentBackground: {},
-      backgrounds: [],
-      selected: '',
-      palette: [
-        '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
-        '#008000', '#00ffff', '#008080', '#0000ff', '#000080', '#ff00ff', '#800080',
-      ],
-      theme: 'win98',
-      themes: [
-        ['desert', 'Desert'],
-        ['contrast', 'High Contrast'],
-        ['rainy', 'Rainy Day'],
-        ['rose', 'Rose'],
-        ['win98', 'Windows Standard'],
-      ],
-    };
-  },
+// Composable
+const { closeWindow2 } = windowsComposable('settings-background')
 
-  beforeMount() {
-    this.currentBackground = Background.loadSettings();
-  },
+// Emits
+const emit = defineEmits(['bgChanged'])
 
-  mounted() {
-    background.get().then((result) => this.backgrounds = result.data);
-    this.selected = this.currentBackground.color;
-    this.theme = settings.load('theme') ?? 'win98';
-  },
+// Reactive data
+const currentBackground = ref({})
+const backgrounds = ref([])
+const selected = ref('')
+const theme = ref('win98')
 
-  methods: {
-    next(direction) {
-      this.currentBackground = Background.nextBackground(this.backgrounds, direction);
-      this.set();
-    },
+// Palettes
+const palette = [
+  '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
+  '#008000', '#00ffff', '#008080', '#0000ff', '#000080', '#ff00ff', '#800080',
+]
+const themes = [
+  ['desert', 'Desert'],
+  ['contrast', 'High Contrast'],
+  ['rainy', 'Rainy Day'],
+  ['rose', 'Rose'],
+  ['win98', 'Windows Standard'],
+]
 
-    random() {
-      this.currentBackground = Background.randomBackground(this.backgrounds);
-      this.set();
-    },
+function next (direction) {
+  currentBackground.value = Background.nextBackground(backgrounds.value, direction)
+  set()
+}
 
-    solid() {
-      this.currentBackground = Background.solidBackground();
-      this.set();
-    },
+function random () {
+  currentBackground.value = Background.randomBackground(backgrounds.value)
+  set()
+}
 
-    set() {
-      this.$emit('bgChanged', this.currentBackground);
-    },
+function solid () {
+  currentBackground.value = Background.solidBackground()
+  set()
+}
 
-    changeColor(color) {
-      this.selected = color;
-      this.currentBackground = Background.setSolidColor(color);
-      this.set();
-    },
+function set () {
+  emit('bgChanged', currentBackground.value)
+}
 
-    colorSelected(e) {
-      this.selected = e.target.value;
-      this.changeColor(this.selected);
-    },
+function changeColor (color) {
+  selected.value = color
+  currentBackground.value = Background.setSolidColor(color)
+  set()
+}
 
-    themeSelected(event) {
-      const theme = event.target.value;
-      settings.save('theme', theme);
-      this.$emit('themeChanged', theme);
-    },
-  },
-};
+function colorSelected (e) {
+  selected.value = e.target.value
+  changeColor(selected.value)
+}
+
+function themeSelected (event) {
+  const theme = event.target.value
+  settings.save('theme', theme)
+  emit('themeChanged', theme)
+}
+
+onBeforeMount(() => {
+  currentBackground.value = Background.loadSettings()
+})
+
+onMounted(() => {
+  background.get().then((result) => backgrounds.value = result.data)
+  selected.value = currentBackground.value.color
+  theme.value = settings.load('theme') ?? 'win98'
+})
 </script>

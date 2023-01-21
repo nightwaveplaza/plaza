@@ -56,63 +56,67 @@
 </template>
 
 
-<script>
-import {ratings} from '@common/api/api';
+<script setup>
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { ratings } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      loading: true,
-      charts: [],
-      total: 0,
-      perPage: 25,
-      pages: 4,
-      page: 1,
-      range: 'overtime',
-    };
-  },
+// Composable
+const { alert2 } = windowsComposable('ratings')
 
-  mounted() {
-    this.fetchRatings(this.range, this.page);
-  },
+// Reactive data
+const loading = ref(true)
+const charts = ref([])
+const total = ref(0)
+const perPage = ref(25)
+const pages = ref(4)
+const page = ref(1)
+const range = ref('overtime')
 
-  watch: {
-    range() {
-      this.page = 1;
-      this.$refs.pagination.reset();
-      this.fetchRatings(this.range, this.page);
-    },
-    page() {
-      this.fetchRatings(this.range, this.page);
-    },
-  },
+// Refs
+const list = ref(null)
+const pagination = ref(null)
 
-  methods: {
-    pad(s) {
-      return s.toString().padStart(3, '0');
-    },
+watch(range, () => {
+  page.value = 1
+  pagination.value.reset()
+  fetchRatings(range.value, page.value)
+})
 
-    changePage(page) {
-      this.page = page;
-    },
+watch(page, () => {
+  fetchRatings(range.value, page.value)
+})
 
-    fetchRatings(range, page) {
-      this.$refs.list.scrollTop();
-      this.loading = true;
+// Methods
+function fetchRatings (range, page) {
+  list.value.scrollTop()
+  loading.value = true
 
-      ratings.get(range, page).then(result => {
-        this.perPage = result.data.per_page;
-        this.pages = result.data.pages;
-        this.charts = result.data.songs;
-        this.total = result.data.count;
-        this.loading = false;
-        this.$refs.list.refreshScrollbar();
-      }).catch(error => this.alert(error.response.data.error, 'Error'));
-    },
-  },
+  ratings.get(range, page).then(result => {
+    perPage.value = result.data.per_page
+    pages.value = result.data.pages
+    charts.value = result.data.songs
+    total.value = result.data.count
+    loading.value = false
+    list.value.refreshScrollbar()
+  }).catch(error => {
+    alert2(error.response.data.error, 'Error')
+  })
+}
 
-  beforeDestroy() {
-    this.charts = null;
-  },
-};
+function changePage (newPage) {
+  page.value = newPage
+}
+
+function pad (s) {
+  return s.toString().padStart(3, '0')
+}
+
+onMounted(() => {
+  fetchRatings(range.value, page.value)
+})
+
+onBeforeUnmount(() => {
+  charts.value = []
+})
 </script>

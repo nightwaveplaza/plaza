@@ -16,41 +16,36 @@
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
-import ticker from '@common/extras/ticker';
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import ticker from '@common/extras/ticker'
 
-export default {
-  data() {
-    return {
-      time: '0:00 PM',
-    };
-  },
+const store = useStore()
 
-  computed: {
-    ...mapGetters('windows', ['isWindowOpen', 'windows', 'activeWindow', 'isWindowMinimized']),
-  },
+const time = ref('0:00 PM')
+const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
+const windows = computed(() => store.getters['windows/windows'])
+const activeWindow = computed(() => store.getters['windows/activeWindow'])
+const isWindowMinimized = computed(() => store.getters['windows/isWindowMinimized'])
 
-  created() {
-    ticker.set(this.getNow, 1000);
-  },
+function getNow () {
+  time.value = (new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+}
 
-  methods: {
-    getNow() {
-      this.time = (new Date).toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
-    },
+function toggleMinimize (name) {
+  if (isWindowMinimized.value(name)) {
+    store.dispatch('windows/restore', name)
+  } else {
+    if (activeWindow.value === name) {
+      store.dispatch('windows/minimize', name)
+    } else {
+      store.commit('windows/pullUp', name)
+    }
+  }
+}
 
-    toggleMinimize(name) {
-      if (this.isWindowMinimized(name)) {
-        this.$store.dispatch('windows/restore', name);
-      } else {
-        if (this.activeWindow === name) {
-          this.$store.dispatch('windows/minimize', name);
-        } else {
-          this.$store.commit('windows/pullUp', name);
-        }
-      }
-    },
-  },
-};
+onMounted(() => {
+  ticker.set(getNow, 1000)
+})
 </script>

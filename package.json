@@ -8,29 +8,30 @@
     "prod": "npx mix -p"
   },
   "devDependencies": {
+    "@vue/compat": "^3.2.45",
     "core-js": "^3.9.1",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.5",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.14"
+    "vue": "^3.2.45"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.2.3",
     "bootstrap": "4.6.1",
     "dayjs": "^1.10.7",
     "ejs": "^3.1.8",
     "js-cookie": "^2.2.1",
-    "laravel-mix": "^6.0.39",
+    "laravel-mix": "^6.0.49",
     "laravel-mix-polyfill": "^3.0.1",
     "nouislider": "^14.1.1",
     "perfect-scrollbar": "1.4.0",
+    "pinia": "^2.0.29",
     "postcss-url": "^10.1.3",
     "uuid": "^8.3.0",
-    "vue-axios": "3.2.2",
-    "vue-loader": "^15.9.8",
-    "vue-router": "^3.5.0",
-    "vuex": "^3.6.0"
+    "vue-axios": "3.5.2",
+    "vue-loader": "^17.0.1",
+    "vue-router": "^4.1.6",
+    "vuex": "^4.1.0"
   }
 }

@@ -4,28 +4,39 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import PerfectScrollbar from 'perfect-scrollbar';
 
-export default {
-  props: {
-    scroll: {
-      type: Boolean,
-      default: false,
-    },
+// Props
+const props = defineProps({
+  scroll: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  mounted() {
-    if (this.scroll) {
-      this.scrollbar = new PerfectScrollbar(this.$refs.memo);
-    }
-  },
+// Reactive data
+const memo = ref(null)
 
-  beforeDestroy() {
-    if (this.scroll) {
-      this.scrollbar.destroy();
-      this.scrollbar = null;
-    }
-  },
-};
+// Scrollbar
+let scrollbar = {}
+
+// Methods
+onMounted(() => {
+  if (props.scroll) {
+    scrollbar = new PerfectScrollbar(memo.value);
+  }
+})
+
+onBeforeUnmount(() => {
+  if (props.scroll) {
+    scrollbar.destroy();
+    scrollbar = null;
+  }
+})
+
+defineExpose({
+  memo
+})
 </script>

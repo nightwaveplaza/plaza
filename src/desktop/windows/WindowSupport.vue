@@ -23,23 +23,26 @@
   </win-window>
 </template>
 
-<script>
-export default {
-  props: {
-    direct: {
-      type: Boolean,
-      default: false
-    }
-  },
+<script setup>
+import { useRouter } from 'vue-router'
+import windowsComposable from '@common/composables/windowsComposable'
 
-  methods: {
-    close() {
-      if (this.direct) {
-        this.$router.push({name: 'index'});
-      } else {
-        this.closeWindow();
-      }
-    }
+const { closeWindow2 } = windowsComposable('support')
+
+const router = useRouter()
+
+const props = defineProps({
+  direct: {
+    type: Boolean,
+    default: false
+  }
+})
+
+function close() {
+  if (props.direct) {
+    router.push({name: 'index'});
+  } else {
+    closeWindow2();
   }
 }
 </script>

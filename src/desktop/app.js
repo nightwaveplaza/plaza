@@ -1,35 +1,39 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import store from '@desktop/store';
-import ticker from '@common/extras/ticker';
-import App from '@desktop/views/App';
-import router from '@desktop/router';
+import { createApp, h } from 'vue'
+import ticker from '@common/extras/ticker'
+import App from '@desktop/views/App'
+import { router } from '@desktop/router'
+import { store } from '@desktop/store'
+import { commonComponents } from '@common/components'
+import { commonWindows } from '@common/windows'
+import { desktopComponents } from '@desktop/components'
+import { desktopWindows } from '@desktop/windows'
+import { windowsMixin} from '@common/mixins/windows'
 
-Vue.router = router;
-Vue.use(VueRouter);
-
-// Plaza components and windows
-import '@common/components';
-import '@common/windows';
-import '@desktop/components';
-import '@desktop/windows';
-
-Vue.component('app', App);
-Vue.mixin(require('@common/mixins/helpers').default);
-Vue.mixin(require('@common/mixins/windows').default);
-
-window.Vue = new Vue({
-  router,
-  store,
-
-  mounted() {
-    requestAnimationFrame(this.tick);
+const app = createApp({
+  mounted () {
+    requestAnimationFrame(this.tick)
   },
 
   methods: {
-    tick() {
-      ticker.tick();
-      requestAnimationFrame(this.tick);
+    tick () {
+      ticker.tick()
+      requestAnimationFrame(this.tick)
     },
   },
-}).$mount('#app');
+
+  render: ()=>h(App)
+})
+
+// Register components
+commonComponents(app)
+commonWindows(app)
+desktopComponents(app)
+desktopWindows(app)
+
+// Register the rest of plugins, mixins, etc
+app.use(router)
+app.use(store)
+app.mixin(require('@common/mixins/helpers').default)
+app.mixin(windowsMixin)
+app.component('app', App)
+app.mount('#app')

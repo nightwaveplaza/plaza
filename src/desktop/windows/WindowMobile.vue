@@ -31,9 +31,15 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+          <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
+
+<script setup>
+import windowsComposable from '@common/composables/windowsComposable'
+
+const { closeWindow2 } = windowsComposable('mobile')
+</script>

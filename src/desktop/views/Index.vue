@@ -1,6 +1,6 @@
 <template>
   <div :style="styles" class="app-desktop" :class="theme">
-    <window-player />
+    <window-player/>
 
     <window-about v-if="isWindowOpen('about')"/>
     <window-credits v-if="isWindowOpen('credits')"/>
@@ -20,67 +20,64 @@
     <window-user-register v-if="isWindowOpen('user-register')"/>
     <window-user-reset v-if="isWindowOpen('user-reset')"/>
 
-    <win-song-info />
+    <win-song-info/>
     <win-alerts/>
-    <win-news-loader ref="news" />
+    <win-news-loader ref="newsLoader"/>
 
     <win-taskbar/>
   </div>
 </template>
 
-<script>
-import {Background} from '@common/extras/background';
-import {mapGetters} from 'vuex';
-import settings from '@common/extras/settings';
-import {news, user} from '@common/api/api';
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import { Background } from '@common/extras/background'
+import settings from '@common/extras/settings'
+import { news, user } from '@common/api/api'
 
-export default {
-  data() {
-    return {
-      styles: {
-        backgroundImage: '',
-        backgroundColor: '#008080',
-      },
-      theme: 'theme-win98',
-    };
-  },
+const store = useStore()
 
-  computed: {
-    ...mapGetters('windows', ['isWindowOpen']),
-    ...mapGetters(['token']),
-  },
+// Reactive data
+const styles = ref({
+  backgroundImage: '',
+  backgroundColor: '#008080',
+})
+const theme = ref('theme-win98')
+const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
+const token = computed(() => store.getters['token'])
 
-  mounted: function() {
-    Background.loadOnStartup().then(this.setBackground);
-    this.loadUser();
+// Refs
+const newsLoader = ref(null)
 
-    this.$refs.news.loadNews();
-    this.themeChanged(settings.load('theme'));
-  },
+// Methods
+function setBackground (bg) {
+  if (bg.mode === 2) {
+    styles.value.backgroundImage = ''
+    styles.value.backgroundColor = bg.color
+  } else {
+    styles.value.backgroundImage = `url('${bg.image.src}')`
+    styles.value.backgroundColor = ''
+  }
+}
 
-  methods: {
-    setBackground(bg) {
-      if (bg.mode === 2) {
-        this.styles.backgroundImage = '';
-        this.styles.backgroundColor = bg.color;
-      } else {
-        this.styles.backgroundImage = `url('${bg.image.src}')`;
-        this.styles.backgroundColor = '';
-      }
-    },
+function loadUser () {
+  if (token.value) {
+    store.commit('user/token', token)
+    user.get().then(result => {
+      store.commit('user/auth', result.data)
+    }).catch(() => {})
+  }
+}
 
-    loadUser() {
-      if (this.token) {
-        this.$store.commit('user/token', this.token);
-        user.get().then(result => {
-          this.$store.commit('user/auth', result.data);
-        });
-      }
-    },
+function themeChanged (newTheme) {
+  theme.value = newTheme ? 'theme-' + newTheme : 'theme-win98'
+}
 
-    themeChanged(theme) {
-      this.theme = theme ? 'theme-' + theme : 'theme-win98';
-    },
-  },
-};
+onMounted(() => {
+  Background.loadOnStartup().then(setBackground)
+  loadUser()
+
+  newsLoader.value.loadNews()
+  themeChanged(settings.load('theme'))
+})
 </script>

@@ -3,7 +3,7 @@
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">Email:</label>
-      <input id="email" :disabled="disabled" v-model="fields.email" class="d-block" type="email"/>
+      <input id="email" :disabled="disabled" v-model="fields.email" class="d-block mb-2" type="email"/>
 
       <!-- Current password -->
       <label for="password">Current password:</label>
@@ -15,70 +15,69 @@
           <win-btn block class="text-bold" @click="update">Change</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow()">Close</win-btn>
+          <win-btn block @click="closeWindow2">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { user } from '@common/api/api'
+import { onMounted, reactive, ref } from 'vue'
+import windowsComposable from '@common/composables/windowsComposable'
+import { useStore } from 'vuex'
 
-export default {
-  data() {
-    return {
-      fields: {
-        current_password: '',
-        email: '',
-      },
-      disabled: true,
-      sending: false,
-    };
-  },
+// Composable
+const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-email')
 
-  mounted() {
-    this.fetchUser();
-  },
+const store = useStore()
 
-  methods: {
-    async fetchUser() {
-      try {
-        const res = await user.get();
-        this.fields.email = res.data.email;
-        this.disabled = false;
-      } catch (err) {
-        this.alert('Can\'t fetch user data.', 'Failed');
-        this.closeWindow();
-      }
-    },
+// Reactive data
+const fields = reactive({
+  current_password: '',
+  email: '',
+})
+const disabled = ref(true)
+const sending = ref(false)
 
-    update() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+function fetchUser () {
+  user.get().then((res) => {
+    fields.email = res.data.email
+    disabled.value = false
+  }).catch(err => {
+    alert2('Can\'t fetch user data.', 'Failed')
+    closeWindow2()
+  })
+}
 
-      this.sending = true;
+function update () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-      user.edit(this.fields).then(() => {
-        this.$store.commit('email', this.fields.email);
-        this.alert('Email has changed!', 'Success', 'info');
-        this.closeWindow('user-email');
-      }).catch(error => {
-        this.alert(error.response.data.error, 'Error');
-      }).finally(() => {
-        this.sending = false;
-      });
-    },
+  sending.value = true
 
-    validate() {
-      if (this.fields.current_password.length === 0) {
-        this.alert('Enter current password.', 'Error');
-        return false;
-      }
+  user.edit(fields).then(() => {
+    alert2('Email has changed!', 'Success', 'info')
+    closeWindow2()
+  }).catch(error => {
+    alert2(error.response.data.error, 'Error')
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-      return true;
-    },
-  },
-};
+function validate () {
+  if (fields.current_password.length === 0) {
+    alert2('Enter current password.', 'Error')
+    return false
+  }
+
+  return true
+}
+
+onMounted(() => {
+  fetchUser()
+})
 </script>

@@ -2,39 +2,46 @@
   <div class="player-volume">
     <div class="player-volume-icon"/>
     <div class="player-volume-control">
-      <div id="player-volume-range" ref="volume"></div>
+      <div id="player-volume-range" ref="volumeSlider"></div>
     </div>
     <div class="player-volume-line simple-border"></div>
   </div>
 </template>
 
-<script>
-import settings from '@common/extras/settings';
-import noUiSlider from 'nouislider';
+<script setup>
+import { onMounted, ref } from 'vue'
+import settings from '@common/extras/settings'
+import noUiSlider from 'nouislider'
 
-export default {
-  mounted() {
-    this.volume = settings.load('volume');
+// Emits
+const emit = defineEmits(['onload', 'onchange'])
 
-    if (this.volume === null) {
-      this.volume = 100;
-    }
+// Reactive data
+const volume = ref(0)
 
-    noUiSlider.create(this.$refs.volume, {
-      start: [this.volume],
-      range: {
-        'min': [0],
-        'max': [100],
-      },
-    });
+// Refs
+const volumeSlider = ref(null)
 
-    this.$refs.volume.noUiSlider.on('slide', (values, handle) => {
-      this.volume = parseInt(values);
-      settings.save('volume', this.volume);
-      this.$emit('onchange', this.volume);
-    });
-
-    this.$emit('onload', this.volume);
+onMounted(() => {
+  volume.value = settings.load('volume')
+  if (volume.value === null) {
+    volume.value = 100
   }
-}
+
+  noUiSlider.create(volumeSlider.value, {
+    start: [volume.value],
+    range: {
+      'min': [0],
+      'max': [100],
+    },
+  })
+
+  volumeSlider.value.noUiSlider.on('slide', (values, handle) => {
+    volume.value = parseInt(values)
+    settings.save('volume', volume.value)
+    emit('onchange', volume.value)
+  })
+
+  emit('onload', volume.value)
+})
 </script>

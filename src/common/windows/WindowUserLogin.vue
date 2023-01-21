@@ -53,75 +53,79 @@
         <div class="col-auto col-sm-2 p-0 login-buttons">
           <win-btn class="mb-2 text-bold" @click="login">Sign In</win-btn>
           <win-btn class="mb-2" @click="openRegister">Register</win-btn>
-          <win-btn @click="closeWindow()">Cancel</win-btn>
+          <win-btn @click="closeWindow2">Cancel</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { onMounted, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
+import helperComposable from '@common/composables/helperComposable'
 
-export default {
-  data() {
-    return {
-      fields: {
-        username: '',
-        password: '',
-      },
-      remember: false,
-    };
-  },
+// Composable
+const { isMobile } = helperComposable()
+const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-login')
 
-  mounted() {
-    this.sending = false;
-  },
+const store = useStore()
 
-  methods: {
-    async login() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+// Reactive data
+const fields = reactive({
+  username: '',
+  password: '',
+})
+const remember = ref(false)
+const sending = ref(false)
 
-      this.sending = true;
+// Methods
 
-      try {
-        const res = await user.auth(this.fields);
+function login () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-        if (this.isMobile) {
-          await this.$store.dispatch('login', res.data);
-          this.alert('Authentication successful!', 'Success', 'info');
-        } else {
-          await this.$store.dispatch('login', {user: res.data, remember: this.remember});
-        }
+  sending.value = true
 
-        this.closeWindow();
-      } catch (err) {
-        this.alert(err.response.data.error, 'Failed');
-      } finally {
-        this.sending = false;
-      }
-    },
+  user.auth(fields).then((res) => {
+    if (isMobile.value) {
+      store.dispatch('login', res.data)
+      alert2('Authentication successful!', 'Success', 'info')
+    } else {
+      store.dispatch('login', { user: res.data, remember: remember.value })
+    }
 
-    openRegister() {
-      this.openWindow('user-register');
-      this.closeWindow();
-    },
+    closeWindow2()
+  }).catch(err => {
+    alert2(err.response.data.error, 'Failed')
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-    openReset() {
-      this.openWindow('user-reset');
-      this.closeWindow();
-    },
+function validate () {
+  if (fields.username.length === 0 || fields.password.length === 0) {
+    alert2('Wrong username or password.', 'Error')
+    return false
+  }
 
-    validate() {
-      if (this.fields.username.length === 0 || this.fields.password.length === 0) {
-        this.alert('Wrong username or password.', 'Error');
-        return false;
-      }
+  return true
+}
 
-      return true;
-    },
-  },
-};
+function openRegister () {
+  openWindow2('user-register')
+  closeWindow2()
+}
+
+function openReset () {
+  openWindow2('user-reset')
+  closeWindow2()
+}
+
+onMounted(() => {
+  sending.value = false
+})
 </script>

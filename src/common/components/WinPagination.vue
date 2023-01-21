@@ -6,7 +6,7 @@
       </win-btn>
     </div>
     <div class="col-4">
-      <input ref="page-input" type="number" class="d-block" value="1" @change="setPage"/>
+      <input ref="pageInput" type="number" class="d-block" value="1" @change="setPage"/>
     </div>
     <div class="col-4 pl-1" v-if="pages > 1 && page < pages">
       <win-btn class="d-block" @click="nextPage(1)">
@@ -16,51 +16,49 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      page: 1,
-    };
-  },
+<script setup>
+import { ref, watch } from 'vue'
 
-  watch: {
-    page() {
-      this.$refs['page-input'].value = this.page;
-      this.$emit('change', this.page);
-    },
-  },
+// Props
+const props = defineProps({
+  pages: Number,
+})
 
-  props: {
-    pages: {
-      type: Number,
-    },
-  },
+// Emits
+const emit = defineEmits(['change'])
 
-  methods: {
-    nextPage(dir) {
-      let page = this.page + dir;
-      if (page < 1) {
-        page = 1;
-      }
-      if (page > this.pages) {
-        page = this.pages;
-      }
-      this.page = page;
-    },
+// Reactive data
+const pageInput = ref(null)
+const page = ref(1)
 
-    setPage(e) {
-      const page = parseInt(e.target.value);
-      if (!isNaN(page) && page > 0 && page <= this.pages) {
-        this.page = page;
-      } else {
-        this.$refs['page-input'].value = this.page;
-      }
-    },
+watch(page, (value) => {
+  pageInput.value.value = value
+  emit('change', value)
+})
 
-    reset() {
-      this.page = 1;
-    },
-  },
-};
+function nextPage (dir) {
+  let newPage = page.value + dir
+  if (newPage < 1) {
+    newPage = 1
+  }
+  if (newPage > this.pages) {
+    newPage = this.pages
+  }
+  page.value = newPage
+}
+
+function setPage (e) {
+  const newPage = parseInt(e.target.value)
+  if (!isNaN(newPage) && newPage > 0 && newPage <= props.pages) {
+    page.value = newPage
+  }
+}
+
+function reset () {
+  page.value = 1
+}
+
+defineExpose({
+  pageInput, reset
+})
 </script>

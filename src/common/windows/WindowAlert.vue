@@ -11,27 +11,21 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="closeWindow()">OK</win-btn>
+        <win-btn class="mt-2 mx-auto px-4" @click="closeWindow2">OK</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-export default {
-  props: {
-    text: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    type: {
-      type: String,
-    },
-  },
-};
+<script setup>
+import windowsComposable from '@common/composables/windowsComposable'
+
+const props = defineProps({
+  text: String,
+  title: String,
+  name: String,
+  type: String,
+})
+
+const { closeWindow2 } = windowsComposable(props.name)
 </script>

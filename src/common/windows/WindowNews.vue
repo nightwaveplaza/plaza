@@ -16,54 +16,53 @@
           <win-pagination v-if="length > 0" :pages="pages" @change="changePage"/>
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="closeWindow()">Close</win-btn>
+          <win-btn block @click="closeWindow2">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-import {news} from '@common/api/api';
-import settings from '@common/extras/settings';
+<script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { news } from '@common/api/api'
+import settings from '@common/extras/settings'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      article: {
-        text: '',
-        created_at: 0,
-      },
-      page: 1,
-      length: 1,
-      pages: 1,
-      latest: 0,
-    };
-  },
+// Composable
+const { closeWindow2 } = windowsComposable('news')
 
-  mounted() {
-    this.getArticle();
-  },
+// Reactive data
+const article = ref({
+  text: '',
+  created_at: 0,
+})
+const page = ref(1)
+const length = ref(1)
+const pages = ref(1)
+const latest = ref(0)
 
-  methods: {
-    getArticle() {
-      news.get(this.page).then(result => {
-        this.article = result.data.articles[0];
+// Methods
+function getArticle () {
+  news.get(page.value).then(result => {
+    article.value = result.data.articles[0]
 
-        if (this.latest === 0) {
-          this.latest = this.article.created_at;
-        }
-      }).catch();
-    },
+    if (latest.value === 0) {
+      latest.value = article.value.created_at
+    }
+  }).catch(() => {})
+}
 
-    changePage(page) {
-      this.page = page;
-      this.getArticle();
-    },
-  },
+function changePage (newPage) {
+  page.value = newPage
+  getArticle()
+}
 
-  beforeDestroy() {
-    settings.save('latestNews', this.latest);
-  },
-};
+onMounted(() => {
+  getArticle()
+})
+
+onBeforeUnmount(() => {
+  settings.save('latestNews', latest.value)
+})
 </script>

@@ -2,117 +2,108 @@
   <win-btn block @click="like"><i :class="likeIcon" class="i mr-1" :style="{color: likeColor}"/>{{ likes }}</win-btn>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
-import {reactions} from '@common/api/api';
-import settings from '@common/extras/settings';
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import { reactions } from '@common/api/api'
+import settings from '@common/extras/settings'
+import windowsComposable from '@common/composables/windowsComposable'
 
-const CL_FAV = '#FFD300';
-const CL_LIKE = '#c12727';
+const CL_FAV = '#FFD300'
+const CL_LIKE = '#c12727'
 
-export default {
-  props: {
-    name: {
-      type: String,
-    },
-  },
+const store = useStore()
 
-  data() {
-    return {
-      likes: 0,
-    };
-  },
+// Composable
+const { alert2 } = windowsComposable('user-favorites')
 
-  computed: {
-    ...mapGetters('player', ['reaction', 'currentSong']),
+// Props
+const props = defineProps({
+  name: String,
+})
 
-    likeIcon() {
-      return this.reaction.score > 1 ? 'icon-favorite' : 'icon-like';
-    },
-    likeColor() {
-      if (this.currentSong.id === this.reaction.songId) {
-        return this.reaction.score === 2 ? CL_FAV : this.reaction.score === 1 ? CL_LIKE : '';
-      }
-    },
-  },
+// Reactive data
+const likes = ref(0)
+const sending = ref(false)
 
-  created() {
-    this.sending = false;
-  },
+// Computed
+const reaction = computed(() => store.getters['player/reaction'])
+const currentSong = computed(() => store.getters['player/currentSong'])
+const likeIcon = computed(() => reaction.value.score > 1 ? 'icon-favorite' : 'icon-like')
+const likeColor = computed(() => {
+  if (currentSong.value.id === reaction.value.songId) {
+    return reaction.value.score === 2 ? CL_FAV : reaction.value.score === 1 ? CL_LIKE : ''
+  }
+})
 
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'player/reactions' || mutation.type === 'player/currentSong') {
-        this.likes = state.player.song.reactions;
-      }
+// Methods
+function like () {
+  if (reaction.value.score === 1) {
+    send(2)
+  } else if (reaction.value.score === 2) {
+    send(0)
+  } else {
+    send(1)
+  }
+}
 
-      if (mutation.type === 'player/currentSong') {
-        this.loadState();
-      }
+function send (score) {
+  if (sending.value) {
+    return
+  }
 
-      if (mutation.type === 'player/reaction') {
-        this.saveState();
-      }
-    });
-  },
+  sending.value = true
 
-  methods: {
-    like() {
-      if (this.reaction.score === 1) {
-        this.send(2);
-      } else if (this.reaction.score === 2) {
-        this.send(0);
-      } else {
-        this.send(1);
-      }
-    },
+  reactions.react(score).then(res => {
+    store.commit('player/reactions', res.data.reactions)
+    store.dispatch('player/setReaction', score).then()
+    sendTip()
+  }).catch(err => {
+    if (err.response.status === 401) {
+      alert2('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+    }
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-    async send(score) {
-      // Чтоб не кликали 100 раз подряд
-      if (this.sending) {
-        return;
-      }
+function loadState () {
+  const saved = settings.load('reaction')
+  if (saved && saved.songId === currentSong.value.id) {
+    store.commit('player/reaction', saved.score)
+  } else {
+    store.commit('player/clearReaction')
+  }
+}
 
-      this.sending = true;
+function saveState () {
+  settings.save('reaction', reaction.value)
+}
 
-      try {
-        const res = await reactions.react(score);
-        this.$store.commit('player/reactions', res.data.reactions);
-        this.$store.dispatch('player/setReaction', score).then();
-        this.sendTip();
-      } catch (error) {
-        if (error.response.status === 401) {
-          this.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error');
-        }
-      } finally {
-        this.sending = false;
-      }
-    },
+function sendTip () {
+  const saved = settings.load('reactionTip')
+  if (saved) return
 
-    loadState() {
-      const saved = settings.load('reaction');
-      if (saved && saved.songId === this.currentSong.id) {
-        this.$store.commit('player/reaction', saved.score);
-      } else {
-        this.$store.commit('player/clearReaction');
-      }
-    },
-
-    saveState() {
-      settings.save('reaction', this.reaction);
-    },
-
-    sendTip() {
-      const saved = settings.load('reactionTip');
-      if (saved) return;
-
-      this.alert(`You have liked the song. Nice!<br />
+  alert2(`You have liked the song. Nice!<br />
                         Clicking the <i class="i icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
-          'N I C E', 'info');
+      'N I C E', 'info')
 
-      settings.save('reactionTip', true);
-    },
-  },
+  settings.save('reactionTip', true)
+}
 
-};
+onMounted(() => {
+  store.subscribe((mutation, state) => {
+    if (mutation.type === 'player/reactions' || mutation.type === 'player/currentSong') {
+      likes.value = state.player.song.reactions
+    }
+
+    if (mutation.type === 'player/currentSong') {
+      loadState()
+    }
+
+    if (mutation.type === 'player/reaction') {
+      saveState()
+    }
+  })
+})
 </script>

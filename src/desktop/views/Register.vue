@@ -4,10 +4,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {
-    this.$store.commit('windows/pullUp', 'user-register');
-  },
-};
+<script setup>
+import { useStore } from 'vuex'
+import { onMounted } from 'vue'
+
+const store = useStore()
+
+onMounted(() => {
+  store.commit('windows/pullUp', 'user-register');
+})
 </script>

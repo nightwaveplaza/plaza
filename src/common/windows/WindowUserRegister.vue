@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-5">
                   <div class="pl-2">
-                    <win-captcha ref="captcha" @refresh="refreshCaptcha"/>
+                    <win-captcha ref="captcha" @refreshed="refreshCaptcha"/>
                   </div>
                 </div>
               </div>
@@ -93,118 +93,113 @@
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { computed, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  props: {
-    direct: {
-      type: Boolean,
-      default: false,
-    },
+const router = useRouter()
+
+// Props
+const props = defineProps({
+  direct: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  data() {
-    return {
-      fields: {
-        username: '',
-        email: '',
-        password: '',
-        key: '',
-        captcha: '',
-      },
+// Composable
+const { alert2, closeWindow2 } = windowsComposable('user-register')
 
-      registered: false,
-      passwordR: '',
-      captchaImage: '',
-    };
-  },
+// Reactive data
+const fields = reactive({
+  username: '',
+  email: '',
+  password: '',
+  key: '',
+  captcha: '',
+})
+const registered = ref(false)
+const passwordR = ref('')
+const captchaImage = ref('')
+const sending = ref(false)
 
-  computed: {
-    closeText() {
-      return this.registered ? 'Finish' : 'Cancel';
-    },
-  },
+// Refs
+const captcha = ref(null)
 
-  async mounted() {
-    this.sending = false;
-  },
+// Computed
+const closeText = computed(() => registered.value ? 'Finish' : 'Cancel')
 
-  methods: {
-    async refreshCaptcha(key) {
-      this.fields.key = key;
-      this.fields.captcha = '';
-    },
+// Methods
+function refreshCaptcha (key) {
+  fields.key = key
+  fields.captcha = ''
+}
 
-    /**
-     * Регистрация пользователя
-     */
-    register() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+/**
+ * User register
+ */
+function register () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-      this.sending = true;
+  sending.value = true
 
-      user.register(this.fields).then(() => {
-        this.registered = true;
-      }).catch(error => {
-        this.alert(error.response.data.error, 'Error');
-        this.$refs.captcha.refresh();
-      }).finally(() => {
-        this.sending = false;
-      });
-    },
+  user.register(fields).then(() => {
+    registered.value = true
+  }).catch(error => {
+    alert2(error.response.data.error, 'Error')
+    captcha.value.refresh()
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-    /**
-     * Проверка полей
-     * @returns {boolean|void}
-     */
-    validate() {
-      if (/[^a-zA-Z0-9-_]+/.test(this.fields.username)) {
-        this.alert('Incorrect username. Only letters, numbers and underscores allowed.', 'Error');
-        return false;
-      }
+/**
+ * Fields validation
+ * @returns {boolean|void}
+ */
+function validate () {
+  if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
+    alert2('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
+    return false
+  }
 
-      if (this.fields.username.length < 4) {
-        this.alert('Username is too short.', 'Error');
-        return false;
-      }
+  if (fields.username.length < 4) {
+    alert2('Username is too short.', 'Error')
+    return false
+  }
 
-      if (this.fields.username.length > 32) {
-        this.alert('Username is too long.', 'Error');
-        return false;
-      }
+  if (fields.username.length > 32) {
+    alert2('Username is too long.', 'Error')
+    return false
+  }
 
-      if (this.fields.password.length < 3) {
-        this.alert('Password is too short.', 'Error');
-        return false;
-      }
+  if (fields.password.length < 3) {
+    alert2('Password is too short.', 'Error')
+    return false
+  }
 
-      if (this.fields.email.length < 3) {
-        this.alert('Email is too short.', 'Error');
-        return false;
-      }
+  if (fields.email.length < 3) {
+    alert2('Email is too short.', 'Error')
+    return false
+  }
 
-      if (this.fields.password !== this.passwordR) {
-        this.alert('Passwords don\'t match.', 'Error');
-        return false;
-      }
+  if (fields.password !== passwordR.value) {
+    alert2('Passwords don\'t match.', 'Error')
+    return false
+  }
 
-      return true;
-    },
+  return true
+}
 
-    close() {
-      if (this.direct) {
-        this.$router.push({name: 'index'});
-      } else {
-        this.closeWindow();
-      }
-    },
-  },
-
-  beforeDestroy() {
-    this.$refs.captcha = null;
-  },
-};
+function close () {
+  if (props.direct) {
+    router.push({ name: 'index' })
+  } else {
+    closeWindow2()
+  }
+}
 </script>

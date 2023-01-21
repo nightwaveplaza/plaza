@@ -1,27 +1,29 @@
 <template>
-  <img class="img-captcha" :src="captchaImage" @click="refresh"/>
+  <img class="img-captcha" :src="captchaImage" @click="refresh" alt="captcha"/>
 </template>
 
-<script>
-import {captcha} from '@common/api/api';
+<script setup>
+import { onMounted, ref } from 'vue'
+import { captcha } from '@common/api/api'
 
-export default {
-  data() {
-    return {
-      captchaImage: '',
-    };
-  },
+// Emits
+const emit = defineEmits(['refreshed'])
 
-  mounted() {
-    this.refresh();
-  },
+// Reactive data
+const captchaImage = ref('')
 
-  methods: {
-    async refresh() {
-      const res = await captcha.get();
-      this.captchaImage = res.data.img;
-      this.$emit('refresh', res.data.key);
-    },
-  },
-};
+function refresh () {
+  captcha.get().then((res) => {
+    captchaImage.value = res.data.img
+    emit('refreshed', res.data.key)
+  })
+}
+
+onMounted(() => {
+  refresh()
+})
+
+defineExpose({
+  refresh
+})
 </script>

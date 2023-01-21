@@ -7,31 +7,36 @@
           <win-btn block class="mb-2" @click="open('user-email')">Change Email</win-btn>
           <win-btn block class="mb-2" @click="open('user-password')">Change Password</win-btn>
           <win-btn block class="mb-2" @click="logout">Logout</win-btn>
-          <win-btn block class="close mt-2 mx-auto" @click="closeWindow()">Close</win-btn>
+          <win-btn block class="close mt-2 mx-auto" @click="closeWindow2">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
+import { useStore } from 'vuex'
+import helperComposable from '@common/composables/helperComposable'
 
-export default {
-  methods: {
-    open(window) {
-      this.openWindow(window);
-      this.closeWindow();
-    },
+// Composable
+const { closeWindow2, openWindow2 } = windowsComposable('user')
+const { isMobile } = helperComposable()
 
-    async logout() {
-      try {
-        await user.logout();
-      } finally {
-        await this.$store.dispatch('logout');
-        this.closeWindow();
-      }
-    },
-  },
-};
+// Store
+const store = useStore()
+
+// Methods
+function open (window) {
+  openWindow2(window)
+  closeWindow2()
+}
+
+function logout () {
+  user.logout().finally(() => {
+    store.dispatch('logout')
+    closeWindow2()
+  })
+}
 </script>

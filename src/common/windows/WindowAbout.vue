@@ -19,9 +19,11 @@
               <p>Please send any enquiries you may have to <a href="mailto:mail@plaza.one">mail@plaza.one</a>.</p>
               <p>Any updates or upcoming maintenance on Nightwave Plaza can be found on our official Twitter account: <a
                   href="https://twitter.com/nightwaveplaza/" target="_blank">@NightwavePlaza</a>.</p>
-              <p>Nightwave Plaza can also be found on <a href="https://plaza.one/youtube" target="_blank">YouTube</a>, <a
-                  href="https://plaza.one/facebook" target="_blank">Facebook</a>,
-                <a href="https://plaza.one/vk" target="_blank">VK</a>, <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a> and <a
+              <p>Nightwave Plaza can also be found on <a href="https://plaza.one/youtube" target="_blank">YouTube</a>,
+                <a
+                    href="https://plaza.one/facebook" target="_blank">Facebook</a>,
+                <a href="https://plaza.one/vk" target="_blank">VK</a>, <a href="https://plaza.one/lastfm"
+                                                                          target="_blank">Last.fm</a> and <a
                     href="https://plaza.one/tunein" target="_blank">TuneIn</a>.
               </p>
 
@@ -73,26 +75,27 @@
   </win-window>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  name: 'window-about',
+const store = useStore()
 
-  computed: {
-    ...mapGetters(['viewVersion']),
-  },
+// Composable
+const {openWindow2, closeWindow2} = windowsComposable('about')
 
-  methods: {
-    openCredits() {
-      this.openWindow('credits');
-      this.closeWindow();
-    },
+// Reactive data
+const viewVersion = computed(() => store.getters.viewVersion)
 
-    openNews() {
-      this.openWindow('news');
-      this.closeWindow();
-    },
-  },
-};
+// Methods
+const openCredits = () => {
+  openWindow2('credits')
+  closeWindow2()
+}
+
+const openNews = () => {
+  openWindow2('news')
+  closeWindow2()
+}
 </script>

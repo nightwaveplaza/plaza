@@ -11,7 +11,7 @@
           <input id="password" v-model="fields.password" class="d-block mb-2" type="password"/>
           <!-- Repeat password -->
           <label for="password_repeat">Password repeat:</label>
-          <input id="password_repeat" v-model="password_repeat" class="d-block" type="password"/>
+          <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password"/>
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
@@ -19,7 +19,7 @@
               <win-btn block class="text-bold" @click="change">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow()">Close</win-btn>
+              <win-btn block @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -28,65 +28,59 @@
   </win-window>
 </template>
 
-<script>
-import {user} from '@common/api/api';
+<script setup>
+import { reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import { user } from '@common/api/api'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      fields: {
-        current_password: '',
-        password: '',
-      },
-      password_repeat: '',
-      sending: false,
-    };
-  },
+const store = useStore()
 
-  methods: {
-    /**
-     * Изменение пароля
-     */
-    async change() {
-      if (!this.validate() || this.sending) {
-        return;
-      }
+// Composable
+const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-password')
 
-      this.sending = true;
+// Reactive data
+const fields = reactive({
+  current_password: '',
+  password: '',
+})
+const passwordRepeat = ref('')
+const sending = ref(false)
 
-      try {
-        await user.edit(this.fields);
-        await this.$store.dispatch('logout');
-        this.alert('Password has changed!', 'Success', 'info');
-        this.closeWindow();
-      } catch (error) {
-        this.alert(error.response.data.error, 'Error');
-      } finally {
-        this.sending = false;
-      }
-    },
+function change () {
+  if (!validate() || sending.value) {
+    return
+  }
 
-    /**
-     * Проверка полей
-     */
-    validate() {
-      if (this.fields.current_password.length === 0) {
-        this.alert('Enter current password.', 'Error');
-        return false;
-      }
+  sending.value = true
 
-      if (this.fields.password.length < 3) {
-        this.alert('Password too short.', 'Error');
-        return false;
-      }
+  user.edit(fields).then(() => {
+    store.dispatch('logout')
+    alert2('Password has changed!', 'Success', 'info')
+    closeWindow2()
+  }).catch((err) => {
+    alert2(err.response.data.error, 'Error')
+  }).finally(() => {
+    sending.value = false
+  })
+}
 
-      if (this.fields.password !== this.password_repeat) {
-        this.alert('Passwords didn\'t match.', 'Error');
-        return false;
-      }
+function validate () {
+  if (fields.current_password.length === 0) {
+    alert2('Enter current password.', 'Error')
+    return false
+  }
 
-      return true;
-    },
-  },
-};
+  if (fields.password.length < 3) {
+    alert2('Password too short.', 'Error')
+    return false
+  }
+
+  if (fields.password !== passwordRepeat.value) {
+    alert2('Passwords didn\'t match.', 'Error')
+    return false
+  }
+
+  return true
+}
 </script>

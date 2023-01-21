@@ -1,13 +1,16 @@
 <template>
-  <div class="app-desktop theme-win98">
-    <window-support :direct="true"/>
-  </div>
+<div class="app-desktop theme-win98">
+  <window-support :direct="true"/>
+</div>
 </template>
 
-<script>
-export default {
-  mounted: function() {
-    this.$store.commit('windows/pullUp', 'support');
-  },
-};
+<script setup>
+  import { onMounted } from 'vue'
+  import {useStore} from 'vuex'
+
+  const store = useStore()
+
+  onMounted(() => {
+    store.commit('windows/pullUp', 'support')
+  })
 </script>

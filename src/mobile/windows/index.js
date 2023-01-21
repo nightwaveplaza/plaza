@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import WindowDonate from '@mobile/windows/WindowDonate';
-import WindowLoading from '@mobile/windows/WindowLoading';
-import WindowPlayer from '@mobile/windows/WindowPlayer';
-import WindowPlayerTimer from '@mobile/windows/WindowPlayerTimer';
-import WindowSettings from '@mobile/windows/WindowSettings';
+import * as Vue from 'vue';
+import * as WindowDonate from '@mobile/windows/WindowDonate';
+import * as WindowLoading from '@mobile/windows/WindowLoading';
+import * as WindowPlayer from '@mobile/windows/WindowPlayer';
+import * as WindowPlayerTimer from '@mobile/windows/WindowPlayerTimer';
+import * as WindowSettings from '@mobile/windows/WindowSettings';
 
 Vue.component('window-donate', WindowDonate);
 Vue.component('window-loading', WindowLoading);

@@ -1,4 +1,13 @@
-export default {
+
+
+import { useStore } from 'vuex'
+
+export const windowsMixin = {
+
+  openWindow(name) {
+    store.dispatch('windows/open', {name}).then();
+  },
+
   methods: {
     /**
      * Open window

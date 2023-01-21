@@ -1,14 +1,11 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
-import Cookies from 'js-cookie';
-import playerStore from '@common/store/player';
-import windowStore from '@common/store/window';
-import backgroundStore from '@common/store/background';
-import userStore from '@common/store/user';
+import { createStore } from 'vuex'
+import Cookies from 'js-cookie'
+import { playerStore } from '@common/store/player'
+import { windowStore } from '@common/store/window'
+import { backgroundStore } from '@common/store/background'
+import { userStore } from '@common/store/user'
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export const store = createStore({
   modules: {
     windows: windowStore,
     player: playerStore,
@@ -17,20 +14,20 @@ export default new Vuex.Store({
   },
 
   actions: {
-    login(context, {user, remember}) {
+    login (context, { user, remember }) {
       if (remember) {
-        Cookies.set('token', user.token, {expires: 180});
+        Cookies.set('token', user.token, { expires: 180 })
       } else {
-        Cookies.set('token', user.token);
+        Cookies.set('token', user.token)
       }
 
-      context.commit('user/auth', user);
-      context.commit('user/token', user.token);
+      context.commit('user/auth', user)
+      context.commit('user/token', user.token)
     },
 
-    async logout(context) {
-      await context.dispatch('user/logout');
-      Cookies.remove('token');
+    async logout (context) {
+      await context.dispatch('user/logout')
+      Cookies.remove('token')
     },
   },
 
@@ -38,4 +35,4 @@ export default new Vuex.Store({
     token: () => Cookies.get('token'),
     viewVersion: () => process.env.version,
   },
-});
+})

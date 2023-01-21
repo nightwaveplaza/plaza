@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import WinAlerts from '@common/components/WinAlerts';
 import WinButton from '@common/components/WinButton';
 import WinCaptcha from '@common/components/WinCaptcha';
@@ -12,15 +11,17 @@ import WinSongInfo from '@common/components/WinSongInfo';
 import WinTaskbar from '@common/components/WinTaskbar';
 import WinWindow from '@common/components/WinWindow.vue';
 
-Vue.component('win-alerts', WinAlerts);
-Vue.component('win-btn', WinButton);
-Vue.component('win-captcha', WinCaptcha);
-Vue.component('win-list', WinList);
-Vue.component('win-memo', WinMemo);
-Vue.component('win-news-loader', WinNewsLoader);
-Vue.component('win-pagination', WinPagination);
-Vue.component('win-player-reactions', WinPlayerReactions);
-Vue.component('win-player-time', WinPlayerTime);
-Vue.component('win-song-info', WinSongInfo);
-Vue.component('win-taskbar', WinTaskbar);
-Vue.component('win-window', WinWindow);
+export const commonComponents = (app) => {
+  app.component('win-alerts', WinAlerts);
+  app.component('win-btn', WinButton);
+  app.component('win-captcha', WinCaptcha);
+  app.component('win-list', WinList);
+  app.component('win-memo', WinMemo);
+  app.component('win-news-loader', WinNewsLoader);
+  app.component('win-pagination', WinPagination);
+  app.component('win-player-reactions', WinPlayerReactions);
+  app.component('win-player-time', WinPlayerTime);
+  app.component('win-song-info', WinSongInfo);
+  app.component('win-taskbar', WinTaskbar);
+  app.component('win-window', WinWindow);
+};

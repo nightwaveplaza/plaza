@@ -4,8 +4,8 @@
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
-            <div v-if="history.length > 0" class="col">Showing history: {{ sd(dateFrom) }} &mdash;
-              {{ sd(this.dateTo) }}.
+            <div v-if="items.length > 0" class="col">Showing history: {{ sd(dateFrom) }} &mdash;
+              {{ sd(dateTo) }}.
             </div>
             <div class="col-auto"><a href="https://plaza.one/lastfm" target="_blank">Last.fm history</a></div>
           </div>
@@ -15,7 +15,7 @@
           <div style="position: relative" class="w-100">
             <div v-if="loading" class="content-loading"></div>
             <win-list ref="list" scroll>
-              <tr v-for="song in history">
+              <tr v-for="song in items">
                 <td class="pl-2 pr-1 py-1 show-info" @click="songInfo(song.id)">
                   <div class="artist">{{ song.artist }}</div>
                   <div class="title">{{ song.title }}</div>
@@ -32,7 +32,7 @@
         <div class="d-flex">
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
-              <win-pagination v-if="history.length > 0" :pages="pages" @change="changePage"/>
+              <win-pagination v-if="items.length > 0" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
               <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
@@ -50,68 +50,64 @@
 </template>
 
 
-<script>
-import {history} from '@common/api/api';
+<script setup>
+import { history } from '@common/api/api'
 import * as dayjs from 'dayjs'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      loading: true,
-      history: [],
-      total: 0,
-      perPage: 25,
-      pages: 0,
-      page: 1,
-      dateFrom: 0,
-      dateTo: 0,
-    };
-  },
+// Reactive data
+const loading = ref(true)
+const items = ref([])
+const total = ref(0)
+const perPage = ref(25)
+const pages = ref(4)
+const page = ref(1)
+const dateFrom = ref(0)
+const dateTo = ref(0)
 
-  mounted() {
-    this.fetchHistory(this.page);
-  },
+// Refs
+const list = ref(null)
+const pagination = ref(null)
 
-  watch: {
-    page() {
-      this.fetchHistory(this.page);
-    },
-  },
+// Composable
+const { alert2 } = windowsComposable('ratings')
 
-  methods: {
-    changePage(page) {
-      this.page = page;
-    },
+watch(page, () => {
+  fetchHistory(page.value)
+})
 
-    fetchHistory(page) {
-      this.$refs.list.scrollTop();
-      this.loading = true;
+function changePage (newPage) {
+  page.value = newPage
+}
 
-      history.get(page).then(result => {
-        this.perPage = result.data.per_page;
-        this.pages = result.data.pages;
-        this.history = result.data.songs;
-        this.total = result.data.count;
-        this.loading = false;
-        this.dateFrom = result.data.from_date;
-        this.dateTo = result.data.to_date;
-        this.$refs.list.refreshScrollbar();
-      }).catch(error => this.alert(error.response.data.error, 'Error'));
-    },
+function fetchHistory (page) {
+  list.value.scrollTop()
+  loading.value = true
 
-    refreshScrollbar() {
-      this.$nextTick(() => {
-        this.scrollbar.update();
-      });
-    },
+  history.get(page).then(result => {
+    perPage.value = result.data.per_page
+    pages.value = result.data.pages
+    items.value = result.data.songs
+    total.value = result.data.count
+    loading.value = false
+    dateFrom.value = result.data.from_date
+    dateTo.value = result.data.to_date
+    list.value.refreshScrollbar()
+  }).catch(error => {
+    alert2(error.response.data.error, 'Error')
+  })
+}
 
-    gt(date) {
-      return dayjs.unix(date).format('HH:mm')
-    },
-  },
+function gt (date) {
+  return dayjs.unix(date).format('HH:mm')
+}
 
-  beforeDestroy() {
-    this.history = null;
-  },
-};
+onMounted(() => {
+  fetchHistory(page.value)
+})
+
+onBeforeUnmount(() => {
+  items.value = []
+})
 </script>

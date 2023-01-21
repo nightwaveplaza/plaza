@@ -11,7 +11,8 @@
                 <table>
                   <tr v-if="showCurrentLike">
                     <td class="p-1 noselect" style="width: 62px">
-                      <img :src="currentSong.artwork_src ? currentSong.artwork_src : 'https://i.plaza.one/dead.jpg'" alt="artwork"/>
+                      <img :src="currentSong.artwork_src ? currentSong.artwork_src : 'https://i.plaza.one/dead.jpg'"
+                           alt="artwork"/>
                     </td>
                     <td class="pl-1">
                       <div class="artist">{{ currentSong.artist }}</div>
@@ -58,7 +59,7 @@
               <win-pagination :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -72,65 +73,69 @@
   </win-window>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
-import {user} from '@common/api/api';
+<script setup>
+import { user } from '@common/api/api'
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import windowsComposable from '@common/composables/windowsComposable'
 
-export default {
-  data() {
-    return {
-      loading: true,
-      likes: [],
-      deleted: [],
-      total: 0,
-      perPage: 25,
-      pages: 4,
-      page: 1,
-    };
-  },
+// Composable
+const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-favorites')
 
-  computed: {
-    ...mapGetters('player', ['currentSong', 'reaction']),
+const store = useStore()
 
-    showCurrentLike() {
-      return false;
-      // return this.currentSong.id === this.reaction.songId && this.page === 1 && this.reaction.score === 2
-    }
-  },
+// Reactive data
+const loading = ref(true)
+const likes = ref([])
+const deleted = ref([])
+const total = ref(0)
+const perPage = ref(25)
+const pages = ref(4)
+const page = ref(1)
 
-  mounted() {
-    this.fetchLikes(this.page);
-  },
+// Refs
+const list = ref(null)
 
-  methods: {
-    fetchLikes(page) {
-      this.$refs.list.scrollTop();
-      this.loading = true;
+//Computed
+const currentSong = computed(() => store.getters['player/currentSong'])
+const reaction = computed(() => store.getters['player/reaction'])
+// return this.currentSong.id === this.reaction.songId && this.page === 1 && this.reaction.score === 2
+const showCurrentLike = computed(() => false)
 
-      user.favorites(page).then(result => {
-        this.perPage = result.data.per_page;
-        this.pages = result.data.pages;
-        this.likes = result.data.favorites;
-        this.total = result.data.count;
-        this.loading = false;
-        this.$refs.list.refreshScrollbar();
-      }).catch(error => this.alert(error.response.data.error, 'Error'));
-    },
+// Methods
+function fetchLikes (page) {
+  list.value.scrollTop()
+  loading.value = true
 
-    changePage(page) {
-      this.page = page;
-      this.fetchLikes(page);
-    },
+  user.favorites(page).then(result => {
+    perPage.value = result.data.per_page
+    pages.value = result.data.pages
+    likes.value = result.data.favorites
+    total.value = result.data.count
+    loading.value = false
+    list.value.refreshScrollbar()
+  }).catch(error => alert2(error.response.data.error, 'Error')).finally(() => {
+    loading.value = false
+  })
+}
 
-    deleteLike(favoriteId) {
-      user.deleteFavorite(favoriteId).then(result => {
-        this.deleted.push(favoriteId);
-      }).catch(error => this.alert(error.response.data.error, 'Error'));
-    },
-  },
+function changePage (newPage) {
+  if (loading.value) {
+    return;
+  }
 
-  beforeDestroy() {
-    this.likes = null;
-  },
-};
+  page.value = newPage
+  fetchLikes(newPage)
+}
+
+function deleteLike (favoriteId) {
+  user.deleteFavorite(favoriteId).then(() => {
+    deleted.value.push(favoriteId)
+  }).catch(error => alert2(error.response.data.error, 'Error'))
+}
+
+onMounted(() => {
+  fetchLikes(page.value)
+})
+
 </script>

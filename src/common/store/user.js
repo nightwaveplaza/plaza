@@ -1,6 +1,6 @@
 import settings from '@common/extras/settings';
 
-export default {
+export const userStore = {
   namespaced: true,
 
   state: {

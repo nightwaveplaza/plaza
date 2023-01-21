@@ -4,13 +4,10 @@
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
+<script setup>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
-export default {
-
-  computed: {
-    ...mapGetters('windows', ['songWindows']),
-  },
-};
+const store = useStore()
+const songWindows = computed(() => store.getters['windows/songWindows'])
 </script>

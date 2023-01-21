@@ -4,12 +4,10 @@
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
-export default {
-  computed: {
-    ...mapGetters('windows', ['alerts']),
-  },
-};
+const store = useStore()
+const alerts = computed(() => store.getters['windows/alerts'])
 </script>

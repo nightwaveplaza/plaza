@@ -28,7 +28,7 @@
                       <img :src="like.song.artwork_src ? like.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>
                     </td>
-                    <td class="pl-1 show-info" @click="songInfo(like.song.id)">
+                    <td class="pl-1 show-info" @click="songInfo2(like.song.id)">
                       <div class="artist">{{ like.song.artist }}</div>
                       <div class="title">{{ like.song.title }}</div>
                       <div class="date">
@@ -74,13 +74,15 @@
 </template>
 
 <script setup>
-import { user } from '@common/api/api'
 import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
+import { user } from '@common/api/api'
 import windowsComposable from '@common/composables/windowsComposable'
+import helperComposable from '@common/composables/helperComposable'
 
 // Composable
-const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-favorites')
+const { alert2, closeWindow2, openWindow2, songInfo2 } = windowsComposable('user-favorites')
+const { sdy } = helperComposable()
 
 const store = useStore()
 
@@ -107,11 +109,11 @@ function fetchLikes (page) {
   list.value.scrollTop()
   loading.value = true
 
-  user.favorites(page).then(result => {
-    perPage.value = result.data.per_page
-    pages.value = result.data.pages
-    likes.value = result.data.favorites
-    total.value = result.data.count
+  user.favorites(page).then(res => {
+    perPage.value = res.data.per_page
+    pages.value = res.data.pages
+    likes.value = res.data.favorites
+    total.value = res.data.count
     loading.value = false
     list.value.refreshScrollbar()
   }).catch(error => alert2(error.response.data.error, 'Error')).finally(() => {

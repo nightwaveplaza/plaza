@@ -4,13 +4,13 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-btn :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="range = 'overtime'">
+          <win-btn :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
             Overtime
           </win-btn>
-          <win-btn :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="range = 'monthly'">
+          <win-btn :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
             Monthly
           </win-btn>
-          <win-btn :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="range = 'weekly'">
+          <win-btn :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
             Weekly
           </win-btn>
         </div>
@@ -23,7 +23,7 @@
               <tr v-for="(chart, i) in charts" class="hover">
                 <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * perPage + i + 1) }}
                 </td>
-                <td class="py-1 show-info" @click="songInfo(chart.id)">
+                <td class="py-1 show-info" @click="songInfo2(chart.id)">
                   <div class="artist">{{ chart.artist }}</div>
                   <div class="title">{{ chart.title }}</div>
                 </td>
@@ -41,7 +41,7 @@
               <win-pagination ref="pagination" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ import { ratings } from '@common/api/api'
 import windowsComposable from '@common/composables/windowsComposable'
 
 // Composable
-const { alert2 } = windowsComposable('ratings')
+const { alert2, closeWindow2, songInfo2 } = windowsComposable('ratings')
 
 // Reactive data
 const loading = ref(true)
@@ -90,22 +90,26 @@ watch(page, () => {
 // Methods
 function fetchRatings (range, page) {
   list.value.scrollTop()
-  loading.value = true
 
-  ratings.get(range, page).then(result => {
-    perPage.value = result.data.per_page
-    pages.value = result.data.pages
-    charts.value = result.data.songs
-    total.value = result.data.count
-    loading.value = false
+  ratings.get(range, page).then(res => {
+    perPage.value = res.data.per_page
+    pages.value = res.data.pages
+    charts.value = res.data.songs
+    total.value = res.data.count
     list.value.refreshScrollbar()
-  }).catch(error => {
-    alert2(error.response.data.error, 'Error')
-  })
+  }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => loading.value = false)
 }
 
 function changePage (newPage) {
-  page.value = newPage
+  if (!loading.value) {
+    page.value = newPage
+  }
+}
+
+function changeRange (newRange) {
+  if (!loading.value) {
+    range.value = newRange
+  }
 }
 
 function pad (s) {

@@ -3,12 +3,12 @@
 </template>
 
 <script setup>
-const CLOCK_REFRESH = 300
-
 import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import ticker from '@common/extras/ticker'
 import helperComposable from '@common/composables/helperComposable'
+
+const CLOCK_REFRESH = 300
 
 const store = useStore()
 
@@ -17,17 +17,18 @@ const { dur } = helperComposable()
 
 // Refs
 const length = ref(0)
-const position = ref(0)
 const actualPosition = ref(0)
-const songUpdated = ref(0)
 const textTime = ref(0)
 const text = ref('')
 const display = computed(() => textTime.value > 0 ? text.value : clock.value)
 const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / ' + dur(length.value) : '...')
 
-// Ticker
+// Non-reactive
+let position = 0
+let songUpdated = 0
 let tickerId = 0
 
+// Methods
 function showText (newText) {
   text.value = newText
   textTime.value = 2000
@@ -40,9 +41,9 @@ function resetTimer () {
 
 function tick () {
   const now = Date.now()
-  const correctedPosition = Math.floor((now - songUpdated.value) / 1000) + position.value
+  const correctedPosition = Math.floor((now - songUpdated) / 1000) + position
 
-  if (songUpdated.value && length.value - actualPosition.value > 0) {
+  if (songUpdated && length.value - actualPosition.value > 0) {
     actualPosition.value = correctedPosition
     //
     // if (this.position < this.length) {
@@ -61,9 +62,9 @@ onMounted(() => {
 
   store.subscribe((mutation, state) => {
     if (mutation.type === 'player/currentSong') {
-      position.value = state.player.song.position
+      position = state.player.song.position
       length.value = state.player.song.length
-      songUpdated.value = Date.now()
+      songUpdated = Date.now()
     }
   })
 })

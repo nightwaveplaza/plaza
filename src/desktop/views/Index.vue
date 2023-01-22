@@ -62,7 +62,7 @@ function setBackground (bg) {
 
 function loadUser () {
   if (token.value) {
-    store.commit('user/token', token)
+    store.commit('user/token', token.value)
     user.get().then(result => {
       store.commit('user/auth', result.data)
     }).catch(() => {})

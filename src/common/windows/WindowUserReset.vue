@@ -41,15 +41,19 @@ const fields = reactive({
   key: '',
   captcha: '',
 })
-const sending = ref(false)
+
+// Refs
 const captcha = ref(null)
 
+// Non-reactive
+let sending = false
+
 function reset () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.reset(fields).then(() => {
     alert2('Instructions have been sent to your email.', 'Success', 'info')
@@ -57,9 +61,7 @@ function reset () {
   }).catch(err => {
     alert2(err.response.data.error, 'Error')
     captcha.value.refresh()
-  }).finally(() => {
-    sending.value = false
-  })
+  }).finally(() => sending = false)
 }
 
 function validate () {

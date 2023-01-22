@@ -79,31 +79,30 @@ const fields = reactive({
   password: '',
 })
 const remember = ref(false)
-const sending = ref(false)
+
+// Non-reactive
+let sending = false
 
 // Methods
-
 function login () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.auth(fields).then((res) => {
     if (isMobile.value) {
       store.dispatch('login', res.data)
-      alert2('Authentication successful!', 'Success', 'info')
     } else {
       store.dispatch('login', { user: res.data, remember: remember.value })
     }
 
+    alert2('Authentication successful!', 'Success', 'info')
     closeWindow2()
-  }).catch(err => {
-    alert2(err.response.data.error, 'Failed')
-  }).finally(() => {
-    sending.value = false
   })
+  .catch(err => alert2(err.response.data.error, 'Failed'))
+  .finally(() => sending = false)
 }
 
 function validate () {
@@ -124,8 +123,4 @@ function openReset () {
   openWindow2('user-reset')
   closeWindow2()
 }
-
-onMounted(() => {
-  sending.value = false
-})
 </script>

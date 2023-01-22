@@ -45,24 +45,23 @@ const fields = reactive({
   password: '',
 })
 const passwordRepeat = ref('')
-const sending = ref(false)
+
+// Non-reactive
+let sending = false
 
 function change () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.edit(fields).then(() => {
     store.dispatch('logout')
     alert2('Password has changed!', 'Success', 'info')
     closeWindow2()
-  }).catch((err) => {
-    alert2(err.response.data.error, 'Error')
-  }).finally(() => {
-    sending.value = false
-  })
+  }).catch(err => alert2(err.response.data.error, 'Error'))
+  .finally(() => sending = false)
 }
 
 function validate () {

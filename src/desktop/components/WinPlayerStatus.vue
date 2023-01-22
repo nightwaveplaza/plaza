@@ -1,80 +1,69 @@
 <template/>
 
-<script>
-const OSD_UPDATE_INTERVAL = 10000;
+<script setup>
+import { computed, markRaw, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { status } from '@common/api/api'
 
-import {status} from '@common/api/api';
-import {mapGetters} from 'vuex';
+const OSD_UPDATE_INTERVAL = 10000
+const store = useStore()
 
-export default {
-  computed: {
-    ...mapGetters('player', ['currentSong']),
-  },
+// Reactive data
+const currentSong = computed(() => store.getters['player/currentSong'])
 
-  created() {
-    this.statusUpdatedAt = 0;
-    this.osdUpdatedAt = 0;
-    this.updating = false;
-  },
+// Vars
+let statusUpdatedAt = 0
+let osdUpdatedAt = 0
+let updating = false
 
-  mounted() {
-    this.tick();
-  },
+function tick () {
+  const now = Date.now()
+  const actualPosition = currentSong.value.position + Math.floor(((now - statusUpdatedAt) / 1000))
 
-  methods: {
-    async tick() {
-      const now = Date.now();
-      const actualPosition = this.currentSong.position + Math.floor(((now - this.statusUpdatedAt) / 1000));
+  if (!currentSong.value.id || currentSong.value.length - actualPosition < 3) {
+    updateStatus()
+  } else if (now - osdUpdatedAt > OSD_UPDATE_INTERVAL) {
+    updateOsd()
+  }
+}
 
-      if (!this.currentSong.id) {
-        await this.updateStatus();
-      } else if (now - this.osdUpdatedAt > OSD_UPDATE_INTERVAL) {
-        await this.updateOsd();
-      } else if (this.currentSong.length - actualPosition < 3) {
-        await this.updateStatus();
-      }
+// Update on-screen-data (listeners, reactions)
+function updateOsd () {
+  if (updating) return
+  updating = true
 
-      setTimeout(this.tick, 1000);
-    },
+  status.getOsd().then(res => {
+    store.commit('player/listeners', res.data[1])
+    store.commit('player/reactions', res.data[2])
+  }).catch(err => {
+    console.log(`Failed to update status: ${err}`)
+  }).finally(() => {
+    updating = false
+    osdUpdatedAt = Date.now()
+    setTimeout(tick, 1000)
+  })
+}
 
-    async updateOsd() {
-      if (this.updating) return;
-      this.updating = true;
+// Update current song status
+function updateStatus () {
+  if (updating) return
+  updating = true
 
-      let data = [];
-      try {
-        data = (await status.getOsd()).data;
-      } catch (e) {
-        console.log(`Failed to update status: ${e}`);
-      } finally {
-        this.updating = false;
-        this.osdUpdatedAt = Date.now();
-      }
+  status.get().then((res) => {
+    store.commit('player/currentSong', res.data.song)
+    store.commit('player/listeners', res.data.listeners)
+  }).catch((err) => {
+    console.log(`Failed to update status: ${err}`)
+  }).finally(() => {
+    updating = false
+    osdUpdatedAt = Date.now()
+    statusUpdatedAt = Date.now()
+    setTimeout(tick, 1000)
+  })
+}
 
-      if (data[0] !== this.currentSong.id) {
-        await this.updateStatus();
-      } else {
-        this.$store.commit('player/listeners', data[1]);
-        this.$store.commit('player/reactions', data[2]);
-      }
-    },
+onMounted(() => {
+  tick()
+})
 
-    async updateStatus() {
-      if (this.updating) return;
-      this.updating = true;
-
-      try {
-        const data = (await status.get()).data;
-        this.$store.commit('player/currentSong', data.song);
-        this.$store.commit('player/listeners', data.listeners);
-      } catch (e) {
-        console.log(`Failed to update status: ${e}`);
-      } finally {
-        this.updating = false;
-        this.osdUpdatedAt = Date.now();
-        this.statusUpdatedAt = Date.now();
-      }
-    },
-  },
-};
 </script>

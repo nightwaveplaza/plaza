@@ -20,6 +20,7 @@ const route = useRoute()
 // Composable
 const { openWindow2 } = windowsComposable()
 
+// Reactive data
 const token = ref('')
 const alerts = computed(() => store.getters['windows/alerts'])
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])

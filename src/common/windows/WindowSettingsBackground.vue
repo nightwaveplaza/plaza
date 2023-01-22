@@ -102,6 +102,7 @@ const themes = [
   ['win98', 'Windows Standard'],
 ]
 
+// Methods
 function next (direction) {
   currentBackground.value = Background.nextBackground(backgrounds.value, direction)
   set()

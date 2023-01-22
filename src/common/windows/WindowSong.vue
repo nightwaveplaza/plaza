@@ -70,17 +70,17 @@ const { dur, sdy } = helperComposable()
 // Reactive data
 const song = ref(false)
 const isPlaying = ref(false)
-const sending = ref(false)
 const playTimeLeft = ref(0)
-
-// Refs
-const audio = ref(null)
-
-// Computed
 const songLength = computed(() => dur(song.value.length))
 const playText = computed(() => isPlaying.value ? 'Stop (' + dur(playTimeLeft.value) + ')' : 'Play preview')
 const artwork = computed(() => song.value.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
 const favoriteColor = computed(() => song.value.favorite_id ? '#FFD300' : '')
+
+// Refs
+const audio = ref(null)
+
+// Non-reactive
+let sending = false
 
 // Functions
 function fetchSongInfo (songId) {
@@ -93,18 +93,18 @@ function fetchSongInfo (songId) {
 }
 
 function favoriteSong () {
-  if (sending.value) return
+  if (sending) return
 
-  sending.value = true
+  sending = true
 
   if (song.value.favorite_id) {
     user.deleteFavorite(song.value.favorite_id).then(() => {
       song.value.favorite_id = null
-    }).catch(err => showError(err)).finally(() => sending.value = false)
+    }).catch(err => showError(err)).finally(() => sending = false)
   } else {
-    user.addFavorite(song.value.id).then(() => {
+    user.addFavorite(song.value.id).then((res) => {
       song.value.favorite_id = res.data.favorite_id
-    }).catch(err => showError(err)).finally(() => sending.value = false)
+    }).catch(err => showError(err)).finally(() => sending = false)
   }
 }
 

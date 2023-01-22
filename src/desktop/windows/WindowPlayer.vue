@@ -14,7 +14,7 @@
 
     <!-- Player -->
     <div class="content p-1 p-sm-2">
-      <win-player />
+      <win-player/>
     </div>
 
     <!-- Statusbar -->
@@ -29,27 +29,24 @@
   </win-window>
 </template>
 
-<script>
-import {mapGetters} from 'vuex';
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
-export default {
-  computed: {
-    ...mapGetters('player', ['listeners']),
-    ...mapGetters('user', ['auth', 'username']),
+const store = useStore()
 
-    fullScreenEnabled() {
-      return document.fullscreenEnabled;
-    },
-  },
+// Reactive data
+const listeners = computed(() => store.getters['player/listeners'])
+const auth = computed(() => store.getters['user/auth'])
+const username = computed(() => store.getters['user/username'])
+const fullScreenEnabled = computed(() => document.fullscreenEnabled)
 
-  methods: {
-    minimize() {
-      this.$store.dispatch('windows/minimize', 'player');
-    },
+// Methods
+function minimize () {
+  store.dispatch('windows/minimize', 'player')
+}
 
-    requestFullScreen() {
-      document.getElementById('app').requestFullscreen();
-    },
-  },
-};
+function requestFullScreen () {
+  document.getElementById('app').requestFullscreen()
+}
 </script>

@@ -16,20 +16,20 @@ import noUiSlider from 'nouislider'
 // Emits
 const emit = defineEmits(['onload', 'onchange'])
 
-// Reactive data
-const volume = ref(0)
-
 // Refs
 const volumeSlider = ref(null)
 
+// Non-reactive
+let volume = 0
+
 onMounted(() => {
-  volume.value = settings.load('volume')
-  if (volume.value === null) {
-    volume.value = 100
+  volume = settings.load('volume')
+  if (volume === null) {
+    volume = 100
   }
 
   noUiSlider.create(volumeSlider.value, {
-    start: [volume.value],
+    start: [volume],
     range: {
       'min': [0],
       'max': [100],
@@ -37,11 +37,11 @@ onMounted(() => {
   })
 
   volumeSlider.value.noUiSlider.on('slide', (values, handle) => {
-    volume.value = parseInt(values)
-    settings.save('volume', volume.value)
-    emit('onchange', volume.value)
+    volume = parseInt(values)
+    settings.save('volume', volume)
+    emit('onchange', volume)
   })
 
-  emit('onload', volume.value)
+  emit('onload', volume)
 })
 </script>

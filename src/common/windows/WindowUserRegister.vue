@@ -123,10 +123,12 @@ const fields = reactive({
 const registered = ref(false)
 const passwordR = ref('')
 const captchaImage = ref('')
-const sending = ref(false)
 
 // Refs
 const captcha = ref(null)
+
+// Non-reactive
+let sending = false
 
 // Computed
 const closeText = computed(() => registered.value ? 'Finish' : 'Cancel')
@@ -141,20 +143,18 @@ function refreshCaptcha (key) {
  * User register
  */
 function register () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.register(fields).then(() => {
     registered.value = true
-  }).catch(error => {
-    alert2(error.response.data.error, 'Error')
+  }).catch(err => {
+    alert2(err.response.data.error, 'Error')
     captcha.value.refresh()
-  }).finally(() => {
-    sending.value = false
-  })
+  }).finally(() => sending = false)
 }
 
 /**

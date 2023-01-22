@@ -15,9 +15,9 @@
 </template>
 
 <script setup>
+import { useStore } from 'vuex'
 import { user } from '@common/api/api'
 import windowsComposable from '@common/composables/windowsComposable'
-import { useStore } from 'vuex'
 import helperComposable from '@common/composables/helperComposable'
 
 // Composable
@@ -34,7 +34,7 @@ function open (window) {
 }
 
 function logout () {
-  user.logout().finally(() => {
+  user.logout().then().finally(() => {
     store.dispatch('logout')
     closeWindow2()
   })

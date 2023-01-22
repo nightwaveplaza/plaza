@@ -28,9 +28,11 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { news } from '@common/api/api'
 import settings from '@common/extras/settings'
 import windowsComposable from '@common/composables/windowsComposable'
+import helperComposable from '@common/composables/helperComposable'
 
 // Composable
 const { closeWindow2 } = windowsComposable('news')
+const { sdy } = helperComposable()
 
 // Reactive data
 const article = ref({
@@ -40,15 +42,18 @@ const article = ref({
 const page = ref(1)
 const length = ref(1)
 const pages = ref(1)
-const latest = ref(0)
+
+// Non-reactive
+let latest = 0
 
 // Methods
 function getArticle () {
-  news.get(page.value).then(result => {
-    article.value = result.data.articles[0]
+  news.get(page.value).then(res => {
+    article.value = res.data.articles[0]
+    pages.value = res.data.pages
 
-    if (latest.value === 0) {
-      latest.value = article.value.created_at
+    if (latest === 0) {
+      latest = article.value.created_at
     }
   }).catch(() => {})
 }
@@ -63,6 +68,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  settings.save('latestNews', latest.value)
+  settings.save('latestNews', latest)
 })
 </script>

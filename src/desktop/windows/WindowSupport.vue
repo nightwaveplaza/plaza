@@ -4,11 +4,12 @@
       <div class="text-center">
         <win-memo>
           <p class="lead mb-2">Love Nightwave Plaza?</p>
-          <p>You can support the radio station and further updates by donating via Boosty and get special Discord rewards!</p>
+          <p>You can support the radio station and further updates by donating via Boosty and get special Discord
+            rewards!</p>
 
           <p class="my-3">
             <a class="pp-link" href="https://boosty.to/nightwaveplaza" target="_blank">
-              <img alt="boosty" src="img/boosty.png"/><br />Support on Boosty
+              <img alt="boosty" src="img/boosty.png"/><br/>Support on Boosty
             </a>
           </p>
 
@@ -34,15 +35,15 @@ const router = useRouter()
 const props = defineProps({
   direct: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
-function close() {
+function close () {
   if (props.direct) {
-    router.push({name: 'index'});
+    router.push({ name: 'index' })
   } else {
-    closeWindow2();
+    closeWindow2()
   }
 }
 </script>

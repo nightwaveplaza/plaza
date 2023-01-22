@@ -5,6 +5,11 @@ import { windowStore } from '@common/store/window'
 import { backgroundStore } from '@common/store/background'
 import { userStore } from '@common/store/user'
 
+const cookieApi = Cookies.withAttributes({
+  path: '/',
+  secure: true
+})
+
 export const store = createStore({
   modules: {
     windows: windowStore,
@@ -16,9 +21,9 @@ export const store = createStore({
   actions: {
     login (context, { user, remember }) {
       if (remember) {
-        Cookies.set('token', user.token, { expires: 180 })
+        cookieApi.set('token', user.token, { expires: 180 })
       } else {
-        Cookies.set('token', user.token)
+        cookieApi.set('token', user.token)
       }
 
       context.commit('user/auth', user)
@@ -27,12 +32,12 @@ export const store = createStore({
 
     async logout (context) {
       await context.dispatch('user/logout')
-      Cookies.remove('token')
+      cookieApi.remove('token')
     },
   },
 
   getters: {
-    token: () => Cookies.get('token'),
+    token: () => cookieApi.get('token'),
     viewVersion: () => process.env.version,
   },
 })

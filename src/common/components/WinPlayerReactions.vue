@@ -24,7 +24,9 @@ const props = defineProps({
 
 // Reactive data
 const likes = ref(0)
-const sending = ref(false)
+
+// Non-reactive
+let sending = false
 
 // Computed
 const reaction = computed(() => store.getters['player/reaction'])
@@ -48,11 +50,11 @@ function like () {
 }
 
 function send (score) {
-  if (sending.value) {
+  if (sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   reactions.react(score).then(res => {
     store.commit('player/reactions', res.data.reactions)
@@ -63,7 +65,7 @@ function send (score) {
       alert2('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   }).finally(() => {
-    sending.value = false
+    sending = false
   })
 }
 

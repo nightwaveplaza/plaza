@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 const store = useStore()
 const songWindows = computed(() => store.getters['windows/songWindows'])

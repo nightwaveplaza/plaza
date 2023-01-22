@@ -36,6 +36,7 @@ watch(page, (value) => {
   emit('change', value)
 })
 
+// Methods
 function nextPage (dir) {
   let newPage = page.value + dir
   if (newPage < 1) {

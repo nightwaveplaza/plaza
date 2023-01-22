@@ -23,12 +23,14 @@ import ticker from '@common/extras/ticker'
 
 const store = useStore()
 
+// Reactive data
 const time = ref('0:00 PM')
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 const windows = computed(() => store.getters['windows/windows'])
 const activeWindow = computed(() => store.getters['windows/activeWindow'])
 const isWindowMinimized = computed(() => store.getters['windows/isWindowMinimized'])
 
+// Methods
 function getNow () {
   time.value = (new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }

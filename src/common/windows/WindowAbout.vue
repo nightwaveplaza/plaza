@@ -65,7 +65,7 @@
               <win-btn class="px-4 mr-2" @click="openNews">News</win-btn>
             </div>
             <div class="col-auto ml-auto">
-              <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -76,8 +76,8 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useStore } from 'vuex'
 import windowsComposable from '@common/composables/windowsComposable'
 
 const store = useStore()

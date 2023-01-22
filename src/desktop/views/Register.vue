@@ -5,12 +5,12 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 const store = useStore()
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'user-register');
+  store.commit('windows/pullUp', 'user-register')
 })
 </script>

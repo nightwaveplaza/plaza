@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { news } from '@common/api/api'
 import settings from '@common/extras/settings'
@@ -17,8 +17,10 @@ const { isMobile } = helperComposable()
 const { openWindow2 } = windowsComposable('about')
 
 // Reactive data
-const newsLoaded = ref(false)
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
+
+// Non-reactive
+let newsLoaded = false
 
 // Methods
 function loadNews () {
@@ -34,9 +36,9 @@ onMounted(() => {
   if (isMobile.value) {
     store.subscribe((mutation) => {
       if (mutation.type === 'pushData' && mutation.payload.name === 'status') {
-        if (!newsLoaded.value) {
+        if (!newsLoaded) {
           loadNews()
-          newsLoaded.value = true
+          newsLoaded = true
         }
       }
     })

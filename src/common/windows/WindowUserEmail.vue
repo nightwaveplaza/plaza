@@ -39,7 +39,9 @@ const fields = reactive({
   email: '',
 })
 const disabled = ref(true)
-const sending = ref(false)
+
+// Non-reactive
+let sending = false
 
 function fetchUser () {
   user.get().then((res) => {
@@ -52,11 +54,11 @@ function fetchUser () {
 }
 
 function update () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.edit(fields).then(() => {
     alert2('Email has changed!', 'Success', 'info')
@@ -64,7 +66,7 @@ function update () {
   }).catch(error => {
     alert2(error.response.data.error, 'Error')
   }).finally(() => {
-    sending.value = false
+    sending = false
   })
 }
 

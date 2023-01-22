@@ -16,7 +16,7 @@
             <div v-if="loading" class="content-loading"></div>
             <win-list ref="list" scroll>
               <tr v-for="song in items">
-                <td class="pl-2 pr-1 py-1 show-info" @click="songInfo(song.id)">
+                <td class="pl-2 pr-1 py-1 show-info" @click="songInfo2(song.id)">
                   <div class="artist">{{ song.artist }}</div>
                   <div class="title">{{ song.title }}</div>
                 </td>
@@ -35,7 +35,7 @@
               <win-pagination v-if="items.length > 0" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow()">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
             </div>
           </div>
         </div>
@@ -55,6 +55,11 @@ import { history } from '@common/api/api'
 import * as dayjs from 'dayjs'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import windowsComposable from '@common/composables/windowsComposable'
+import helperComposable from '@common/composables/helperComposable'
+
+// Composable
+const { alert2, closeWindow2, songInfo2 } = windowsComposable('history')
+const { sd } = helperComposable()
 
 // Reactive data
 const loading = ref(true)
@@ -70,15 +75,14 @@ const dateTo = ref(0)
 const list = ref(null)
 const pagination = ref(null)
 
-// Composable
-const { alert2 } = windowsComposable('ratings')
-
 watch(page, () => {
   fetchHistory(page.value)
 })
 
 function changePage (newPage) {
-  page.value = newPage
+  if (!loading.value) {
+    page.value = newPage
+  }
 }
 
 function fetchHistory (page) {
@@ -94,9 +98,9 @@ function fetchHistory (page) {
     dateFrom.value = result.data.from_date
     dateTo.value = result.data.to_date
     list.value.refreshScrollbar()
-  }).catch(error => {
-    alert2(error.response.data.error, 'Error')
   })
+  .catch(error => alert2(error.response.data.error, 'Error'))
+  .finally(() => loading.value = false)
 }
 
 function gt (date) {

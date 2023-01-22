@@ -34,6 +34,7 @@ import windowsComposable from '@common/composables/windowsComposable'
 
 const router = useRouter()
 
+// Props
 const props = defineProps({
   token: {
     type: String,
@@ -41,27 +42,27 @@ const props = defineProps({
   },
 })
 
+// Composable
 const { closeWindow2, alert2 } = windowsComposable('user-reset-password')
 
+// Reactive data
 const password = ref('')
 const passwordRepeat = ref('')
-const sending = ref(false)
+
+// Non-reactive
+let sending = false
 
 function change () {
   if (!validate() || sending.value) {
     return
   }
 
-  sending.value = true
+  sending = true
 
   user.confirmReset({ token: props.token, password: password.value }).then(() => {
     alert2('Password has changed.', 'Success', 'info')
     closeWindow2()
-  }).catch(err => {
-    alert2(err.response.data.error, 'Error')
-  }).finally(() => {
-    sending.value = false
-  })
+  }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => sending = false)
 }
 
 function validate () {

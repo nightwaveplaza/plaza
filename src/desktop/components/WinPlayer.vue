@@ -76,14 +76,13 @@ const { closeWindow2, openWindow2, songInfo2 } = windowsComposable()
 const { startVisual } = visualComposable()
 
 // Reactive data
-const offline = ref(false)
-const volume = ref(100)
 const state = ref(STATE_IDLE)
 const auth = computed(() => store.getters['user/auth'])
 const currentSong = computed(() => store.getters['player/currentSong'])
-const artwork = computed(() => currentSong.value.id && currentSong.value.artwork_src
-    ? currentSong.value.artwork_src
-    : 'https://i.plaza.one/dead.jpg')
+const artwork = computed(() => {
+  if (currentSong.value.id && currentSong.value.artwork_src) return currentSong.value.artwork_src
+  else return 'https://i.plaza.one/dead.jpg'
+})
 const playText = computed(() => {
   if (state.value === STATE_IDLE) return 'Play'
   else if (state.value === STATE_LOADING) return 'Loading...'
@@ -95,9 +94,12 @@ const audio = ref(null)
 const time = ref(null)
 const canvas = ref(null)
 
+// Non-reactive
+let offline = false
+let volume = 100
 
 function updateSong () {
-  if (offline.value && state.value === STATE_PLAYING) {
+  if (offline && state.value === STATE_PLAYING) {
     stopPlay()
     setTimeout(play, 2000)
   }
@@ -107,7 +109,7 @@ function updateSong () {
     updateMediaSession()
   }
 
-  offline.value = false
+  offline = false
 }
 
 function play () {
@@ -133,7 +135,7 @@ function startPlay () {
   }
 
   audio.value.load()
-  audio.value.volume = volume.value
+  audio.value.volume = volume
 
   document.title = `${currentSong.value.artist} - ${currentSong.value.title}`
 }
@@ -165,9 +167,9 @@ function setVolume (volume) {
 }
 
 function updateVolume (newVolume) {
-  volume.value = newVolume / 100
+  volume = newVolume / 100
   if (state.value === STATE_PLAYING) {
-    audio.value.volume = volume.value
+    audio.value.volume = volume
   }
 }
 

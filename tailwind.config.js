@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     './src/desktop/index.html',
-    './src/**/*.{js,scss,vue}',
+    './src/desktop/**/*.{js,scss,vue}',
+    './src/mobile/index.html',
+    './src/mobile/**/*.{js,scss,vue}',
   ],
   theme: {
     extend: {},

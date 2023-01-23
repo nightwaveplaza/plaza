@@ -7,14 +7,18 @@ import legacy from '@vitejs/plugin-legacy'
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
+  const base = process.env.VITE_APP === 'mobile' ? '' : '/'
+  const root = resolve(__dirname, 'src/' + process.env.VITE_APP)
+  const minify = process.env.VITE_USER_NODE_ENV !== 'development'
+
   return defineConfig({
 
     plugins: [
       vue(), splitVendorChunkPlugin(), getLegacyPlugin(process.env)
     ],
 
-    root: resolve(__dirname, 'src/' + process.env.VITE_APP),
-    base: `/`,
+    root,
+    base,
     publicDir: 'public',
     envDir: resolve(__dirname),
     build: {
@@ -25,7 +29,7 @@ export default ({ mode }) => {
         input: '/index.html',
       },
       assetsInlineLimit: 16384,
-      minify: false,
+      minify
     },
 
     resolve: {

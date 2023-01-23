@@ -6,7 +6,7 @@
   bottom: 3px;
   right: 3px;
   background-color: #FFFFFF;
-  background-image: url('@common/styles/icons/loading.png');
+  background-image: url('@common/img/loading.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 36px 36px;
@@ -18,7 +18,7 @@
   }
 
   .window .header .icon {
-    background: url('@common/styles/icons/ball.png') no-repeat;
+    background: url('@common/img/ball.png') no-repeat;
     background-size: cover;
   }
 

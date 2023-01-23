@@ -14,7 +14,7 @@ export default ({ mode }) => {
   return defineConfig({
 
     plugins: [
-      vue(), splitVendorChunkPlugin(), getLegacyPlugin(process.env)
+      vue(), splitVendorChunkPlugin(), getLegacyPlugin(process.env),
     ],
 
     root,
@@ -27,9 +27,12 @@ export default ({ mode }) => {
       manifest: false,
       rollupOptions: {
         input: '/index.html',
+        external: [
+          resolve(__dirname, 'src/common/public/img/ball.png'),
+        ],
       },
-      assetsInlineLimit: 16384,
-      minify
+      assetsInlineLimit: 8192,
+      minify,
     },
 
     resolve: {
@@ -42,8 +45,8 @@ export default ({ mode }) => {
   })
 }
 
-function getLegacyPlugin(env) {
+function getLegacyPlugin (env) {
   return env.VITE_USER_NODE_ENV === 'development' ? null : legacy({
-      targets: '> 0.25%, not dead, android 4.4.4, ios 7',
-    })
+    targets: '> 0.25%, not dead, android 4.4.4, ios 7',
+  })
 }

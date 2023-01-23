@@ -4,10 +4,10 @@
     height: 32px;
 
     &.info {
-      background-image: url('@common/styles/icons/msg_info.png');
+      background-image: url('@common/img/msg_info.png');
     }
     &.warn {
-      background-image: url('@common/styles/icons/msg_warning.png');
+      background-image: url('@common/img/msg_warning.png');
     }
   }
 }

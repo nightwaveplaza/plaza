@@ -7,7 +7,7 @@
         </div>
 
         <div class="col-auto d-none d-sm-block pr-3">
-          <img alt="" class="img-key" height="48" src="/img/win/key.png" width="45"/>
+          <img alt="" class="img-key" height="48" src="@common/img/key.png" width="45"/>
         </div>
 
         <div class="col pl-0 pr-2">

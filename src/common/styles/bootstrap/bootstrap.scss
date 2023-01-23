@@ -1,0 +1,25 @@
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+$spacer: 16px !default;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+@import "bootstrap/scss/mixins/breakpoints";
+@import "bootstrap/scss/mixins/grid-framework";
+@import "bootstrap/scss/mixins/grid";
+
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/utilities/display";
+@import "bootstrap/scss/utilities/flex";
+@import "bootstrap/scss/utilities/spacing";
+@import "bootstrap/scss/utilities/sizing";

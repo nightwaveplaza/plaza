@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {Native} from '@mobile/bridge/native';
-import playerStore from '@common/store/player';
-import windowStore from '@common/store/window';
-import backgroundStore from '@common/store/background';
-import userStore from '@common/store/user';
+import playerStore from '@common/js/store/player';
+import windowStore from '@common/js/store/window';
+import backgroundStore from '@common/js/store/background';
+import userStore from '@common/js/store/user';
 
 Vue.use(Vuex);
 

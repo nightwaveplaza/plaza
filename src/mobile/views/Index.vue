@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import {Background} from '@common/extras/background';
+import {Background} from '@common/js/extras/background';
 import {mapGetters} from 'vuex';
-import settings from '@common/extras/settings';
+import settings from '@common/js/extras/settings';
 import {Native} from '@mobile/bridge/native';
 
 export default {

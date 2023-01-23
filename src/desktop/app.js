@@ -1,12 +1,12 @@
 import { createApp, h } from 'vue'
-import ticker from '@common/extras/ticker'
-import App from '@desktop/views/App'
-import { router } from '@desktop/router'
-import { store } from '@desktop/store'
-import { commonComponents } from '@common/components'
-import { commonWindows } from '@common/windows'
-import { desktopComponents } from '@desktop/components'
-import { desktopWindows } from '@desktop/windows'
+import ticker from '@common/js/extras/ticker.js'
+import { router } from '@desktop/js/router'
+import store from '@desktop/js/store'
+import { commonComponents } from '@common/js/components'
+import { commonWindows } from '@common/js/windows'
+import { desktopComponents } from '@desktop/js/components'
+import { desktopWindows } from '@desktop/js/windows'
+import App from '@desktop/js/views/App.vue'
 // import { windowsMixin} from '@common/mixins/windows'
 
 const app = createApp({
@@ -21,7 +21,7 @@ const app = createApp({
     },
   },
 
-  render: ()=>h(App)
+  render: () => h(App),
 })
 
 app.use(router)

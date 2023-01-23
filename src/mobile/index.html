@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Nightwave Plaza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="@mobile/styles/dist.scss">
+    <link rel="stylesheet" type="text/css" href="@mobile/styles/app.scss">
+    <script src="@mobile/app.js" type="module"></script>
+</head>
+<body>
+<div id="app">
+    <app></app>
+</div>
+<script>
+  window['plaza'] = {
+    vue: {},
+
+    push: function(action, data) {
+      if (action === 'openWindow') {
+        this.vue.openWindow(data.window);
+      }
+
+      if (action === 'closeWindow') {
+        this.vue.closeWindow(data.window);
+      }
+
+      this.vue.pushData(action, data);
+    }
+  };
+</script>
+</body>
+</html>

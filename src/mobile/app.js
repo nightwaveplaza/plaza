@@ -1,44 +1,49 @@
-import Vue from 'vue';
-import ticker from '@common/extras/ticker';
-import store from '@mobile/store';
-import {Native} from '@mobile/bridge/native';
+import { createApp, h } from 'vue'
+import { useStore } from 'vuex'
+import store from '@mobile/js/store.js'
+import ticker from '@common/js/extras/ticker.js'
+import Index from '@mobile/js/views/Index.vue'
 
-// Mobile components and windows
-import '@common/components';
-import '@common/windows';
-import '@mobile/components';
-import '@mobile/windows';
+import { commonComponents } from '@common/js/components'
+import { commonWindows } from '@common/js/windows'
+import { mobileComponents } from '@mobile/js/components'
+import { mobileWindows } from '@mobile/js/windows'
 
-Vue.component('app', require('@mobile/views/Index').default);
-Vue.mixin(require('@common/mixins/helpers').default);
-Vue.mixin(require('@common/mixins/windows').default);
-
-window.Vue = new Vue({
-  store,
-
-  created() {
-    window.plaza.vue = this;
+const app = createApp({
+  mounted () {
+    requestAnimationFrame(this.tick)
   },
 
-  async mounted() {
-    requestAnimationFrame(this.tick);
-
-    // Load token
-    const token = await Native.getAuthToken();
-    const userAgent = await Native.getUserAgent();
-    this.$store.commit('user/token', token);
-    this.$store.commit('user/agent', userAgent);
+  created () {
+    window['plaza'].vue = this
   },
 
   methods: {
-    pushData(name, data) {
-      this.$store.commit('pushData', {name, data});
+    tick () {
+      ticker.tick()
+      requestAnimationFrame(this.tick)
     },
 
-    tick() {
-      ticker.tick();
-      requestAnimationFrame(this.tick);
+    pushData (name, data) {
+      this.$store.commit('pushData', { name, data })
     },
+
+    openWindow(name) {
+      this.$store.dispatch('windows/open', { name })
+    },
+
+    closeWindow(name) {
+      this.$store.dispatch('windows/close', name)
+    }
   },
-}).$mount('#app');
 
+  render: () => h(Index),
+})
+
+app.use(store)
+commonComponents(app)
+commonWindows(app)
+mobileComponents(app)
+mobileWindows(app)
+app.component('app', Index)
+app.mount('#app')

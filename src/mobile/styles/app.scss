@@ -1,0 +1,54 @@
+@import "@common/styles/base.scss";
+@import "@common/styles/content.scss";
+@import "@common/styles/pagination.scss";
+@import "@common/styles/utils.scss";
+
+@import "@common/styles/windows/about.scss";
+@import "@common/styles/windows/alert.scss";
+@import "windows/loading";
+@import "@common/styles/windows/news.scss";
+@import "@common/styles/windows/player.scss";
+@import "@common/styles/windows/ratings.scss";
+@import "@common/styles/windows/settings-background.scss";
+@import "@common/styles/windows/song-info.scss";
+@import "@common/styles/windows/support.scss";
+@import "@common/styles/windows/user-favorites.scss";
+@import "@common/styles/windows/user-login.scss";
+@import "@common/styles/windows/user-register.scss";
+
+.btn-start {
+  background-image: url('@mobile/styles/icons/windows-0.png') !important;
+  background-size: 21px 21px !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+/**
+Android
+ */
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.win98 {
+  input {
+    font-size: 12px;
+
+    &:focus {
+      outline: none;
+      border: 1px #000000 dashed;
+    }
+  }
+
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+.statusbar table {
+  font-size: 12px;
+}

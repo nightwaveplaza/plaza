@@ -14,14 +14,14 @@
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-6 pr-0">
             <div class="text-field p-0 m-0 player-time-container">
-              <win-player-time ref="time"/>
+              <win-player-time/>
             </div>
           </div>
         </div>
 
         <div class="row no-gutters">
           <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pr-2">
-            <win-btn class="player-play" block @click="play()">{{ playText }}</win-btn>
+            <win-btn class="player-play" block @click="play">{{ playText }}</win-btn>
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
@@ -46,24 +46,25 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { Native } from '@mobile/js/bridge/native'
-import { computed } from 'vue'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 const store = useStore()
 
 // Composable
-const { openWindow2 } = windowsComposable()
+const { openWindow2, closeWindow2 } = windowsComposable()
 
 // Reactive data
 const currentSong = computed(() => store.getters['player/currentSong'])
 const isPlaying = computed(() => store.getters['isPlaying'])
 const sleepTime = computed(() => store.getters['sleepTime'])
 const artwork = computed(() => {
-  return currentSong.value.id && currentSong.value.artwork_src
-      ? currentSong.value.artwork_src
-      : 'https://i.plaza.one/dead.jpg'
+  if (currentSong.value.id && currentSong.value.artwork_src)
+    return currentSong.value.artwork_src
+  else
+    return 'https://i.plaza.one/dead.jpg'
 })
 const playText = computed(() => isPlaying.value ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')

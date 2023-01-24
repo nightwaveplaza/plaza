@@ -25,7 +25,7 @@ const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / 
 
 // Non-reactive
 let position = 0
-let songUpdated = 0
+let songUpdatedAt = 0
 let tickerId = 0
 
 // Methods
@@ -41,14 +41,13 @@ function resetTimer () {
 
 function tick () {
   const now = Date.now()
-  const correctedPosition = Math.floor((now - songUpdated) / 1000) + position
+  let correctedPosition = Math.floor((now - songUpdatedAt) / 1000) + position
+  if (correctedPosition > length.value) {
+    length.value = correctedPosition
+  }
 
-  if (songUpdated && length.value - actualPosition.value > 0) {
+  if (songUpdatedAt) {
     actualPosition.value = correctedPosition
-    //
-    // if (this.position < this.length) {
-    //   this.position += 1;
-    // }
   }
 
   if (textTime.value > 0) {
@@ -62,9 +61,9 @@ onMounted(() => {
 
   store.subscribe((mutation, state) => {
     if (mutation.type === 'player/currentSong') {
-      position = state.player.song.position
       length.value = state.player.song.length
-      songUpdated = Date.now()
+      position = state.player.song.position
+      songUpdatedAt = Date.now()
     }
   })
 })

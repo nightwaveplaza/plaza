@@ -7,7 +7,7 @@ import { userStore } from '@common/js/store/user'
 
 const cookieApi = Cookies.withAttributes({
   path: '/',
-  secure: true
+  secure: true,
 })
 
 export default createStore({
@@ -38,6 +38,5 @@ export default createStore({
 
   getters: {
     token: () => cookieApi.get('token'),
-    viewVersion: () => process.env.version,
   },
 })

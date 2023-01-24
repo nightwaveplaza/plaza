@@ -12,7 +12,6 @@ export default ({ mode }) => {
   const minify = process.env.VITE_USER_NODE_ENV !== 'development'
 
   return defineConfig({
-
     plugins: [
       vue(), splitVendorChunkPlugin(), getLegacyPlugin(process.env),
     ],
@@ -27,12 +26,13 @@ export default ({ mode }) => {
       manifest: false,
       rollupOptions: {
         input: '/index.html',
-        external: [
-          resolve(__dirname, 'src/common/public/img/ball.png'),
-        ],
       },
-      assetsInlineLimit: 8192,
+      assetsInlineLimit: 4096,
       minify,
+    },
+
+    define: {
+      __APP_VERSION__: getBuildDate(),
     },
 
     resolve: {
@@ -49,4 +49,8 @@ function getLegacyPlugin (env) {
   return env.VITE_USER_NODE_ENV === 'development' ? null : legacy({
     targets: '> 0.25%, not dead, android 4.4.4, ios 7',
   })
+}
+
+function getBuildDate () {
+  return new Date().toISOString().slice(0, 10).replace(/-/g, '')
 }

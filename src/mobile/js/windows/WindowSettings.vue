@@ -42,6 +42,6 @@ function open(window) {
 }
 
 onMounted(() => {
-  Native.getAudioQuality.then(q => audioQuality.value = q)
+  Native.getAudioQuality().then(q => audioQuality.value = q)
 })
 </script>

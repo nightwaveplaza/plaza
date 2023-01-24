@@ -50,7 +50,7 @@
                 <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
               </p>
               <p class="mt-2">
-                View build: {{ viewVersion }}
+                Build date: __APP_VERSION__
               </p>
             </win-memo>
           </div>
@@ -76,17 +76,13 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useStore } from 'vuex'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 const store = useStore()
 
 // Composable
-const {openWindow2, closeWindow2} = windowsComposable('about')
-
-// Reactive data
-const viewVersion = computed(() => store.getters.viewVersion)
+const { openWindow2, closeWindow2 } = windowsComposable('about')
 
 // Methods
 const openCredits = () => {

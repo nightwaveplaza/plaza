@@ -45,12 +45,12 @@ function updateOsd () {
   if (updating) return
   updating = true
 
-  status.getOsd().then(data => {
-    if (data[0] !== currentSong.value.id) {
+  status.getOsd().then(res => {
+    if (res.data[0] !== currentSong.value.id) {
       requestUpdate()
     } else {
-      store.commit('player/listeners', data[1])
-      store.commit('player/reactions', data[2])
+      store.commit('player/listeners', res.data[1])
+      store.commit('player/reactions', res.data[2])
     }
   }).catch(err => console.log(`Failed to update status: ${err}`)).finally(() => {
     updating = false
@@ -59,21 +59,13 @@ function updateOsd () {
 }
 
 function setStatus (status) {
-  if (JSON.stringify(status) === '{}' || status.updated === 0 || status.id === '') {
+  if (JSON.stringify(status) === '{}' || status.id === '') {
     return
   }
 
   // If song has been changed
   if (status.id !== currentSong.value.id) {
-    store.commit('player/currentSong', {
-      id: status.id,
-      artist: status.artist,
-      title: status.title,
-      position: status.position,
-      length: status.length,
-      artwork_src: status.artwork_src,
-      reactions: status.likes,
-    })
+    store.commit('player/currentSong', status)
     store.commit('player/listeners', status.listeners)
     osdUpdatedAt = Date.now()
   }

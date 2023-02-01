@@ -13,7 +13,9 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [
-      vue(), splitVendorChunkPlugin(), getLegacyPlugin(process.env),
+      vue(),
+      // getSplitVendorChunkPlugin(process.env),
+      getLegacyPlugin(process.env)
     ],
 
     root,
@@ -25,8 +27,9 @@ export default ({ mode }) => {
       emptyOutDir: true,
       manifest: false,
       rollupOptions: {
-        input: '/index.html',
+        input: '/index.html'
       },
+      // target: 'es2015',
       assetsInlineLimit: 4096,
       minify,
     },
@@ -46,9 +49,21 @@ export default ({ mode }) => {
 }
 
 function getLegacyPlugin (env) {
-  return env.VITE_USER_NODE_ENV === 'development' ? null : legacy({
-    targets: '> 0.25%, not dead, android 4.4.4, ios 7',
-  })
+  if (env.VITE_USER_NODE_ENV === 'development')
+    return null
+  else
+    return legacy({
+      targets: 'defaults, android >= 4.4.4, ios >= 7',
+      externalSystemJS: true
+    })
+}
+
+function getSplitVendorChunkPlugin (env) {
+  if (env.VITE_APP === 'mobile') {
+    return null
+  } else {
+    return splitVendorChunkPlugin()
+  }
 }
 
 function getBuildDate () {

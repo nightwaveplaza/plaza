@@ -43,7 +43,7 @@ function tick () {
   const now = Date.now()
   let correctedPosition = Math.floor((now - songUpdatedAt) / 1000) + position
   if (correctedPosition > length.value) {
-    length.value = correctedPosition
+    correctedPosition = length.value
   }
 
   if (songUpdatedAt) {

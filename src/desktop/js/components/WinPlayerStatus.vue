@@ -1,7 +1,7 @@
 <template/>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { status } from '@common/js/api/api'
 
@@ -24,6 +24,8 @@ function tick () {
     updateStatus()
   } else if (now - osdUpdatedAt > OSD_UPDATE_INTERVAL) {
     updateOsd()
+  } else {
+    setTimeout(tick, 1000)
   }
 }
 

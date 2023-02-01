@@ -7,7 +7,6 @@ import { commonWindows } from '@common/js/windows'
 import { desktopComponents } from '@desktop/js/components'
 import { desktopWindows } from '@desktop/js/windows'
 import App from '@desktop/js/views/App.vue'
-// import { windowsMixin} from '@common/mixins/windows'
 
 const app = createApp({
   mounted () {

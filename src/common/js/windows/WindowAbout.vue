@@ -37,9 +37,9 @@
               </p>
               <p class="mt-2">
                 <b>Streams</b><br/>
-                <a href="http://radio.plaza.one/opus" target="_blank">http://radio.plaza.one/opus</a> (opus /
+                <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus /
                 96kbps)<br/>
-                <a href="http://radio.plaza.one/opus_low" target="_blank">http://radio.plaza.one/opus_low</a> (opus /
+                <a href="http://radio.plaza.one/ogg_low" target="_blank">http://radio.plaza.one/ogg_low</a> (opus /
                 64kbps)<br/>
                 <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
                 <a href="http://radio.plaza.one/mp3_low" target="_blank">http://radio.plaza.one/mp3_low</a> (mp3 /

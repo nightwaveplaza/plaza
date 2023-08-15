@@ -7,7 +7,7 @@ import legacy from '@vitejs/plugin-legacy'
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const base = process.env.VITE_APP === 'mobile' ? '' : '/'
+  // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
   const root = resolve(__dirname, 'src/' + process.env.VITE_APP)
   const minify = process.env.VITE_USER_NODE_ENV !== 'development'
 
@@ -19,7 +19,7 @@ export default ({ mode }) => {
     ],
 
     root,
-    base,
+    base: '/',
     publicDir: 'public',
     envDir: resolve(__dirname),
     build: {

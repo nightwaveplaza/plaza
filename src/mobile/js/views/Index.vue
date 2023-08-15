@@ -65,5 +65,11 @@ onMounted(() => {
 
   themeChanged(settings.load('theme'));
   Background.loadOnStartup().then(bg => setBackground(bg))
+
+  store.subscribe((mutation) => {
+    if (mutation.type === 'pushData' && mutation.payload.name === 'resume') {
+      Background.loadOnStartup().then(bg => setBackground(bg))
+    }
+  })
 })
 </script>

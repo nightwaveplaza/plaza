@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { Native } from '@mobile/js/bridge/native'
 import windowsComposable from '@common/js/composables/windowsComposable'
@@ -57,6 +57,7 @@ const store = useStore()
 const { openWindow2, closeWindow2 } = windowsComposable()
 
 // Reactive data
+const isBuffering = ref(false)
 const currentSong = computed(() => store.getters['player/currentSong'])
 const isPlaying = computed(() => store.getters['isPlaying'])
 const sleepTime = computed(() => store.getters['sleepTime'])
@@ -66,19 +67,37 @@ const artwork = computed(() => {
   else
     return 'https://i.plaza.one/dead.jpg'
 })
-const playText = computed(() => isPlaying.value ? 'Stop' : 'Play')
+const playText = computed(() => isBuffering.value ? 'Loading...' : isPlaying.value ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {
-  if (!isPlaying.value) {
-    Native.audioPlay()
-  } else {
-    Native.audioStop()
+  if (isPlaying.value) {
     closeWindow2('player-timer')
   }
+  Native.audioPlay()
 }
 
 function openDrawer () {
   Native.openDrawer()
 }
+
+onMounted(() => {
+  store.subscribe((mutation, state) => {
+    if (mutation.type === 'pushData') {
+
+      if (mutation.payload.name === 'isPlaying') {
+        isBuffering.value = false
+        store.commit('isPlaying', state.data.isPlaying)
+      }
+
+      if (mutation.payload.name === 'isBuffering') {
+        isBuffering.value = true
+      }
+
+      if (mutation.payload.name === 'sleepTime') {
+        store.commit('sleepTime', state.data.sleepTime)
+      }
+    }
+  })
+})
 </script>

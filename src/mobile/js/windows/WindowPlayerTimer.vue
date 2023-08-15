@@ -60,7 +60,7 @@ const { closeWindow2 } = windowsComposable('player-timer')
 const minutes = ref(20)
 const timeText = ref(0)
 const sleepTime = computed(() => store.getters['sleepTime'])
-const active = computed(() => sleepTime.value !== 0)
+const active = computed(() => sleepTime.value !== 0 ?? sleepTime.value > Date.now())
 const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
 
 // Non-reactive
@@ -70,12 +70,15 @@ let tickerId = 0
 function start() {
   if (active.value) {
     Native.setSleepTimer(0);
+    store.commit('sleepTime', 0)
   } else {
-    add(0); // hack: make minutes integer
+    add(0); // hack: make minutes integer // wtf is this
+    const sleepTime = Date.now() + (minutes.value * 60 * 1000)
+    store.commit('sleepTime', sleepTime)
     Native.setSleepTimer(minutes.value);
   }
 
-  this.closeWindow();
+  closeWindow2()
 }
 
 function refreshText() {

@@ -52,7 +52,6 @@ export default createStore({
 
     async setToken (context, token) {
       context.commit('user/token', token)
-      await Native.setAuthToken(token)
     },
 
     async setReactionNative (context, score) {

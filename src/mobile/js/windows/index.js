@@ -5,7 +5,6 @@ import WindowSettings from '@mobile/js/windows/WindowSettings.vue'
 
 export const mobileWindows = (app) => {
   app.component('window-donate', WindowDonate)
-  app.component('window-loading', WindowLoading)
   app.component('window-player', WindowPlayer)
   app.component('window-player-timer', WindowPlayerTimer)
   app.component('window-settings', WindowSettings)

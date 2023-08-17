@@ -1,5 +1,11 @@
 <template>
   <div :style="styles" class="app-desktop" :class="theme">
+    <div class="video-frame" :style="{'visibility': videoSrc !== '' ? 'visible ' : 'hidden'}">
+      <video autoplay ref="video" muted loop>
+        <source :src="videoSrc" />
+      </video>
+    </div>
+
     <window-player/>
 
     <window-about v-if="isWindowOpen('about')"/>
@@ -39,24 +45,31 @@ const store = useStore()
 
 // Reactive data
 const styles = ref({
-  backgroundImage: '',
+  // backgroundImage: '',
   backgroundColor: '#008080',
 })
+const videoSrc = ref('')
 const theme = ref('theme-win98')
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 const token = computed(() => store.getters['token'])
 
 // Refs
+const video = ref(null)
 const newsLoader = ref(null)
 
 // Methods
 function setBackground (bg) {
   if (bg.mode === 2) {
-    styles.value.backgroundImage = ''
+    videoSrc.value = ''
+    // styles.value.backgroundImage = ''
     styles.value.backgroundColor = bg.color
   } else {
-    styles.value.backgroundImage = `url('${bg.image.src}')`
-    styles.value.backgroundColor = ''
+
+    videoSrc.value = bg.image.video_src
+    video.value.load()
+    video.value.play()
+    // styles.value.backgroundImage = `url('${bg.image.src}')`
+    // styles.value.backgroundColor = ''
   }
 }
 

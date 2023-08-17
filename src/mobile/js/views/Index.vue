@@ -1,11 +1,5 @@
 <template>
   <div :class="theme" :style="styles" class="app-desktop">
-    <div class="video-frame" :style="{'visibility': videoSrc !== '' ? 'visible ' : 'hidden'}">
-      <video autoplay playsinline ref="video" muted loop>
-        <source :src="videoSrc" />
-      </video>
-    </div>
-
     <window-loading v-if="loading"/>
     <window-player v-show="!loading"/>
     <window-player-timer v-if="isWindowOpen('player-timer')"/>
@@ -45,33 +39,19 @@ import {Native} from '@mobile/js/bridge/native';
 
 const store = useStore()
 
-// Reactive data
+// Reactive date
 const styles = ref({
-  backgroundColor: '#008080'
+  backgroundColor: 'transparent'
 })
-const videoSrc = ref('')
 const theme = ref('theme-win98')
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 const currentSong = computed(() => store.getters['player/currentSong'])
 const loading = computed(() => currentSong.value.id === '')
-const video = ref(null)
 
 // Methods
 function setBackground(bg) {
-  if (bg.mode === 2) {
-    videoSrc.value = ''
-    // styles.value.backgroundImage = ''
-    styles.value.backgroundColor = bg.color
-  } else {
-
-    videoSrc.value = bg.image.video_src
-    video.value.load()
-    video.value.play()
-    // styles.value.backgroundImage = `url('${bg.image.src}')`
-    // styles.value.backgroundColor = ''
-  }
-  // styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent';
-  //Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.video_src);
+  styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent';
+  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.video_src);
 }
 
 function themeChanged(newTheme) {

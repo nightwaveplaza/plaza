@@ -1,7 +1,7 @@
 <template>
   <div :style="styles" class="app-desktop" :class="theme">
     <div class="video-frame" :style="{'visibility': videoSrc !== '' ? 'visible ' : 'hidden'}">
-      <video autoplay ref="video" muted loop>
+      <video autoplay playsinline ref="video" muted loop>
         <source :src="videoSrc" />
       </video>
     </div>

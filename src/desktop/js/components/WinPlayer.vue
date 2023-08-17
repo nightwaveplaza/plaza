@@ -81,7 +81,7 @@ const auth = computed(() => store.getters['user/auth'])
 const currentSong = computed(() => store.getters['player/currentSong'])
 const artwork = computed(() => {
   if (currentSong.value.id && currentSong.value.artwork_src) return currentSong.value.artwork_src
-  else return 'https://i.plaza.one/dead.jpg'
+  else return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => {
   if (state.value === STATE_IDLE) return 'Play'

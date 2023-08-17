@@ -65,7 +65,7 @@ const artwork = computed(() => {
   if (currentSong.value.id && currentSong.value.artwork_src)
     return currentSong.value.artwork_src
   else
-    return 'https://i.plaza.one/dead.jpg'
+    return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => isBuffering.value ? 'Loading...' : isPlaying.value ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')

@@ -6,7 +6,8 @@
       </video>
     </div>
 
-    <window-player/>
+    <window-loading v-if="loading"/>
+    <window-player v-show="!loading"/>
 
     <window-about v-if="isWindowOpen('about')"/>
     <window-credits v-if="isWindowOpen('credits')"/>
@@ -52,6 +53,7 @@ const videoSrc = ref('')
 const theme = ref('theme-win98')
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 const token = computed(() => store.getters['token'])
+const loading = computed(() => store.getters['player/currentSong'].id === '')
 
 // Refs
 const video = ref(null)

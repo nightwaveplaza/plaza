@@ -1,5 +1,4 @@
 import WindowDonate from '@mobile/js/windows/WindowDonate.vue'
-import WindowLoading from '@mobile/js/windows/WindowLoading.vue'
 import WindowPlayer from '@mobile/js/windows/WindowPlayer.vue'
 import WindowPlayerTimer from '@mobile/js/windows/WindowPlayerTimer.vue'
 import WindowSettings from '@mobile/js/windows/WindowSettings.vue'

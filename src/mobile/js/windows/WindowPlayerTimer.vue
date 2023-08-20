@@ -58,7 +58,7 @@ const { closeWindow2 } = windowsComposable('player-timer')
 
 // Reactive data
 const minutes = ref(20)
-const timeText = ref(0)
+const timeText = ref("Not set")
 const sleepTime = computed(() => store.getters['sleepTime'])
 const active = computed(() => sleepTime.value !== 0 ?? sleepTime.value > Date.now())
 const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
@@ -82,8 +82,8 @@ function start() {
 }
 
 function refreshText() {
-  const t = (sleepTime.value - Date.now()) / 1000;
-  timeText.value = t < 0 ? '00:00' : dur(t);
+  const t = sleepTime.value - Date.now()
+  timeText.value = t < 0 ? "Not set" : new Date(t).toISOString().substring(11, 19);
 }
 
 function add(amount) {

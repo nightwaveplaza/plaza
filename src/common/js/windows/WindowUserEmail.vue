@@ -15,7 +15,7 @@
           <win-btn block class="text-bold" @click="update">Change</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow2">Close</win-btn>
+          <win-btn block @click="closeWindow">Close</win-btn>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import { useStore } from 'vuex'
 
 // Composable
-const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-email')
+const { alert2, closeWindow, openWindow } = windowsComposable('user-email')
 
 const store = useStore()
 
@@ -49,7 +49,7 @@ function fetchUser () {
     disabled.value = false
   }).catch(err => {
     alert2('Can\'t fetch user data.', 'Failed')
-    closeWindow2()
+    closeWindow()
   })
 }
 
@@ -62,7 +62,7 @@ function update () {
 
   user.edit(fields).then(() => {
     alert2('Email has changed!', 'Success', 'info')
-    closeWindow2()
+    closeWindow()
   }).catch(error => {
     alert2(error.response.data.error, 'Error')
   }).finally(() => {

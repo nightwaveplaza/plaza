@@ -11,7 +11,7 @@
 
       <div class="row no-gutters justify-content-center">
         <div class="col-6">
-          <win-btn block @click="closeWindow2">Close</win-btn>
+          <win-btn block @click="closeWindow">Close</win-btn>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@ import { computed, onMounted, ref } from 'vue'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 // Composable
-const { openWindow2, closeWindow2 } = windowsComposable('settings')
+const { openWindow, closeWindow } = windowsComposable('settings')
 
 // Reactive data
 const audioQuality = ref(0)
@@ -37,8 +37,8 @@ function switchAudioQuality() {
 }
 
 function open(window) {
-  openWindow2(window);
-  closeWindow2();
+  openWindow(window);
+  closeWindow();
 }
 
 onMounted(() => {

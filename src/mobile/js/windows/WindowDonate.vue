@@ -14,7 +14,7 @@
       </div>
 
       <div class="text-center mt-2">
-        <win-btn class="mx-auto px-4" @click="closeWindow2">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="closeWindow">Close</win-btn>
       </div>
     </div>
   </win-window>
@@ -23,5 +23,5 @@
 <script setup>
 import windowsComposable from '@common/js/composables/windowsComposable'
 
-const { closeWindow2 } = windowsComposable('donate')
+const { closeWindow } = windowsComposable('donate')
 </script>

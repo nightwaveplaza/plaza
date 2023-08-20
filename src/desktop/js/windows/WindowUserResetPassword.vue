@@ -43,7 +43,7 @@ const props = defineProps({
 })
 
 // Composable
-const { closeWindow2, alert2 } = windowsComposable('user-reset-password')
+const { closeWindow, alert2 } = windowsComposable('user-reset-password')
 
 // Reactive data
 const password = ref('')
@@ -61,7 +61,7 @@ function change () {
 
   user.confirmReset({ token: props.token, password: password.value }).then(() => {
     alert2('Password has changed.', 'Success', 'info')
-    closeWindow2()
+    closeWindow()
   }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => sending = false)
 }
 

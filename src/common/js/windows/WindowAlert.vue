@@ -11,7 +11,7 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="closeWindow2">OK</win-btn>
+        <win-btn class="mt-2 mx-auto px-4" @click="closeWindow">OK</win-btn>
       </div>
     </div>
   </win-window>
@@ -27,5 +27,5 @@ const props = defineProps({
   type: String,
 })
 
-const { closeWindow2 } = windowsComposable(props.name)
+const { closeWindow } = windowsComposable(props.name)
 </script>

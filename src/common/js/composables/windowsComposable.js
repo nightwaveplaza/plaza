@@ -7,7 +7,7 @@ export default function (windowName) {
    * Open window
    * @param name
    */
-  function openWindow2 (name) {
+  function openWindow (name) {
     store.dispatch('windows/open', { name }).then()
   }
 
@@ -15,7 +15,7 @@ export default function (windowName) {
    * Close window
    * @param name
    */
-  function closeWindow2 (name) {
+  function closeWindow (name) {
     if (name) {
       store.dispatch('windows/close', name).then()
     } else {
@@ -43,5 +43,5 @@ export default function (windowName) {
     store.dispatch('windows/open', { name: 'song-' + id, id }).then()
   }
 
-  return { openWindow2, closeWindow2, alert2, songInfo2 }
+  return { openWindow, closeWindow, alert2, songInfo2 }
 }

@@ -18,7 +18,7 @@
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow2">Close</win-btn>
+              <win-btn block @click="closeWindow">Close</win-btn>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@ import { user } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 // Composable
-const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-reset')
+const { alert2, closeWindow, openWindow } = windowsComposable('user-reset')
 
 // Reactive data
 const fields = reactive({
@@ -57,7 +57,7 @@ function reset () {
 
   user.reset(fields).then(() => {
     alert2('Instructions have been sent to your email.', 'Success', 'info')
-    closeWindow2()
+    closeWindow()
   }).catch(err => {
     alert2(err.response.data.error, 'Error')
     captcha.value.refresh()

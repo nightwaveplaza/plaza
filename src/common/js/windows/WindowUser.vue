@@ -7,7 +7,7 @@
           <win-btn block class="mb-2" @click="open('user-email')">Change Email</win-btn>
           <win-btn block class="mb-2" @click="open('user-password')">Change Password</win-btn>
           <win-btn block class="mb-2" @click="logout">Logout</win-btn>
-          <win-btn block class="close mt-2 mx-auto" @click="closeWindow2">Close</win-btn>
+          <win-btn block class="close mt-2 mx-auto" @click="closeWindow">Close</win-btn>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
-const { closeWindow2, openWindow2 } = windowsComposable('user')
+const { closeWindow, openWindow } = windowsComposable('user')
 const { isMobile } = helperComposable()
 
 // Store
@@ -29,14 +29,14 @@ const store = useStore()
 
 // Methods
 function open (window) {
-  openWindow2(window)
-  closeWindow2()
+  openWindow(window)
+  closeWindow()
 }
 
 function logout () {
   user.logout().then().finally(() => {
     store.dispatch('logout')
-    closeWindow2()
+    closeWindow()
   })
 }
 </script>

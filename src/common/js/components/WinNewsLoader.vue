@@ -14,7 +14,7 @@ const store = useStore()
 
 // Composable
 const { isMobile } = helperComposable()
-const { openWindow2 } = windowsComposable('about')
+const { openWindow } = windowsComposable('about')
 
 // Reactive data
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
@@ -27,7 +27,7 @@ function loadNews () {
   news.latest().then(result => {
     const latestNews = settings.load('latestNews')
     if (latestNews < result.data.updated_at) {
-      openWindow2('news')
+      openWindow('news')
     }
   })
 }

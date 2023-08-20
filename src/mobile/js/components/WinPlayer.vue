@@ -25,7 +25,7 @@
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-btn block @click="openWindow2('player-timer')">
+            <win-btn block @click="openWindow('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-btn>
           </div>
@@ -54,7 +54,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const store = useStore()
 
 // Composable
-const { openWindow2, closeWindow2 } = windowsComposable()
+const { openWindow, closeWindow } = windowsComposable()
 
 // Reactive data
 const isBuffering = ref(false)
@@ -72,7 +72,7 @@ const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {
   if (isPlaying.value) {
-    closeWindow2('player-timer')
+    closeWindow('player-timer')
   }
   Native.audioPlay()
 }

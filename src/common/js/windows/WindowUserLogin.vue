@@ -53,7 +53,7 @@
         <div class="col-auto col-sm-2 p-0 login-buttons">
           <win-btn class="mb-2 text-bold" @click="login">Sign In</win-btn>
           <win-btn class="mb-2" @click="openRegister">Register</win-btn>
-          <win-btn @click="closeWindow2">Cancel</win-btn>
+          <win-btn @click="closeWindow">Cancel</win-btn>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
 const { isMobile } = helperComposable()
-const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-login')
+const { alert2, closeWindow, openWindow } = windowsComposable('user-login')
 
 const store = useStore()
 
@@ -99,7 +99,7 @@ function login () {
     }
 
     alert2('Authentication successful!', 'Success', 'info')
-    closeWindow2()
+    closeWindow()
   })
   .catch(err => alert2(err.response.data.error, 'Failed'))
   .finally(() => sending = false)
@@ -115,12 +115,12 @@ function validate () {
 }
 
 function openRegister () {
-  openWindow2('user-register')
-  closeWindow2()
+  openWindow('user-register')
+  closeWindow()
 }
 
 function openReset () {
-  openWindow2('user-reset')
-  closeWindow2()
+  openWindow('user-reset')
+  closeWindow()
 }
 </script>

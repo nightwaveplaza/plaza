@@ -110,7 +110,7 @@ const props = defineProps({
 })
 
 // Composable
-const { alert2, closeWindow2 } = windowsComposable('user-register')
+const { alert2, closeWindow } = windowsComposable('user-register')
 
 // Reactive data
 const fields = reactive({
@@ -199,7 +199,7 @@ function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    closeWindow2()
+    closeWindow()
   }
 }
 </script>

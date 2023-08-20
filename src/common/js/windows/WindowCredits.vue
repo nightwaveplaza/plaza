@@ -14,7 +14,7 @@
           authors and music labels. If you have any copyright issue, please let us know.</p>
       </win-memo>
       <div class="text-center my-2">
-        <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+        <win-btn class="px-4" @click="closeWindow">Close</win-btn>
       </div>
     </div>
   </win-window>
@@ -22,5 +22,5 @@
 
 <script setup>
 import windowsComposable from '@common/js/composables/windowsComposable'
-const { closeWindow2 } = windowsComposable('credits')
+const { closeWindow } = windowsComposable('credits')
 </script>

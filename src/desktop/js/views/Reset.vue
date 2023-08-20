@@ -18,7 +18,7 @@ const router = useRouter()
 const route = useRoute()
 
 // Composable
-const { openWindow2 } = windowsComposable()
+const { openWindow } = windowsComposable()
 
 // Reactive data
 const token = ref('')
@@ -34,9 +34,9 @@ watch(alerts, (n) => {
 onMounted(() => {
   if (route.params.token) {
     token.value = route.params.token
-    openWindow2('user-reset-password')
+    openWindow('user-reset-password')
   } else {
-    openWindow2('user-reset')
+    openWindow('user-reset')
   }
 })
 </script>

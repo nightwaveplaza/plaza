@@ -35,7 +35,7 @@
           <win-btn block class="text-bold" @click="start()">{{ btnText }}</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow2">Close</win-btn>
+          <win-btn block @click="closeWindow">Close</win-btn>
         </div>
       </div>
     </div>
@@ -43,9 +43,9 @@
 </template>
 
 <script setup>
-import {Native} from '@mobile/js/bridge/native';
+import { Native } from '@mobile/js/bridge/native'
 import { mapGetters, useStore } from 'vuex'
-import ticker from '@common/js/extras/ticker';
+import ticker from '@common/js/extras/ticker'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import helperComposable from '@common/js/composables/helperComposable'
 import windowsComposable from '@common/js/composables/windowsComposable'
@@ -54,11 +54,11 @@ const store = useStore()
 
 // Composable
 const { dur } = helperComposable()
-const { closeWindow2 } = windowsComposable('player-timer')
+const { closeWindow } = windowsComposable('player-timer')
 
 // Reactive data
 const minutes = ref(20)
-const timeText = ref("Not set")
+const timeText = ref('Not set')
 const sleepTime = computed(() => store.getters['sleepTime'])
 const active = computed(() => sleepTime.value !== 0 ?? sleepTime.value > Date.now())
 const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
@@ -67,29 +67,29 @@ const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
 let tickerId = 0
 
 // Methods
-function start() {
+function start () {
   if (active.value) {
-    Native.setSleepTimer(0);
+    Native.setSleepTimer(0)
     store.commit('sleepTime', 0)
   } else {
-    add(0); // hack: make minutes integer // wtf is this
+    add(0) // hack: make minutes integer // wtf is this
     const sleepTime = Date.now() + (minutes.value * 60 * 1000)
     store.commit('sleepTime', sleepTime)
-    Native.setSleepTimer(minutes.value);
+    Native.setSleepTimer(minutes.value)
   }
 
-  closeWindow2()
+  closeWindow()
 }
 
-function refreshText() {
+function refreshText () {
   const t = sleepTime.value - Date.now()
-  timeText.value = t < 0 ? "Not set" : new Date(t).toISOString().substring(11, 19);
+  timeText.value = t < 0 ? 'Not set' : new Date(t).toISOString().substring(11, 19)
 }
 
-function add(amount) {
-  let newMinutes = parseInt(minutes.value);
-  newMinutes = newMinutes ? minutes.value + amount : 0;
-  minutes.value = newMinutes <= 0 ? 1 : newMinutes;
+function add (amount) {
+  let newMinutes = parseInt(minutes.value)
+  newMinutes = newMinutes ? minutes.value + amount : 0
+  minutes.value = newMinutes <= 0 ? 1 : newMinutes
 }
 
 onMounted(() => {

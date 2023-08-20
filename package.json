@@ -6,8 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "watch": "vite build --watch",
-    "serve": "cd dist && php -S 127.0.0.1:8001"
+    "watch": "vite build --watch"
   },
   "devDependencies": {
     "@vue/compat": "^3.2.45",

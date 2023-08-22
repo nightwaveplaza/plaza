@@ -51,7 +51,7 @@ const loading = computed(() => currentSong.value.id === '')
 // Methods
 function setBackground(bg) {
   styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent';
-  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.video_src);
+  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.src);
 }
 
 function themeChanged(newTheme) {

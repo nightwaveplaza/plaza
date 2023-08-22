@@ -27,13 +27,13 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const { openWindow, closeWindow } = windowsComposable('settings')
 
 // Reactive data
-const audioQuality = ref(0)
-const quality = computed(() => audioQuality.value === 1 ? 'Eco' : 'High')
+const lowQualityAudio = ref(false)
+const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 
 // Methods
 function switchAudioQuality() {
-  audioQuality.value = +(!audioQuality.value);
-  Native.setAudioQuality(audioQuality.value);
+  lowQualityAudio.value = !lowQualityAudio.value;
+  Native.setAudioQuality(lowQualityAudio.value);
 }
 
 function open(window) {
@@ -42,6 +42,6 @@ function open(window) {
 }
 
 onMounted(() => {
-  Native.getAudioQuality().then(q => audioQuality.value = q)
+  Native.getAudioQuality().then(q => lowQualityAudio.value = q)
 })
 </script>

@@ -10,6 +10,7 @@ export default ({ mode }) => {
   // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
   const root = resolve(__dirname, 'src/' + process.env.VITE_APP)
   const minify = process.env.VITE_USER_NODE_ENV !== 'development'
+  const base = process.env.VITE_APP === 'mobile' ? '' : '/'
 
   return defineConfig({
     plugins: [
@@ -19,7 +20,7 @@ export default ({ mode }) => {
     ],
 
     root,
-    base: '/',
+    base,
     publicDir: 'public',
     envDir: resolve(__dirname),
     build: {

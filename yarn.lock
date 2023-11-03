@@ -2303,6 +2303,13 @@ vue-router@^4.1.6:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
+vue-turnstile@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-turnstile/-/vue-turnstile-1.0.1.tgz#551b402cc95e0d74bbb298d1e570169b83626c62"
+  integrity sha512-WegwpJg0OJQLZ7kkXN+vHvWfCiR6MT1hyS8lFhhpqOk+abxSfS74H0V/b9FGpqCpirRVOOmrGuzXnQWPPxzNGw==
+  dependencies:
+    vue "^3.2.45"
+
 vue@^3.2.45:
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.45.tgz#94a116784447eb7dbd892167784619fef379b3c8"

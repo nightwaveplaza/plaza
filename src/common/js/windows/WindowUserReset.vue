@@ -1,19 +1,24 @@
 <template>
-  <win-window ref="window" :width="250" name="user-reset" title="Reset password">
-    <div class="py-2">
-      <div class="row no-gutters">
-        <div class="col-10 offset-1">
-          <!-- Email -->
+  <win-window ref="window" :width="320" name="user-reset" title="Reset password">
+    <div class="p-2">
+
+      <p class="pb-3 px-3 text-center">Enter your email address and click the
+        button &mdash; an email will be sent to you with a link to reset your password.</p>
+
+      <!-- Email -->
+      <div class="row no-gutters mb-3">
+        <div class="col-6 offset-3">
           <label for="email">Enter your Email:</label>
-          <input id="email" v-model="fields.email" class="d-block mb-2" type="email"/>
+          <input id="email" v-model="fields.email" class="d-block" type="email"/>
+        </div>
+      </div>
 
-          <!-- Captcha -->
-          <label for="captcha">Captcha:</label>
-          <input id="captcha" v-model="fields.captcha" class="d-block mb-2" type="text"/>
-          <win-captcha ref="captcha" @refreshed="refreshCaptcha"/>
+      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha" />
 
-          <!-- Buttons -->
-          <div class="row mt-2 no-gutters justify-content-between">
+      <!-- Buttons -->
+      <div class="row no-gutters">
+        <div class="col-sm-8 offset-sm-2">
+          <div class="py-2 row no-gutters justify-content-between">
             <div class="col-6">
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
@@ -28,39 +33,49 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { user } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
+import VueTurnstile from 'vue-turnstile'
 
 // Composable
 const { alert2, closeWindow, openWindow } = windowsComposable('user-reset')
 
 // Reactive data
 const fields = reactive({
-  email: '',
-  key: '',
-  captcha: '',
+  email: ''
 })
 
 // Refs
-const captcha = ref(null)
+const showCaptcha = ref(false)
+const captchaResponse = ref('')
 
 // Non-reactive
 let sending = false
+
+watch(captchaResponse, (value) => {
+  setTimeout(() => {
+    completeCaptcha(value)
+  }, 2000)
+})
 
 function reset () {
   if (!validate() || sending) {
     return
   }
 
+  showCaptcha.value = true
+}
+
+function completeCaptcha() {
   sending = true
 
-  user.reset(fields).then(() => {
+  user.reset({...fields, captcha_response: captchaResponse.value}).then(() => {
     alert2('Instructions have been sent to your email.', 'Success', 'info')
     closeWindow()
   }).catch(err => {
+    showCaptcha.value = false
     alert2(err.response.data.error, 'Error')
-    captcha.value.refresh()
   }).finally(() => sending = false)
 }
 

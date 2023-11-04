@@ -27,7 +27,9 @@ function loadNews () {
   news.latest().then(result => {
     const latestNews = settings.load('latestNews')
     if (latestNews < result.data.updated_at) {
-      openWindow('news')
+      setTimeout(() => {
+        openWindow('news')
+      }, 3000)
     }
   })
 }

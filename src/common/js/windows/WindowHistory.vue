@@ -35,7 +35,7 @@
               <win-pagination v-if="items.length > 0" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
-const { alert2, closeWindow2, songInfo2 } = windowsComposable('history')
+const { alert2, closeWindow, songInfo2 } = windowsComposable('history')
 const { sd, gt } = helperComposable()
 
 // Reactive data

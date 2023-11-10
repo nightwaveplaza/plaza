@@ -31,7 +31,7 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+          <win-btn class="px-4" @click="closeWindow">Close</win-btn>
         </div>
       </div>
     </div>
@@ -41,5 +41,5 @@
 <script setup>
 import windowsComposable from '@common/js/composables/windowsComposable'
 
-const { closeWindow2 } = windowsComposable('mobile')
+const { closeWindow } = windowsComposable('mobile')
 </script>

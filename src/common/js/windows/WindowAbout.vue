@@ -65,7 +65,7 @@
               <win-btn class="px-4 mr-2" @click="openNews">News</win-btn>
             </div>
             <div class="col-auto ml-auto">
-              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
             </div>
           </div>
         </div>
@@ -82,16 +82,16 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const store = useStore()
 
 // Composable
-const { openWindow2, closeWindow2 } = windowsComposable('about')
+const { openWindow, closeWindow } = windowsComposable('about')
 
 // Methods
 const openCredits = () => {
-  openWindow2('credits')
-  closeWindow2()
+  openWindow('credits')
+  closeWindow()
 }
 
 const openNews = () => {
-  openWindow2('news')
-  closeWindow2()
+  openWindow('news')
+  closeWindow()
 }
 </script>

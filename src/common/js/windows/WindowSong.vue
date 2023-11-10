@@ -37,7 +37,7 @@
             <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+            <win-btn class="px-4" @click="closeWindow">Close</win-btn>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ const props = defineProps({
 })
 
 // Composable
-const { alert2, closeWindow2 } = windowsComposable(props.name)
+const { alert2, closeWindow } = windowsComposable(props.name)
 const { dur, sdy } = helperComposable()
 
 // Reactive data
@@ -88,7 +88,7 @@ function fetchSongInfo (songId) {
     song.value = result.data
   }).catch(error => {
     alert2(error.response.data.error, 'Error')
-    closeWindow2()
+    closeWindow()
   })
 }
 

@@ -19,7 +19,7 @@
               <win-btn block class="text-bold" @click="change">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow2">Close</win-btn>
+              <win-btn block @click="closeWindow">Close</win-btn>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const store = useStore()
 
 // Composable
-const { alert2, closeWindow2, openWindow2 } = windowsComposable('user-password')
+const { alert2, closeWindow, openWindow } = windowsComposable('user-password')
 
 // Reactive data
 const fields = reactive({
@@ -59,7 +59,7 @@ function change () {
   user.edit(fields).then(() => {
     store.dispatch('logout')
     alert2('Password has changed!', 'Success', 'info')
-    closeWindow2()
+    closeWindow()
   }).catch(err => alert2(err.response.data.error, 'Error'))
   .finally(() => sending = false)
 }

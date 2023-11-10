@@ -25,7 +25,7 @@
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-btn block @click="openWindow2('player-timer')">
+            <win-btn block @click="openWindow('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-btn>
           </div>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { Native } from '@mobile/js/bridge/native'
 import windowsComposable from '@common/js/composables/windowsComposable'
@@ -54,9 +54,10 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const store = useStore()
 
 // Composable
-const { openWindow2, closeWindow2 } = windowsComposable()
+const { openWindow, closeWindow } = windowsComposable()
 
 // Reactive data
+const isBuffering = ref(false)
 const currentSong = computed(() => store.getters['player/currentSong'])
 const isPlaying = computed(() => store.getters['isPlaying'])
 const sleepTime = computed(() => store.getters['sleepTime'])
@@ -64,21 +65,39 @@ const artwork = computed(() => {
   if (currentSong.value.id && currentSong.value.artwork_src)
     return currentSong.value.artwork_src
   else
-    return 'https://i.plaza.one/dead.jpg'
+    return 'https://i.plaza.one/artwork_dead.jpg'
 })
-const playText = computed(() => isPlaying.value ? 'Stop' : 'Play')
+const playText = computed(() => isBuffering.value ? 'Loading...' : isPlaying.value ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {
-  if (!isPlaying.value) {
-    Native.audioPlay()
-  } else {
-    Native.audioStop()
-    closeWindow2('player-timer')
+  if (isPlaying.value) {
+    closeWindow('player-timer')
   }
+  Native.audioPlay()
 }
 
 function openDrawer () {
   Native.openDrawer()
 }
+
+onMounted(() => {
+  store.subscribe((mutation, state) => {
+    if (mutation.type === 'pushData') {
+
+      if (mutation.payload.name === 'isPlaying') {
+        isBuffering.value = false
+        store.commit('isPlaying', state.data.isPlaying)
+      }
+
+      if (mutation.payload.name === 'isBuffering') {
+        isBuffering.value = true
+      }
+
+      if (mutation.payload.name === 'sleepTime') {
+        store.commit('sleepTime', state.data.sleepTime)
+      }
+    }
+  })
+})
 </script>

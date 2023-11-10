@@ -2,6 +2,7 @@ import WindowAbout from '@common/js/windows/WindowAbout.vue'
 import WindowAlert from '@common/js/windows/WindowAlert.vue'
 import WindowCredits from '@common/js/windows/WindowCredits.vue'
 import WindowHistory from '@common/js/windows/WindowHistory.vue'
+import WindowLoading from '@common/js/windows/WindowLoading.vue'
 import WindowNews from '@common/js/windows/WindowNews.vue'
 import WindowRatings from '@common/js/windows/WindowRatings.vue'
 import WindowSettingsBackground from '@common/js/windows/WindowSettingsBackground.vue'
@@ -19,6 +20,7 @@ export const commonWindows = (app) => {
   app.component('window-alert', WindowAlert)
   app.component('window-credits', WindowCredits)
   app.component('window-history', WindowHistory)
+  app.component('window-loading', WindowLoading)
   app.component('window-news', WindowNews)
   app.component('window-ratings', WindowRatings)
   app.component('window-settings-background', WindowSettingsBackground)

@@ -10,7 +10,7 @@
             <slot name="header">
               <div class="buttons">
                 <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
-                <win-btn class="button-close" @click="closeWindow2"><span/></win-btn>
+                <win-btn class="button-close" @click="closeWindow"><span/></win-btn>
               </div>
             </slot>
           </div>
@@ -47,7 +47,7 @@ const props = defineProps({
 })
 
 // Composable
-const { closeWindow2 } = windowsComposable(props.name)
+const { closeWindow } = windowsComposable(props.name)
 
 // Reactive data
 const style = ref({

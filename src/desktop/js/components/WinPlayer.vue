@@ -39,12 +39,12 @@
           <div class="col-6 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="auth ? openWindow2('user') : openWindow2('user-login')">
+                <win-btn block @click="auth ? openWindow('user') : openWindow('user-login')">
                   <i class="i icon-user mr-0"/>
                 </win-btn>
               </div>
               <div class="col-6">
-                <win-btn block @click="openWindow2('settings-background')">
+                <win-btn block @click="openWindow('settings-background')">
                   <i class="i icon-cog mr-0"/>
                 </win-btn>
               </div>
@@ -72,7 +72,7 @@ const STATE_PLAYING = 2
 const store = useStore()
 
 // Composable
-const { closeWindow2, openWindow2, songInfo2 } = windowsComposable()
+const { closeWindow, openWindow, songInfo2 } = windowsComposable()
 const { startVisual } = visualComposable()
 
 // Reactive data
@@ -81,7 +81,7 @@ const auth = computed(() => store.getters['user/auth'])
 const currentSong = computed(() => store.getters['player/currentSong'])
 const artwork = computed(() => {
   if (currentSong.value.id && currentSong.value.artwork_src) return currentSong.value.artwork_src
-  else return 'https://i.plaza.one/dead.jpg'
+  else return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => {
   if (state.value === STATE_IDLE) return 'Play'

@@ -28,7 +28,7 @@
 import { useRouter } from 'vue-router'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
-const { closeWindow2 } = windowsComposable('support')
+const { closeWindow } = windowsComposable('support')
 
 const router = useRouter()
 
@@ -43,7 +43,7 @@ function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    closeWindow2()
+    closeWindow()
   }
 }
 </script>

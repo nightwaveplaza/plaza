@@ -59,7 +59,7 @@
               <win-pagination :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow2">Close</win-btn>
+              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
-const { alert2, closeWindow2, openWindow2, songInfo2 } = windowsComposable('user-favorites')
+const { alert2, closeWindow, openWindow, songInfo2 } = windowsComposable('user-favorites')
 const { sdy } = helperComposable()
 
 const store = useStore()

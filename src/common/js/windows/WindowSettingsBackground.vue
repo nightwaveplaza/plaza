@@ -64,7 +64,7 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mx-auto px-4" @click="closeWindow2">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="closeWindow">Close</win-btn>
       </div>
     </div>
   </win-window>
@@ -78,7 +78,7 @@ import { background } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 // Composable
-const { closeWindow2 } = windowsComposable('settings-background')
+const { closeWindow } = windowsComposable('settings-background')
 
 // Emits
 const emit = defineEmits(['bgChanged'])

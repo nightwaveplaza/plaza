@@ -10,7 +10,7 @@
             <slot name="header">
               <div class="buttons">
                 <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
-                <win-btn class="button-close" @click="closeWindow"><span/></win-btn>
+                <win-btn class="button-close" @click="close"><span/></win-btn>
               </div>
             </slot>
           </div>
@@ -68,6 +68,9 @@ const isMinimized = computed(() => isWindowMinimized.value(props.name))
 
 // Refs
 const windowRef = ref(null)
+
+// Emits
+const emit = defineEmits(['closed'])
 
 // Non-reactive
 let windowDefaultPosition = [0, 0]
@@ -155,6 +158,11 @@ function minimize () {
   store.dispatch('windows/minimize', props.name)
 }
 
+function close() {
+  emit('closed')
+  closeWindow()
+}
+
 onBeforeMount(() => {
   store.dispatch('windows/updateTitle', { name: props.name, title: props.title }).then()
 })
@@ -182,5 +190,10 @@ onBeforeUnmount(() => {
   window.removeEventListener('mouseup', stopMove)
   window.removeEventListener('mousemove', move)
   window.removeEventListener('resize', recalculatePositions)
+})
+
+
+defineExpose({
+  close
 })
 </script>

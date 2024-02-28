@@ -4,24 +4,27 @@ export const appearanceStore = {
   state: {
     background: {
       image: '',
-      color: '#008080'
+      color: '#008080',
+      index: 0,
+      mode: 0,
     },
-    theme: 'theme-win98'
+    theme: 'win98'
   },
 
   mutations: {
     theme(state, theme) {
-      state.theme = theme ? 'theme-' + theme : 'theme-win98';
+      state.theme = theme
     },
 
     background(state, background) {
-      if (background.mode === 2) {
-        state.background.image = ''
-        state.background.color = background.color
-      } else {
-        state.background.image = `url('${background.image.src}')`
-        state.background.color = ''
-      }
+      state.background = background
+      // if (background.mode === 2) {
+      //   state.background.image = ''
+      //   state.background.color = background.color
+      // } else {
+      //   state.background.image = `url('${background.image.src}')`
+      //   state.background.color = ''
+      // }
     },
   },
 
@@ -29,5 +32,6 @@ export const appearanceStore = {
     theme: state => state.theme,
     backgroundImage: state => state.background.image,
     backgroundColor: state => state.background.color,
+    background: state => state.background
   },
 };

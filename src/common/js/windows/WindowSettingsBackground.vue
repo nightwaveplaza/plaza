@@ -4,53 +4,53 @@
       <div class="group-box p-2 mb-3">
         <div class="gb-label noselect">Background</div>
 
-        <div class="row palette no-gutters" v-if="currentBackground.mode === 2">
+        <div class="row palette no-gutters" v-if="currentBg.mode === 2">
           <div class="col-auto" v-for="color in palette">
-            <button class="color" :style="{backgroundColor: color}" @click="changeColor(color)"/>
+            <button class="color" :style="{backgroundColor: color}" @click="solidBg(color)"/>
           </div>
           <div class="col-3">
-            <input class="d-block" :value="selected" @change="colorSelected"/>
+            <input class="d-block" :value="currentBg.color" @input="colorSelected"/>
           </div>
         </div>
 
         <win-memo v-else>
           <p>
-            <b>Background:</b> {{ currentBackground.image.num }}
+            <b>Background:</b> {{ currentBg.image.num }}
           </p>
           <p>
             <b>Source: </b>
-            <a v-if="currentBackground.image.source_link !== ''"
-               :href="currentBackground.image.source_link">
-              {{ currentBackground.image.source }}
+            <a v-if="currentBg.image.source_link !== ''"
+               :href="currentBg.image.source_link">
+              {{ currentBg.image.source }}
             </a>
           </p>
           <p>
             <b>Author: </b>
-            <a v-if="currentBackground.image.author_link !== ''"
-               :href="currentBackground.image.author_link">
-              {{ currentBackground.image.author }}
+            <a v-if="currentBg.image.author_link !== ''"
+               :href="currentBg.image.author_link">
+              {{ currentBg.image.author }}
             </a>
           </p>
         </win-memo>
 
         <div class="row no-gutters mt-2 noselect">
           <div class="col-2 pr-1">
-            <win-btn block @click="next(-1)">&lt;</win-btn>
+            <win-btn block @click="nextBg(-1)">&lt;</win-btn>
           </div>
           <div class="col-2 pr-1">
-            <win-btn block @click="next(1)">&gt;</win-btn>
+            <win-btn block @click="nextBg(1)">&gt;</win-btn>
           </div>
           <div class="col-4 pr-1">
-            <win-btn block @click="random">Random</win-btn>
+            <win-btn block @click="randomBg">Random</win-btn>
           </div>
           <div class="col-4">
-            <win-btn block :class="{active: currentBackground.mode === 2}" @click="solid">Solid</win-btn>
+            <win-btn block :class="{active: currentBg.mode === 2}" @click="solidBg">Solid</win-btn>
           </div>
         </div>
 
         <div class="mt-1 noselect">
           <small>All background images were found on the Internet. Do you know the author? <a
-              href="mailto:mail@plaza.one">Let us know!</a></small>
+            href="mailto:mail@plaza.one">Let us know!</a></small>
         </div>
       </div>
 
@@ -72,18 +72,14 @@
 
 <script setup>
 import { onBeforeMount, onMounted, ref } from 'vue'
-import settings from '@common/js/extras/settings'
-import { Background } from '@common/js/extras/background'
 import { background } from '@common/js/api/api'
 import { useStore } from 'vuex'
+import userPrefs from '@common/js/composables/userPrefsComposable'
 
-// Store
 const store = useStore()
+const { applyBackground, applyTheme } = userPrefs()
 
-// Reactive data
-const currentBackground = ref({})
-const backgrounds = ref([])
-const selected = ref('')
+const backgroundList = ref([])
 const theme = ref('win98')
 const window = ref('window')
 
@@ -92,6 +88,8 @@ const palette = [
   '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
   '#008000', '#00ffff', '#008080', '#0000ff', '#000080', '#ff00ff', '#800080',
 ]
+
+// Themes
 const themes = [
   ['desert', 'Desert'],
   ['contrast', 'High Contrast'],
@@ -100,50 +98,70 @@ const themes = [
   ['win98', 'Windows Standard'],
 ]
 
-// Methods
-function next (direction) {
-  currentBackground.value = Background.nextBackground(backgrounds.value, direction)
-  set()
-}
-
-function random () {
-  currentBackground.value = Background.randomBackground(backgrounds.value)
-  set()
-}
-
-function solid () {
-  currentBackground.value = Background.solidBackground()
-  set()
-}
-
-function set () {
-  store.commit('appearance/background', currentBackground.value)
-}
-
-function changeColor (color) {
-  selected.value = color
-  currentBackground.value = Background.setSolidColor(color)
-  set()
-}
-
 function colorSelected (e) {
-  selected.value = e.target.value
-  changeColor(selected.value)
+  solidBg(e.target.value)
 }
 
 function themeSelected (event) {
-  const theme = event.target.value
-  settings.save('theme', theme)
-  store.commit('appearance/theme', theme)
+  applyTheme(event.target.value)
+}
+
+const MODE_RANDOM = 0
+const MODE_SINGLE = 1
+const MODE_SOLID = 2
+
+const currentBg = ref({})
+
+function nextBg(dir) {
+  let index = findIndex(currentBg.value.image) + dir
+
+  if (index < 0) {
+    index = backgroundList.value.length - 1
+  } else if (index >= backgroundList.value.length) {
+    index = 0
+  }
+
+  currentBg.value.mode = MODE_SINGLE
+  currentBg.value.image = backgroundList.value[index]
+
+  applyBackground(currentBg.value)
+}
+
+function randomBg() {
+  const image = backgroundList.value[Math.floor(Math.random() * backgroundList.value.length)]
+
+  currentBg.value.mode = MODE_RANDOM
+  currentBg.value.image = image
+
+  applyBackground(currentBg.value)
+}
+
+function solidBg(color) {
+  if (color !== undefined) {
+    currentBg.value.color = color
+  }
+
+  currentBg.value.mode = MODE_SOLID
+  currentBg.value.image = ''
+
+  applyBackground(currentBg.value)
+}
+
+function findIndex(background) {
+  const index = backgroundList.value.findIndex((b) => {
+    return b.id === background.id
+  })
+
+  return index < 0 ? 0 : index
 }
 
 onBeforeMount(() => {
-  currentBackground.value = Background.loadSettings()
+  currentBg.value = store.getters['appearance/background']
+  theme.value = store.getters['appearance/theme']
 })
 
 onMounted(() => {
-  background.get().then((result) => backgrounds.value = result.data)
-  selected.value = currentBackground.value.color
-  theme.value = settings.load('theme') ?? 'win98'
+  // Load background list from server
+  background.get().then((result) => backgroundList.value = result.data)
 })
 </script>

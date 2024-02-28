@@ -14,7 +14,7 @@ const store = useStore()
 
 // Composable
 const { isMobile } = helperComposable()
-const { openWindow } = windowsComposable('about')
+const { openWindow } = windowsComposable()
 
 // Reactive data
 const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])

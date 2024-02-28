@@ -19,7 +19,7 @@
               <win-btn block class="text-bold" @click="change">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow">Close</win-btn>
+              <win-btn block @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -37,9 +37,9 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 const store = useStore()
 
 // Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-password')
+const { alert, openWindow } = windowsComposable()
 
-// Reactive data
+const window = ref('window')
 const fields = reactive({
   current_password: '',
   password: '',
@@ -58,25 +58,25 @@ function change () {
 
   user.edit(fields).then(() => {
     store.dispatch('logout')
-    alert2('Password has changed!', 'Success', 'info')
-    closeWindow()
-  }).catch(err => alert2(err.response.data.error, 'Error'))
+    alert('Password has changed!', 'Success', 'info')
+    window.value.close()
+  }).catch(err => alert(err.response.data.error, 'Error'))
   .finally(() => sending = false)
 }
 
 function validate () {
   if (fields.current_password.length === 0) {
-    alert2('Enter current password.', 'Error')
+    alert('Enter current password.', 'Error')
     return false
   }
 
   if (fields.password.length < 3) {
-    alert2('Password too short.', 'Error')
+    alert('Password too short.', 'Error')
     return false
   }
 
   if (fields.password !== passwordRepeat.value) {
-    alert2('Passwords didn\'t match.', 'Error')
+    alert('Passwords didn\'t match.', 'Error')
     return false
   }
 

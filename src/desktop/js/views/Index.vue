@@ -1,6 +1,6 @@
 <template>
   <div class="app-desktop" :class="theme" :style="{backgroundImage, backgroundColor}">
-    <component v-for="window in windows" :is="`window-${window.name}`" />
+    <component v-for="window in windows" :is="window.form" />
 
     <win-news-loader ref="newsLoader"/>
 

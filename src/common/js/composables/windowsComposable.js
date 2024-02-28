@@ -8,7 +8,9 @@ export default function (windowName) {
    * @param name
    */
   function openWindow (name) {
-    store.dispatch('windows/open', { name }).then()
+    store.dispatch('windows/open', {
+      name, form: 'window-' + name,
+    }).then()
   }
 
   /**
@@ -29,19 +31,22 @@ export default function (windowName) {
    * @param title
    * @param type
    */
-  function alert2 (text, title, type = 'warn') {
+  function alert (text, title, type = 'warn') {
     const id = Math.random().toString(36).substr(2, 9)
-    store.dispatch('windows/open',
-      { name: 'alert-' + id, text, title, type }).then()
+    store.dispatch('windows/open', {
+      name: 'alert-' + id, text, title, type,
+    }).then()
   }
 
   /**
    * Show song info window
    * @param id
    */
-  function songInfo2 (id) {
-    store.dispatch('windows/open', { name: 'song-' + id, id }).then()
+  function songInfo (id) {
+    store.dispatch('windows/open', {
+      name: 'song-' + id, id,
+    }).then()
   }
 
-  return { openWindow, closeWindow, alert2, songInfo2 }
+  return { openWindow, closeWindow, alert, songInfo }
 }

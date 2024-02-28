@@ -23,7 +23,7 @@
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow">Close</win-btn>
+              <win-btn block @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -39,14 +39,14 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import VueTurnstile from 'vue-turnstile'
 
 // Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-reset')
+const { alert, openWindow } = windowsComposable()
 
 // Reactive data
 const fields = reactive({
   email: ''
 })
 
-// Refs
+const window = ref('window')
 const showCaptcha = ref(false)
 const captchaResponse = ref('')
 
@@ -71,17 +71,17 @@ function completeCaptcha() {
   sending = true
 
   user.reset({...fields, captcha_response: captchaResponse.value}).then(() => {
-    alert2('Instructions have been sent to your email.', 'Success', 'info')
-    closeWindow()
+    alert('Instructions have been sent to your email.', 'Success', 'info')
+    window.value.close()
   }).catch(err => {
     showCaptcha.value = false
-    alert2(err.response.data.error, 'Error')
+    alert(err.response.data.error, 'Error')
   }).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.email.length === 0) {
-    alert2('Enter email.', 'Error')
+    alert('Enter email.', 'Error')
     return false
   }
   return true

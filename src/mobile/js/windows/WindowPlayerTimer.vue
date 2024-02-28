@@ -35,7 +35,7 @@
           <win-btn block class="text-bold" @click="start()">{{ btnText }}</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="window.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -54,9 +54,9 @@ const store = useStore()
 
 // Composable
 const { dur } = helperComposable()
-const { closeWindow } = windowsComposable('player-timer')
+const { closeWindow } = windowsComposable()
 
-// Reactive data
+const window = ref('window')
 const minutes = ref(20)
 const timeText = ref('Not set')
 const sleepTime = computed(() => store.getters['sleepTime'])
@@ -78,7 +78,7 @@ function start () {
     Native.setSleepTimer(minutes.value)
   }
 
-  closeWindow()
+  window.value.close()
 }
 
 function refreshText () {

@@ -20,12 +20,9 @@
 import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
 
 const router = useRouter()
 const store = useStore()
-
-const { closeWindow } = windowsComposable('delete-account')
 
 const window = ref('window')
 
@@ -34,7 +31,6 @@ onMounted(() => {
 })
 
 function close () {
-  console.log("emit")
   router.push({ name: 'index' })
 }
 </script>

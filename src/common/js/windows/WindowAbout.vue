@@ -65,7 +65,7 @@
               <win-btn class="px-4 mr-2" @click="openNews">News</win-btn>
             </div>
             <div class="col-auto ml-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -78,20 +78,23 @@
 <script setup>
 import { useStore } from 'vuex'
 import windowsComposable from '@common/js/composables/windowsComposable'
+import { ref } from 'vue'
 
 const store = useStore()
 
+const window = ref('window')
+
 // Composable
-const { openWindow, closeWindow } = windowsComposable('about')
+const { openWindow } = windowsComposable()
 
 // Methods
 const openCredits = () => {
   openWindow('credits')
-  closeWindow()
+  window.value.close()
 }
 
 const openNews = () => {
   openWindow('news')
-  closeWindow()
+  window.value.close()
 }
 </script>

@@ -11,14 +11,15 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="closeWindow">OK</win-btn>
+        <win-btn class="mt-2 mx-auto px-4" @click="window.close()">OK</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
+
+import { ref } from 'vue'
 
 const props = defineProps({
   text: String,
@@ -27,5 +28,5 @@ const props = defineProps({
   type: String,
 })
 
-const { closeWindow } = windowsComposable(props.name)
+const window = ref('window')
 </script>

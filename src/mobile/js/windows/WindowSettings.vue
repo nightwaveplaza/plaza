@@ -11,7 +11,7 @@
 
       <div class="row no-gutters justify-content-center">
         <div class="col-6">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="window.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -19,26 +19,26 @@
 </template>
 
 <script setup>
-import {Native} from '@mobile/js/bridge/native';
+import { Native } from '@mobile/js/bridge/native'
 import { computed, onMounted, ref } from 'vue'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 // Composable
-const { openWindow, closeWindow } = windowsComposable('settings')
+const { openWindow, closeWindow } = windowsComposable()
 
-// Reactive data
+const window = ref('window')
 const lowQualityAudio = ref(false)
 const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 
 // Methods
-function switchAudioQuality() {
-  lowQualityAudio.value = !lowQualityAudio.value;
-  Native.setAudioQuality(lowQualityAudio.value);
+function switchAudioQuality () {
+  lowQualityAudio.value = !lowQualityAudio.value
+  Native.setAudioQuality(lowQualityAudio.value)
 }
 
-function open(window) {
-  openWindow(window);
-  closeWindow();
+function open (window) {
+  openWindow(window)
+  window.value.close()
 }
 
 onMounted(() => {

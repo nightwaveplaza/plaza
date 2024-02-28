@@ -37,7 +37,7 @@
             <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+            <win-btn class="px-4" @click="window.close()">Close</win-btn>
           </div>
         </div>
       </div>
@@ -64,10 +64,11 @@ const props = defineProps({
 })
 
 // Composable
-const { alert2, closeWindow } = windowsComposable(props.name)
+const { alert, closeWindow } = windowsComposable()
 const { dur, sdy } = helperComposable()
 
 // Reactive data
+const window = ref('window')
 const song = ref(false)
 const isPlaying = ref(false)
 const playTimeLeft = ref(0)
@@ -87,8 +88,8 @@ function fetchSongInfo (songId) {
   songs.get(songId).then(result => {
     song.value = result.data
   }).catch(error => {
-    alert2(error.response.data.error, 'Error')
-    closeWindow()
+    alert(error.response.data.error, 'Error')
+    window.value.close()
   })
 }
 
@@ -110,7 +111,7 @@ function favoriteSong () {
 
 function showError (error) {
   if (error.response.status === 401) {
-    alert2('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+    alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
   }
 }
 

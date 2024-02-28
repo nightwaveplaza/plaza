@@ -1,5 +1,4 @@
 import { useStore } from 'vuex'
-import { Background } from '@common/js/extras/background'
 import settings from '@common/js/extras/settings'
 import { background, user } from '@common/js/api/api'
 

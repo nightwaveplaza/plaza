@@ -14,13 +14,14 @@
           authors and music labels. If you have any copyright issue, please let us know.</p>
       </win-memo>
       <div class="text-center my-2">
-        <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+        <win-btn class="px-4" @click="window.close()">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
-const { closeWindow } = windowsComposable('credits')
+import { ref } from 'vue'
+
+const window = ref('window')
 </script>

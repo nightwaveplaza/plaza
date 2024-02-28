@@ -16,7 +16,7 @@
             <div v-if="loading" class="content-loading"></div>
             <win-list ref="list" scroll>
               <tr v-for="song in items">
-                <td class="pl-2 pr-1 py-1 show-info" @click="songInfo2(song.id)">
+                <td class="pl-2 pr-1 py-1 show-info" @click="songInfo(song.id)">
                   <div class="artist">{{ song.artist }}</div>
                   <div class="title">{{ song.title }}</div>
                 </td>
@@ -35,7 +35,7 @@
               <win-pagination v-if="items.length > 0" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -57,9 +57,10 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
-const { alert2, closeWindow, songInfo2 } = windowsComposable('history')
+const { alert, songInfo } = windowsComposable()
 const { sd, gt } = helperComposable()
 
+const window = ref('window')
 // Reactive data
 const loading = ref(true)
 const items = ref([])
@@ -98,7 +99,7 @@ function fetchHistory (page) {
     dateTo.value = result.data.to_date
     list.value.refreshScrollbar()
   })
-  .catch(error => alert2(error.response.data.error, 'Error'))
+  .catch(error => alert(error.response.data.error, 'Error'))
   .finally(() => loading.value = false)
 }
 

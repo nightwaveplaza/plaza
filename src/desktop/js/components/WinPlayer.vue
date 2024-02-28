@@ -72,7 +72,7 @@ const STATE_PLAYING = 2
 const store = useStore()
 
 // Composable
-const { closeWindow, openWindow, songInfo2 } = windowsComposable()
+const { closeWindow, openWindow, songInfo } = windowsComposable()
 const { startVisual } = visualComposable()
 
 // Reactive data
@@ -175,7 +175,7 @@ function updateVolume (newVolume) {
 
 function showSongInfo () {
   if (currentSong.value.id) {
-    songInfo2(currentSong.value.id)
+    songInfo(currentSong.value.id)
   }
 }
 

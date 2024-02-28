@@ -43,9 +43,9 @@ const props = defineProps({
 })
 
 // Composable
-const { closeWindow, alert2 } = windowsComposable('user-reset-password')
+const { alert } = windowsComposable()
 
-// Reactive data
+const window = ref('window')
 const password = ref('')
 const passwordRepeat = ref('')
 
@@ -60,19 +60,19 @@ function change () {
   sending = true
 
   user.confirmReset({ token: props.token, password: password.value }).then(() => {
-    alert2('Password has changed.', 'Success', 'info')
-    closeWindow()
-  }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => sending = false)
+    alert('Password has changed.', 'Success', 'info')
+    window.value.close()
+  }).catch(err => alert(err.response.data.error, 'Error')).finally(() => sending = false)
 }
 
 function validate () {
   if (password.value.length < 3) {
-    alert2('Password is too short.', 'Error')
+    alert('Password is too short.', 'Error')
     return false
   }
 
   if (password.value !== passwordRepeat.value) {
-    alert2('Passwords didn\'t match.', 'Error')
+    alert('Passwords didn\'t match.', 'Error')
     return false
   }
 

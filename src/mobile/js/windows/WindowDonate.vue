@@ -14,14 +14,14 @@
       </div>
 
       <div class="text-center mt-2">
-        <win-btn class="mx-auto px-4" @click="closeWindow">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { ref } from 'vue'
 
-const { closeWindow } = windowsComposable('donate')
+const window = ref('window')
 </script>

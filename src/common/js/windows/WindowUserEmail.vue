@@ -15,7 +15,7 @@
           <win-btn block class="text-bold" @click="update">Change</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="window.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -29,11 +29,12 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import { useStore } from 'vuex'
 
 // Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-email')
+const { alert, openWindow } = windowsComposable()
 
 const store = useStore()
 
 // Reactive data
+const window = ref('window')
 const fields = reactive({
   current_password: '',
   email: '',
@@ -48,8 +49,8 @@ function fetchUser () {
     fields.email = res.data.email
     disabled.value = false
   }).catch(err => {
-    alert2('Can\'t fetch user data.', 'Failed')
-    closeWindow()
+    alert('Can\'t fetch user data.', 'Failed')
+    window.value.close()
   })
 }
 
@@ -61,10 +62,10 @@ function update () {
   sending = true
 
   user.edit(fields).then(() => {
-    alert2('Email has changed!', 'Success', 'info')
-    closeWindow()
+    alert('Email has changed!', 'Success', 'info')
+    window.value.close()
   }).catch(error => {
-    alert2(error.response.data.error, 'Error')
+    alert(error.response.data.error, 'Error')
   }).finally(() => {
     sending = false
   })
@@ -72,7 +73,7 @@ function update () {
 
 function validate () {
   if (fields.current_password.length === 0) {
-    alert2('Enter current password.', 'Error')
+    alert('Enter current password.', 'Error')
     return false
   }
 

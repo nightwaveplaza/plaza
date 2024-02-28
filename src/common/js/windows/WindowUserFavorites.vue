@@ -28,7 +28,7 @@
                       <img :src="like.song.artwork_src ? like.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>
                     </td>
-                    <td class="pl-1 show-info" @click="songInfo2(like.song.id)">
+                    <td class="pl-1 show-info" @click="songInfo(like.song.id)">
                       <div class="artist">{{ like.song.artist }}</div>
                       <div class="title">{{ like.song.title }}</div>
                       <div class="date">
@@ -59,7 +59,7 @@
               <win-pagination :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
-const { alert2, closeWindow, openWindow, songInfo2 } = windowsComposable('user-favorites')
+const { alert, openWindow, songInfo } = windowsComposable()
 const { sdy } = helperComposable()
 
 const store = useStore()
@@ -96,6 +96,7 @@ const pages = ref(4)
 const page = ref(1)
 
 // Refs
+const window = ref('window')
 const list = ref(null)
 
 //Computed
@@ -116,7 +117,7 @@ function fetchLikes (page) {
     total.value = res.data.count
     loading.value = false
     list.value.refreshScrollbar()
-  }).catch(error => alert2(error.response.data.error, 'Error')).finally(() => {
+  }).catch(error => alert(error.response.data.error, 'Error')).finally(() => {
     loading.value = false
   })
 }
@@ -133,7 +134,7 @@ function changePage (newPage) {
 function deleteLike (favoriteId) {
   user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
-  }).catch(error => alert2(error.response.data.error, 'Error'))
+  }).catch(error => alert(error.response.data.error, 'Error'))
 }
 
 onMounted(() => {

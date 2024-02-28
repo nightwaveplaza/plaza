@@ -23,7 +23,7 @@
               <tr v-for="(chart, i) in charts" class="hover">
                 <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * perPage + i + 1) }}
                 </td>
-                <td class="py-1 show-info" @click="songInfo2(chart.id)">
+                <td class="py-1 show-info" @click="songInfo(chart.id)">
                   <div class="artist">{{ chart.artist }}</div>
                   <div class="title">{{ chart.title }}</div>
                 </td>
@@ -41,7 +41,7 @@
               <win-pagination ref="pagination" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="window.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -62,8 +62,9 @@ import { ratings } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 // Composable
-const { alert2, closeWindow, songInfo2 } = windowsComposable('ratings')
+const { alert, songInfo } = windowsComposable()
 
+const window = ref('window')
 // Reactive data
 const loading = ref(true)
 const charts = ref([])
@@ -97,7 +98,7 @@ function fetchRatings (range, page) {
     charts.value = res.data.songs
     total.value = res.data.count
     list.value.refreshScrollbar()
-  }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => loading.value = false)
+  }).catch(err => alert(err.response.data.error, 'Error')).finally(() => loading.value = false)
 }
 
 function changePage (newPage) {

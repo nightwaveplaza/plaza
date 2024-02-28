@@ -106,7 +106,7 @@ const props = defineProps({
 })
 
 // Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-register')
+const { alert, openWindow } = windowsComposable()
 
 // Reactive data
 const fields = reactive({
@@ -134,7 +134,7 @@ function register () {
 
 function completeCaptcha () {
   if (fields.captcha_response === '') {
-    alert2('Captcha validation failed', 'Error')
+    alert('Captcha validation failed', 'Error')
     step.value = 1
     return
   }
@@ -142,10 +142,10 @@ function completeCaptcha () {
   sending = true
 
   user.register(fields).then(() => {
-    alert2(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
-    closeWindow()
+    alert(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
+    window.value.close()
   }).catch(err => {
-    alert2(err.response.data.error, 'Error')
+    alert(err.response.data.error, 'Error')
     step.value = 1
   }).finally(() => sending = false)
 }
@@ -156,32 +156,32 @@ function completeCaptcha () {
  */
 function validate () {
   if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
-    alert2('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
+    alert('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
     return false
   }
 
   if (fields.username.length < 4) {
-    alert2('Username is too short.', 'Error')
+    alert('Username is too short.', 'Error')
     return false
   }
 
   if (fields.username.length > 32) {
-    alert2('Username is too long.', 'Error')
+    alert('Username is too long.', 'Error')
     return false
   }
 
   if (fields.password.length < 3) {
-    alert2('Password is too short.', 'Error')
+    alert('Password is too short.', 'Error')
     return false
   }
 
   if (fields.email.length < 3) {
-    alert2('Email is too short.', 'Error')
+    alert('Email is too short.', 'Error')
     return false
   }
 
   if (fields.password !== passwordR.value) {
-    alert2('Passwords don\'t match.', 'Error')
+    alert('Passwords don\'t match.', 'Error')
     return false
   }
 
@@ -192,7 +192,7 @@ function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    closeWindow()
+    window.value.close()
   }
 }
 </script>

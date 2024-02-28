@@ -15,7 +15,7 @@ const CL_LIKE = '#c12727'
 const store = useStore()
 
 // Composable
-const { alert2 } = windowsComposable('user-favorites')
+const { alert } = windowsComposable()
 
 // Props
 const props = defineProps({
@@ -62,7 +62,7 @@ function send (score) {
     sendTip()
   }).catch(err => {
     if (err.response.status === 401) {
-      alert2('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+      alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   }).finally(() => {
     sending = false
@@ -86,7 +86,7 @@ function sendTip () {
   const saved = settings.load('reactionTip')
   if (saved) return
 
-  alert2(`You have liked the song. Nice!<br />
+  alert(`You have liked the song. Nice!<br />
                         Clicking the <i class="i icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
       'N I C E', 'info')
 

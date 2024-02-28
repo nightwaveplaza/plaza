@@ -53,7 +53,7 @@
         <div class="col-auto col-sm-2 p-0 login-buttons">
           <win-btn class="mb-2 text-bold" @click="login">Sign In</win-btn>
           <win-btn class="mb-2" @click="openRegister">Register</win-btn>
-          <win-btn @click="closeWindow">Cancel</win-btn>
+          <win-btn @click="window.close()">Cancel</win-btn>
         </div>
       </div>
     </div>
@@ -69,9 +69,11 @@ import helperComposable from '@common/js/composables/helperComposable'
 
 // Composable
 const { isMobile } = helperComposable()
-const { alert2, closeWindow, openWindow } = windowsComposable('user-login')
+const { alert, openWindow } = windowsComposable()
 
 const store = useStore()
+
+const window = ref('window')
 
 // Reactive data
 const fields = reactive({
@@ -98,16 +100,16 @@ function login () {
       store.dispatch('login', { user: res.data, remember: remember.value })
     }
 
-    alert2('Authentication successful!', 'Success', 'info')
-    closeWindow()
+    alert('Authentication successful!', 'Success', 'info')
+    window.value.close()
   })
-  .catch(err => alert2(err.response.data.error, 'Failed'))
+  .catch(err => alert(err.response.data.error, 'Failed'))
   .finally(() => sending = false)
 }
 
 function validate () {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    alert2('Wrong username or password.', 'Error')
+    alert('Wrong username or password.', 'Error')
     return false
   }
 
@@ -116,11 +118,11 @@ function validate () {
 
 function openRegister () {
   openWindow('user-register')
-  closeWindow()
+  window.value.close()
 }
 
 function openReset () {
   openWindow('user-reset')
-  closeWindow()
+  window.value.close()
 }
 </script>

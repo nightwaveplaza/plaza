@@ -1,74 +1,69 @@
 <template>
   <div :class="theme" :style="styles" class="app-desktop">
-    <window-loading v-if="loading"/>
-    <window-player v-show="!loading"/>
-    <window-player-timer v-if="isWindowOpen('player-timer')"/>
+    <component v-for="window in windows" :is="window.form"/>
 
-    <window-about v-if="isWindowOpen('about')"/>
-    <window-credits v-if="isWindowOpen('credits')"/>
-    <window-history v-if="isWindowOpen('history')"/>
-    <window-ratings v-if="isWindowOpen('ratings')"/>
-    <window-settings v-if="isWindowOpen('settings')"/>
-    <window-settings-background v-if="isWindowOpen('settings-background')"
-                                @bgChanged="setBackground"
-                                @themeChanged="themeChanged"
-    />
-    <window-donate v-if="isWindowOpen('donate')"/>
-    <window-user v-if="isWindowOpen('user')"/>
-    <window-user-email v-if="isWindowOpen('user-email')"/>
-    <window-user-favorites v-if="isWindowOpen('user-favorites')"/>
-    <window-user-login v-if="isWindowOpen('user-login')"/>
-    <window-user-password v-if="isWindowOpen('user-password')"/>
-    <window-user-register v-if="isWindowOpen('user-register')"/>
-    <window-user-reset v-if="isWindowOpen('user-reset')"/>
+    <win-news-loader ref="newsLoader"/>
 
-    <win-news-loader/>
-    <win-song-info/>
-    <win-alerts/>
+    <window-song :id="s.id" :name="s.name" v-for="s in songs" :key="s.id"/>
+    <window-alert v-for="a in alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
 
-    <win-taskbar v-if="!loading"/>
+    <win-taskbar/>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
-import {Background} from '@common/js/extras/background';
-import settings from '@common/js/extras/settings';
-import {Native} from '@mobile/js/bridge/native';
+import { Native } from '@mobile/js/bridge/native'
+import userPrefsComposable from '@common/js/composables/userPrefsComposable'
+
+const { loadBackground, loadTheme } = userPrefsComposable()
 
 const store = useStore()
 
 // Reactive date
 const styles = ref({
-  backgroundColor: 'transparent'
+  backgroundColor: 'transparent',
 })
-const theme = ref('theme-win98')
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
+
+// Windows
+const windows = computed(() => store.getters['windows/windows'])
+const alerts = computed(() => store.getters['windows/alerts'])
+const songs = computed(() => store.getters['windows/songWindows'])
+
 const currentSong = computed(() => store.getters['player/currentSong'])
 const loading = computed(() => currentSong.value.id === '')
+const theme = computed(() => 'theme-' + store.getters['appearance/theme'])
 
-// Methods
-function setBackground(bg) {
-  styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent';
-  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.src);
+function startup () {
+  openWindow('player')
+  openWindow('loading')
+
+  loadBackground()
+  loadTheme()
+
+  Native.getAuthToken().then(token => store.commit('user/token', token))
+  Native.getUserAgent().then(agent => store.commit('user/agent', agent))
 }
 
-function themeChanged(newTheme) {
-  theme.value = newTheme ? 'theme-' + newTheme : 'theme-win98';
+// Methods
+function setBackground (bg) {
+  styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent'
+  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.src)
 }
 
 onMounted(() => {
-  // Load token
-  Native.getAuthToken().then(token => store.commit('user/token', token))
-  Native.getUserAgent().then(agent => store.commit('user/agent', agent))
+  startup()
 
-  themeChanged(settings.load('theme'));
-  Background.loadOnStartup().then(bg => setBackground(bg))
+  loadBackground()
 
   store.subscribe((mutation) => {
     if (mutation.type === 'pushData' && mutation.payload.name === 'resume') {
-      Background.loadOnStartup().then(bg => setBackground(bg))
+      loadBackground()
+    }
+
+    if (mutation.type === 'appearance/background') {
+      setBackground(mutation.payload)
     }
   })
 })

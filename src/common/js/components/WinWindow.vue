@@ -194,6 +194,6 @@ onBeforeUnmount(() => {
 
 
 defineExpose({
-  close
+  close, pullUp
 })
 </script>

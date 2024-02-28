@@ -64,30 +64,28 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mx-auto px-4" @click="closeWindow">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import settings from '@common/js/extras/settings'
 import { Background } from '@common/js/extras/background'
 import { background } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useStore } from 'vuex'
 
-// Composable
-const { closeWindow } = windowsComposable('settings-background')
-
-// Emits
-const emit = defineEmits(['bgChanged'])
+// Store
+const store = useStore()
 
 // Reactive data
 const currentBackground = ref({})
 const backgrounds = ref([])
 const selected = ref('')
 const theme = ref('win98')
+const window = ref('window')
 
 // Palettes
 const palette = [
@@ -119,7 +117,7 @@ function solid () {
 }
 
 function set () {
-  emit('bgChanged', currentBackground.value)
+  store.commit('appearance/background', currentBackground.value)
 }
 
 function changeColor (color) {
@@ -136,7 +134,7 @@ function colorSelected (e) {
 function themeSelected (event) {
   const theme = event.target.value
   settings.save('theme', theme)
-  emit('themeChanged', theme)
+  store.commit('appearance/theme', theme)
 }
 
 onBeforeMount(() => {

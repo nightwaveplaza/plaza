@@ -31,7 +31,7 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+          <win-btn class="px-4" @click="window.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -39,7 +39,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
-const { closeWindow } = windowsComposable('mobile')
+const window = ref('window')
 </script>

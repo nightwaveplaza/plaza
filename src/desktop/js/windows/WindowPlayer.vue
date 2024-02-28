@@ -1,5 +1,5 @@
 <template>
-  <win-window name="player" title="Nightwave Plaza" :width="450">
+  <win-window ref="window" name="player" title="Nightwave Plaza" :width="450" v-show="loaded">
 
     <!-- Minimize button -->
     <template v-slot:header>
@@ -30,16 +30,22 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
+import windowsComposable from '@common/js/composables/windowsComposable'
 
 const store = useStore()
+
+
+const { closeWindow, openWindow } = windowsComposable()
 
 // Reactive data
 const listeners = computed(() => store.getters['player/listeners'])
 const auth = computed(() => store.getters['user/auth'])
 const username = computed(() => store.getters['user/username'])
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
+const loaded = ref(false)
+const window = ref('window')
 
 // Methods
 function minimize () {
@@ -49,4 +55,14 @@ function minimize () {
 function requestFullScreen () {
   document.getElementById('app').requestFullscreen()
 }
+
+onMounted(() => {
+  store.subscribe((mutation) => {
+    if (mutation.type === 'player/currentSong' && loaded.value === false) {
+      closeWindow('loading')
+      loaded.value = true
+      window.value.pullUp()
+    }
+  })
+})
 </script>

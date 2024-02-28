@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import Cookies from 'js-cookie'
 import { playerStore } from '@common/js/store/player'
 import { windowStore } from '@common/js/store/window'
-import { backgroundStore } from '@common/js/store/background'
+import { appearanceStore } from '@common/js/store/appearance'
 import { userStore } from '@common/js/store/user'
 
 const cookieApi = Cookies.withAttributes({
@@ -14,7 +14,7 @@ export default createStore({
   modules: {
     windows: windowStore,
     player: playerStore,
-    background: backgroundStore,
+    appearance: appearanceStore,
     user: userStore,
   },
 

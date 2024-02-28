@@ -2,9 +2,9 @@ export const windowStore = {
   namespaced: true,
 
   state: {
-    windows: [{name: 'player'}],
+    windows: [],
     minimized: [],
-    activeWindow: 'player',
+    activeWindow: '',
     activeZIndex: 100,
   },
 

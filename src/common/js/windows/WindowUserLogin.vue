@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="480" name="user-login" title="Sign In">
+  <win-window ref="win" :width="480" name="user-login" title="Sign In" v-slot="winProps">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
@@ -53,7 +53,7 @@
         <div class="col-auto col-sm-2 p-0 login-buttons">
           <win-btn class="mb-2 text-bold" @click="login">Sign In</win-btn>
           <win-btn class="mb-2" @click="openRegister">Register</win-btn>
-          <win-btn @click="window.close()">Cancel</win-btn>
+          <win-btn @click="winProps.close()">Cancel</win-btn>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@ const { alert, openWindow } = windowsComposable()
 
 const store = useStore()
 
-const window = ref('window')
+const win = ref('win')
 
 // Reactive data
 const fields = reactive({
@@ -101,10 +101,8 @@ function login () {
     }
 
     alert('Authentication successful!', 'Success', 'info')
-    window.value.close()
-  })
-  .catch(err => alert(err.response.data.error, 'Failed'))
-  .finally(() => sending = false)
+    win.value.close()
+  }).catch(err => alert(err.response.data.error, 'Failed')).finally(() => sending = false)
 }
 
 function validate () {
@@ -118,11 +116,11 @@ function validate () {
 
 function openRegister () {
   openWindow('user-register')
-  window.value.close()
+  win.value.close()
 }
 
 function openReset () {
   openWindow('user-reset')
-  window.value.close()
+  win.value.close()
 }
 </script>

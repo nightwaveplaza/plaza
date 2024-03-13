@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="350" name="news" title="News">
+  <win-window :width="350" name="news" title="News" v-slot="winProps">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading"></div>
@@ -16,7 +16,7 @@
           <win-pagination v-if="length > 0" :pages="pages" @change="changePage"/>
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="window.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -33,8 +33,6 @@ import helperComposable from '@common/js/composables/helperComposable'
 // Composable
 const { closeWindow } = windowsComposable()
 const { sdy } = helperComposable()
-
-const window = ref('window')
 
 // Reactive data
 const article = ref({

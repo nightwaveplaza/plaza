@@ -1,6 +1,6 @@
 <template>
   <div class="app-desktop" :class="theme" :style="{backgroundImage, backgroundColor}">
-    <component v-for="window in windows" :is="window.form" />
+    <component v-for="window in windows" :is="window.form"/>
 
     <win-news-loader ref="newsLoader"/>
 
@@ -34,7 +34,7 @@ const theme = computed(() => 'theme-' + store.getters['appearance/theme'])
 
 const newsLoader = ref(null)
 
-function startup() {
+function startup () {
   openWindow('player')
   openWindow('loading')
 

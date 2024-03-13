@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="250" name="user-password" title="Change Password">
+  <win-window ref="win" :width="250" name="user-password" title="Change Password" v-slot="winProps">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -19,7 +19,7 @@
               <win-btn block class="text-bold" @click="change">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="window.close()">Close</win-btn>
+              <win-btn block @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@ const store = useStore()
 // Composable
 const { alert, openWindow } = windowsComposable()
 
-const window = ref('window')
+const win = ref('win')
 const fields = reactive({
   current_password: '',
   password: '',
@@ -59,9 +59,8 @@ function change () {
   user.edit(fields).then(() => {
     store.dispatch('logout')
     alert('Password has changed!', 'Success', 'info')
-    window.value.close()
-  }).catch(err => alert(err.response.data.error, 'Error'))
-  .finally(() => sending = false)
+    win.value.close()
+  }).catch(err => alert(err.response.data.error, 'Error')).finally(() => sending = false)
 }
 
 function validate () {

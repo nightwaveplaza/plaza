@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="440" fluidHeight name="ratings" title="Ratings">
+  <win-window :width="440" fluidHeight name="ratings" title="Ratings" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
@@ -41,7 +41,7 @@
               <win-pagination ref="pagination" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="window.close()">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -61,11 +61,8 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { ratings } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
-// Composable
 const { alert, songInfo } = windowsComposable()
 
-const window = ref('window')
-// Reactive data
 const loading = ref(true)
 const charts = ref([])
 const total = ref(0)

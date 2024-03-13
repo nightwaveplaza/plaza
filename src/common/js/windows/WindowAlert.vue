@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :isAlert="true" :name="name" :title="title" :width=290>
+  <win-window ref="win" :isAlert="true" :name="name" :title="title" :width=290 v-slot="winProps">
     <div class="p-2">
       <div class="row no-gutters">
         <div class="col-auto text-center align-self-center">
@@ -11,22 +11,17 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="window.close()">OK</win-btn>
+        <win-btn class="mt-2 mx-auto px-4" @click="winProps.close()">OK</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup>
-
-import { ref } from 'vue'
-
 const props = defineProps({
   text: String,
   title: String,
   name: String,
   type: String,
 })
-
-const window = ref('window')
 </script>

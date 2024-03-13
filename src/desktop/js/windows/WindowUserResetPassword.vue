@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" name="user-reset-password" title="Reset password" :width="280">
+  <win-window ref="win" name="user-reset-password" title="Reset password" :width="280">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -45,7 +45,7 @@ const props = defineProps({
 // Composable
 const { alert } = windowsComposable()
 
-const window = ref('window')
+const win = ref('win')
 const password = ref('')
 const passwordRepeat = ref('')
 
@@ -61,7 +61,7 @@ function change () {
 
   user.confirmReset({ token: props.token, password: password.value }).then(() => {
     alert('Password has changed.', 'Success', 'info')
-    window.value.close()
+    win.value.close()
   }).catch(err => alert(err.response.data.error, 'Error')).finally(() => sending = false)
 }
 

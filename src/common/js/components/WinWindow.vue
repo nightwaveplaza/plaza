@@ -15,7 +15,7 @@
             </slot>
           </div>
 
-          <slot/>
+          <slot :close="close" />
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@ const props = defineProps({
 })
 
 // Composable
-const { closeWindow } = windowsComposable(props.name)
+const { closeWindow } = windowsComposable()
 
 // Reactive data
 const style = ref({
@@ -160,7 +160,7 @@ function minimize () {
 
 function close() {
   emit('closed')
-  closeWindow()
+  closeWindow(props.name)
 }
 
 onBeforeMount(() => {

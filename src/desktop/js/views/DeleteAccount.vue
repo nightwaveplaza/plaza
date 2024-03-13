@@ -1,6 +1,6 @@
 <template>
   <div class="app-desktop theme-win98">
-    <win-window ref="window" :width="450" name="delete-account" title="Delete Account" @closed="close()">
+    <win-window :width="450" name="delete-account" title="Delete Account" @closed="close()" v-slot="winProps">
       <div class="p-2">
         <win-memo>
           <p class="lead mb-2 text-center">Account deletion</p>
@@ -9,7 +9,7 @@
         </win-memo>
 
         <div class="text-center mt-3">
-          <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
+          <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </win-window>
@@ -18,13 +18,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 const router = useRouter()
 const store = useStore()
-
-const window = ref('window')
 
 onMounted(() => {
   store.commit('windows/pullUp', 'delete-account')

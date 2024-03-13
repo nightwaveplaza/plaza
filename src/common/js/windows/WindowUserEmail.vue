@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="250" name="user-email" title="Change Email">
+  <win-window ref="win" :width="250" name="user-email" title="Change Email" v-slot="winProps">
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">Email:</label>
@@ -15,7 +15,7 @@
           <win-btn block class="text-bold" @click="update">Change</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="window.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@ const { alert, openWindow } = windowsComposable()
 const store = useStore()
 
 // Reactive data
-const window = ref('window')
+const win = ref('win')
 const fields = reactive({
   current_password: '',
   email: '',
@@ -50,7 +50,7 @@ function fetchUser () {
     disabled.value = false
   }).catch(err => {
     alert('Can\'t fetch user data.', 'Failed')
-    window.value.close()
+    win.value.close()
   })
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="450" name="support" title="Support Us">
+  <win-window ref="win" :width="450" name="support" title="Support Us">
     <div class="p-2">
       <div class="text-center">
         <win-memo>
@@ -37,13 +37,13 @@ const props = defineProps({
   },
 })
 
-const window = ref('window')
+const win = ref('win')
 
 function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    window.value.close()
+    win.value.close()
   }
 }
 </script>

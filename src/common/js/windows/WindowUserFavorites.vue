@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="450" fluidHeight name="user-favorites" title="My Favorites">
+  <win-window :width="450" fluidHeight name="user-favorites" title="My Favorites" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
@@ -59,7 +59,7 @@
               <win-pagination :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="window.close()">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -96,7 +96,6 @@ const pages = ref(4)
 const page = ref(1)
 
 // Refs
-const window = ref('window')
 const list = ref(null)
 
 //Computed

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="320" name="user-reset" title="Reset password">
+  <win-window ref="win" :width="320" name="user-reset" title="Reset password" v-slot="winProps">
     <div class="p-2">
 
       <p class="pb-3 px-3 text-center">Enter your email address and click the
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha" />
+      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha"/>
 
       <!-- Buttons -->
       <div class="row no-gutters">
@@ -23,7 +23,7 @@
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="window.close()">Close</win-btn>
+              <win-btn block @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -43,10 +43,10 @@ const { alert, openWindow } = windowsComposable()
 
 // Reactive data
 const fields = reactive({
-  email: ''
+  email: '',
 })
 
-const window = ref('window')
+const win = ref('win')
 const showCaptcha = ref(false)
 const captchaResponse = ref('')
 
@@ -67,12 +67,12 @@ function reset () {
   showCaptcha.value = true
 }
 
-function completeCaptcha() {
+function completeCaptcha () {
   sending = true
 
-  user.reset({...fields, captcha_response: captchaResponse.value}).then(() => {
+  user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
     alert('Instructions have been sent to your email.', 'Success', 'info')
-    window.value.close()
+    win.value.close()
   }).catch(err => {
     showCaptcha.value = false
     alert(err.response.data.error, 'Error')

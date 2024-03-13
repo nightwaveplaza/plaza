@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="220" name="settings" title="Settings">
+  <win-window ref="win" :width="220" name="settings" title="Settings" v-slot="winProps">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
@@ -11,7 +11,7 @@
 
       <div class="row no-gutters justify-content-center">
         <div class="col-6">
-          <win-btn block @click="window.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@ import windowsComposable from '@common/js/composables/windowsComposable'
 // Composable
 const { openWindow, closeWindow } = windowsComposable()
 
-const window = ref('window')
+const win = ref('win')
 const lowQualityAudio = ref(false)
 const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 
@@ -38,7 +38,7 @@ function switchAudioQuality () {
 
 function open (window) {
   openWindow(window)
-  window.value.close()
+  win.value.close()
 }
 
 onMounted(() => {

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="250" name="player-timer" title="Sleep Timer">
+  <win-window ref="win" :width="250" name="player-timer" title="Sleep Timer">
     <div class="p-3">
       <p v-if="active" class="text-center">
         Sleep timer is active <br/> <b>{{ timeText }}</b>
@@ -44,16 +44,14 @@
 
 <script setup>
 import { Native } from '@mobile/js/bridge/native'
-import { mapGetters, useStore } from 'vuex'
+import { useStore } from 'vuex'
 import ticker from '@common/js/extras/ticker'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import helperComposable from '@common/js/composables/helperComposable'
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 const store = useStore()
 
 // Composable
-const { dur } = helperComposable()
 const { closeWindow } = windowsComposable()
 
 const window = ref('window')
@@ -78,7 +76,7 @@ function start () {
     Native.setSleepTimer(minutes.value)
   }
 
-  window.value.close()
+  win.value.close()
 }
 
 function refreshText () {

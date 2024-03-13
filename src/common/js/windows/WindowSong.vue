@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="360" :name="name" title="Song Info">
+  <win-window ref="win" :width="360" :name="name" title="Song Info">
     <div class="p-2 song-info">
       <div v-if="song !== false">
         <div class="group-box p-2 m-0">
@@ -37,7 +37,7 @@
             <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="window.close()">Close</win-btn>
+            <win-btn class="px-4" @click="win.close()">Close</win-btn>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ const { alert, closeWindow } = windowsComposable()
 const { dur, sdy } = helperComposable()
 
 // Reactive data
-const window = ref('window')
+const win = ref('win')
 const song = ref(false)
 const isPlaying = ref(false)
 const playTimeLeft = ref(0)
@@ -89,7 +89,7 @@ function fetchSongInfo (songId) {
     song.value = result.data
   }).catch(error => {
     alert(error.response.data.error, 'Error')
-    window.value.close()
+    win.value.close()
   })
 }
 

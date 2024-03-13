@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="400" fluidHeight name="history" title="Play History">
+  <win-window :width="400" fluidHeight name="history" title="Play History" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
@@ -35,7 +35,7 @@
               <win-pagination v-if="items.length > 0" :pages="pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="window.close()">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -60,8 +60,6 @@ import helperComposable from '@common/js/composables/helperComposable'
 const { alert, songInfo } = windowsComposable()
 const { sd, gt } = helperComposable()
 
-const window = ref('window')
-// Reactive data
 const loading = ref(true)
 const items = ref([])
 const total = ref(0)
@@ -73,7 +71,6 @@ const dateTo = ref(0)
 
 // Refs
 const list = ref(null)
-const pagination = ref(null)
 
 watch(page, () => {
   fetchHistory(page.value)

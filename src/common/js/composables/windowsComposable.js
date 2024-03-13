@@ -1,6 +1,6 @@
 import { useStore } from 'vuex'
 
-export default function (windowName) {
+export default function () {
   const store = useStore()
 
   /**
@@ -18,11 +18,7 @@ export default function (windowName) {
    * @param name
    */
   function closeWindow (name) {
-    if (name) {
-      store.dispatch('windows/close', name).then()
-    } else {
-      store.dispatch('windows/close', windowName).then()
-    }
+    store.dispatch('windows/close', name).then()
   }
 
   /**

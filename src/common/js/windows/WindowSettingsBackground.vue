@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="280" name="settings-background" title="Appearance Settings">
+  <win-window :width="280" name="settings-background" title="Appearance Settings" v-slot="winProps">
     <div class="p-2">
       <div class="group-box p-2 mb-3">
         <div class="gb-label noselect">Background</div>
@@ -64,7 +64,7 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
       </div>
     </div>
   </win-window>
@@ -81,7 +81,6 @@ const { applyBackground, applyTheme } = userPrefs()
 
 const backgroundList = ref([])
 const theme = ref('win98')
-const window = ref('window')
 
 // Palettes
 const palette = [
@@ -112,7 +111,7 @@ const MODE_SOLID = 2
 
 const currentBg = ref({})
 
-function nextBg(dir) {
+function nextBg (dir) {
   let index = findIndex(currentBg.value.image) + dir
 
   if (index < 0) {
@@ -127,7 +126,7 @@ function nextBg(dir) {
   applyBackground(currentBg.value)
 }
 
-function randomBg() {
+function randomBg () {
   const image = backgroundList.value[Math.floor(Math.random() * backgroundList.value.length)]
 
   currentBg.value.mode = MODE_RANDOM
@@ -136,7 +135,7 @@ function randomBg() {
   applyBackground(currentBg.value)
 }
 
-function solidBg(color) {
+function solidBg (color) {
   if (color !== undefined) {
     currentBg.value.color = color
   }
@@ -147,7 +146,7 @@ function solidBg(color) {
   applyBackground(currentBg.value)
 }
 
-function findIndex(background) {
+function findIndex (background) {
   const index = backgroundList.value.findIndex((b) => {
     return b.id === background.id
   })

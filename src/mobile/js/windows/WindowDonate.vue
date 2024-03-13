@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="450" name="donate" title="Support Us">
+  <win-window :width="450" name="donate" title="Support Us" v-slot="winProps">
     <div class="p-2">
       <div class="text-center">
         <win-memo>
@@ -14,14 +14,8 @@
       </div>
 
       <div class="text-center mt-2">
-        <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
+        <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
       </div>
     </div>
   </win-window>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-
-const window = ref('window')
-</script>

@@ -1,16 +1,16 @@
 import { Native } from '@mobile/js/bridge/native'
 import { playerStore } from '@common/js/store/player'
 import { windowStore } from '@common/js/store/window'
-import { backgroundStore } from '@common/js/store/background'
 import { userStore } from '@common/js/store/user'
+import { appearanceStore } from '@common/js/store/appearance'
 import { createStore } from 'vuex'
 
 export default createStore({
   modules: {
     windows: windowStore,
     player: playerStore,
-    background: backgroundStore,
     user: userStore,
+    appearance: appearanceStore,
   },
 
   state: {

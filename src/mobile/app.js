@@ -1,5 +1,4 @@
 import { createApp, h } from 'vue'
-import { useStore } from 'vuex'
 import store from '@mobile/js/store.js'
 import ticker from '@common/js/extras/ticker.js'
 import Index from '@mobile/js/views/Index.vue'
@@ -28,13 +27,15 @@ const app = createApp({
       this.$store.commit('pushData', { name, data })
     },
 
-    openWindow(name) {
-      this.$store.dispatch('windows/open', { name })
+    openWindow (name) {
+      this.$store.dispatch('windows/open', {
+        name, form: 'window-' + name,
+      })
     },
 
-    closeWindow(name) {
+    closeWindow (name) {
       this.$store.dispatch('windows/close', name)
-    }
+    },
   },
 
   render: () => h(Index),

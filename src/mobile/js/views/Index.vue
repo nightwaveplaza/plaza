@@ -16,8 +16,10 @@ import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { Native } from '@mobile/js/bridge/native'
 import userPrefsComposable from '@common/js/composables/userPrefsComposable'
+import windowsComposable from '@common/js/composables/windowsComposable'
 
 const { loadBackground, loadTheme } = userPrefsComposable()
+const { openWindow } = windowsComposable()
 
 const store = useStore()
 

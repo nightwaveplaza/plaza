@@ -19,13 +19,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const router = useRouter()
-const store = useStore()
+const windowsStore = useWindowsStore()
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'delete-account')
+  windowsStore.pullUp('delete-account')
 })
 
 function close () {

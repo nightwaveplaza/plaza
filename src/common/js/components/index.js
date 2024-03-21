@@ -7,7 +7,6 @@ import WinNewsLoader from '@common/js/components/WinNewsLoader.vue'
 import WinPagination from '@common/js/components/WinPagination.vue'
 import WinPlayerReactions from '@common/js/components/WinPlayerReactions.vue'
 import WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
-import WinSongInfo from '@common/js/components/WinSongInfo.vue'
 import WinTaskbar from '@common/js/components/WinTaskbar.vue'
 import WinWindow from '@common/js/components/WinWindow.vue'
 
@@ -21,7 +20,6 @@ export const commonComponents = (app) => {
   app.component('win-pagination', WinPagination)
   app.component('win-player-reactions', WinPlayerReactions)
   app.component('win-player-time', WinPlayerTime)
-  app.component('win-song-info', WinSongInfo)
   app.component('win-taskbar', WinTaskbar)
   app.component('win-window', WinWindow)
 }

@@ -2,7 +2,7 @@
   <img class="img-captcha" :src="captchaImage" @click="refresh" alt="captcha"/>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { captcha } from '@common/js/api/api'
 
@@ -24,6 +24,6 @@ onMounted(() => {
 })
 
 defineExpose({
-  refresh
+  refresh,
 })
 </script>

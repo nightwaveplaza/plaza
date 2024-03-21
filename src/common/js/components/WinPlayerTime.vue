@@ -3,14 +3,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import ticker from '@common/js/extras/ticker'
 import helperComposable from '@common/js/composables/helperComposable'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 const CLOCK_REFRESH = 300
 
 const store = useStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
 // Composable
 const { dur } = helperComposable()
@@ -59,12 +61,10 @@ onMounted(() => {
   showText('Welcome back!')
   tickerId = ticker.set(tick, CLOCK_REFRESH)
 
-  store.subscribe((mutation, state) => {
-    if (mutation.type === 'player/currentSong') {
-      length.value = state.player.song.length
-      position = state.player.song.position
-      songUpdatedAt = Date.now()
-    }
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    length.value = state.length
+    position = state.position
+    songUpdatedAt = Date.now()
   })
 })
 

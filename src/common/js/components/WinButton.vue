@@ -1,16 +1,16 @@
 <template>
   <button
-      ontouchstart
-      class="noselect"
-      :class="{'d-block': block}"
-      @click="emit('click')"
-      :disabled="disabled"
+    ontouchstart
+    class="noselect"
+    :class="{'d-block': block}"
+    @click="emit('click')"
+    :disabled="disabled"
   >
     <slot/>
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // Emits
 const emit = defineEmits(['click'])
 

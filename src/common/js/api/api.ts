@@ -1,31 +1,10 @@
 import Repository from '@common/js/api/axios'
-
-export interface ifcUserAuth {
-  username: string,
-  password: string
-}
-
-export interface ifcUserRegister {
-  username: string,
-  email: string,
-  password: string,
-  captcha_response: string
-}
-
-export interface ifcUserEdit {
-  current_password: string,
-  password: string
-}
-
-export interface ifcUserReset {
-  email: string,
-  captcha_response: string
-}
-
-export interface ifcUserResetConfirm {
-  token: string,
-  password: string
-}
+import type {
+  ifcUserAuth,
+  ifcUserEdit, ifcUserRegister,
+  ifcUserReset,
+  ifcUserResetConfirm,
+} from '@common/js/types'
 
 /**
  * Status
@@ -38,7 +17,7 @@ export const status = {
 /**
  * Backgrounds
  */
-export const background = {
+export const backgrounds = {
   get: () => Repository.get('backgrounds'),
   random: () => Repository.get('backgrounds/random'),
 }

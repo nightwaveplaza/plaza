@@ -22,12 +22,8 @@
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+<script setup lang="ts">
 import windowsComposable from '@common/js/composables/windowsComposable'
 
 const { openWindow } = windowsComposable()
-const store = useStore()
-const auth = computed(() => store.getters['user/auth'])
 </script>

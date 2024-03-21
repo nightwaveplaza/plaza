@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="350" name="news" title="News" v-slot="winProps">
+  <win-window :width="350" name="news" title="News" v-slot="winProps" v-show="ready">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading"></div>
@@ -29,12 +29,16 @@ import { news } from '@common/js/api/api'
 import settings from '@common/js/extras/settings'
 import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 // Composable
 const { closeWindow } = windowsComposable()
 const { sdy } = helperComposable()
 
+const playerPlaybackStore = usePlayerPlaybackStore()
+
 // Reactive data
+const ready = ref(false)
 const article = ref({
   text: '',
   created_at: 0,
@@ -64,7 +68,11 @@ function changePage (newPage) {
 }
 
 onMounted(() => {
-  getArticle()
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    setTimeout(() => {
+      getArticle()
+    }, 3000)
+  })
 })
 
 onBeforeUnmount(() => {

@@ -17,11 +17,11 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
 
 // Reactive data
 const style = ref({
@@ -59,12 +59,12 @@ function move () {
 }
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'loading')
+  windowsStore.pullUp('loading')
   move()
 })
 
 onBeforeUnmount(() => {
   loading = false
-  store.commit('windows/pullUp', 'player')
+  windowsStore.pullUp('player')
 })
 </script>

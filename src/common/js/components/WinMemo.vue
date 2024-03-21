@@ -4,9 +4,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import PerfectScrollbar from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar'
 
 // Props
 const props = defineProps({
@@ -25,18 +25,18 @@ let scrollbar = {}
 // Methods
 onMounted(() => {
   if (props.scroll) {
-    scrollbar = new PerfectScrollbar(memo.value);
+    scrollbar = new PerfectScrollbar(memo.value)
   }
 })
 
 onBeforeUnmount(() => {
   if (props.scroll) {
-    scrollbar.destroy();
-    scrollbar = null;
+    scrollbar.destroy()
+    scrollbar = null
   }
 })
 
 defineExpose({
-  memo
+  memo,
 })
 </script>

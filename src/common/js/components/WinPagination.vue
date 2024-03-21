@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 
 // Props
@@ -60,6 +60,6 @@ function reset () {
 }
 
 defineExpose({
-  pageInput, reset
+  pageInput, reset,
 })
 </script>

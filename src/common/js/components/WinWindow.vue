@@ -22,14 +22,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const SNAP_SIZE = 15
 
-const store = useStore()
+const windowsStore = useWindowsStore()
 
 // Props
 const props = defineProps({
@@ -46,9 +45,6 @@ const props = defineProps({
   },
 })
 
-// Composable
-const { closeWindow } = windowsComposable()
-
 // Reactive data
 const style = ref({
   zIndex: 100,
@@ -59,12 +55,8 @@ const style = ref({
   width: '',
 })
 const windowPos = ref([0, 0])
-const activeWindow = computed(() => store.getters['windows/activeWindow'])
-const globalZ = computed(() => store.getters['windows/globalZ'])
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
-const isWindowMinimized = computed(() => store.getters['windows/isWindowMinimized'])
-const isWindowInactive = computed(() => activeWindow.value !== props.name)
-const isMinimized = computed(() => isWindowMinimized.value(props.name))
+const isWindowInactive = computed(() => windowsStore.activeWindow !== props.name)
+const isMinimized = computed(() => windowsStore.isMinimized(props.name))
 
 // Refs
 const windowRef = ref(null)
@@ -89,8 +81,8 @@ function resetPosition () {
 }
 
 function pullUp () {
-  store.commit('windows/pullUp', props.name)
-  style.value.zIndex = globalZ.value
+  windowsStore.pullUp(props.name)
+  style.value.zIndex = windowsStore.activeZIndex
 }
 
 function startMove (event) {
@@ -155,31 +147,29 @@ function recalculatePositions () {
 }
 
 function minimize () {
-  store.dispatch('windows/minimize', props.name)
+  windowsStore.minimize(props.name)
 }
 
 function close() {
   emit('closed')
-  closeWindow(props.name)
+  windowsStore.close(props.name)
 }
 
+watch(() => windowsStore.activeWindow, () => {
+  style.value.zIndex = windowsStore.activeZIndex
+})
+
 onBeforeMount(() => {
-  store.dispatch('windows/updateTitle', { name: props.name, title: props.title }).then()
+  windowsStore.updateTitle(props.name, props.title)
 })
 
 onMounted(() => {
-  style.value.zIndex = globalZ.value
+  style.value.zIndex = windowsStore.activeZIndex
   style.value.width = props.width + 'px'
 
   if (props.width > 0 && props.width <= 320) {
     style.value.maxWidth = props.width + 'px'
   }
-
-  store.subscribe((mutation, state) => {
-    if (mutation.type === 'windows/pullUp' && props.name === state.windows.activeWindow) {
-      style.value.zIndex = state.windows.activeZIndex
-    }
-  })
 
   window.addEventListener('mouseup', stopMove)
   window.addEventListener('mousemove', move)

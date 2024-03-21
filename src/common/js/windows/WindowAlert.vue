@@ -17,7 +17,7 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   text: String,
   title: String,

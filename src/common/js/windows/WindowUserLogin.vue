@@ -60,18 +60,18 @@
   </win-window>
 </template>
 
-<script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
 import { user } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 
 // Composable
 const { isMobile } = helperComposable()
 const { alert, openWindow } = windowsComposable()
 
-const store = useStore()
+const userAuthStore = useUserAuthStore()
 
 const win = ref('win')
 
@@ -95,9 +95,9 @@ function login () {
 
   user.auth(fields).then((res) => {
     if (isMobile.value) {
-      store.dispatch('login', res.data)
+      userAuthStore.login(res.data)
     } else {
-      store.dispatch('login', { user: res.data, remember: remember.value })
+      userAuthStore.login(res.data, remember.value)
     }
 
     alert('Authentication successful!', 'Success', 'info')

@@ -1,4 +1,4 @@
-import settings from '@common/js/extras/settings';
+import settings from '@common/js/extras/settings'
 
 export const userStore = {
   namespaced: true,
@@ -11,30 +11,30 @@ export const userStore = {
   },
 
   mutations: {
-    auth(state, user) {
-      state.auth = true;
-      state.username = user.username;
+    auth (state, user) {
+      state.auth = true
+      state.username = user.username
     },
 
-    token(state, token) {
-      state.token = token;
+    token (state, token) {
+      state.token = token
     },
 
-    agent(state, agent) {
-      state.agent = agent;
+    agent (state, agent) {
+      state.agent = agent
     },
 
-    logout(state) {
-      state.auth = false;
-      state.username = 'Guest';
+    logout (state) {
+      state.auth = false
+      state.username = 'Guest'
     },
   },
 
   actions: {
-    logout(context) {
-      context.commit('logout');
-      context.commit('player/reaction', 0, {root: true});
-      settings.save('reaction', null);
+    logout (context) {
+      context.commit('logout')
+      context.commit('player/reaction', 0, { root: true })
+      settings.save('reaction', null)
     },
   },
 
@@ -43,4 +43,4 @@ export const userStore = {
     username: state => state.username,
     token: state => state.token,
   },
-};
+}

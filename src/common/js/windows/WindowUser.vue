@@ -14,17 +14,17 @@
   </win-window>
 </template>
 
-<script setup>
-import { useStore } from 'vuex'
+<script setup lang="ts">
 import { user } from '@common/js/api/api'
 import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 
 // Composable
 const { closeWindow, openWindow } = windowsComposable()
 const { isMobile } = helperComposable()
 
-const store = useStore()
+const userAuthStore = useUserAuthStore()
 
 // Methods
 function open (window) {
@@ -34,7 +34,7 @@ function open (window) {
 
 function logout () {
   user.logout().then().finally(() => {
-    store.dispatch('logout')
+    userAuthStore.logout()
     closeWindow('user')
   })
 }

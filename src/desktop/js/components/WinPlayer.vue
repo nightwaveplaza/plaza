@@ -9,8 +9,8 @@
 
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
-        <div class="player-artist track-artist mb-2">{{ currentSong.artist }}</div>
-        <div class="player-title track-title">{{ currentSong.title }}</div>
+        <div class="player-artist track-artist mb-2">{{ playerPlaybackStore.artist }}</div>
+        <div class="player-title track-title">{{ playerPlaybackStore.title }}</div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-7 pr-0 pr-md-2">
@@ -39,7 +39,7 @@
           <div class="col-6 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="auth ? openWindow('user') : openWindow('user-login')">
+                <win-btn block @click="userAuthStore.signed ? openWindow('user') : openWindow('user-login')">
                   <i class="i icon-user mr-0"/>
                 </win-btn>
               </div>
@@ -64,12 +64,16 @@ import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import windowsComposable from '@common/js/composables/windowsComposable'
 import visualComposable from '@common/js/composables/visualComposable'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 
+// const
 const STATE_IDLE = 0
 const STATE_LOADING = 1
 const STATE_PLAYING = 2
 
 const store = useStore()
+const userAuthStore = useUserAuthStore()
 
 // Composable
 const { closeWindow, openWindow, songInfo } = windowsComposable()
@@ -77,10 +81,8 @@ const { startVisual } = visualComposable()
 
 // Reactive data
 const state = ref(STATE_IDLE)
-const auth = computed(() => store.getters['user/auth'])
-const currentSong = computed(() => store.getters['player/currentSong'])
 const artwork = computed(() => {
-  if (currentSong.value.id && currentSong.value.artwork_src) return currentSong.value.artwork_src
+  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src) return playerPlaybackStore.artwork_src
   else return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => {
@@ -88,6 +90,8 @@ const playText = computed(() => {
   else if (state.value === STATE_LOADING) return 'Loading...'
   else return 'Stop'
 })
+
+const playerPlaybackStore = usePlayerPlaybackStore()
 
 // Refs
 const audio = ref(null)
@@ -105,7 +109,7 @@ function updateSong () {
   }
 
   if (state.value === STATE_PLAYING) {
-    document.title = `${currentSong.value.artist} - ${currentSong.value.title}`
+    document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
     updateMediaSession()
   }
 
@@ -137,7 +141,7 @@ function startPlay () {
   audio.value.load()
   audio.value.volume = volume
 
-  document.title = `${currentSong.value.artist} - ${currentSong.value.title}`
+  document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
 }
 
 function audioCanPlay () {
@@ -174,20 +178,20 @@ function updateVolume (newVolume) {
 }
 
 function showSongInfo () {
-  if (currentSong.value.id) {
-    songInfo(currentSong.value.id)
+  if (playerPlaybackStore.songId) {
+    songInfo(playerPlaybackStore.songId)
   }
 }
 
 function updateMediaSession () {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: currentSong.value.title,
-      artist: currentSong.value.artist,
-      album: currentSong.value.album,
+      title: playerPlaybackStore.title,
+      artist: playerPlaybackStore.artist,
+      album: playerPlaybackStore.album,
       artwork: [
-        { src: currentSong.value.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
-        { src: currentSong.value.artwork_src, sizes: '500x500', type: 'image/jpg' },
+        { src: playerPlaybackStore.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
+        { src: playerPlaybackStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
       ],
     })
   } else {
@@ -220,10 +224,8 @@ function setMediaSessionState (state) {
 }
 
 onMounted(() => {
-  store.subscribe((mutation) => {
-    if (mutation.type === 'player/currentSong') {
-      updateSong()
-    }
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    updateSong()
   })
 
   setMediaSessionActions()

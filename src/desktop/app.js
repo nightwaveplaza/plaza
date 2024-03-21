@@ -8,6 +8,8 @@ import { desktopComponents } from '@desktop/js/components'
 import { desktopWindows } from '@desktop/js/windows'
 import App from '@desktop/js/views/App.vue'
 
+import { createPinia } from 'pinia'
+
 const app = createApp({
   mounted () {
     requestAnimationFrame(this.tick)
@@ -23,6 +25,9 @@ const app = createApp({
   render: () => h(App),
 })
 
+const pinia = createPinia()
+
+app.use(pinia)
 app.use(router)
 app.use(store)
 

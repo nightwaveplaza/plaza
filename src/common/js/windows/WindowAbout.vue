@@ -75,18 +75,18 @@
   </win-window>
 </template>
 
-<script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const { openWindow, closeWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
 
 const openCredits = () => {
-  openWindow('credits')
-  closeWindow('about')
+  windowsStore.open('credits')
+  windowsStore.close('about')
 }
 
 const openNews = () => {
-  openWindow('news')
-  closeWindow('about')
+  windowsStore.open('news')
+  windowsStore.close('about')
 }
 </script>

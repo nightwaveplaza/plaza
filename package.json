@@ -27,6 +27,7 @@
     "js-cookie": "^3.0.1",
     "nouislider": "^15.6.1",
     "perfect-scrollbar": "1.4.0",
+    "pinia": "^2.1.7",
     "tailwindcss": "^3.2.4",
     "uuid": "^9.0.0",
     "vue-axios": "3.5.2",

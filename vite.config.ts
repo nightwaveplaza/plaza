@@ -1,22 +1,22 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, splitVendorChunkPlugin, loadEnv } from 'vite'
+import { defineConfig, splitVendorChunkPlugin, loadEnv, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
 
-export default ({ mode }) => {
+export default ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
   // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
-  const root = resolve(__dirname, 'src/' + process.env.VITE_APP)
-  const minify = process.env.VITE_USER_NODE_ENV !== 'development'
-  const base = process.env.VITE_APP === 'mobile' ? '' : '/'
+  const root: string = resolve(__dirname, 'src/' + process.env.VITE_APP)
+  const minify: boolean = process.env.VITE_USER_NODE_ENV !== 'development'
+  const base: string = process.env.VITE_APP === 'mobile' ? '' : '/'
 
   return defineConfig({
     plugins: [
       vue(),
       // getSplitVendorChunkPlugin(process.env),
-      getLegacyPlugin(process.env)
+      getLegacyPlugin(process.env),
     ],
 
     root,
@@ -24,11 +24,11 @@ export default ({ mode }) => {
     publicDir: 'public',
     envDir: resolve(__dirname),
     build: {
-      outDir: resolve(__dirname, process.env.VITE_BUILD_PATH),
+      outDir: resolve(__dirname, process.env.VITE_BUILD_PATH!),
       emptyOutDir: true,
       manifest: false,
       rollupOptions: {
-        input: '/index.html'
+        input: '/index.html',
       },
       // target: 'es2015',
       assetsInlineLimit: 4096,
@@ -49,17 +49,17 @@ export default ({ mode }) => {
   })
 }
 
-function getLegacyPlugin (env) {
+function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
   if (env.VITE_USER_NODE_ENV === 'development')
     return null
   else
     return legacy({
       targets: 'defaults, android >= 4.4.4, ios >= 7',
-      externalSystemJS: true
+      externalSystemJS: true,
     })
 }
 
-function getSplitVendorChunkPlugin (env) {
+function getSplitVendorChunkPlugin (env: NodeJS.ProcessEnv) {
   if (env.VITE_APP === 'mobile') {
     return null
   } else {
@@ -67,6 +67,6 @@ function getSplitVendorChunkPlugin (env) {
   }
 }
 
-function getBuildDate () {
+function getBuildDate (): string {
   return new Date().toISOString().slice(0, 10).replace(/-/g, '')
 }

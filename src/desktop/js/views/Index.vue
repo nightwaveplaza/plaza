@@ -14,6 +14,7 @@ import { computed, onMounted } from 'vue'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { news } from '@common/js/api/api'
 
 const appearanceStore = useAppearanceStore()
 const userAuthStore = useUserAuthStore()
@@ -25,11 +26,20 @@ const backgroundColor = computed(() => appearanceStore.background.color)
 
 onMounted(() => {
   windowsStore.open('player')
-  windowsStore.open('news')
   windowsStore.open('loading')
 
   appearanceStore.loadBackground()
   appearanceStore.loadTheme()
   userAuthStore.loadUser()
+
+  setTimeout(() => {
+    news.latest().then(res => {
+      const latestNewsRead = localStorage.getItem('latestNewsRead')
+      if (!latestNewsRead || latestNewsRead < res.data.id) {
+        windowsStore.open('news')
+        localStorage.setItem('latestNewsRead', res.data.id)
+      }
+    })
+  }, 3000)
 })
 </script>

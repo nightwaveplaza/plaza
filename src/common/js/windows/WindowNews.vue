@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="350" name="news" title="News" v-slot="winProps" v-show="ready">
+  <win-window :width="350" name="news" title="News" v-slot="winProps">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading"></div>
@@ -23,10 +23,9 @@
   </win-window>
 </template>
 
-<script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { news } from '@common/js/api/api'
-import settings from '@common/js/extras/settings'
 import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
@@ -38,7 +37,6 @@ const { sdy } = helperComposable()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
 // Reactive data
-const ready = ref(false)
 const article = ref({
   text: '',
   created_at: 0,
@@ -47,18 +45,11 @@ const page = ref(1)
 const length = ref(1)
 const pages = ref(1)
 
-// Non-reactive
-let latest = 0
-
 // Methods
 function getArticle () {
   news.get(page.value).then(res => {
     article.value = res.data.articles[0]
     pages.value = res.data.pages
-
-    if (latest === 0) {
-      latest = article.value.created_at
-    }
   }).catch(() => {})
 }
 
@@ -68,14 +59,6 @@ function changePage (newPage) {
 }
 
 onMounted(() => {
-  playerPlaybackStore.$subscribe((mutation, state) => {
-    setTimeout(() => {
-      getArticle()
-    }, 3000)
-  })
-})
-
-onBeforeUnmount(() => {
-  settings.save('latestNews', latest)
+  getArticle()
 })
 </script>

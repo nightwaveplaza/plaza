@@ -3,7 +3,6 @@ import WinButton from '@common/js/components/WinButton.vue'
 import WinCaptcha from '@common/js/components/WinCaptcha.vue'
 import WinList from '@common/js/components/WinList.vue'
 import WinMemo from '@common/js/components/WinMemo.vue'
-import WinNewsLoader from '@common/js/components/WinNewsLoader.vue'
 import WinPagination from '@common/js/components/WinPagination.vue'
 import WinPlayerReactions from '@common/js/components/WinPlayerReactions.vue'
 import WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
@@ -16,7 +15,6 @@ export const commonComponents = (app) => {
   app.component('win-captcha', WinCaptcha)
   app.component('win-list', WinList)
   app.component('win-memo', WinMemo)
-  app.component('win-news-loader', WinNewsLoader)
   app.component('win-pagination', WinPagination)
   app.component('win-player-reactions', WinPlayerReactions)
   app.component('win-player-time', WinPlayerTime)

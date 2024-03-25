@@ -6,6 +6,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import helperComposable from '@common/js/composables/helperComposable'
+import { MutationType } from 'pinia'
 
 const CLOCK_REFRESH = 1000
 
@@ -51,9 +52,11 @@ onMounted(() => {
   intervalId = setInterval(tick, CLOCK_REFRESH)
 
   playerPlaybackStore.$subscribe((mutation, state) => {
-    length.value = state.length
-    position = state.position
-    songUpdatedAt = Date.now()
+    if (mutation.type === MutationType.patchObject) {
+      length.value = state.length
+      position = state.position
+      songUpdatedAt = Date.now()
+    }
   })
 })
 

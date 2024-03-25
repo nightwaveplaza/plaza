@@ -15,13 +15,19 @@
       </div>
     </div>
   </win-window>
+
+  <win-player-status />
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { MutationType } from 'pinia'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
 
 const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
 const style = ref({
   transform: `translate(0px, 0px)`,
@@ -56,8 +62,16 @@ function move () {
 }
 
 onMounted(() => {
-  windowsStore.pullUp('loading')
+  //windowsStore.pullUp('loading')
   move()
+
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    if (mutation.type === MutationType.patchObject) {
+      windowsStore.open('player')
+      windowsStore.close('loading')
+    }
+  })
+
 })
 
 onBeforeUnmount(() => {

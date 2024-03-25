@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450" v-show="loaded">
+  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
 
     <!-- Minimize button -->
     <template v-slot:header>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
@@ -40,12 +40,9 @@ const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Reactive data
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
-const loaded = ref(false)
 const win = ref<InstanceType<typeof WinWindow>>()
 
-// Methods
 function minimize () {
   windowsStore.minimize('player')
 }
@@ -53,14 +50,4 @@ function minimize () {
 function requestFullScreen () {
   document.getElementById('app')?.requestFullscreen()
 }
-
-onMounted(() => {
-  playerPlaybackStore.$subscribe((mutation, state) => {
-    if (loaded.value === false) {
-      windowsStore.close('loading')
-      loaded.value = true
-      win.value!.pullUp()
-    }
-  })
-})
 </script>

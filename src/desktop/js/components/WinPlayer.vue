@@ -66,6 +66,7 @@ import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import type WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
+import { MutationType } from 'pinia'
 
 // const
 const STATE_IDLE = 0
@@ -211,7 +212,9 @@ function setMediaSessionState (state: string) {
 
 onMounted(() => {
   playerPlaybackStore.$subscribe((mutation, state) => {
-    updateSong()
+    if (mutation.type === MutationType.patchObject) {
+      updateSong()
+    }
   })
 
   setMediaSessionActions()

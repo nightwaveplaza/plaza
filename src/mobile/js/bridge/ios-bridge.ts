@@ -7,26 +7,23 @@ const CallbackKey = 'ios-callback'
  * результата выполнения функции
  */
 export const iOSBridge = {
-  getStatus: () => sendMessage('getStatus'),
   requestUiUpdate: () => sendMessage('requestUiUpdate'),
   audioPlay: () => sendMessage('audioPlay'),
   audioStop: () => sendMessage('audioStop'),
-  setSleepTimer: (time) => sendMessage('setSleepTimer', [`${time}`]),
+  setSleepTimer: (time: number) => sendMessage('setSleepTimer', [`${time}`]),
   getAuthToken: () => sendMessage('getAuthToken'),
-  setAuthToken: (token) => sendMessage('setAuthToken', [token]),
+  setAuthToken: (token: string) => sendMessage('setAuthToken', [token]),
   getAudioQuality: () => sendMessage('getAudioQuality'),
-  setAudioQuality: (lowQuality) => sendMessage('setAudioQuality',
+  setAudioQuality: (lowQuality: boolean) => sendMessage('setAudioQuality',
     [`${lowQuality}`]),
   toggleFullscreen: () => sendMessage('toggleFullscreen'),
   openDrawer: () => sendMessage('openDrawer'),
   getUserAgent: () => sendMessage('getUserAgent'),
   getAppVersion: () => sendMessage('getAppVersion'),
-  setBackground: (background) => sendMessage('setBackground', [background]),
-  setReaction: (score) => sendMessage('setReaction', [`${score}`]),
-  getReaction: () => sendMessage('getReaction'),
+  setBackground: (background: string) => sendMessage('setBackground', [background]),
 }
 
-function sendMessage (name, args) {
+function sendMessage (name: string, args?: string[]) {
 
   if (window.webkit && window.webkit.messageHandlers &&
     window.webkit.messageHandlers.plaza) {

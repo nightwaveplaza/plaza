@@ -21,28 +21,26 @@
 <script setup lang="ts">
 import { Native } from '@mobile/js/bridge/native'
 import { computed, onMounted, ref } from 'vue'
-import windowsComposable from '@common/js/composables/windowsComposable'
 import WinWindow from '@common/js/components/WinWindow.vue'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
-const { openWindow, closeWindow } = windowsComposable()
+const windowStore = useWindowsStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 const lowQualityAudio = ref(false)
 const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 
-// Methods
 function switchAudioQuality () {
   lowQualityAudio.value = !lowQualityAudio.value
   Native.setAudioQuality(lowQualityAudio.value)
 }
 
-function open (window) {
-  openWindow(window)
-  win.value.close()
+function open (window: string) {
+  windowStore.open(window)
+  win.value!.close()
 }
 
 onMounted(() => {
-  Native.getAudioQuality().then(q => lowQualityAudio.value = q)
+  Native.getAudioQuality()!.then(q => lowQualityAudio.value = q as boolean)
 })
 </script>

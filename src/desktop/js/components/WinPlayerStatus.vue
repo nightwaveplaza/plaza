@@ -1,7 +1,7 @@
 <template/>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { status } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
@@ -12,6 +12,7 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 let statusUpdatedAt = 0
 let osdUpdatedAt = 0
 let updating = false
+let intervalId = 0
 
 function tick () {
   const now = Date.now()
@@ -22,7 +23,7 @@ function tick () {
   } else if (now - osdUpdatedAt > OSD_UPDATE_INTERVAL) {
     updateOsd()
   } else {
-    setTimeout(tick, 1000)
+    intervalId = setTimeout(tick, 1000)
   }
 }
 
@@ -39,7 +40,7 @@ function updateOsd () {
   }).finally(() => {
     updating = false
     osdUpdatedAt = Date.now()
-    setTimeout(tick, 1000)
+    intervalId = setTimeout(tick, 1000)
   })
 }
 
@@ -67,7 +68,7 @@ function updateStatus () {
     updating = false
     osdUpdatedAt = Date.now()
     statusUpdatedAt = Date.now()
-    setTimeout(tick, 1000)
+    intervalId = setTimeout(tick, 1000)
   })
 }
 
@@ -75,4 +76,7 @@ onMounted(() => {
   tick()
 })
 
+onBeforeUnmount(() => {
+  clearTimeout(intervalId)
+})
 </script>

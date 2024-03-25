@@ -32,25 +32,25 @@ export const useAppearanceStore = defineStore('appearanceStore', {
 
   actions: {
     saveTheme () {
-      prefs.save('theme', this.theme)
+      //prefs.save('theme', this.theme)
     },
 
     loadTheme () {
-      this.theme = prefs.getStr('theme', 'win98')
+      //this.theme = prefs.getStr('theme', 'win98')
     },
 
     saveBackground () {
-      prefs.save('background', this.background)
+      //prefs.save('background', this.background)
     },
 
     async loadBackground () {
-      const bg: ifcBackground = prefs.getObj('background')
+      //const bg: ifcBackground = prefs.getObj('background')
 
-      if (!bg || bg.mode === enBackgroundMode.RANDOM) {
+      if (this.background.mode === enBackgroundMode.RANDOM) {
         this.background.image = (await backgrounds.random()).data
-      } else {
-        this.background = bg
       }
     },
   },
+
+  persist: true
 })

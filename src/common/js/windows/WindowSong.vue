@@ -44,7 +44,7 @@
       <div v-else class="text-center">Loading...</div>
     </div>
 
-    <div v-if="song !== false" class="statusbar row no-gutters noselect">
+    <div v-if="song" class="statusbar row no-gutters noselect">
       <div v-if="song.first_played_at" class="col cell">First played: {{ sdy(song.first_played_at) }}</div>
     </div>
   </win-window>

@@ -5,22 +5,21 @@ import { iOSBridge } from './ios-bridge'
  * Общий API для взаимодействия с Android и iOS
  */
 export const Native = {
-  getStatus: () => CurrentBridge().getStatus(),
   requestUiUpdate: () => CurrentBridge().requestUiUpdate(),
   audioPlay: () => CurrentBridge().audioPlay(),
   audioStop: () => CurrentBridge().audioStop(),
-  setSleepTimer: (time) => CurrentBridge().setSleepTimer(time),
+  setSleepTimer: (time: number) => CurrentBridge().setSleepTimer(time),
   getAuthToken: () => CurrentBridge().getAuthToken(),
-  setAuthToken: (token) => CurrentBridge().setAuthToken(token),
+  setAuthToken: (token: string) => CurrentBridge().setAuthToken(token),
   getAudioQuality: () => CurrentBridge().getAudioQuality(),
-  setAudioQuality: (lowQuality) => CurrentBridge().setAudioQuality(lowQuality),
+  setAudioQuality: (lowQuality: boolean) => CurrentBridge().
+    setAudioQuality(lowQuality),
   toggleFullscreen: () => CurrentBridge().toggleFullscreen(),
   openDrawer: () => CurrentBridge().openDrawer(),
   getUserAgent: () => CurrentBridge().getUserAgent(),
   getAppVersion: () => CurrentBridge().getAppVersion(),
-  setBackground: (background) => CurrentBridge().setBackground(background),
-  setReaction: (score) => CurrentBridge().setReaction(score),
-  getReaction: (score) => CurrentBridge().getReaction(score),
+  setBackground: (background: string) => CurrentBridge().
+    setBackground(background),
 }
 
 const CurrentBridge = () => {

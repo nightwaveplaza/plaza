@@ -51,8 +51,6 @@ function send (score: number) {
     playerPlaybackStore.reactions = res.data.reactions
     userReactionStore.score = score
     userReactionStore.songId = playerPlaybackStore.songId
-    userReactionStore.save()
-    // store.dispatch('player/setReaction', score).then() // TODO
     showTip()
   }).catch(err => {
     if (err.response.status === 401) {
@@ -75,8 +73,6 @@ function showTip () {
 }
 
 onMounted(() => {
-  playerPlaybackStore.$subscribe((mutation, state) => {
-    userReactionStore.load()
-  })
+
 })
 </script>

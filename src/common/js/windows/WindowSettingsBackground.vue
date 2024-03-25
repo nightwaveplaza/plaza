@@ -41,7 +41,7 @@
             <win-btn block @click="nextBg(1)">&gt;</win-btn>
           </div>
           <div class="col-4 pr-1">
-            <win-btn block @click="randomBg">Random</win-btn>
+            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">Random</win-btn>
           </div>
           <div class="col-4">
             <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">Solid</win-btn>

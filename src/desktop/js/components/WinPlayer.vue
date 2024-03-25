@@ -143,7 +143,7 @@ function audioCanPlay () {
     state.value = STATE_PLAYING
 
     audio.value!.play().then(() => {
-      startVisual(audio.value, canvas.value)
+      startVisual(audio.value!, canvas.value!)
       updateMediaSession()
       setMediaSessionState('playing')
     }).catch(err => console.log(err))

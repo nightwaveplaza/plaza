@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
@@ -27,7 +27,7 @@ watch(windowsStore.alerts, (n) => {
 
 onMounted(() => {
   if (route.params.token) {
-    token.value = route.params.token
+    token.value = route.params.token as string
     windowsStore.open('user-reset-password')
   } else {
     windowsStore.open('user-reset')

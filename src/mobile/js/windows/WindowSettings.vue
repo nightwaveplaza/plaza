@@ -18,15 +18,16 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Native } from '@mobile/js/bridge/native'
 import { computed, onMounted, ref } from 'vue'
 import windowsComposable from '@common/js/composables/windowsComposable'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
 // Composable
 const { openWindow, closeWindow } = windowsComposable()
 
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 const lowQualityAudio = ref(false)
 const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 

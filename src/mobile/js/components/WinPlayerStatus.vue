@@ -100,6 +100,6 @@ onMounted(() => {
     }
   })
 
-  ticker.set(tick, 1000)
+  setInt(tick, 1000)
 })
 </script>

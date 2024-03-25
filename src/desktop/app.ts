@@ -1,26 +1,14 @@
 import { createApp, h } from 'vue'
-import ticker from '@common/js/extras/ticker.js'
 import { router } from '@desktop/js/router'
 import { commonComponents } from '@common/js/components'
 import { commonWindows } from '@common/js/windows'
 import { desktopComponents } from '@desktop/js/components'
 import { desktopWindows } from '@desktop/js/windows'
+import { createPinia } from 'pinia'
 import App from '@desktop/js/views/App.vue'
 
-import { createPinia } from 'pinia'
 
 const app = createApp({
-  mounted () {
-    requestAnimationFrame(this.tick)
-  },
-
-  methods: {
-    tick () {
-      ticker.tick()
-      requestAnimationFrame(this.tick)
-    },
-  },
-
   render: () => h(App),
 })
 

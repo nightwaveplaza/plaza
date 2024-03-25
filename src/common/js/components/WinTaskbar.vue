@@ -17,21 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import ticker from '@common/js/extras/ticker'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const windowsStore = useWindowsStore()
 
-// Reactive data
 const time = ref('0:00 PM')
 
-// Methods
 function getNow () {
   time.value = (new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }
 
-function toggleMinimize (name) {
+function toggleMinimize (name: string) {
   if (windowsStore.isMinimized(name)) {
     windowsStore.restore(name)
   } else {
@@ -43,7 +40,11 @@ function toggleMinimize (name) {
   }
 }
 
+onBeforeMount(() => {
+  getNow()
+})
+
 onMounted(() => {
-  ticker.set(getNow, 1000)
+  setInterval(getNow, 1000)
 })
 </script>

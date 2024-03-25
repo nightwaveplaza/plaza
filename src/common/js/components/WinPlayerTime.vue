@@ -5,10 +5,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
-import ticker from '@common/js/extras/ticker'
 import helperComposable from '@common/js/composables/helperComposable'
 
-const CLOCK_REFRESH = 300
+const CLOCK_REFRESH = 1000
 
 const playerPlaybackStore = usePlayerPlaybackStore()
 
@@ -24,17 +23,12 @@ const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / 
 // Non-reactive
 let position = 0
 let songUpdatedAt = 0
-let tickerId = ''
+let intervalId = 0
 
 function showText (newText: string) {
   text.value = newText
   textTime.value = 2000
 }
-
-// function resetTimer () {
-//   ticker.stop(tickerId)
-//   tickerId = ticker.set(tick, CLOCK_REFRESH)
-// }
 
 function tick () {
   const now = Date.now()
@@ -54,7 +48,7 @@ function tick () {
 
 onMounted(() => {
   showText('Welcome back!')
-  tickerId = ticker.set(tick, CLOCK_REFRESH)
+  intervalId = setInterval(tick, CLOCK_REFRESH)
 
   playerPlaybackStore.$subscribe((mutation, state) => {
     length.value = state.length

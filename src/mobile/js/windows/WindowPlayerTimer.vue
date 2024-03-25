@@ -62,7 +62,7 @@ const active = computed(() => sleepTime.value !== 0 ?? sleepTime.value > Date.no
 const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
 
 // Non-reactive
-let tickerId = 0
+let intervalId = 0
 
 // Methods
 function start () {
@@ -91,11 +91,11 @@ function add (amount) {
 }
 
 onMounted(() => {
-  tickerId = ticker.set(refreshText, 1000)
+  intervalId = setInterval(refreshText, 1000)
 })
 
 onBeforeUnmount(() => {
-  ticker.stop(tickerId)
+  clearInterval(intervalId)
 })
 
 </script>

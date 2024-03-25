@@ -2,12 +2,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useStore } from 'vuex'
 import { status } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 const OSD_UPDATE_INTERVAL = 10000
-const store = useStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
 // Vars
@@ -34,8 +32,6 @@ function updateOsd () {
   updating = true
 
   status.getOsd().then(res => {
-    // store.commit('player/listeners', res.data[1])
-    // store.commit('player/reactions', res.data[2])
     playerPlaybackStore.listeners = res.data[1]
     playerPlaybackStore.reactions = res.data[2]
   }).catch(err => {
@@ -54,18 +50,17 @@ function updateStatus () {
 
   status.get().then((res) => {
     playerPlaybackStore.$patch({
-        songId: res.data.song.id,
-        artist: res.data.song.artist,
-        title: res.data.song.title,
-        album: res.data.song.album,
-        position: res.data.song.position,
-        length: res.data.song.length,
-        reactions: res.data.song.reactions,
-        listeners: res.data.listeners,
-        artwork_src: res.data.song.artwork_src,
-        artwork_sm_src: res.data.song.artwork_sm_src,
-      },
-    )
+      songId: res.data.song.id,
+      artist: res.data.song.artist,
+      title: res.data.song.title,
+      album: res.data.song.album,
+      position: res.data.song.position,
+      length: res.data.song.length,
+      reactions: res.data.song.reactions,
+      artwork_src: res.data.song.artwork_src,
+      artwork_sm_src: res.data.song.artwork_sm_src,
+      listeners: res.data.listeners,
+    })
   }).catch((err) => {
     console.log(`Failed to update status: ${err}`)
   }).finally(() => {

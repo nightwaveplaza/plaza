@@ -11,26 +11,25 @@ import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
 import PerfectScrollbar from 'perfect-scrollbar'
 
 // Props
-const props = defineProps({
-  scroll: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  scroll?: boolean
+}>(), {
+  scroll: false,
 })
 
-// Reactive data
-const list = ref(null)
+// Elements
+const list = ref<HTMLDivElement | null>(null)
 
 // Scrollbar
-let scrollbar = {}
+let scrollbar: PerfectScrollbar
 
 // Methods
 function scrollTop () {
-  list.scrollTop = 0
+  list.value!.scrollTop = 0
 }
 
 function refreshScrollbar () {
-  if (scroll) {
+  if (props.scroll) {
     nextTick(() => {
       scrollbar.update()
     })
@@ -39,14 +38,13 @@ function refreshScrollbar () {
 
 onMounted(() => {
   if (props.scroll) {
-    scrollbar = new PerfectScrollbar(list.value)
+    scrollbar = new PerfectScrollbar(list.value!)
   }
 })
 
 onBeforeUnmount(() => {
   if (props.scroll) {
     scrollbar.destroy()
-    scrollbar = null
   }
 })
 

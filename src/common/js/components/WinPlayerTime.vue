@@ -2,22 +2,18 @@
   <div class="player-time">{{ display }}</div>
 </template>
 
-<script setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import { useStore } from 'vuex'
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import ticker from '@common/js/extras/ticker'
 import helperComposable from '@common/js/composables/helperComposable'
-import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 const CLOCK_REFRESH = 300
 
-const store = useStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Composable
 const { dur } = helperComposable()
 
-// Refs
 const length = ref(0)
 const actualPosition = ref(0)
 const textTime = ref(0)
@@ -28,18 +24,17 @@ const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / 
 // Non-reactive
 let position = 0
 let songUpdatedAt = 0
-let tickerId = 0
+let tickerId = ''
 
-// Methods
-function showText (newText) {
+function showText (newText: string) {
   text.value = newText
   textTime.value = 2000
 }
 
-function resetTimer () {
-  ticker.stop(tickerId)
-  tickerId = ticker.set(tick, CLOCK_REFRESH)
-}
+// function resetTimer () {
+//   ticker.stop(tickerId)
+//   tickerId = ticker.set(tick, CLOCK_REFRESH)
+// }
 
 function tick () {
   const now = Date.now()

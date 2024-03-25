@@ -34,6 +34,7 @@ import { computed, onMounted, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
@@ -42,7 +43,7 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 // Reactive data
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
 const loaded = ref(false)
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 
 // Methods
 function minimize () {
@@ -50,7 +51,7 @@ function minimize () {
 }
 
 function requestFullScreen () {
-  document.getElementById('app').requestFullscreen()
+  document.getElementById('app')?.requestFullscreen()
 }
 
 onMounted(() => {
@@ -58,7 +59,7 @@ onMounted(() => {
     if (loaded.value === false) {
       windowsStore.close('loading')
       loaded.value = true
-      win.value.pullUp()
+      win.value!.pullUp()
     }
   })
 })

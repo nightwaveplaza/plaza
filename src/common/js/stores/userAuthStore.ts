@@ -1,7 +1,8 @@
-import { defineStore, type StoreDefinition } from 'pinia'
+import { defineStore } from 'pinia'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { user } from '@common/js/api/api'
 import Cookies from 'js-cookie'
+import type { ifcUserProfile } from '@common/js/types'
 
 interface State {
   username: string,
@@ -35,14 +36,14 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       }
     },
 
-    login(user, remember: boolean) {
+    login(userProfile: ifcUserProfile, remember: boolean = false) {
       if (remember) {
-        cookieApi.set('token', user.token, { expires: 180 })
+        cookieApi.set('token', userProfile.token, { expires: 180 })
       } else {
-        cookieApi.set('token', user.token)
+        cookieApi.set('token', userProfile.token)
       }
 
-      this.username = user.username
+      this.username = userProfile.username
       this.signed = true
     },
 

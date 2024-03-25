@@ -11,18 +11,13 @@
 </template>
 
 <script setup lang="ts">
-// Emits
 const emit = defineEmits(['click'])
 
-// Props
-const props = defineProps({
-  block: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  block?: boolean,
+  disabled?: boolean
+}>(), {
+  block: false,
+  disabled: false
 })
 </script>

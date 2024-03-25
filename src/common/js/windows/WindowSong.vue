@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="360" :name="name" title="Song Info">
+  <win-window :width="360" :name="name" title="Song Info" v-slot="winProps">
     <div class="p-2 song-info">
       <div v-if="song !== false">
         <div class="group-box p-2 m-0">
@@ -37,7 +37,7 @@
             <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="win.close()">Close</win-btn>
+            <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
           </div>
         </div>
       </div>
@@ -50,25 +50,27 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { songs, user } from '@common/js/api/api'
-import settings from '@common/js/extras/settings'
 import helperComposable from '@common/js/composables/helperComposable'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import { prefs } from '@common/js/extras/prefs'
+
+const windowsStore = useWindowsStore()
 
 // Props
-const props = defineProps({
-  id: String,
-  name: String,
-})
+const props = defineProps<{
+  id: string,
+  name: string,
+}>()
 
 // Composable
-const { alert, closeWindow } = windowsComposable()
 const { dur, sdy } = helperComposable()
 
 // Reactive data
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 const song = ref(false)
 const isPlaying = ref(false)
 const playTimeLeft = ref(0)
@@ -88,7 +90,7 @@ function fetchSongInfo (songId) {
   songs.get(songId).then(result => {
     song.value = result.data
   }).catch(error => {
-    alert(error.response.data.error, 'Error')
+    windowsStore.alert(error.response.data.error, 'Error')
     win.value.close()
   })
 }
@@ -111,17 +113,12 @@ function favoriteSong () {
 
 function showError (error) {
   if (error.response.status === 401) {
-    alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+    windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
   }
 }
 
 function getVolume () {
-  const volume = settings.load('volume')
-
-  if (volume === null) {
-    return 1
-  }
-
+  const volume = prefs.getInt('volume', 100)
   return volume / 100
 }
 

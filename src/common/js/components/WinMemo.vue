@@ -8,31 +8,26 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import PerfectScrollbar from 'perfect-scrollbar'
 
-// Props
-const props = defineProps({
-  scroll: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  scroll?: boolean
+}>(), {
+  scroll: false,
 })
 
-// Reactive data
-const memo = ref(null)
+const memo = ref<HTMLDivElement | null>(null)
 
 // Scrollbar
-let scrollbar = {}
+let scrollbar: PerfectScrollbar
 
-// Methods
 onMounted(() => {
   if (props.scroll) {
-    scrollbar = new PerfectScrollbar(memo.value)
+    scrollbar = new PerfectScrollbar(memo.value!)
   }
 })
 
 onBeforeUnmount(() => {
   if (props.scroll) {
     scrollbar.destroy()
-    scrollbar = null
   }
 })
 

@@ -1,9 +1,14 @@
 import Repository from '@common/js/api/axios'
 import type {
-  ifcUserAuth,
-  ifcUserEdit, ifcUserRegister,
+  ifcUserLogin,
+  ifcUserEdit,
+  ifcUserRegister,
   ifcUserReset,
   ifcUserResetConfirm,
+  ifcReactResponse,
+  ifcHistoryResponse,
+  ifcUserResponse,
+  ifcRatingsResponse, ifcFavoritesResponse,
 } from '@common/js/types'
 
 /**
@@ -33,21 +38,21 @@ export const songs = {
  * Play history
  */
 export const history = {
-  get: (page: number) => Repository.get(`history/${page}`),
+  get: (page: number) => Repository.get<ifcHistoryResponse>(`history/${page}`),
 }
 
 /**
  * Reactions
  */
 export const reactions = {
-  react: (reaction: number) => Repository.post('reactions', { reaction }),
+  react: (reaction: number) => Repository.post<ifcReactResponse>('reactions', { reaction }),
 }
 
 /**
  * Ratings
  */
 export const ratings = {
-  get: (range: string, page: number) => Repository.get(
+  get: (range: string, page: number) => Repository.get<ifcRatingsResponse>(
     `ratings/${range}/${page}`),
 }
 
@@ -63,22 +68,14 @@ export const news = {
  * User
  */
 export const user = {
-  get: () => Repository.get('user'),
-  auth: (data: ifcUserAuth) => Repository.post('user/auth', data),
+  get: () => Repository.get<ifcUserResponse>('user'),
+  login: (data: ifcUserLogin) => Repository.post('user/auth', data),
   register: (data: ifcUserRegister) => Repository.post('user/register', data),
   edit: (data: ifcUserEdit) => Repository.put('user', data),
   reset: (data: ifcUserReset) => Repository.post('user/reset', data),
   confirmReset: (data: ifcUserResetConfirm) => Repository.post('user/reset/confirm', data),
   logout: () => Repository.post('user/logout'),
-  favorites: (page: number) => Repository.get(`user/favorites/${page}`),
-  deleteFavorite: (favoriteId: string) => Repository.delete(`user/favorites/${favoriteId}`),
+  favorites: (page: number) => Repository.get<ifcFavoritesResponse>(`user/favorites/${page}`),
+  deleteFavorite: (favoriteId: number) => Repository.delete(`user/favorites/${favoriteId}`),
   addFavorite: (song_id: string) => Repository.post('user/favorites', { song_id }),
 }
-
-/**
- * Captcha
- */
-export const captcha = {
-  get: () => Repository.get('captcha'),
-}
-

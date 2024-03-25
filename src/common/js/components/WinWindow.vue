@@ -15,7 +15,7 @@
             </slot>
           </div>
 
-          <slot :close="close" />
+          <slot :close="close"/>
         </div>
       </div>
     </div>
@@ -23,30 +23,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, type CSSProperties, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const SNAP_SIZE = 15
-
 const windowsStore = useWindowsStore()
 
-// Props
-const props = defineProps({
-  title: String,
-  name: String,
-  isAlert: Boolean,
-  width: {
-    type: Number,
-    default: 500,
-  },
-  fluidHeight: {
-    type: Boolean,
-    default: false,
-  },
+const emit = defineEmits(['closed'])
+
+const props = withDefaults(defineProps<{
+  title?: string,
+  name: string,
+  isAlert?: boolean,
+  width?: number,
+  fluidHeight?: boolean
+}>(), {
+  width: 500,
+  fluidHeight: false,
 })
 
-// Reactive data
-const style = ref({
+const style: CSSProperties = reactive({
   zIndex: 100,
   position: 'relative',
   left: '0px',
@@ -57,23 +53,13 @@ const style = ref({
 const windowPos = ref([0, 0])
 const isWindowInactive = computed(() => windowsStore.activeWindow !== props.name)
 const isMinimized = computed(() => windowsStore.isMinimized(props.name))
-
-// Refs
-const windowRef = ref(null)
-
-// Emits
-const emit = defineEmits(['closed'])
+const windowRef = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
 let windowDefaultPosition = [0, 0]
 let borders = [0, 0]
 let offsets = [0, 0]
 let moving = false
-
-watch(windowPos, (newWindowPos) => {
-  style.value.left = newWindowPos[0] + 'px'
-  style.value.top = newWindowPos[1] + 'px'
-})
 
 // Methods
 function resetPosition () {
@@ -82,24 +68,24 @@ function resetPosition () {
 
 function pullUp () {
   windowsStore.pullUp(props.name)
-  style.value.zIndex = windowsStore.activeZIndex
+  style.zIndex = windowsStore.activeZIndex
 }
 
-function startMove (event) {
-  if (event.target.tagName === 'BUTTON' || event.target.tagName === 'SPAN') {
+function startMove (e: MouseEvent) {
+  if ((e.target as HTMLElement).tagName === 'BUTTON' || (e.target as HTMLElement).tagName === 'SPAN') {
     return
   }
 
   recalculatePositions()
   moving = true
-  offsets = [event.offsetX, event.offsetY]
+  offsets = [e.offsetX, e.offsetY]
 }
 
-function move (event) {
+function move (e: MouseEvent) {
   if (!moving) return
-  event.preventDefault()
+  e.preventDefault()
 
-  const mousePos = [event.clientX - offsets[0], event.clientY - offsets[1]]
+  const mousePos = [e.clientX - offsets[0], e.clientY - offsets[1]]
   let x = mousePos[0] - windowDefaultPosition[0]
   let y = mousePos[1] - windowDefaultPosition[1]
 
@@ -122,21 +108,21 @@ function move (event) {
   windowPos.value = [x, y]
 }
 
-function stopMove (event) {
+function stopMove (e: Event) {
   if (!moving) return
-  event.preventDefault()
+  e.preventDefault()
 
   moving = false
 }
 
 function recalculatePositions () {
   const newBorders = [
-    window.innerWidth - windowRef.value.offsetWidth,
-    window.innerHeight - windowRef.value.offsetHeight,
+    window.innerWidth - windowRef.value!.offsetWidth,
+    window.innerHeight - windowRef.value!.offsetHeight,
   ]
 
   if (windowPos.value[0] === 0 && windowPos.value[1] === 0) {
-    const rect = windowRef.value.getBoundingClientRect()
+    const rect = windowRef.value!.getBoundingClientRect()
     windowDefaultPosition = [rect.x, rect.y]
   } else {
     windowDefaultPosition[0] += (newBorders[0] - borders[0]) / 2
@@ -150,25 +136,32 @@ function minimize () {
   windowsStore.minimize(props.name)
 }
 
-function close() {
+function close () {
   emit('closed')
   windowsStore.close(props.name)
 }
 
 watch(() => windowsStore.activeWindow, () => {
-  style.value.zIndex = windowsStore.activeZIndex
+  style.zIndex = windowsStore.activeZIndex
+})
+
+watch(windowPos, (newWindowPos) => {
+  style.left = newWindowPos[0] + 'px'
+  style.top = newWindowPos[1] + 'px'
 })
 
 onBeforeMount(() => {
-  windowsStore.updateTitle(props.name, props.title)
+  if (props.title) {
+    windowsStore.updateTitle(props.name, props.title)
+  }
 })
 
 onMounted(() => {
-  style.value.zIndex = windowsStore.activeZIndex
-  style.value.width = props.width + 'px'
+  style.zIndex = windowsStore.activeZIndex
+  style.width = props.width + 'px'
 
   if (props.width > 0 && props.width <= 320) {
-    style.value.maxWidth = props.width + 'px'
+    style.maxWidth = props.width + 'px'
   }
 
   window.addEventListener('mouseup', stopMove)
@@ -182,8 +175,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', recalculatePositions)
 })
 
-
 defineExpose({
-  close, pullUp
+  close, pullUp,
 })
 </script>

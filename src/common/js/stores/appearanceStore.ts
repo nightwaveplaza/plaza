@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia'
-import { enBackgroundMode, type IfcBackground } from '@common/js/types'
+import { enBackgroundMode, type ifcBackground } from '@common/js/types'
 import { backgrounds } from '@common/js/api/api'
+import { prefs } from '@common/js/extras/prefs'
 
 interface State {
-  background: IfcBackground,
+  background: ifcBackground,
   theme: string
 }
 
 export const useAppearanceStore = defineStore('appearanceStore', {
   state: (): State => ({
     background: {
-      image: null,
+      image: undefined,
       color: '#008080',
       index: 0,
       mode: enBackgroundMode.RANDOM,
@@ -31,22 +32,19 @@ export const useAppearanceStore = defineStore('appearanceStore', {
 
   actions: {
     saveTheme () {
-      localStorage.setItem('prefs_theme', JSON.stringify(this.theme))
+      prefs.save('theme', this.theme)
     },
 
-    loadTheme (): string {
-      const theme = JSON.parse(localStorage.getItem('prefs_theme'))
-      this.theme = theme ?? 'win98'
+    loadTheme () {
+      this.theme = prefs.getStr('theme', 'win98')
     },
 
     saveBackground () {
-      localStorage.setItem('prefs_background', JSON.stringify(this.background))
+      prefs.save('background', this.background)
     },
 
     async loadBackground () {
-      const bg: IfcBackground = JSON.parse(
-        localStorage.getItem('prefs_background')
-      )
+      const bg: ifcBackground = prefs.getObj('background')
 
       if (!bg || bg.mode === enBackgroundMode.RANDOM) {
         this.background.image = (await backgrounds.random()).data

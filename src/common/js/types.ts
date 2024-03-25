@@ -1,14 +1,14 @@
-export interface IfcWindow {
+export interface ifcWindow {
   name: string,
   form: string,
   // alerts
   text?: string,
   type?: string,
-  id?: string
+  id?: string,
+  title?: string
 }
 
-
-export interface IfcBackground {
+export interface ifcBackground {
   image?: ifcBackgroundImage,
   color: string,
   index: number,
@@ -33,7 +33,13 @@ export interface ifcBackgroundImage {
   video_src: string
 }
 
-export interface ifcUserAuth {
+export interface ifcUserProfile {
+  username: string,
+  token: string,
+  email?: string
+}
+
+export interface ifcUserLogin {
   username: string,
   password: string
 }
@@ -47,15 +53,69 @@ export interface ifcUserRegister {
 
 export interface ifcUserEdit {
   current_password: string,
-  password: string
+  password?: string,
+  email?: string
 }
 
 export interface ifcUserReset {
   email: string,
-  captcha_response: string
+  captcha_response?: string
 }
 
 export interface ifcUserResetConfirm {
   token: string,
   password: string
+}
+
+export interface ifcHistoryResponse {
+  per_page: number
+  pages: number
+  count: number
+  from_date: number
+  to_date: number
+  songs: {
+    played_at: number
+    id: string
+    artist: string
+    title: string
+  }[]
+}
+
+export interface ifcRatingsResponse {
+  per_page: number
+  pages: number
+  count: number
+  songs: {
+    id: string
+    artist: string
+    title: string
+    likes: number
+  }[]
+}
+
+export interface ifcFavoritesResponse {
+  per_page: number
+  pages: number
+  count: number
+  favorites: {
+    id: number
+    created_at: number
+    song: {
+      id: string
+      artist: string
+      title: string
+      artwork_src: string
+    }
+  }[]
+}
+
+export interface ifcReactResponse {
+  score: number
+  songId: string
+  reactions: number
+}
+
+export interface ifcUserResponse {
+  username: string,
+  email: string
 }

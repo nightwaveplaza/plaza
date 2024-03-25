@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 
-const baseURL = import.meta.env.VITE_API_URL
+const baseURL: string = import.meta.env.VITE_API_URL
 const instance = axios.create({ baseURL })
 
 instance.interceptors.request.use(function (config) {

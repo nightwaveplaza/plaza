@@ -1,39 +1,33 @@
 <template>
-  <win-btn block @click="like"><i :class="likeIcon" class="i mr-1" :style="{color: likeColor}"/>{{ playerPlaybackStore.reactions }}</win-btn>
+  <win-btn block @click="like"><i :class="likeIcon" class="i mr-1" :style="{color: likeColor}"/>
+    {{ playerPlaybackStore.reactions }}
+  </win-btn>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { reactions } from '@common/js/api/api'
-import settings from '@common/js/extras/settings'
-import windowsComposable from '@common/js/composables/windowsComposable'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { prefs } from '@common/js/extras/prefs'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
 
 const playerPlaybackStore = usePlayerPlaybackStore()
 const userReactionStore = useUserReactionStore()
+const windowsStore = useWindowsStore()
 
-// Composable
-const { alert } = windowsComposable()
-
-// Props
-const props = defineProps({
-  name: String,
-})
-
-// Non-reactive
-let sending = false
-
-// Computed
 const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => {
   if (playerPlaybackStore.songId === userReactionStore.songId) {
     return userReactionStore.score === 2 ? CL_FAV : userReactionStore.score === 1 ? CL_LIKE : ''
   }
 })
+
+// Non-reactive
+let sending = false
 
 // Methods
 function like () {
@@ -46,7 +40,7 @@ function like () {
   }
 }
 
-function send (score) {
+function send (score: number) {
   if (sending) {
     return
   }
@@ -62,7 +56,7 @@ function send (score) {
     showTip()
   }).catch(err => {
     if (err.response.status === 401) {
-      alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+      windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   }).finally(() => {
     sending = false
@@ -70,14 +64,14 @@ function send (score) {
 }
 
 function showTip () {
-  const saved = settings.load('reactionTip')
-  if (saved) return
+  const showed = prefs.getInt('reactionTip', 0)
+  if (showed > 0) return
 
-  alert(`You have liked the song. Nice!<br />
+  windowsStore.alert(`You have liked the song. Nice!<br />
                         Clicking the <i class="i icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
     'N I C E', 'info')
 
-  settings.save('reactionTip', true)
+  prefs.save('reactionTip', 1)
 }
 
 onMounted(() => {

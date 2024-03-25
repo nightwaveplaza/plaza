@@ -18,10 +18,10 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  text: String,
-  title: String,
-  name: String,
-  type: String,
-})
+const props = defineProps<{
+  text: string,
+  title: string,
+  name: string,
+  type: string,
+}>()
 </script>

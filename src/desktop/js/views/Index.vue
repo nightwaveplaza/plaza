@@ -15,6 +15,7 @@ import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { news } from '@common/js/api/api'
+import { prefs } from '@common/js/extras/prefs'
 
 const appearanceStore = useAppearanceStore()
 const userAuthStore = useUserAuthStore()
@@ -34,10 +35,10 @@ onMounted(() => {
 
   setTimeout(() => {
     news.latest().then(res => {
-      const latestNewsRead = localStorage.getItem('latestNewsRead')
-      if (!latestNewsRead || latestNewsRead < res.data.id) {
+      const latestNewsRead = prefs.getInt('latestNewsRead', 0)
+      if (latestNewsRead < res.data.id) {
         windowsStore.open('news')
-        localStorage.setItem('latestNewsRead', res.data.id)
+        prefs.save('latestNewsRead', res.data.id)
       }
     })
   }, 3000)

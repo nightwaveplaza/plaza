@@ -22,20 +22,17 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { user } from '@common/js/api/api'
 import { onMounted, reactive, ref } from 'vue'
-import windowsComposable from '@common/js/composables/windowsComposable'
-import { useStore } from 'vuex'
+import type { ifcUserEdit } from '@common/js/types'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
-// Composable
-const { alert, openWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
 
-const store = useStore()
-
-// Reactive data
-const win = ref('win')
-const fields = reactive({
+const win = ref<InstanceType<typeof WinWindow>>()
+const fields: ifcUserEdit = reactive({
   current_password: '',
   email: '',
 })
@@ -49,8 +46,8 @@ function fetchUser () {
     fields.email = res.data.email
     disabled.value = false
   }).catch(err => {
-    alert('Can\'t fetch user data.', 'Failed')
-    win.value.close()
+    windowsStore.alert('Can\'t fetch user data.', 'Failed')
+    win.value!.close()
   })
 }
 
@@ -62,10 +59,10 @@ function update () {
   sending = true
 
   user.edit(fields).then(() => {
-    alert('Email has changed!', 'Success', 'info')
-    window.value.close()
+    windowsStore.alert('Email has changed!', 'Success', 'info')
+    win.value!.close()
   }).catch(error => {
-    alert(error.response.data.error, 'Error')
+    windowsStore.alert(error.response.data.error, 'Error')
   }).finally(() => {
     sending = false
   })
@@ -73,7 +70,7 @@ function update () {
 
 function validate () {
   if (fields.current_password.length === 0) {
-    alert('Enter current password.', 'Error')
+    windowsStore.alert('Enter current password.', 'Error')
     return false
   }
 

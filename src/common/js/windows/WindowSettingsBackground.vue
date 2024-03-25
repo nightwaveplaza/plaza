@@ -74,7 +74,7 @@
 import { onMounted, ref } from 'vue'
 import { backgrounds } from '@common/js/api/api'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
-import { enBackgroundMode } from '@common/js/types'
+import { enBackgroundMode, type ifcBackgroundImage } from '@common/js/types'
 
 const appearanceStore = useAppearanceStore()
 const backgroundList = ref([])
@@ -94,17 +94,17 @@ const themes = [
   ['win98', 'Windows Standard'],
 ]
 
-function colorSelected (e) {
-  solidBg(e.target.value)
+function colorSelected (e: Event) {
+  solidBg((e.target as HTMLInputElement).value)
 }
 
-function themeSelected (event) {
-  appearanceStore.theme = event.target.value
+function themeSelected (e: Event) {
+  appearanceStore.theme = (e.target as HTMLSelectElement).value
   appearanceStore.saveTheme()
 }
 
-function nextBg (dir) {
-  let index = findIndex(appearanceStore.background.image) + dir
+function nextBg (dir: number) {
+  let index = findIndex(appearanceStore.background.image!) + dir
 
   if (index < 0) {
     index = backgroundList.value.length - 1
@@ -125,18 +125,18 @@ function randomBg () {
   appearanceStore.saveBackground()
 }
 
-function solidBg (color) {
-  if (color !== undefined) {
+function solidBg (color?: string) {
+  if (typeof color !== 'undefined') {
     appearanceStore.background.color = color
   }
 
   appearanceStore.background.mode = enBackgroundMode.SOLID
-  appearanceStore.background.image = null
+  appearanceStore.background.image = undefined
   appearanceStore.saveBackground()
 }
 
-function findIndex (background) {
-  const index = backgroundList.value.findIndex((b) => {
+function findIndex (background: ifcBackgroundImage) {
+  const index = backgroundList.value.findIndex((b: any) => {
     return b.id === background.id
   })
 

@@ -89,28 +89,25 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { ifcUserRegister } from '@common/js/types'
 
 const router = useRouter()
+const windowsStore = useWindowsStore()
 
-// Props
-const props = defineProps({
-  direct: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  direct: boolean
+}>(), {
+  direct: false
 })
 
-// Composable
-const { alert, openWindow } = windowsComposable()
-
-// Reactive data
-const fields = reactive({
+const fields: ifcUserRegister = reactive({
   username: '',
   email: '',
   password: '',
@@ -119,8 +116,7 @@ const fields = reactive({
 const step = ref(1)
 const passwordR = ref('')
 
-// Refs
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 
 // Non-reactive
 let sending = false
@@ -138,7 +134,7 @@ function register () {
 
 function completeCaptcha () {
   if (fields.captcha_response === '') {
-    alert('Captcha validation failed', 'Error')
+    windowsStore.alert('Captcha validation failed', 'Error')
     step.value = 1
     return
   }
@@ -146,46 +142,45 @@ function completeCaptcha () {
   sending = true
 
   user.register(fields).then(() => {
-    alert(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
-    win.value.close()
+    windowsStore.alert(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
+    win.value!.close()
   }).catch(err => {
-    alert(err.response.data.error, 'Error')
+    windowsStore.alert(err.response.data.error, 'Error')
     step.value = 1
   }).finally(() => sending = false)
 }
 
 /**
  * Fields validation
- * @returns {boolean|void}
  */
-function validate () {
+function validate (): boolean {
   if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
-    alert('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
+    windowsStore.alert('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
     return false
   }
 
   if (fields.username.length < 4) {
-    alert('Username is too short.', 'Error')
+    windowsStore.alert('Username is too short.', 'Error')
     return false
   }
 
   if (fields.username.length > 32) {
-    alert('Username is too long.', 'Error')
+    windowsStore.alert('Username is too long.', 'Error')
     return false
   }
 
   if (fields.password.length < 3) {
-    alert('Password is too short.', 'Error')
+    windowsStore.alert('Password is too short.', 'Error')
     return false
   }
 
   if (fields.email.length < 3) {
-    alert('Email is too short.', 'Error')
+    windowsStore.alert('Email is too short.', 'Error')
     return false
   }
 
   if (fields.password !== passwordR.value) {
-    alert('Passwords don\'t match.', 'Error')
+    windowsStore.alert('Passwords don\'t match.', 'Error')
     return false
   }
 
@@ -196,7 +191,7 @@ function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    win.value.close()
+    win.value!.close()
   }
 }
 </script>

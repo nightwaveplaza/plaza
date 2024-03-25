@@ -23,14 +23,12 @@ import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const windowsStore = useWindowsStore()
 
-// Reactive data
 const style = ref({
   transform: `translate(0px, 0px)`,
 })
 
-// Refs
-const bar = ref(null)
-const progress = ref(null)
+const bar = ref<HTMLDivElement | null>(null)
+const progress = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
 let movedAt = 0
@@ -38,7 +36,6 @@ let direction = 3
 let left = 0
 let loading = true
 
-// Methods
 function move () {
   if (!loading) {
     return
@@ -46,7 +43,7 @@ function move () {
 
   const now = Date.now()
   if (now - movedAt > 30 && bar.value) {
-    if (left > bar.value.offsetWidth - progress.value.offsetWidth - 6 || left < 0) {
+    if (left > bar.value!.offsetWidth - progress.value!.offsetWidth - 6 || left < 0) {
       direction *= -1
     }
 

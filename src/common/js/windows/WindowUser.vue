@@ -16,26 +16,23 @@
 
 <script setup lang="ts">
 import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
-const { closeWindow, openWindow } = windowsComposable()
 const { isMobile } = helperComposable()
-
 const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
 
-// Methods
-function open (window) {
-  openWindow(window)
-  closeWindow('user')
+function open (window: string) {
+  windowsStore.open(window)
+  windowsStore.close('user')
 }
 
 function logout () {
   user.logout().then().finally(() => {
     userAuthStore.logout()
-    closeWindow('user')
+    windowsStore.close('user')
   })
 }
 </script>

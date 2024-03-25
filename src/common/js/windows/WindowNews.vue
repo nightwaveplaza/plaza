@@ -26,19 +26,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { news } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
 import helperComposable from '@common/js/composables/helperComposable'
-import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 // Composable
-const { closeWindow } = windowsComposable()
 const { sdy } = helperComposable()
-
-const playerPlaybackStore = usePlayerPlaybackStore()
 
 // Reactive data
 const article = ref({
   text: '',
+  author: '',
   created_at: 0,
 })
 const page = ref(1)
@@ -53,7 +49,7 @@ function getArticle () {
   }).catch(() => {})
 }
 
-function changePage (newPage) {
+function changePage (newPage: number) {
   page.value = newPage
   getArticle()
 }

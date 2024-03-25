@@ -39,12 +39,12 @@
           <div class="col-6 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="userAuthStore.signed ? openWindow('user') : openWindow('user-login')">
+                <win-btn block @click="userAuthStore.signed ? windowsStore.open('user') : windowsStore.open('user-login')">
                   <i class="i icon-user mr-0"/>
                 </win-btn>
               </div>
               <div class="col-6">
-                <win-btn block @click="openWindow('settings-background')">
+                <win-btn block @click="windowsStore.open('settings-background')">
                   <i class="i icon-cog mr-0"/>
                 </win-btn>
               </div>
@@ -59,28 +59,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
 import visualComposable from '@common/js/composables/visualComposable'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import type WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
 
 // const
 const STATE_IDLE = 0
 const STATE_LOADING = 1
 const STATE_PLAYING = 2
 
-const store = useStore()
-const userAuthStore = useUserAuthStore()
-
-// Composable
-const { closeWindow, openWindow, songInfo } = windowsComposable()
 const { startVisual } = visualComposable()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Reactive data
+const audio = ref<InstanceType<typeof HTMLAudioElement>>()
+const time = ref<InstanceType<typeof WinPlayerTime>>()
+const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
 const state = ref(STATE_IDLE)
+
 const artwork = computed(() => {
   if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src) return playerPlaybackStore.artwork_src
   else return 'https://i.plaza.one/artwork_dead.jpg'
@@ -90,13 +91,6 @@ const playText = computed(() => {
   else if (state.value === STATE_LOADING) return 'Loading...'
   else return 'Stop'
 })
-
-const playerPlaybackStore = usePlayerPlaybackStore()
-
-// Refs
-const audio = ref(null)
-const time = ref(null)
-const canvas = ref(null)
 
 // Non-reactive
 let offline = false
@@ -129,17 +123,17 @@ function startPlay () {
   const noCacheStr = 'nocache=' + Date.now()
 
   // Can we play OGG Vorbis?
-  const canPlayOGG = !!(audio.value.canPlayType && audio.value.canPlayType('audio/ogg; codecs=opus').replace(/no/, ''))
+  const canPlayOGG = !!(audio.value!.canPlayType && audio.value!.canPlayType('audio/ogg; codecs=opus').replace(/no/, ''))
   if (canPlayOGG) {
-    audio.value.type = 'audio/ogg; codecs=opus'
-    audio.value.src = 'https://radio.plaza.one/ogg?' + noCacheStr
+    audio.value!.type = 'audio/ogg; codecs=opus'
+    audio.value!.src = 'https://radio.plaza.one/ogg?' + noCacheStr
   } else {
-    audio.value.type = 'audio/mpeg'
-    audio.value.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+    audio.value!.type = 'audio/mpeg'
+    audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
   }
 
-  audio.value.load()
-  audio.value.volume = volume
+  audio.value!.load()
+  audio.value!.volume = volume
 
   document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
 }
@@ -148,7 +142,7 @@ function audioCanPlay () {
   if (state.value === STATE_LOADING) {
     state.value = STATE_PLAYING
 
-    audio.value.play().then(() => {
+    audio.value!.play().then(() => {
       startVisual(audio.value, canvas.value)
       updateMediaSession()
       setMediaSessionState('playing')
@@ -157,29 +151,29 @@ function audioCanPlay () {
 }
 
 function stopPlay () {
-  audio.value.pause()
-  audio.value.currentTime = 0
+  audio.value!.pause()
+  audio.value!.currentTime = 0
 
   state.value = STATE_IDLE
   setMediaSessionState('paused')
   document.title = 'Nightwave Plaza - Online Vaporwave Radio'
 }
 
-function setVolume (volume) {
+function setVolume (volume: number) {
   updateVolume(volume)
-  time.value.showText('Volume: ' + volume + '%')
+  time.value!.showText('Volume: ' + volume + '%')
 }
 
-function updateVolume (newVolume) {
+function updateVolume (newVolume: number) {
   volume = newVolume / 100
   if (state.value === STATE_PLAYING) {
-    audio.value.volume = volume
+    audio.value!.volume = volume
   }
 }
 
 function showSongInfo () {
   if (playerPlaybackStore.songId) {
-    songInfo(playerPlaybackStore.songId)
+    windowsStore.showSong(playerPlaybackStore.songId)
   }
 }
 
@@ -209,7 +203,7 @@ function setMediaSessionActions () {
 
     for (const [action, handler] of actionHandlers) {
       try {
-        navigator.mediaSession.setActionHandler(action, handler)
+        navigator.mediaSession.setActionHandler(action as MediaSessionAction, handler as MediaSessionActionHandler)
       } catch (error) {
         console.log(`The media session action "${action}" is not supported yet.`)
       }
@@ -217,9 +211,9 @@ function setMediaSessionActions () {
   }
 }
 
-function setMediaSessionState (state) {
+function setMediaSessionState (state: string) {
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.playbackState = state.value
+    navigator.mediaSession.playbackState = state as MediaSessionPlaybackState
   }
 }
 

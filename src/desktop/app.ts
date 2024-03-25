@@ -1,7 +1,6 @@
 import { createApp, h } from 'vue'
 import ticker from '@common/js/extras/ticker.js'
 import { router } from '@desktop/js/router'
-import store from '@desktop/js/store'
 import { commonComponents } from '@common/js/components'
 import { commonWindows } from '@common/js/windows'
 import { desktopComponents } from '@desktop/js/components'
@@ -29,7 +28,6 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
-app.use(store)
 
 // Register components
 commonComponents(app)

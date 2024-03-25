@@ -121,16 +121,8 @@ function play () {
 
 function startPlay () {
   const noCacheStr = 'nocache=' + Date.now()
-
-  // Can we play OGG Vorbis?
-  const canPlayOGG = !!(audio.value!.canPlayType && audio.value!.canPlayType('audio/ogg; codecs=opus').replace(/no/, ''))
-  if (canPlayOGG) {
-    audio.value!.type = 'audio/ogg; codecs=opus'
-    audio.value!.src = 'https://radio.plaza.one/ogg?' + noCacheStr
-  } else {
-    audio.value!.type = 'audio/mpeg'
-    audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
-  }
+  audio.value!.type = 'audio/mpeg'
+  audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
 
   audio.value!.load()
   audio.value!.volume = volume

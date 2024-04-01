@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
@@ -30,7 +30,7 @@ function open (window: string) {
 }
 
 function logout () {
-  user.logout().then().finally(() => {
+  api.user.logout().then().finally(() => {
     userAuthStore.logout()
     windowsStore.close('user')
   })

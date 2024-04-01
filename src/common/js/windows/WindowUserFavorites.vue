@@ -62,18 +62,18 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 import WinList from '@common/js/components/WinList.vue'
-import type { ifcFavoritesResponse } from '@common/js/types'
+import type { FavoritesResponse } from '@common/js/types'
 
 const { sdy } = helperComposable()
 
 const windowsStore = useWindowsStore()
 
-const data: ifcFavoritesResponse = reactive({
+const data: FavoritesResponse = reactive({
   per_page: 25,
   pages: 4,
   count: 0,
@@ -90,16 +90,13 @@ function fetchLikes (page: number) {
   list.value!.scrollTop()
   loading.value = true
 
-  user.favorites(page).then(res => {
-    data.per_page = res.data.per_page
-    data.pages = res.data.pages
-    data.favorites = res.data.favorites
-    data.count = res.data.count
+  api.user.favorites(page).then(res => {
+    Object.assign(data, res.data)
     loading.value = false
     list.value!.refreshScrollbar()
-  }).catch(
-    error => windowsStore.alert(error.response.data.error, 'Error'),
-  ).finally(() => {
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => {
     loading.value = false
   })
 }
@@ -114,9 +111,11 @@ function changePage (newPage: number) {
 }
 
 function deleteLike (favoriteId: number) {
-  user.deleteFavorite(favoriteId).then(() => {
+  api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
-  }).catch(error => windowsStore.alert(error.response.data.error, 'Error'))
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  })
 }
 
 onMounted(() => {

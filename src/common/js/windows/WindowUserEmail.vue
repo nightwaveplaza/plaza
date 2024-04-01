@@ -23,16 +23,16 @@
 </template>
 
 <script setup lang="ts">
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { onMounted, reactive, ref } from 'vue'
-import type { ifcUserEdit } from '@common/js/types'
+import type { UserEdit } from '@common/js/types'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 
 const windowsStore = useWindowsStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
-const fields: ifcUserEdit = reactive({
+const fields: UserEdit = reactive({
   current_password: '',
   email: '',
 })
@@ -42,10 +42,10 @@ const disabled = ref(true)
 let sending = false
 
 function fetchUser () {
-  user.get().then((res) => {
+  api.user.get().then(res => {
     fields.email = res.data.email
     disabled.value = false
-  }).catch(err => {
+  }).catch(() => {
     windowsStore.alert('Can\'t fetch user data.', 'Failed')
     win.value!.close()
   })
@@ -58,11 +58,11 @@ function update () {
 
   sending = true
 
-  user.edit(fields).then(() => {
+  api.user.edit(fields).then(() => {
     windowsStore.alert('Email has changed!', 'Success', 'info')
     win.value!.close()
-  }).catch(error => {
-    windowsStore.alert(error.response.data.error, 'Error')
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
   }).finally(() => {
     sending = false
   })

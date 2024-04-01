@@ -34,15 +34,15 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@common/js/components/WinWindow.vue'
-import type { ifcUserReset } from '@common/js/types'
+import type { UserReset } from '@common/js/types'
 
 const windowsStore = useWindowsStore()
 
-const fields: ifcUserReset = reactive({
+const fields: UserReset = reactive({
   email: '',
 })
 
@@ -64,12 +64,12 @@ function reset () {
 function completeCaptcha () {
   sending = true
 
-  user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
+  api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
     windowsStore.alert('Instructions have been sent to your email.', 'Success', 'info')
     win.value!.close()
-  }).catch(err => {
+  }).catch(e => {
     showCaptcha.value = false
-    windowsStore.alert(err.response.data.error, 'Error')
+    windowsStore.alert((e as Error).message, 'Error')
   }).finally(() => sending = false)
 }
 

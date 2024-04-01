@@ -17,6 +17,8 @@ import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { enBackgroundMode, type ifcBackground } from '@common/js/types'
 import useEmitter from '@mobile/js/extra/useEmitter'
+import { api } from '@common/js/api/api'
+import { prefs } from '@common/js/extras/prefs'
 
 const appearanceStore = useAppearanceStore()
 const userAuthStore = useUserAuthStore()
@@ -27,37 +29,8 @@ const backgroundColor = computed(() => {
   return appearanceStore.background.mode === enBackgroundMode.SOLID ? appearanceStore.background.color : 'transparent'
 })
 
-function startup () {
-  windowsStore.open('loading')
-
-  updateBackground(appearanceStore.background)
-
-  Native.getAuthToken()!.then(t => {
-    userAuthStore.token = t as string
-    userAuthStore.loadUser()
-  })
-
-  Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
-}
-
-function updateBackground(bg: ifcBackground) {
-  Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
-}
-
-// Watch background for changes
-watch(appearanceStore.$state, (state) => {
-  updateBackground(state.background)
-}, { deep: true })
-
-// Watch user token for change
-watch(() => userAuthStore.token, (t) => {
-  Native.setAuthToken(t as string)
-})
-
-onMounted(() => {
-  startup()
-
-  emitter.on('resume', () => appearanceStore.loadBackground())
+function registerEmitterEvents() {
+  emitter.on('resume', () => updateBackgroundNative(appearanceStore.background))
   emitter.on('closeWindow', (name: string) => windowsStore.close(name))
   emitter.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
@@ -67,5 +40,48 @@ onMounted(() => {
 
     windowsStore.open(name)
   })
+}
+
+function checkNews() {
+  api.news.latest().then(res => {
+    const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!
+    if (latestNewsRead < res.data.id) {
+      windowsStore.open('news')
+      prefs.save('latestNewsRead', res.data.id)
+    }
+  })
+}
+
+
+function updateBackgroundNative(bg: ifcBackground) {
+  Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
+}
+
+// Watch background for changes
+watch(appearanceStore.$state, (state) => updateBackgroundNative(state.background), { deep: true })
+
+// Watch user token for change
+watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
+
+onMounted(() => {
+  registerEmitterEvents()
+  checkNews()
+
+  windowsStore.open('loading')
+
+  appearanceStore.loadSettings()
+  if (appearanceStore.isBackgroundRandomMode) {
+    appearanceStore.loadRandomBackground()
+  } else {
+    updateBackgroundNative(appearanceStore.background)
+  }
+
+  Native.getAuthToken()!.then(t => {
+    userAuthStore.token = t as string
+    userAuthStore.loadUser()
+  })
+
+  Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
+
 })
 </script>

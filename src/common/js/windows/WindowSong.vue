@@ -1,7 +1,7 @@
 <template>
   <win-window :width="360" :name="name" title="Song Info" v-slot="winProps">
     <div class="p-2 song-info">
-      <div v-if="song !== false">
+      <div v-if="song.id !== ''">
         <div class="group-box p-2 m-0">
           <div class="row">
             <div class="col">
@@ -51,69 +51,66 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { songs, user } from '@common/js/api/api'
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 import { prefs } from '@common/js/extras/prefs'
+import type { SongResponse } from '@common/js/types'
+import { AxiosError } from 'axios'
 
 const windowsStore = useWindowsStore()
+const { dur, sdy } = helperComposable()
 
-// Props
 const props = defineProps<{
   id: string,
   name: string,
 }>()
 
-// Composable
-const { dur, sdy } = helperComposable()
-
-// Reactive data
+const audio = ref<HTMLAudioElement>()
 const win = ref<InstanceType<typeof WinWindow>>()
-const song = ref(false)
+const song: SongResponse = reactive({
+  id: ''
+})
+
 const isPlaying = ref(false)
 const playTimeLeft = ref(0)
-const songLength = computed(() => dur(song.value.length))
+const songLength = computed(() => dur(song.length!))
 const playText = computed(() => isPlaying.value ? 'Stop (' + dur(playTimeLeft.value) + ')' : 'Play preview')
-const artwork = computed(() => song.value.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
-const favoriteColor = computed(() => song.value.favorite_id ? '#FFD300' : '')
+const artwork = computed(() => song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
+const favoriteColor = computed(() => song.favorite_id ? '#FFD300' : '')
 
-// Refs
-const audio = ref(null)
-
-// Non-reactive
 let sending = false
 
-// Functions
-function fetchSongInfo (songId) {
-  songs.get(songId).then(result => {
-    song.value = result.data
-  }).catch(error => {
-    windowsStore.alert(error.response.data.error, 'Error')
-    win.value.close()
+function fetchSongInfo (songId: string) {
+  api.songs.get(songId).then(res => {
+    Object.assign(song, res.data)
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+    win.value!.close()
   })
 }
 
-function favoriteSong () {
+async function favoriteSong () {
   if (sending) return
 
   sending = true
 
-  if (song.value.favorite_id) {
-    user.deleteFavorite(song.value.favorite_id).then(() => {
-      song.value.favorite_id = null
-    }).catch(err => showError(err)).finally(() => sending = false)
-  } else {
-    user.addFavorite(song.value.id).then((res) => {
-      song.value.favorite_id = res.data.favorite_id
-    }).catch(err => showError(err)).finally(() => sending = false)
-  }
-}
-
-function showError (error) {
-  if (error.response.status === 401) {
-    windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+  try {
+    if (song.favorite_id) {
+      await api.user.deleteFavorite(song.favorite_id)
+      song.favorite_id = undefined
+    } else {
+      const res = await api.user.addFavorite(song.id)
+      song.favorite_id = res.data.favorite_id
+    }
+  } catch(e) {
+    if (e instanceof AxiosError && e.status === 401) {
+      windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+    }
+  } finally {
+    sending = false
   }
 }
 
@@ -126,15 +123,15 @@ function play () {
   if (isPlaying.value) {
     stop()
   } else {
-    audio.value.volume = getVolume()
-    audio.value.play()
+    audio.value!.volume = getVolume()
+    audio.value!.play()
   }
 }
 
 function stop () {
   isPlaying.value = false
-  audio.value.pause()
-  audio.value.currentTime = 0
+  audio.value!.pause()
+  audio.value!.currentTime = 0
 }
 
 function onPlay () {
@@ -147,7 +144,7 @@ function onPause () {
 
 function timeUpdated () {
   if (isPlaying.value) {
-    playTimeLeft.value = 30 - audio.value.currentTime
+    playTimeLeft.value = 30 - audio.value!.currentTime
   }
 }
 
@@ -158,7 +155,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (isPlaying.value) {
     stop()
-    audio.value = null
+    audio.value = undefined
   }
 })
 

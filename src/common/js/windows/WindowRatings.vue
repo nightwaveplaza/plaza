@@ -58,49 +58,50 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { ratings } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 import type WinList from '@common/js/components/WinList.vue'
 import type WinPagination from '@common/js/components/WinPagination.vue'
-import type { ifcRatingsResponse } from '@common/js/types'
+import type { RatingsResponse } from '@common/js/types'
 
 const windowsStore = useWindowsStore()
 
-const data: ifcRatingsResponse = reactive({
+
+const list = ref<InstanceType<typeof WinList>>()
+const pagination = ref<InstanceType<typeof WinPagination>>()
+
+const data: RatingsResponse = reactive({
   per_page: 25,
   pages: 4,
   songs: [],
   count: 0
 })
 
-const loading = ref(true)
 const page = ref(1)
 const range = ref('overtime')
 
-const list = ref<InstanceType<typeof WinList>>()
-const pagination = ref<InstanceType<typeof WinPagination>>()
+let loading = false
 
 function fetchRatings (range: string, page: number) {
   list.value!.scrollTop()
 
-  ratings.get(range, page).then(res => {
-    data.per_page = res.data.per_page
-    data.pages = res.data.pages
-    data.songs = res.data.songs
-    data.count = res.data.count
+  api.ratings.get(range, page).then(res => {
+    Object.assign(data, res.data)
     list.value!.refreshScrollbar()
-  }).catch(err => windowsStore.alert(err.response.data.error, 'Error')).finally(() => loading.value = false)
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => loading = false)
 }
 
 function changePage (newPage: number) {
-  if (!loading.value) {
+  if (!loading) {
     page.value = newPage
   }
 }
 
 function changeRange (newRange: string) {
-  if (!loading.value) {
+  if (!loading) {
     range.value = newRange
   }
 }

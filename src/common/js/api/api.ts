@@ -1,81 +1,61 @@
 import Repository from '@common/js/api/axios'
 import type {
-  ifcUserLogin,
-  ifcUserEdit,
-  ifcUserRegister,
-  ifcUserReset,
-  ifcUserResetConfirm,
-  ifcReactResponse,
-  ifcHistoryResponse,
-  ifcUserResponse,
-  ifcRatingsResponse, ifcFavoritesResponse,
+  UserLogin,
+  UserEdit,
+  UserRegister,
+  UserReset,
+  UserResetConfirm,
+  ReactResponse,
+  HistoryResponse,
+  UserResponse,
+  RatingsResponse,
+  FavoritesResponse,
+  BackgroundImage,
+  NewsLatestResponse, StatusResponse, NewsResponse,
 } from '@common/js/types'
 
-/**
- * Status
- */
-export const status = {
-  get: () => Repository.get('status'),
-  getOsd: () => Repository.get('status/on-screen-data'),
-}
+export const api = {
+  status: {
+    get: () => Repository.get<StatusResponse>('status'),
+    getOsd: () => Repository.get<(string | number)[]>('status/on-screen-data'),
+  },
 
-/**
- * Backgrounds
- */
-export const backgrounds = {
-  get: () => Repository.get('backgrounds'),
-  random: () => Repository.get('backgrounds/random'),
-}
+  news: {
+    latest: () => Repository.get<NewsLatestResponse>(`news/latest`),
+    get: (page: number) => Repository.get<NewsResponse>(`news/${page}`),
+  },
 
-/**
- * Songs
- */
-export const songs = {
-  get: (id: string) => Repository.get(`songs/${id}`),
-}
+  history: {
+    get: (page: number) => Repository.get<HistoryResponse>(`history/${page}`),
+  },
 
-/**
- * Play history
- */
-export const history = {
-  get: (page: number) => Repository.get<ifcHistoryResponse>(`history/${page}`),
-}
+  reactions: {
+    react: (reaction: number) => Repository.post<ReactResponse>('reactions', { reaction })
+  },
 
-/**
- * Reactions
- */
-export const reactions = {
-  react: (reaction: number) => Repository.post<ifcReactResponse>('reactions', { reaction }),
-}
+  ratings: {
+    get: (range: string, page: number) => Repository.get<RatingsResponse>(`ratings/${range}/${page}`),
+  },
 
-/**
- * Ratings
- */
-export const ratings = {
-  get: (range: string, page: number) => Repository.get<ifcRatingsResponse>(
-    `ratings/${range}/${page}`),
-}
+  songs: {
+    get: (id: string) => Repository.get(`songs/${id}`),
+  },
 
-/**
- * News
- */
-export const news = {
-  get: (page: number) => Repository.get(`news/${page}`),
-  latest: () => Repository.get(`news/latest`),
-}
+  backgrounds: {
+    get: () => Repository.get<BackgroundImage[]>('backgrounds'),
+    random: () => Repository.get<BackgroundImage>('backgrounds/random'),
+  },
 
-/**
- * User
- */
-export const user = {
-  get: () => Repository.get<ifcUserResponse>('user'),
-  login: (data: ifcUserLogin) => Repository.post('user/auth', data),
-  register: (data: ifcUserRegister) => Repository.post('user/register', data),
-  edit: (data: ifcUserEdit) => Repository.put('user', data),
-  reset: (data: ifcUserReset) => Repository.post('user/reset', data),
-  confirmReset: (data: ifcUserResetConfirm) => Repository.post('user/reset/confirm', data),
-  logout: () => Repository.post('user/logout'),
-  favorites: (page: number) => Repository.get<ifcFavoritesResponse>(`user/favorites/${page}`),
-  deleteFavorite: (favoriteId: number) => Repository.delete(`user/favorites/${favoriteId}`),
-  addFavorite: (song_id: string) => Repository.post('user/favorites', { song_id }),
+  user: {
+    login: (data: UserLogin) => Repository.post('user/auth', data),
+    register: (data: UserRegister) => Repository.post('user/register', data),
+    get: () => Repository.get<UserResponse>('user'),
+    edit: (data: UserEdit) => Repository.put('user', data),
+    favorites: (page: number) => Repository.get<FavoritesResponse>(`user/favorites/${page}`),
+    addFavorite: (song_id: string) => Repository.post('user/favorites', { song_id }),
+    deleteFavorite: (favoriteId: number) => Repository.delete(`user/favorites/${favoriteId}`),
+    reset: (data: UserReset) => Repository.post('user/reset', data),
+    confirmReset: (data: UserResetConfirm) => Repository.post('user/reset/confirm', data),
+    logout: () => Repository.post('user/logout')
+  },
 }

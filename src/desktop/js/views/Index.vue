@@ -14,7 +14,7 @@ import { computed, onMounted } from 'vue'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
-import { news } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 
 const appearanceStore = useAppearanceStore()
@@ -25,22 +25,25 @@ const windowsStore = useWindowsStore()
 const backgroundImage = computed(() => appearanceStore.backgroundSrc)
 const backgroundColor = computed(() => appearanceStore.background.color)
 
+function checkNews() {
+  api.news.latest().then(res => {
+    const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!
+    if (latestNewsRead < res.data.id) {
+      windowsStore.open('news')
+      prefs.save('latestNewsRead', res.data.id)
+    }
+  })
+}
+
 onMounted(() => {
-  windowsStore.open('player')
   windowsStore.open('loading')
 
-  appearanceStore.loadBackground()
-  appearanceStore.loadTheme()
+  appearanceStore.loadSettings()
+  if (appearanceStore.isBackgroundRandomMode) {
+    appearanceStore.loadRandomBackground()
+  }
   userAuthStore.loadUser()
 
-  setTimeout(() => {
-    news.latest().then(res => {
-      const latestNewsRead = prefs.getInt('latestNewsRead', 0)
-      if (latestNewsRead < res.data.id) {
-        windowsStore.open('news')
-        prefs.save('latestNewsRead', res.data.id)
-      }
-    })
-  }, 3000)
+  setTimeout(() => checkNews(), 3000)
 })
 </script>

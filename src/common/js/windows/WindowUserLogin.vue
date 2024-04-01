@@ -62,12 +62,12 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
-import type { ifcUserLogin } from '@common/js/types'
+import type { UserLogin } from '@common/js/types'
 
 const { isMobile } = helperComposable()
 
@@ -76,7 +76,7 @@ const windowsStore = useWindowsStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
-const fields: ifcUserLogin = reactive({
+const fields: UserLogin = reactive({
   username: '',
   password: '',
 })
@@ -92,11 +92,13 @@ function login () {
 
   sending = true
 
-  user.login(fields).then((res) => {
+  api.user.login(fields).then(res => {
     userAuthStore.login(res.data, remember.value)
     windowsStore.alert('Authentication successful!', 'Success', 'info')
     win.value!.close()
-  }).catch(err => windowsStore.alert(err.response.data.error, 'Failed')).finally(() => sending = false)
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Failed')
+  }).finally(() => sending = false)
 }
 
 function validate () {

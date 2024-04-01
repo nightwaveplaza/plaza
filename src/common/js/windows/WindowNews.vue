@@ -25,13 +25,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { news } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
 const { sdy } = helperComposable()
+const windowsStore = useWindowsStore()
 
-// Reactive data
 const article = ref({
   text: '',
   author: '',
@@ -41,12 +41,13 @@ const page = ref(1)
 const length = ref(1)
 const pages = ref(1)
 
-// Methods
 function getArticle () {
-  news.get(page.value).then(res => {
+  api.news.get(page.value).then(res => {
     article.value = res.data.articles[0]
     pages.value = res.data.pages
-  }).catch(() => {})
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  })
 }
 
 function changePage (newPage: number) {

@@ -139,7 +139,7 @@ function audioCanPlay () {
       startVisual(audio.value!, canvas.value!)
       updateMediaSession()
       setMediaSessionState('playing')
-    }).catch(err => console.log(err))
+    }).catch(e => console.log(e))
   }
 }
 

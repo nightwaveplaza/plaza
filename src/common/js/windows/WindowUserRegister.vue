@@ -92,11 +92,11 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@common/js/components/WinWindow.vue'
-import type { ifcUserRegister } from '@common/js/types'
+import type { UserRegister } from '@common/js/types'
 
 const router = useRouter()
 const windowsStore = useWindowsStore()
@@ -107,7 +107,7 @@ const props = withDefaults(defineProps<{
   direct: false
 })
 
-const fields: ifcUserRegister = reactive({
+const fields: UserRegister = reactive({
   username: '',
   email: '',
   password: '',
@@ -141,11 +141,11 @@ function completeCaptcha () {
 
   sending = true
 
-  user.register(fields).then(() => {
+  api.user.register(fields).then(() => {
     windowsStore.alert(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
     win.value!.close()
-  }).catch(err => {
-    windowsStore.alert(err.response.data.error, 'Error')
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
     step.value = 1
   }).finally(() => sending = false)
 }

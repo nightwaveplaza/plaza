@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { enBackgroundMode, type ifcBackground } from '@common/js/types'
-import { backgrounds } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 
 interface State {
@@ -21,36 +21,39 @@ export const useAppearanceStore = defineStore('appearanceStore', {
 
   getters: {
     backgroundSrc (state) {
-      return state.background.image
-        ? `url('${state.background.image.src}')`
-        : ''
+      if (state.background.image === undefined || state.background.mode === enBackgroundMode.SOLID) {
+        return ''
+      } else {
+        return `url('${state.background.image.src}')`
+      }
     },
+
     themeName (state) {
       return 'theme-' + state.theme
     },
+
+    isBackgroundRandomMode(state) {
+      return state.background.mode === enBackgroundMode.RANDOM
+    }
   },
 
   actions: {
     saveTheme () {
-      //prefs.save('theme', this.theme)
-    },
-
-    loadTheme () {
-      //this.theme = prefs.getStr('theme', 'win98')
+      prefs.save('theme', this.theme)
     },
 
     saveBackground () {
-      //prefs.save('background', this.background)
+      prefs.save('background', this.background)
     },
 
-    async loadBackground () {
-      //const bg: ifcBackground = prefs.getObj('background')
-
-      if (this.background.mode === enBackgroundMode.RANDOM) {
-        this.background.image = (await backgrounds.random()).data
-      }
+    loadSettings() {
+      this.background = prefs.getObj<ifcBackground>('background', this.background)!
+      this.theme = prefs.getStr('theme', 'win98')
     },
-  },
 
-  persist: true
+    loadRandomBackground () {
+      this.background.image = undefined
+      api.backgrounds.random().then(i => this.background.image = i.data)
+    }
+  }
 })

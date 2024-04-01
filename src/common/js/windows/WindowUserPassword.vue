@@ -30,9 +30,9 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
-import type { ifcUserEdit } from '@common/js/types'
+import type { UserEdit } from '@common/js/types'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 
@@ -40,7 +40,7 @@ const windowsStore = useWindowsStore()
 const userAuthStore = useUserAuthStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
-const fields: ifcUserEdit = reactive({
+const fields: UserEdit = reactive({
   current_password: '',
   password: '',
 })
@@ -56,12 +56,12 @@ function change () {
 
   sending = true
 
-  user.edit(fields).then(() => {
+  api.user.edit(fields).then(() => {
     userAuthStore.logout()
     windowsStore.alert('Password has changed!', 'Success', 'info')
     win.value!.close()
-  }).catch(err =>
-    windowsStore.alert(err.response.data.error, 'Error')
+  }).catch(e =>
+    windowsStore.alert((e as Error).message, 'Error')
   ).finally(() => sending = false)
 }
 

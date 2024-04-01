@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
-import { status } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
 const OSD_UPDATE_INTERVAL = 10000
@@ -32,11 +32,11 @@ function updateOsd () {
   if (updating) return
   updating = true
 
-  status.getOsd().then(res => {
-    playerPlaybackStore.listeners = res.data[1]
-    playerPlaybackStore.reactions = res.data[2]
-  }).catch(err => {
-    console.log(`Failed to update status: ${err}`)
+  api.status.getOsd().then(res => {
+    playerPlaybackStore.listeners = res.data[1] as number
+    playerPlaybackStore.reactions = res.data[2] as number
+  }).catch(e => {
+    console.log(`Failed to update status: ${(e as Error).message}`)
   }).finally(() => {
     updating = false
     osdUpdatedAt = Date.now()
@@ -49,7 +49,7 @@ function updateStatus () {
   if (updating) return
   updating = true
 
-  status.get().then((res) => {
+  api.status.get().then(res => {
     playerPlaybackStore.$patch({
       songId: res.data.song.id,
       artist: res.data.song.artist,
@@ -62,8 +62,8 @@ function updateStatus () {
       artwork_sm_src: res.data.song.artwork_sm_src,
       listeners: res.data.listeners,
     })
-  }).catch((err) => {
-    console.log(`Failed to update status: ${err}`)
+  }).catch(e => {
+    console.log(`Failed to update status: ${(e as Error).message}`)
   }).finally(() => {
     updating = false
     osdUpdatedAt = Date.now()

@@ -6,11 +6,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { reactions } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { prefs } from '@common/js/extras/prefs'
+import { AxiosError } from 'axios'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -47,13 +48,13 @@ function send (score: number) {
 
   sending = true
 
-  reactions.react(score).then(res => {
+  api.reactions.react(score).then(res => {
     playerPlaybackStore.reactions = res.data.reactions
     userReactionStore.score = score
     userReactionStore.songId = playerPlaybackStore.songId
     showTip()
-  }).catch(err => {
-    if (err.response.status === 401) {
+  }).catch(e => {
+    if (e instanceof AxiosError && e.response!.status === 401) {
       windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   }).finally(() => {

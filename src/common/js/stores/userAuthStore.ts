@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
-import { user } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import Cookies from 'js-cookie'
 import type { ifcUserProfile } from '@common/js/types'
 import helperComposable from '@common/js/composables/helperComposable'
-import { Native } from '@mobile/js/bridge/native'
 
 const { isMobile } = helperComposable()
 
@@ -35,10 +34,9 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       }
 
       if (this.token !== null) {
-        user.get().then(result => {
-          console.log(this.token)
+        api.user.get().then(res => {
           this.signed = true
-          this.username = result.data.username
+          this.username = res.data.username
         }).catch(() => {})
       }
     },

@@ -52,15 +52,15 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
-import { history } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import type WinList from '@common/js/components/WinList.vue'
-import type { ifcHistoryResponse } from '@common/js/types'
+import type { HistoryResponse } from '@common/js/types'
 
 const windowsStore = useWindowsStore()
 const { sd, gt } = helperComposable()
 
-const data: ifcHistoryResponse = reactive({
+const data: HistoryResponse = reactive({
   per_page: 25,
   pages: 4,
   songs: [],
@@ -79,23 +79,18 @@ function changePage (newPage: number) {
   }
 }
 
-function fetchHistory (page: number) {
+async function fetchHistory (page: number) {
   list.value!.scrollTop()
   loading.value = true
 
-  history.get(page).then(result => {
-    data.per_page = result.data.per_page
-    data.pages = result.data.pages
-    data.songs = result.data.songs
-    data.count = result.data.count
-    data.from_date = result.data.from_date
-    data.to_date = result.data.to_date
+  api.history.get(page).then(res => {
+    Object.assign(data, res.data)
     list.value!.refreshScrollbar()
-  }).catch(
-    error => windowsStore.alert(error.response.data.error, 'Error'),
-  ).finally(
-    () => loading.value = false,
-  )
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => {
+    loading.value = false
+  })
 }
 
 watch(page, () => {

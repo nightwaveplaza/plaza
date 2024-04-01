@@ -72,12 +72,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { backgrounds } from '@common/js/api/api'
+import { api } from '@common/js/api/api'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
-import { enBackgroundMode, type ifcBackgroundImage } from '@common/js/types'
+import { enBackgroundMode, type BackgroundImage } from '@common/js/types'
 
 const appearanceStore = useAppearanceStore()
-const backgroundList = ref([])
+const backgroundList = ref<BackgroundImage[]>([])
 
 // Palettes
 const palette = [
@@ -131,11 +131,10 @@ function solidBg (color?: string) {
   }
 
   appearanceStore.background.mode = enBackgroundMode.SOLID
-  appearanceStore.background.image = undefined
   appearanceStore.saveBackground()
 }
 
-function findIndex (background: ifcBackgroundImage) {
+function findIndex (background: BackgroundImage) {
   const index = backgroundList.value.findIndex((b: any) => {
     return b.id === background.id
   })
@@ -145,6 +144,6 @@ function findIndex (background: ifcBackgroundImage) {
 
 onMounted(() => {
   // Load background list from server
-  backgrounds.get().then((result) => backgroundList.value = result.data)
+  api.backgrounds.get().then(res => backgroundList.value = res.data)
 })
 </script>

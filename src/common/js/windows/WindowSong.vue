@@ -106,7 +106,7 @@ async function favoriteSong () {
       song.favorite_id = res.data.favorite_id
     }
   } catch(e) {
-    if (e instanceof AxiosError && e.status === 401) {
+    if (e instanceof AxiosError && e.response!.status === 401) {
       windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   } finally {

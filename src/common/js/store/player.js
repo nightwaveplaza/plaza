@@ -51,6 +51,7 @@ export const playerStore = {
       context.commit('reaction', score)
 
       // Dispatch setReactionNative for mobile root store
+      // TODO
       if (this._actions['setReactionNative']) {
         context.dispatch('setReactionNative', score, { root: true }).then()
       }

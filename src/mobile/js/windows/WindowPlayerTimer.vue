@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="250" name="player-timer" title="Sleep Timer">
+  <win-window ref="win" :width="250" name="player-timer" title="Sleep Timer" v-slot="winProps">
     <div class="p-3">
       <p v-if="active" class="text-center">
         Sleep timer is active <br/> <b>{{ timeText }}</b>
@@ -35,67 +35,61 @@
           <win-btn block class="text-bold" @click="start()">{{ btnText }}</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="window.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Native } from '@mobile/js/bridge/native'
-import { useStore } from 'vuex'
-import ticker from '@common/js/extras/ticker'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useNativeStateStore } from '@mobile/js/stores/nativeStateStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
-const store = useStore()
+const nativeStateStore = useNativeStateStore()
 
-// Composable
-const { closeWindow } = windowsComposable()
+const win = ref<InstanceType<typeof WinWindow>>()
 
-const window = ref('window')
 const minutes = ref(20)
 const timeText = ref('Not set')
-const sleepTime = computed(() => store.getters['sleepTime'])
-const active = computed(() => sleepTime.value !== 0 ?? sleepTime.value > Date.now())
-const btnText = computed(() => sleepTime.value !== 0 ? 'Stop' : 'Start')
+
+const active = computed(() => nativeStateStore.sleepTime !== 0 ?? nativeStateStore.sleepTime > Date.now())
+const btnText = computed(() => nativeStateStore.sleepTime !== 0 ? 'Stop' : 'Start')
 
 // Non-reactive
-let tickerId = 0
+let intervalId = 0
 
-// Methods
 function start () {
   if (active.value) {
     Native.setSleepTimer(0)
-    store.commit('sleepTime', 0)
+    nativeStateStore.sleepTime = 0
   } else {
-    add(0) // hack: make minutes integer // wtf is this
-    const sleepTime = Date.now() + (minutes.value * 60 * 1000)
-    store.commit('sleepTime', sleepTime)
+    nativeStateStore.sleepTime = Date.now() + (minutes.value * 60 * 1000)
     Native.setSleepTimer(minutes.value)
   }
 
-  win.value.close()
+  win.value!.close()
 }
 
 function refreshText () {
-  const t = sleepTime.value - Date.now()
+  const t = nativeStateStore.sleepTime - Date.now()
   timeText.value = t < 0 ? 'Not set' : new Date(t).toISOString().substring(11, 19)
 }
 
-function add (amount) {
-  let newMinutes = parseInt(minutes.value)
+function add (amount: number) {
+  let newMinutes = minutes.value
   newMinutes = newMinutes ? minutes.value + amount : 0
   minutes.value = newMinutes <= 0 ? 1 : newMinutes
 }
 
 onMounted(() => {
-  tickerId = ticker.set(refreshText, 1000)
+  intervalId = setInterval(refreshText, 1000)
 })
 
 onBeforeUnmount(() => {
-  ticker.stop(tickerId)
+  clearInterval(intervalId)
 })
 
 </script>

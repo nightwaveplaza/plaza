@@ -32,32 +32,26 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { UserReset } from '@common/js/types'
 
-// Composable
-const { alert, openWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
 
-// Reactive data
-const fields = reactive({
+const fields: UserReset = reactive({
   email: '',
 })
 
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 const showCaptcha = ref(false)
 const captchaResponse = ref('')
 
 // Non-reactive
 let sending = false
-
-watch(captchaResponse, (value) => {
-  setTimeout(() => {
-    completeCaptcha(value)
-  }, 2000)
-})
 
 function reset () {
   if (!validate() || sending) {
@@ -70,25 +64,26 @@ function reset () {
 function completeCaptcha () {
   sending = true
 
-  user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
-    alert('Instructions have been sent to your email.', 'Success', 'info')
-    win.value.close()
-  }).catch(err => {
+  api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
+    windowsStore.alert('Instructions have been sent to your email.', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
     showCaptcha.value = false
-    alert(err.response.data.error, 'Error')
+    windowsStore.alert((e as Error).message, 'Error')
   }).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.email.length === 0) {
-    alert('Enter email.', 'Error')
+    windowsStore.alert('Enter email.', 'Error')
     return false
   }
   return true
 }
 
-function refreshCaptcha (key) {
-  fields.key = key
-  fields.captcha = ''
-}
+watch(captchaResponse, () => {
+  setTimeout(() => {
+    completeCaptcha()
+  }, 2000)
+})
 </script>

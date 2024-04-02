@@ -24,9 +24,10 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
 const router = useRouter()
 
@@ -37,13 +38,13 @@ const props = defineProps({
   },
 })
 
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 
 function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    win.value.close()
+    win.value!.close()
   }
 }
 </script>

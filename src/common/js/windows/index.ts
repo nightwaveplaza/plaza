@@ -14,8 +14,9 @@ import WindowUserLogin from '@common/js/windows/WindowUserLogin.vue'
 import WindowUserPassword from '@common/js/windows/WindowUserPassword.vue'
 import WindowUserRegister from '@common/js/windows/WindowUserRegister.vue'
 import WindowUserReset from '@common/js/windows/WindowUserReset.vue'
+import type { App } from 'vue'
 
-export const commonWindows = (app) => {
+export const commonWindows = (app: App) => {
   app.component('window-about', WindowAbout)
   app.component('window-alert', WindowAlert)
   app.component('window-credits', WindowCredits)

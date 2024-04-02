@@ -6,51 +6,49 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
-import PerfectScrollbar from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar'
 
 // Props
-const props = defineProps({
-  scroll: {
-    type: Boolean,
-    default: false,
-  }
+const props = withDefaults(defineProps<{
+  scroll?: boolean
+}>(), {
+  scroll: false,
 })
 
-// Reactive data
-const list = ref(null)
+// Elements
+const list = ref<HTMLDivElement | null>(null)
 
 // Scrollbar
-let scrollbar = {}
+let scrollbar: PerfectScrollbar
 
 // Methods
-function scrollTop() {
-  list.scrollTop = 0;
+function scrollTop () {
+  list.value!.scrollTop = 0
 }
 
-function refreshScrollbar() {
-  if (scroll) {
+function refreshScrollbar () {
+  if (props.scroll) {
     nextTick(() => {
-      scrollbar.update();
-    });
+      scrollbar.update()
+    })
   }
 }
 
 onMounted(() => {
   if (props.scroll) {
-    scrollbar = new PerfectScrollbar(list.value);
+    scrollbar = new PerfectScrollbar(list.value!)
   }
 })
 
 onBeforeUnmount(() => {
   if (props.scroll) {
-    scrollbar.destroy();
-    scrollbar = null;
+    scrollbar.destroy()
   }
 })
 
 defineExpose({
-  list, scrollTop, refreshScrollbar
+  list, scrollTop, refreshScrollbar,
 })
 </script>

@@ -2,20 +2,18 @@
   <div class="player-time">{{ display }}</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import ticker from '@common/js/extras/ticker'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import helperComposable from '@common/js/composables/helperComposable'
+import { MutationType } from 'pinia'
 
-const CLOCK_REFRESH = 300
+const CLOCK_REFRESH = 1000
 
-const store = useStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Composable
 const { dur } = helperComposable()
 
-// Refs
 const length = ref(0)
 const actualPosition = ref(0)
 const textTime = ref(0)
@@ -26,17 +24,11 @@ const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / 
 // Non-reactive
 let position = 0
 let songUpdatedAt = 0
-let tickerId = 0
+let intervalId = 0
 
-// Methods
-function showText (newText) {
+function showText (newText: string) {
   text.value = newText
   textTime.value = 2000
-}
-
-function resetTimer () {
-  ticker.stop(tickerId)
-  tickerId = ticker.set(tick, CLOCK_REFRESH)
 }
 
 function tick () {
@@ -57,12 +49,12 @@ function tick () {
 
 onMounted(() => {
   showText('Welcome back!')
-  tickerId = ticker.set(tick, CLOCK_REFRESH)
+  intervalId = setInterval(tick, CLOCK_REFRESH)
 
-  store.subscribe((mutation, state) => {
-    if (mutation.type === 'player/currentSong') {
-      length.value = state.player.song.length
-      position = state.player.song.position
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    if (mutation.type === MutationType.patchObject) {
+      length.value = state.length
+      position = state.position
       songUpdatedAt = Date.now()
     }
   })

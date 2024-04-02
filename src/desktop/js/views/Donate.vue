@@ -4,13 +4,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'support')
+  windowsStore.pullUp('support')
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450" v-show="loaded">
+  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
 
     <!-- Minimize button -->
     <template v-slot:header>
@@ -20,48 +20,34 @@
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        Listeners: {{ listeners }}
+        Listeners: {{ playerPlaybackStore.listeners }}
       </div>
-      <div v-if="auth" class="col-5 col-sm-3 cell login">
-        Logged as: {{ username }}
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
+        Logged as: {{ userAuthStore.username }}
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
-const store = useStore()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
-const { closeWindow, openWindow } = windowsComposable()
-
-// Reactive data
-const listeners = computed(() => store.getters['player/listeners'])
-const auth = computed(() => store.getters['user/auth'])
-const username = computed(() => store.getters['user/username'])
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
-const loaded = ref(false)
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 
-// Methods
 function minimize () {
-  store.dispatch('windows/minimize', 'player')
+  windowsStore.minimize('player')
 }
 
 function requestFullScreen () {
-  document.getElementById('app').requestFullscreen()
+  document.getElementById('app')?.requestFullscreen()
 }
-
-onMounted(() => {
-  store.subscribe((mutation) => {
-    if (mutation.type === 'player/currentSong' && loaded.value === false) {
-      closeWindow('loading')
-      loaded.value = true
-      win.value.pullUp()
-    }
-  })
-})
 </script>

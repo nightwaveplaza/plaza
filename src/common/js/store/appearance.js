@@ -33,5 +33,5 @@ export const appearanceStore = {
     backgroundImage: state => state.background.image,
     backgroundColor: state => state.background.color,
     background: state => state.background
-  },
+  }
 };

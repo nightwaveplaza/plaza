@@ -50,7 +50,7 @@
                 <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
               </p>
               <p class="mt-2">
-                Build date: __APP_VERSION__
+                Build date: {{ version }}
               </p>
             </win-memo>
           </div>
@@ -75,18 +75,20 @@
   </win-window>
 </template>
 
-<script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import {onMounted} from "vue";
 
-const { openWindow, closeWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
+const version = __APP_VERSION__ ?? "n/a";
 
 const openCredits = () => {
-  openWindow('credits')
-  closeWindow('about')
+  windowsStore.open('credits')
+  windowsStore.close('about')
 }
 
 const openNews = () => {
-  openWindow('news')
-  closeWindow('about')
+  windowsStore.open('news')
+  windowsStore.close('about')
 }
 </script>

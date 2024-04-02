@@ -16,40 +16,31 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 
-// Props
-const props = defineProps({
-  pages: Number,
-})
+const props = defineProps<{
+  pages: number
+}>()
 
-// Emits
 const emit = defineEmits(['change'])
 
-// Reactive data
-const pageInput = ref(null)
+const pageInput = ref<HTMLInputElement | null>(null)
 const page = ref(1)
 
-watch(page, (value) => {
-  pageInput.value.value = value
-  emit('change', value)
-})
-
-// Methods
-function nextPage (dir) {
+function nextPage (dir: number) {
   let newPage = page.value + dir
   if (newPage < 1) {
     newPage = 1
   }
-  if (newPage > props.pages) {
-    newPage = props.pages
+  if (newPage > props.pages!) {
+    newPage = props.pages!
   }
   page.value = newPage
 }
 
-function setPage (e) {
-  const newPage = parseInt(e.target.value)
+function setPage (e: Event) {
+  const newPage = parseInt((e.target as HTMLInputElement).value)
   if (!isNaN(newPage) && newPage > 0 && newPage <= props.pages) {
     page.value = newPage
   }
@@ -59,7 +50,12 @@ function reset () {
   page.value = 1
 }
 
+watch(page, (value) => {
+  pageInput.value!.value = value.toString()
+  emit('change', value)
+})
+
 defineExpose({
-  pageInput, reset
+  pageInput, reset,
 })
 </script>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="@mobile/styles/dist.scss">
     <link rel="stylesheet" type="text/css" href="@mobile/styles/app.scss">
-    <script src="@mobile/app.js" type="module"></script>
+    <script src="@mobile/app.ts" type="module"></script>
 </head>
 <body>
 <div id="app">
@@ -19,10 +19,12 @@
     push: function(action, data) {
       if (action === 'openWindow') {
         this.vue.openWindow(data.window);
+        return
       }
 
       if (action === 'closeWindow') {
         this.vue.closeWindow(data.window);
+        return
       }
 
       this.vue.pushData(action, data);

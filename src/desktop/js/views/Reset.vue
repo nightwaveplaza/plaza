@@ -1,42 +1,36 @@
 <template>
   <div class="app-desktop theme-win98">
-    <window-user-reset-password v-if="isWindowOpen('user-reset-password')" :token="token"/>
-    <window-user-reset v-if="isWindowOpen('user-reset')"/>
+    <window-user-reset-password v-if="windowsStore.isOpened('user-reset-password')" :token="token"/>
+    <window-user-reset v-if="windowsStore.isOpened('user-reset')"/>
 
-    <win-alerts/>
+    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
   </div>
 </template>
 
-<script setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import { useStore } from 'vuex'
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const store = useStore()
 const router = useRouter()
 const route = useRoute()
-
-// Composable
-const { openWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
 
 // Reactive data
 const token = ref('')
-const alerts = computed(() => store.getters['windows/alerts'])
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
 
-watch(alerts, (n) => {
-  if (n.length === 0 && !isWindowOpen.value('user-reset-password') && !isWindowOpen.value('user-reset')) {
+watch(windowsStore.alerts, (n) => {
+  if (n.length === 0 && !windowsStore.isOpened('user-reset-password') && !windowsStore.isOpened('user-reset')) {
     router.push({ name: 'index' })
   }
 })
 
 onMounted(() => {
   if (route.params.token) {
-    token.value = route.params.token
-    openWindow('user-reset-password')
+    token.value = route.params.token as string
+    windowsStore.open('user-reset-password')
   } else {
-    openWindow('user-reset')
+    windowsStore.open('user-reset')
   }
 })
 </script>

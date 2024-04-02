@@ -26,13 +26,15 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
 const router = useRouter()
+const windowsStore = useWindowsStore()
 
 // Props
 const props = defineProps({
@@ -42,10 +44,7 @@ const props = defineProps({
   },
 })
 
-// Composable
-const { alert } = windowsComposable()
-
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 const password = ref('')
 const passwordRepeat = ref('')
 
@@ -53,26 +52,28 @@ const passwordRepeat = ref('')
 let sending = false
 
 function change () {
-  if (!validate() || sending.value) {
+  if (!validate() || sending) {
     return
   }
 
   sending = true
 
-  user.confirmReset({ token: props.token, password: password.value }).then(() => {
-    alert('Password has changed.', 'Success', 'info')
-    win.value.close()
-  }).catch(err => alert(err.response.data.error, 'Error')).finally(() => sending = false)
+  api.user.confirmReset({ token: props.token, password: password.value }).then(() => {
+    windowsStore.alert('Password has changed.', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => sending = false)
 }
 
 function validate () {
   if (password.value.length < 3) {
-    alert('Password is too short.', 'Error')
+    windowsStore.alert('Password is too short.', 'Error')
     return false
   }
 
   if (password.value !== passwordRepeat.value) {
-    alert('Passwords didn\'t match.', 'Error')
+    windowsStore.alert('Passwords didn\'t match.', 'Error')
     return false
   }
 

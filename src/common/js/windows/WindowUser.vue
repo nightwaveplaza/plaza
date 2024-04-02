@@ -14,28 +14,25 @@
   </win-window>
 </template>
 
-<script setup>
-import { useStore } from 'vuex'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
-const { closeWindow, openWindow } = windowsComposable()
 const { isMobile } = helperComposable()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
 
-const store = useStore()
-
-// Methods
-function open (window) {
-  openWindow(window)
-  closeWindow('user')
+function open (window: string) {
+  windowsStore.open(window)
+  windowsStore.close('user')
 }
 
 function logout () {
-  user.logout().then().finally(() => {
-    store.dispatch('logout')
-    closeWindow('user')
+  api.user.logout().then().finally(() => {
+    userAuthStore.logout()
+    windowsStore.close('user')
   })
 }
 </script>

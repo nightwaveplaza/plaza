@@ -15,22 +15,26 @@
       </div>
     </div>
   </win-window>
+
+  <win-player-status />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { MutationType } from 'pinia'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Reactive data
 const style = ref({
   transform: `translate(0px, 0px)`,
 })
 
-// Refs
-const bar = ref(null)
-const progress = ref(null)
+const bar = ref<HTMLDivElement | null>(null)
+const progress = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
 let movedAt = 0
@@ -38,7 +42,6 @@ let direction = 3
 let left = 0
 let loading = true
 
-// Methods
 function move () {
   if (!loading) {
     return
@@ -46,7 +49,7 @@ function move () {
 
   const now = Date.now()
   if (now - movedAt > 30 && bar.value) {
-    if (left > bar.value.offsetWidth - progress.value.offsetWidth - 6 || left < 0) {
+    if (left > bar.value!.offsetWidth - progress.value!.offsetWidth - 6 || left < 0) {
       direction *= -1
     }
 
@@ -59,12 +62,20 @@ function move () {
 }
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'loading')
+  //windowsStore.pullUp('loading')
   move()
+
+  playerPlaybackStore.$subscribe((mutation, state) => {
+    if (mutation.type === MutationType.patchObject) {
+      windowsStore.open('player')
+      windowsStore.close('loading')
+    }
+  })
+
 })
 
 onBeforeUnmount(() => {
   loading = false
-  store.commit('windows/pullUp', 'player')
+  windowsStore.pullUp('player')
 })
 </script>

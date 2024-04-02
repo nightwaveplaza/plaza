@@ -17,11 +17,11 @@
   </win-window>
 </template>
 
-<script setup>
-const props = defineProps({
-  text: String,
-  title: String,
-  name: String,
-  type: String,
-})
+<script setup lang="ts">
+const props = defineProps<{
+  text: string,
+  title: string,
+  name: string,
+  type: string,
+}>()
 </script>

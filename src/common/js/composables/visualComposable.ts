@@ -2,19 +2,19 @@ export default function () {
   const VISUAL_BARS = 'rgba(255,255,255,0.6)'
   const MAX_FREQ_VISUAL = 14000
 
-  let canvasContext = false
   let canvasWidth = 0
   let canvasHeight = 0
   let visualBars = 0
   let visualEnabled = false
-  let context = false
-  let analyser = false
-  let source = false
-  let canvas = false
+  let context: AudioContext | null
+  let analyser: AnalyserNode | null
+  let source: MediaElementAudioSourceNode | null
+  let canvas: HTMLCanvasElement | null
+  let canvasContext: CanvasRenderingContext2D | null
 
-  function startVisual (audio, cvs) {
-    if (!context || !source) {
-      context = new (window.AudioContext || window.webkitAudioContext)()
+  function startVisual (audio: HTMLAudioElement, cvs: HTMLCanvasElement) {
+    if (!context || !source || !analyser) {
+      context = new (window.AudioContext || (window as any).webkitAudioContext)()
       analyser = context.createAnalyser()
       source = context.createMediaElementSource(audio)
     }
@@ -36,8 +36,8 @@ export default function () {
   }
 
   function calcVisualFreqs () {
-    const sampleRate = context.sampleRate
-    const freqStep = sampleRate / (analyser.frequencyBinCount * 2)
+    const sampleRate = context!.sampleRate
+    const freqStep = sampleRate / (analyser!.frequencyBinCount * 2)
     let endFreq = freqStep
 
     while (endFreq + freqStep < MAX_FREQ_VISUAL) {
@@ -52,29 +52,29 @@ export default function () {
     }
 
     requestAnimationFrame(visualize)
-    canvasContext.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
+    canvasContext!.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
 
-    const frequencyData = new Uint8Array(analyser.frequencyBinCount)
-    analyser.getByteFrequencyData(frequencyData)
+    const frequencyData = new Uint8Array(analyser!.frequencyBinCount)
+    analyser!.getByteFrequencyData(frequencyData)
 
     for (let i = 0; i < visualBars; i++) {
       const height = Math.ceil((canvasHeight * frequencyData[i]) / 255)
       const width = Math.ceil(canvasWidth / visualBars)
-      canvasContext.fillStyle = VISUAL_BARS
-      canvasContext.fillRect(i * width, canvasHeight - height, width, height)
+      canvasContext!.fillStyle = VISUAL_BARS
+      canvasContext!.fillRect(i * width, canvasHeight - height, width, height)
     }
   }
 
   function stopVisual () {
     visualEnabled = false
     if (canvasContext) {
-      canvasContext.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
+      canvasContext.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
     }
 
-    analyser.disconnect()
-    source.disconnect()
-    context = false
-    source = false
+    analyser!.disconnect()
+    source!.disconnect()
+    context = null
+    source = null
   }
 
   return {

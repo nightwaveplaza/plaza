@@ -4,31 +4,31 @@
       <div class="group-box p-2 mb-3">
         <div class="gb-label noselect">Background</div>
 
-        <div class="row palette no-gutters" v-if="currentBg.mode === 2">
+        <div class="row palette no-gutters" v-if="appearanceStore.background.mode === enBackgroundMode.SOLID">
           <div class="col-auto" v-for="color in palette">
             <button class="color" :style="{backgroundColor: color}" @click="solidBg(color)"/>
           </div>
           <div class="col-3">
-            <input class="d-block" :value="currentBg.color" @input="colorSelected"/>
+            <input class="d-block" :value="appearanceStore.background.color" @input="colorSelected"/>
           </div>
         </div>
 
         <win-memo v-else>
           <p>
-            <b>Background:</b> {{ currentBg.image.num }}
+            <b>Background:</b> {{ appearanceStore.background.image?.num }}
           </p>
           <p>
             <b>Source: </b>
-            <a v-if="currentBg.image.source_link !== ''"
-               :href="currentBg.image.source_link">
-              {{ currentBg.image.source }}
+            <a v-if="appearanceStore.background.image?.source_link !== ''"
+               :href="appearanceStore.background.image?.source_link">
+              {{ appearanceStore.background.image?.source }}
             </a>
           </p>
           <p>
             <b>Author: </b>
-            <a v-if="currentBg.image.author_link !== ''"
-               :href="currentBg.image.author_link">
-              {{ currentBg.image.author }}
+            <a v-if="appearanceStore.background.image?.author_link !== ''"
+               :href="appearanceStore.background.image?.author_link">
+              {{ appearanceStore.background.image?.author }}
             </a>
           </p>
         </win-memo>
@@ -41,10 +41,10 @@
             <win-btn block @click="nextBg(1)">&gt;</win-btn>
           </div>
           <div class="col-4 pr-1">
-            <win-btn block @click="randomBg">Random</win-btn>
+            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">Random</win-btn>
           </div>
           <div class="col-4">
-            <win-btn block :class="{active: currentBg.mode === 2}" @click="solidBg">Solid</win-btn>
+            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">Solid</win-btn>
           </div>
         </div>
 
@@ -58,7 +58,7 @@
         <div class="gb-label noselect">Theme</div>
         <div class="select">
           <select @change="themeSelected">
-            <option v-for="item in themes" :value="item[0]" v-html="item[1]" :selected="theme === item[0]"/>
+            <option v-for="item in themes" :value="item[0]" v-html="item[1]" :selected="appearanceStore.theme === item[0]"/>
           </select>
         </div>
       </div>
@@ -70,17 +70,14 @@
   </win-window>
 </template>
 
-<script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
-import { background } from '@common/js/api/api'
-import { useStore } from 'vuex'
-import userPrefs from '@common/js/composables/userPrefsComposable'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { api } from '@common/js/api/api'
+import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { enBackgroundMode, type BackgroundImage } from '@common/js/types'
 
-const store = useStore()
-const { applyBackground, applyTheme } = userPrefs()
-
-const backgroundList = ref([])
-const theme = ref('win98')
+const appearanceStore = useAppearanceStore()
+const backgroundList = ref<BackgroundImage[]>([])
 
 // Palettes
 const palette = [
@@ -97,22 +94,17 @@ const themes = [
   ['win98', 'Windows Standard'],
 ]
 
-function colorSelected (e) {
-  solidBg(e.target.value)
+function colorSelected (e: Event) {
+  solidBg((e.target as HTMLInputElement).value)
 }
 
-function themeSelected (event) {
-  applyTheme(event.target.value)
+function themeSelected (e: Event) {
+  appearanceStore.theme = (e.target as HTMLSelectElement).value
+  appearanceStore.saveTheme()
 }
 
-const MODE_RANDOM = 0
-const MODE_SINGLE = 1
-const MODE_SOLID = 2
-
-const currentBg = ref({})
-
-function nextBg (dir) {
-  let index = findIndex(currentBg.value.image) + dir
+function nextBg (dir: number) {
+  let index = findIndex(appearanceStore.background.image!) + dir
 
   if (index < 0) {
     index = backgroundList.value.length - 1
@@ -120,47 +112,38 @@ function nextBg (dir) {
     index = 0
   }
 
-  currentBg.value.mode = MODE_SINGLE
-  currentBg.value.image = backgroundList.value[index]
-
-  applyBackground(currentBg.value)
+  appearanceStore.background.mode = enBackgroundMode.SINGLE
+  appearanceStore.background.image = backgroundList.value[index]
+  appearanceStore.saveBackground()
 }
 
 function randomBg () {
   const image = backgroundList.value[Math.floor(Math.random() * backgroundList.value.length)]
 
-  currentBg.value.mode = MODE_RANDOM
-  currentBg.value.image = image
-
-  applyBackground(currentBg.value)
+  appearanceStore.background.mode = enBackgroundMode.RANDOM
+  appearanceStore.background.image = image
+  appearanceStore.saveBackground()
 }
 
-function solidBg (color) {
-  if (color !== undefined) {
-    currentBg.value.color = color
+function solidBg (color?: string) {
+  if (typeof color !== 'undefined') {
+    appearanceStore.background.color = color
   }
 
-  currentBg.value.mode = MODE_SOLID
-  currentBg.value.image = ''
-
-  applyBackground(currentBg.value)
+  appearanceStore.background.mode = enBackgroundMode.SOLID
+  appearanceStore.saveBackground()
 }
 
-function findIndex (background) {
-  const index = backgroundList.value.findIndex((b) => {
+function findIndex (background: BackgroundImage) {
+  const index = backgroundList.value.findIndex((b: any) => {
     return b.id === background.id
   })
 
   return index < 0 ? 0 : index
 }
 
-onBeforeMount(() => {
-  currentBg.value = store.getters['appearance/background']
-  theme.value = store.getters['appearance/theme']
-})
-
 onMounted(() => {
   // Load background list from server
-  background.get().then((result) => backgroundList.value = result.data)
+  api.backgrounds.get().then(res => backgroundList.value = res.data)
 })
 </script>

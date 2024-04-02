@@ -60,23 +60,23 @@
   </win-window>
 </template>
 
-<script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { UserLogin } from '@common/js/types'
 
-// Composable
 const { isMobile } = helperComposable()
-const { alert, openWindow } = windowsComposable()
 
-const store = useStore()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
 
-const win = ref('win')
+const win = ref<InstanceType<typeof WinWindow>>()
 
-// Reactive data
-const fields = reactive({
+const fields: UserLogin = reactive({
   username: '',
   password: '',
 })
@@ -85,7 +85,6 @@ const remember = ref(false)
 // Non-reactive
 let sending = false
 
-// Methods
 function login () {
   if (!validate() || sending) {
     return
@@ -93,21 +92,18 @@ function login () {
 
   sending = true
 
-  user.auth(fields).then((res) => {
-    if (isMobile.value) {
-      store.dispatch('login', res.data)
-    } else {
-      store.dispatch('login', { user: res.data, remember: remember.value })
-    }
-
-    alert('Authentication successful!', 'Success', 'info')
-    win.value.close()
-  }).catch(err => alert(err.response.data.error, 'Failed')).finally(() => sending = false)
+  api.user.login(fields).then(res => {
+    userAuthStore.login(res.data, remember.value)
+    windowsStore.alert('Authentication successful!', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Failed')
+  }).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    alert('Wrong username or password.', 'Error')
+    windowsStore.alert('Wrong username or password.', 'Error')
     return false
   }
 
@@ -115,12 +111,12 @@ function validate () {
 }
 
 function openRegister () {
-  openWindow('user-register')
-  win.value.close()
+  windowsStore.open('user-register')
+  win.value!.close()
 }
 
 function openReset () {
-  openWindow('user-reset')
-  win.value.close()
+  windowsStore.open('user-reset')
+  win.value!.close()
 }
 </script>

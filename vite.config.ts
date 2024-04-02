@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, splitVendorChunkPlugin, loadEnv, Plugin } from 'vite'
+import { defineConfig, loadEnv, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
 
@@ -36,7 +36,7 @@ export default ({ mode }: { mode: string }) => {
     },
 
     define: {
-      __APP_VERSION__: getBuildDate(),
+      __APP_VERSION__: JSON.stringify(getBuildDate()),
     },
 
     resolve: {
@@ -59,13 +59,13 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
     })
 }
 
-function getSplitVendorChunkPlugin (env: NodeJS.ProcessEnv) {
-  if (env.VITE_APP === 'mobile') {
-    return null
-  } else {
-    return splitVendorChunkPlugin()
-  }
-}
+// function getSplitVendorChunkPlugin (env: NodeJS.ProcessEnv) {
+//   if (env.VITE_APP === 'mobile') {
+//     return null
+//   } else {
+//     return splitVendorChunkPlugin()
+//   }
+// }
 
 function getBuildDate (): string {
   return new Date().toISOString().slice(0, 10).replace(/-/g, '')

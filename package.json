@@ -2,6 +2,7 @@
   "name": "app-plaza",
   "version": "5.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -30,7 +31,6 @@
     "nouislider": "^15.6.1",
     "perfect-scrollbar": "1.4.0",
     "pinia": "^2.1.7",
-    "tailwindcss": "^3.2.4",
     "uuid": "^9.0.0",
     "vue-loader": "^17.2.1",
     "vue-router": "^4.3.0",

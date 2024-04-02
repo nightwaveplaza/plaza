@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { enBackgroundMode, type ifcBackground } from '@common/js/types'
+import { enBackgroundMode, type Background } from '@common/js/types'
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 
 interface State {
-  background: ifcBackground,
+  background: Background,
   theme: string
 }
 
@@ -47,7 +47,7 @@ export const useAppearanceStore = defineStore('appearanceStore', {
     },
 
     loadSettings() {
-      this.background = prefs.getObj<ifcBackground>('background', this.background)!
+      this.background = prefs.getObj<Background>('background', this.background)!
       this.theme = prefs.getStr('theme', 'win98')
     },
 

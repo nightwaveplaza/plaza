@@ -11,7 +11,7 @@ import type {
   RatingsResponse,
   FavoritesResponse,
   BackgroundImage,
-  NewsLatestResponse, StatusResponse, NewsResponse,
+  NewsLatestResponse, StatusResponse, NewsResponse, SongResponse,
 } from '@common/js/types'
 
 export const api = {
@@ -38,7 +38,7 @@ export const api = {
   },
 
   songs: {
-    get: (id: string) => Repository.get(`songs/${id}`),
+    get: (id: string) => Repository.get<SongResponse>(`songs/${id}`),
   },
 
   backgrounds: {

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { api } from '@common/js/api/api'
 import Cookies from 'js-cookie'
-import type { ifcUserProfile } from '@common/js/types'
+import type { UserProfile } from '@common/js/types'
 import helperComposable from '@common/js/composables/helperComposable'
 
 const { isMobile } = helperComposable()
@@ -41,7 +41,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       }
     },
 
-    login(userProfile: ifcUserProfile, remember: boolean = false) {
+    login(userProfile: UserProfile, remember: boolean = false) {
       if (remember && navigator.cookieEnabled) {
         cookieApi.set('token', userProfile.token, { expires: 180 })
       } else {

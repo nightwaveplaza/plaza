@@ -1,14 +1,13 @@
-export interface ifcWindow {
+export interface Window {
   name: string,
   form: string,
-  // alerts
   text?: string,
   type?: string,
   id?: string,
   title?: string
 }
 
-export interface ifcBackground {
+export interface Background {
   image?: BackgroundImage,
   color: string,
   index: number,
@@ -33,7 +32,7 @@ export interface BackgroundImage {
   video_src: string
 }
 
-export interface ifcUserProfile {
+export interface UserProfile {
   username: string,
   token: string,
   email?: string

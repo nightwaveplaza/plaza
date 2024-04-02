@@ -15,7 +15,7 @@ import { Native } from '@mobile/js/bridge/native'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
-import { enBackgroundMode, type ifcBackground } from '@common/js/types'
+import { enBackgroundMode, type Background } from '@common/js/types'
 import useEmitter from '@mobile/js/extra/useEmitter'
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
@@ -53,7 +53,7 @@ function checkNews() {
 }
 
 
-function updateBackgroundNative(bg: ifcBackground) {
+function updateBackgroundNative(bg: Background) {
   Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
 }
 

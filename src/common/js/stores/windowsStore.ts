@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import type { ifcWindow } from '@common/js/types'
+import type { Window } from '@common/js/types'
 
 interface State {
-  windows: ifcWindow[],
+  windows: Window[],
   minimized: string[],
   activeWindow: string,
   activeZIndex: number

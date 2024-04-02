@@ -31,6 +31,7 @@ function getNow () {
 function toggleMinimize (name: string) {
   if (windowsStore.isMinimized(name)) {
     windowsStore.restore(name)
+    windowsStore.pullUp(name)
   } else {
     if (windowsStore.activeWindow === name) {
       windowsStore.minimize(name)

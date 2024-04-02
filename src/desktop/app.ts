@@ -7,7 +7,6 @@ import { desktopWindows } from '@desktop/js/windows'
 import { createPinia } from 'pinia'
 import App from '@desktop/js/views/App.vue'
 
-
 const app = createApp({
   render: () => h(App),
 })

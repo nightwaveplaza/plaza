@@ -91,8 +91,4 @@ const openNews = () => {
   windowsStore.open('news')
   windowsStore.close('about')
 }
-
-onMounted(() => {
-  console.log(import.meta.env.__APP_VERSION__)
-})
 </script>

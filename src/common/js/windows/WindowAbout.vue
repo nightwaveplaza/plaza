@@ -50,7 +50,7 @@
                 <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
               </p>
               <p class="mt-2">
-                Build date: __APP_VERSION__
+                Build date: {{ version }}
               </p>
             </win-memo>
           </div>
@@ -77,8 +77,10 @@
 
 <script setup lang="ts">
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import {onMounted} from "vue";
 
 const windowsStore = useWindowsStore()
+const version = __APP_VERSION__ ?? "n/a";
 
 const openCredits = () => {
   windowsStore.open('credits')
@@ -89,4 +91,8 @@ const openNews = () => {
   windowsStore.open('news')
   windowsStore.close('about')
 }
+
+onMounted(() => {
+  console.log(import.meta.env.__APP_VERSION__)
+})
 </script>

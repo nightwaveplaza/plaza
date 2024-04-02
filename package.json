@@ -9,10 +9,9 @@
     "watch": "vite build --watch"
   },
   "devDependencies": {
-    "@vue/compat": "^3.2.45",
     "sass": "^1.57.1",
     "terser": "^5.16.1",
-    "vite": "^4.4.9",
+    "vite": "^5.2.7",
     "vue": "^3.2.45"
   },
   "dependencies": {

@@ -6,5 +6,8 @@
         }
     },
     "alerts.reaction_tip.message": "You have liked the song. Nice!<br />\nClicking the {icon} button twice will add song to your favorites list. Give it a try!",
-    "alerts.reaction_tip.title": "N I C E"
+    "alerts.reaction_tip.title": "N I C E",
+    "another": {
+        "test": "test"
+    }
 }

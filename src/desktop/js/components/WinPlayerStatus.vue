@@ -5,51 +5,20 @@ import { onBeforeUnmount, onMounted } from 'vue'
 import { api } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 
-const OSD_UPDATE_INTERVAL = 10000
+const STATUS_UPDATE_INTERVAL = 10000
 const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Vars
-let statusUpdatedAt = 0
-let osdUpdatedAt = 0
-let updating = false
+let unmounted = false
 let intervalId = 0
 
-function tick () {
-  const now = Date.now()
-  const actualPosition = playerPlaybackStore.position + Math.floor(((now - statusUpdatedAt) / 1000))
-
-  if (!playerPlaybackStore.songId || playerPlaybackStore.length - actualPosition < 3) {
-    updateStatus()
-  } else if (now - osdUpdatedAt > OSD_UPDATE_INTERVAL) {
-    updateOsd()
-  } else {
-    intervalId = setTimeout(tick, 1000)
+async function updateStatus () {
+  if (unmounted) {
+    return
   }
-}
 
-// Update on-screen-data (listeners, reactions)
-function updateOsd () {
-  if (updating) return
-  updating = true
+  try {
+    let res = await api.status.get()
 
-  api.status.getOsd().then(res => {
-    playerPlaybackStore.listeners = res.data[1] as number
-    playerPlaybackStore.reactions = res.data[2] as number
-  }).catch(e => {
-    console.log(`Failed to update status: ${(e as Error).message}`)
-  }).finally(() => {
-    updating = false
-    osdUpdatedAt = Date.now()
-    intervalId = setTimeout(tick, 1000)
-  })
-}
-
-// Update current song status
-function updateStatus () {
-  if (updating) return
-  updating = true
-
-  api.status.get().then(res => {
     playerPlaybackStore.$patch({
       songId: res.data.song.id,
       artist: res.data.song.artist,
@@ -62,21 +31,22 @@ function updateStatus () {
       artwork_sm_src: res.data.song.artwork_sm_src,
       listeners: res.data.listeners,
     })
-  }).catch(e => {
+  } catch (e) {
     console.log(`Failed to update status: ${(e as Error).message}`)
-  }).finally(() => {
-    updating = false
-    osdUpdatedAt = Date.now()
-    statusUpdatedAt = Date.now()
-    intervalId = setTimeout(tick, 1000)
-  })
+  }
+
+  // Can be unmounted while status update
+  if (!unmounted) {
+    intervalId = setTimeout(updateStatus, STATUS_UPDATE_INTERVAL)
+  }
 }
 
 onMounted(() => {
-  tick()
+  updateStatus()
 })
 
 onBeforeUnmount(() => {
   clearTimeout(intervalId)
+  unmounted = true
 })
 </script>

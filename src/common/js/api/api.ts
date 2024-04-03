@@ -17,7 +17,6 @@ import type {
 export const api = {
   status: {
     get: () => Repository.get<StatusResponse>('status'),
-    getOsd: () => Repository.get<(string | number)[]>('status/on-screen-data'),
   },
 
   news: {

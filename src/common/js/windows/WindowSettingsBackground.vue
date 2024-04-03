@@ -54,14 +54,30 @@
         </div>
       </div>
 
-      <div class="group-box p-2 mb-2">
-        <div class="gb-label noselect">Theme</div>
-        <div class="select">
-          <select @change="themeSelected">
-            <option v-for="item in themes" :value="item[0]" v-html="item[1]" :selected="appearanceStore.theme === item[0]"/>
-          </select>
+      <div class="row no-gutters mb-2">
+        <div class="col-7">
+          <div class="group-box p-2 mr-1">
+            <div class="gb-label noselect">Theme</div>
+            <div class="select">
+              <select @change="themeSelected">
+                <option v-for="item in themes" :value="item[0]" v-html="item[1]" :selected="appearanceStore.theme === item[0]"/>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div class="group-box p-2">
+            <div class="gb-label noselect">Taskbar</div>
+            <div class="select">
+              <select @change="taskbarPositionSelected">
+                <option v-for="item in taskbarPositions" :value="item[0]" v-html="item[1]" :selected="appearanceStore.taskbarPosition === item[0]" />
+              </select>
+            </div>
+          </div>
         </div>
       </div>
+
 
       <div class="text-center">
         <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
@@ -79,19 +95,22 @@ import { enBackgroundMode, type BackgroundImage } from '@common/js/types'
 const appearanceStore = useAppearanceStore()
 const backgroundList = ref<BackgroundImage[]>([])
 
-// Palettes
 const palette = [
   '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
   '#008000', '#00ffff', '#008080', '#0000ff', '#000080', '#ff00ff', '#800080',
 ]
 
-// Themes
 const themes = [
   ['desert', 'Desert'],
   ['contrast', 'High Contrast'],
   ['rainy', 'Rainy Day'],
   ['rose', 'Rose'],
   ['win98', 'Windows Standard'],
+]
+
+const taskbarPositions = [
+    ['bottom', 'Bottom'],
+    ['top', 'Top']
 ]
 
 function colorSelected (e: Event) {
@@ -101,6 +120,11 @@ function colorSelected (e: Event) {
 function themeSelected (e: Event) {
   appearanceStore.theme = (e.target as HTMLSelectElement).value
   appearanceStore.saveTheme()
+}
+
+function taskbarPositionSelected (e: Event) {
+  appearanceStore.taskbarPosition = (e.target as HTMLSelectElement).value
+  appearanceStore.saveTaskbarPosition()
 }
 
 function nextBg (dir: number) {

@@ -5,7 +5,8 @@ import { prefs } from '@common/js/extras/prefs'
 
 interface State {
   background: Background,
-  theme: string
+  theme: string,
+  taskbarPosition: string
 }
 
 export const useAppearanceStore = defineStore('appearanceStore', {
@@ -17,6 +18,7 @@ export const useAppearanceStore = defineStore('appearanceStore', {
       mode: enBackgroundMode.RANDOM,
     },
     theme: 'win98',
+    taskbarPosition: 'bottom'
   }),
 
   getters: {
@@ -39,16 +41,21 @@ export const useAppearanceStore = defineStore('appearanceStore', {
 
   actions: {
     saveTheme () {
-      prefs.save('theme', this.theme)
+      prefs.save<string>('theme', this.theme)
+    },
+
+    saveTaskbarPosition() {
+      prefs.save<string>('taskbar_position', this.taskbarPosition)
     },
 
     saveBackground () {
-      prefs.save('background', this.background)
+      prefs.save<Background>('background', this.background)
     },
 
     loadSettings() {
-      this.background = prefs.getObj<Background>('background', this.background)!
-      this.theme = prefs.getStr('theme', 'win98')
+      this.background = prefs.get<Background>('background', this.background)
+      this.theme = prefs.get<string>('theme', 'win98')
+      this.taskbarPosition = prefs.get<string>('taskbar_position', 'bottom')
     },
 
     loadRandomBackground () {

@@ -1,5 +1,5 @@
 <template>
-  <div class="taskbar d-flex flex-nowrap">
+  <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': appearanceStore.taskbarPosition === 'top'}">
     <div style="flex: 0 0 10px">
       <div class="divider mx-1"/>
     </div>
@@ -19,8 +19,10 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, ref } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 
 const windowsStore = useWindowsStore()
+const appearanceStore = useAppearanceStore()
 
 const time = ref('0:00 PM')
 

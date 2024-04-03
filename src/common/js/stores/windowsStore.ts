@@ -39,8 +39,8 @@ export const useWindowsStore = defineStore('windowsStore', {
     },
 
     pullUp (name?: string) {
-      this.activeWindow = name ?? this.windows[this.windows.length - 1].name
       this.activeZIndex++
+      this.activeWindow = name ?? this.windows[this.windows.length - 1].name
     },
 
     close (name: string) {
@@ -58,10 +58,8 @@ export const useWindowsStore = defineStore('windowsStore', {
     },
 
     restore (name: string) {
-      if (this.isMinimized(name)) {
-        this.minimized = this.minimized.filter(n => n !== name)
-        this.pullUp(name)
-      }
+      this.minimized = this.minimized.filter(n => n !== name)
+      this.pullUp(name)
     },
 
     updateTitle (name: string, title: string) {

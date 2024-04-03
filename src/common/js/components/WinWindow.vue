@@ -142,7 +142,9 @@ function close () {
 }
 
 watch(() => windowsStore.activeWindow, () => {
-  style.zIndex = windowsStore.activeZIndex
+  if (windowsStore.activeWindow === props.name) {
+    style.zIndex = windowsStore.activeZIndex
+  }
 })
 
 watch(windowPos, (newWindowPos) => {

@@ -3,40 +3,16 @@ export const prefs = {
     localStorage.setItem('prefs_' + name, JSON.stringify(value))
   },
 
-  get<T>(name: string, def?: T): T | undefined {
+  get<T>(name: string, def?: T): T {
     const str = localStorage.getItem('prefs_' + name)
     if (str == null) {
-      return def
+      return def ?? null as T
     }
 
     try {
       return JSON.parse(str) as T
     } catch (e) {
-      return def
+      return def ?? null as T
     }
-  },
-
-  getInt (name: string, def?: number) {
-    const str = localStorage.getItem('prefs_' + name)
-    if (str === null) {
-      return typeof def !== 'undefined' ? def : 0
-    }
-    return JSON.parse(str) as number
-  },
-
-  getStr (name: string, def?: string) {
-    const str = localStorage.getItem('prefs_' + name)
-    if (str === null) {
-      return typeof def !== 'undefined' ? def : ''
-    }
-    return JSON.parse(str) as string
-  },
-
-  getObj <T>(name: string, def?: T): T | undefined {
-    const str = localStorage.getItem('prefs_' + name)
-    if (str === null) {
-      return def
-    }
-    return JSON.parse(str) as T
-  },
+  }
 }

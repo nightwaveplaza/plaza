@@ -11,14 +11,8 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 let unmounted = false
 let intervalId = 0
 
-async function updateStatus () {
-  if (unmounted) {
-    return
-  }
-
-  try {
-    let res = await api.status.get()
-
+function updateStatus () {
+  api.status.get().then((res) => {
     playerPlaybackStore.$patch({
       songId: res.data.song.id,
       artist: res.data.song.artist,
@@ -31,11 +25,10 @@ async function updateStatus () {
       artwork_sm_src: res.data.song.artwork_sm_src,
       listeners: res.data.listeners,
     })
-  } catch (e) {
+  }).catch(e => {
     console.log(`Failed to update status: ${(e as Error).message}`)
-  }
+  })
 
-  // Can be unmounted while status update
   if (!unmounted) {
     intervalId = setTimeout(updateStatus, STATUS_UPDATE_INTERVAL)
   }

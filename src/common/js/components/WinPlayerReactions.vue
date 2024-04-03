@@ -6,13 +6,13 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { AxiosError } from 'axios'
-import { useI18n } from "vue-i18n"
 import { api } from '@common/js/api/api'
-import { prefs } from '@common/js/extras/prefs'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { prefs } from '@common/js/extras/prefs'
+import { AxiosError } from 'axios'
+import { useI18n } from "vue-i18n";
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -66,11 +66,9 @@ function showTip () {
   const showed = prefs.get<number>('reactionTip', 0)
   if (showed > 0) return
 
-  windowsStore.alert(
-      t('alerts.reaction_tip.message', {icon: '<i class="i icon-like"></i>'}),
-      t('alerts.reaction_tip.title'),
-      'info'
-  )
+  windowsStore.alert(`You have liked the song. Nice!<br />
+                        Clicking the <i class="i icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
+    'N I C E', 'info')
 
   prefs.save('reactionTip', 1)
 }

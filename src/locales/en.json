@@ -5,7 +5,7 @@
             "title": "Error"
         },
         "reaction_tip": {
-            "message": "You have liked the song. Nice!<br />\\nClicking the {{icon}} button twice will add song to your favorites list. Give it a try!",
+            "message": "You have liked the song. Nice!<br />\nClicking the {icon} button twice will add song to your favorites list. Give it a try!",
             "title": "N I C E"
         }
     },

@@ -12,7 +12,6 @@ import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { prefs } from '@common/js/extras/prefs'
 import { AxiosError } from 'axios'
-import { useI18n } from "vue-i18n";
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -20,9 +19,6 @@ const CL_LIKE = '#c12727'
 const playerPlaybackStore = usePlayerPlaybackStore()
 const userReactionStore = useUserReactionStore()
 const windowsStore = useWindowsStore()
-const { t } = useI18n()
-
-let sending = false
 
 const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => {
@@ -31,6 +27,10 @@ const likeColor = computed(() => {
   }
 })
 
+// Non-reactive
+let sending = false
+
+// Methods
 function like () {
   if (userReactionStore.score === 1) {
     send(2)
@@ -55,7 +55,7 @@ function send (score: number) {
     showTip()
   }).catch(e => {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('alerts.reaction_sign.message'), t('alerts.reaction_sign.title'))
+      windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
     }
   }).finally(() => {
     sending = false

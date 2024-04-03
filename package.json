@@ -32,7 +32,6 @@
     "perfect-scrollbar": "1.4.0",
     "pinia": "^2.1.7",
     "uuid": "^9.0.0",
-    "vue-i18n": "9",
     "vue-loader": "^17.2.1",
     "vue-router": "^4.3.0",
     "vue-turnstile": "^1.0.8"

@@ -1,8 +1,3 @@
 {
-  "alerts": {
-    "reaction_sign": {
-      "message": "Please sign in to your Nightwave Plaza account to use the like button.",
-      "title": "Error"
-    }
-  }
+  "hello": "Hello"
 }

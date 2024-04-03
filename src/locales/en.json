@@ -1,9 +1,8 @@
 {
-    "alerts": {
-        "reaction_sign": {
-            "message": "Please sign in to your Nightwave Plaza account to use the like button.",
-            "title": "Error"
-        }
-    },
-    "alerts.reaction_tip.message": "You have liked the song. Nice!<br />\nClicking the {icon} button twice will add song to your favorites list. Give it a try!"
+  "alerts": {
+    "reaction_sign": {
+      "message": "Please sign in to your Nightwave Plaza account to use the like button.",
+      "title": "Error"
+    }
+  }
 }

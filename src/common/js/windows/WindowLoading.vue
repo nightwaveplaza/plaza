@@ -24,6 +24,8 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { MutationType } from 'pinia'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import { api } from '@common/js/api/api'
+import { prefs } from '@common/js/extras/prefs'
 import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
 
 const windowsStore = useWindowsStore()
@@ -62,20 +64,28 @@ function move () {
 }
 
 onMounted(() => {
-  //windowsStore.pullUp('loading')
   move()
 
+  // waiting for the first status response then check news and open up player
   playerPlaybackStore.$subscribe((mutation, state) => {
     if (mutation.type === MutationType.patchObject) {
-      windowsStore.open('player')
-      windowsStore.close('loading')
+      api.news.latest().then(res => {
+        const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!
+        if (latestNewsRead < res.data.id) {
+          prefs.save('latestNewsRead', res.data.id)
+          setTimeout(() => windowsStore.open('news'), 3000)
+        }
+
+        windowsStore.open('player')
+        windowsStore.close('loading')
+      })
+
     }
   })
-
 })
 
 onBeforeUnmount(() => {
   loading = false
-  windowsStore.pullUp('player')
+  // windowsStore.pullUp('player')
 })
 </script>

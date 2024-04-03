@@ -29,7 +29,7 @@ const backgroundColor = computed(() => {
   return appearanceStore.background.mode === enBackgroundMode.SOLID ? appearanceStore.background.color : 'transparent'
 })
 
-function registerEmitterEvents() {
+function registerEmitterEvents () {
   emitter.on('resume', () => updateBackgroundNative(appearanceStore.background))
   emitter.on('closeWindow', (name: string) => windowsStore.close(name))
   emitter.on('openWindow', (name: string) => {
@@ -42,30 +42,23 @@ function registerEmitterEvents() {
   })
 }
 
-function checkNews() {
-  api.news.latest().then(res => {
-    const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!
-    if (latestNewsRead < res.data.id) {
-      windowsStore.open('news')
-      prefs.save('latestNewsRead', res.data.id)
-    }
-  })
-}
-
-
-function updateBackgroundNative(bg: Background) {
+function updateBackgroundNative (bg: Background) {
   Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
 }
 
 // Watch background for changes
-watch(appearanceStore.$state, (state) => updateBackgroundNative(state.background), { deep: true })
+watch(() => appearanceStore.background, (b) => {
+    if (b.image) {
+      updateBackgroundNative(b as Background)
+    }
+  }, { deep: true },
+)
 
 // Watch user token for change
 watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 
 onMounted(() => {
   registerEmitterEvents()
-  checkNews()
 
   windowsStore.open('loading')
 

@@ -55,7 +55,7 @@ const win = ref<InstanceType<typeof WinWindow>>()
 const minutes = ref(20)
 const timeText = ref('Not set')
 
-const active = computed(() => nativeStateStore.sleepTime !== 0 ?? nativeStateStore.sleepTime > Date.now())
+const active = computed(() => nativeStateStore.sleepTime !== 0 && nativeStateStore.sleepTime > Date.now())
 const btnText = computed(() => nativeStateStore.sleepTime !== 0 ? 'Stop' : 'Start')
 
 // Non-reactive

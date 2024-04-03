@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { AxiosError } from 'axios'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n"
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'

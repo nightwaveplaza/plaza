@@ -7,6 +7,8 @@ import { computed, onMounted, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import helperComposable from '@common/js/composables/helperComposable'
 import { MutationType } from 'pinia'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const CLOCK_REFRESH = 1000
 
@@ -48,7 +50,7 @@ function tick () {
 }
 
 onMounted(() => {
-  showText('Welcome back!')
+  showText(t('player.welcome'))
   intervalId = setInterval(tick, CLOCK_REFRESH)
 
   playerPlaybackStore.$subscribe((mutation, state) => {

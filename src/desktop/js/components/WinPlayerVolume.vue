@@ -35,7 +35,7 @@ function createSlider() {
 }
 
 onMounted(() => {
-  volume = prefs.getInt('volume', 100)
+  volume = prefs.get<number>('volume', 100)
   createSlider()
   emit('onload', volume)
 })

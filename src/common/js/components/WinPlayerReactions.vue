@@ -63,7 +63,7 @@ function send (score: number) {
 }
 
 function showTip () {
-  const showed = prefs.getInt('reactionTip', 0)
+  const showed = prefs.get<number>('reactionTip', 0)
   if (showed > 0) return
 
   windowsStore.alert(`You have liked the song. Nice!<br />

@@ -115,7 +115,7 @@ async function favoriteSong () {
 }
 
 function getVolume () {
-  const volume = prefs.getInt('volume', 100)
+  const volume = prefs.get<number>('volume', 100)
   return volume / 100
 }
 

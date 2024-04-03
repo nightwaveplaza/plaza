@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/locales/*"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
@@ -11,7 +11,8 @@
     "paths": {
       "@common/*": ["./src/common/*"],
       "@desktop/*": ["./src/desktop/*"],
-      "@mobile/*": ["./src/mobile/*"]
+      "@mobile/*": ["./src/mobile/*"],
+      "@locales/*": ["./src/locales/*"]
     }
   }
 }

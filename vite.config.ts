@@ -44,6 +44,7 @@ export default ({ mode }: { mode: string }) => {
         '@common': fileURLToPath(new URL('./src/common', import.meta.url)),
         '@desktop': fileURLToPath(new URL('./src/desktop', import.meta.url)),
         '@mobile': fileURLToPath(new URL('./src/mobile', import.meta.url)),
+        '@locales': fileURLToPath(new URL('./src/locales', import.meta.url)),
       },
     },
   })

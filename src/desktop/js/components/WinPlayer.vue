@@ -4,7 +4,7 @@
       <div class="cover simple-border noselect">
         <img :src="artwork" alt="artwork" @click="showSongInfo"/>
       </div>
-      <audio ref="audio" crossorigin="anonymous" preload="auto" @canplay="audioCanPlay"/>
+      <audio ref="audio" crossorigin="anonymous" preload="auto" @loadedmetadata="audioCanPlay"/>
     </div>
 
     <div class="col-12 col-sm">

@@ -112,7 +112,7 @@ function updateSong () {
 }
 
 function play () {
-  if (navigator.mediaSession && navigator.mediaSession.playbackState !== 'playing') {
+  if (navigator.mediaSession && navigator.mediaSession.playbackState !== 'playing' && state.value !== STATE_IDLE) {
     state.value = STATE_IDLE
   }
 

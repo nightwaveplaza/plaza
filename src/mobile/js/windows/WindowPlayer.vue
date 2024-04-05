@@ -1,5 +1,5 @@
 <template>
-  <win-window name="player" title="Nightwave Plaza" :width="400">
+  <win-window ref="win" name="player" title="Nightwave Plaza" :width="400">
 
     <!-- Minimize button -->
     <template v-slot:header>
@@ -17,25 +17,28 @@
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        Listeners: {{ listeners }}
+        Listeners: {{ playerPlaybackStore.listeners }}
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { Native } from '@mobile/js/bridge/native'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import { MutationType } from 'pinia'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Reactive data
-const listeners = computed(() => store.getters['player/listeners'])
+const win = ref<InstanceType<typeof WinWindow>>()
 
 // Methods
 function minimize () {
-  store.dispatch('windows/minimize', 'player')
+  windowsStore.minimize('player')
 }
 
 function toggleFullscreen () {

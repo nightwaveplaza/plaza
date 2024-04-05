@@ -1,86 +1,35 @@
 <template>
-  <div :style="styles" class="app-desktop" :class="theme">
+  <div class="app-desktop" :class="appearanceStore.themeName" :style="{backgroundImage, backgroundColor}">
+    <component v-for="window in windowsStore.windows" :is="window.form"/>
 
-    <window-loading v-if="loading"/>
-    <window-player v-show="!loading"/>
-
-    <window-about v-if="isWindowOpen('about')"/>
-    <window-credits v-if="isWindowOpen('credits')"/>
-    <window-history v-if="isWindowOpen('history')"/>
-    <window-mobile v-if="isWindowOpen('mobile')"/>
-    <window-news v-if="isWindowOpen('news')"/>
-    <window-ratings v-if="isWindowOpen('ratings')"/>
-    <window-settings-background v-if="isWindowOpen('settings-background')"
-                                @themeChanged="themeChanged"
-                                @bgChanged="setBackground"/>
-    <window-support v-if="isWindowOpen('support')"/>
-    <window-user v-if="isWindowOpen('user')"/>
-    <window-user-email v-if="isWindowOpen('user-email')"/>
-    <window-user-favorites v-if="isWindowOpen('user-favorites')"/>
-    <window-user-login v-if="isWindowOpen('user-login')"/>
-    <window-user-password v-if="isWindowOpen('user-password')"/>
-    <window-user-register v-if="isWindowOpen('user-register')"/>
-    <window-user-reset v-if="isWindowOpen('user-reset')"/>
-
-    <win-song-info/>
-    <win-alerts/>
-    <win-news-loader ref="newsLoader"/>
+    <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
+    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
 
     <win-taskbar/>
   </div>
 </template>
 
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import { Background } from '@common/js/extras/background'
-import settings from '@common/js/extras/settings'
-import { news, user } from '@common/js/api/api'
+<script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const store = useStore()
+const appearanceStore = useAppearanceStore()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
 
-// Reactive data
-const styles = ref({
-  backgroundImage: '',
-  backgroundColor: '#008080',
-})
-const theme = ref('theme-win98')
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
-const token = computed(() => store.getters['token'])
-const loading = computed(() => store.getters['player/currentSong'].id === '')
-
-// Refs
-const newsLoader = ref(null)
-
-// Methods
-function setBackground (bg) {
-  if (bg.mode === 2) {
-    styles.value.backgroundImage = ''
-    styles.value.backgroundColor = bg.color
-  } else {
-    styles.value.backgroundImage = `url('${bg.image.src}')`
-    styles.value.backgroundColor = ''
-  }
-}
-
-function loadUser () {
-  if (token.value) {
-    store.commit('user/token', token.value)
-    user.get().then(result => {
-      store.commit('user/auth', result.data)
-    }).catch(() => {})
-  }
-}
-
-function themeChanged (newTheme) {
-  theme.value = newTheme ? 'theme-' + newTheme : 'theme-win98'
-}
+// Appearance
+const backgroundImage = computed(() => appearanceStore.backgroundSrc)
+const backgroundColor = computed(() => appearanceStore.background.color)
 
 onMounted(() => {
-  Background.loadOnStartup().then(setBackground)
-  loadUser()
+  windowsStore.open('loading')
 
-  newsLoader.value.loadNews()
-  themeChanged(settings.load('theme'))
+  appearanceStore.loadSettings()
+  if (appearanceStore.isBackgroundRandomMode) {
+    appearanceStore.loadRandomBackground()
+  }
+  userAuthStore.loadUser()
 })
 </script>

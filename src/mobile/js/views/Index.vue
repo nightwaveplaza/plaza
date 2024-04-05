@@ -1,75 +1,80 @@
 <template>
-  <div :class="theme" :style="styles" class="app-desktop">
-    <window-loading v-if="loading"/>
-    <window-player v-show="!loading"/>
-    <window-player-timer v-if="isWindowOpen('player-timer')"/>
+  <div :class="appearanceStore.themeName" :style="{backgroundColor}" class="app-desktop">
+    <component v-for="window in windowsStore.windows" :is="window.form"/>
 
-    <window-about v-if="isWindowOpen('about')"/>
-    <window-credits v-if="isWindowOpen('credits')"/>
-    <window-history v-if="isWindowOpen('history')"/>
-    <window-ratings v-if="isWindowOpen('ratings')"/>
-    <window-settings v-if="isWindowOpen('settings')"/>
-    <window-settings-background v-if="isWindowOpen('settings-background')"
-                                @bgChanged="setBackground"
-                                @themeChanged="themeChanged"
-    />
-    <window-donate v-if="isWindowOpen('donate')"/>
-    <window-user v-if="isWindowOpen('user')"/>
-    <window-user-email v-if="isWindowOpen('user-email')"/>
-    <window-user-favorites v-if="isWindowOpen('user-favorites')"/>
-    <window-user-login v-if="isWindowOpen('user-login')"/>
-    <window-user-password v-if="isWindowOpen('user-password')"/>
-    <window-user-register v-if="isWindowOpen('user-register')"/>
-    <window-user-reset v-if="isWindowOpen('user-reset')"/>
+    <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
+    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
 
-    <win-news-loader/>
-    <win-song-info/>
-    <win-alerts/>
-
-    <win-taskbar v-if="!loading"/>
+    <win-taskbar/>
   </div>
 </template>
 
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import {Background} from '@common/js/extras/background';
-import settings from '@common/js/extras/settings';
-import {Native} from '@mobile/js/bridge/native';
+<script setup lang="ts">
+import { computed, onMounted, watch } from 'vue'
+import { Native } from '@mobile/js/bridge/native'
+import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { enBackgroundMode, type Background } from '@common/js/types'
+import useEmitter from '@mobile/js/extra/useEmitter'
+import { api } from '@common/js/api/api'
+import { prefs } from '@common/js/extras/prefs'
 
-const store = useStore()
+const appearanceStore = useAppearanceStore()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
+const emitter = useEmitter()
 
-// Reactive date
-const styles = ref({
-  backgroundColor: 'transparent'
+const backgroundColor = computed(() => {
+  return appearanceStore.background.mode === enBackgroundMode.SOLID ? appearanceStore.background.color : 'transparent'
 })
-const theme = ref('theme-win98')
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
-const currentSong = computed(() => store.getters['player/currentSong'])
-const loading = computed(() => currentSong.value.id === '')
 
-// Methods
-function setBackground(bg) {
-  styles.value.backgroundColor = bg.mode === 2 ? bg.color : 'transparent';
-  Native.setBackground(bg.mode === 2 ? 'solid' : bg.image.src);
+function registerEmitterEvents () {
+  emitter.on('resume', () => updateBackgroundNative(appearanceStore.background))
+  emitter.on('closeWindow', (name: string) => windowsStore.close(name))
+  emitter.on('openWindow', (name: string) => {
+    if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
+      windowsStore.open('user-login')
+      return
+    }
+
+    windowsStore.open(name)
+  })
 }
 
-function themeChanged(newTheme) {
-  theme.value = newTheme ? 'theme-' + newTheme : 'theme-win98';
+function updateBackgroundNative (bg: Background) {
+  Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
 }
+
+// Watch background for changes
+watch(() => appearanceStore.background, (b) => {
+    if (b.image) {
+      updateBackgroundNative(b as Background)
+    }
+  }, { deep: true },
+)
+
+// Watch user token for change
+watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 
 onMounted(() => {
-  // Load token
-  Native.getAuthToken().then(token => store.commit('user/token', token))
-  Native.getUserAgent().then(agent => store.commit('user/agent', agent))
+  registerEmitterEvents()
 
-  themeChanged(settings.load('theme'));
-  Background.loadOnStartup().then(bg => setBackground(bg))
+  windowsStore.open('loading')
 
-  store.subscribe((mutation) => {
-    if (mutation.type === 'pushData' && mutation.payload.name === 'resume') {
-      Background.loadOnStartup().then(bg => setBackground(bg))
-    }
+  appearanceStore.loadSettings()
+  if (appearanceStore.isBackgroundRandomMode) {
+    appearanceStore.loadRandomBackground()
+  } else {
+    updateBackgroundNative(appearanceStore.background)
+  }
+
+  Native.getAuthToken()!.then(t => {
+    userAuthStore.token = t as string
+    userAuthStore.loadUser()
   })
+
+  Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
+
 })
 </script>

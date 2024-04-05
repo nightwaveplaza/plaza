@@ -1,28 +1,23 @@
 <template>
   <button
-      ontouchstart
-      class="noselect"
-      :class="{'d-block': block}"
-      @click="emit('click')"
-      :disabled="disabled"
+    ontouchstart
+    class="noselect"
+    :class="{'d-block': block}"
+    @click="emit('click')"
+    :disabled="disabled"
   >
     <slot/>
   </button>
 </template>
 
-<script setup>
-// Emits
+<script setup lang="ts">
 const emit = defineEmits(['click'])
 
-// Props
-const props = defineProps({
-  block: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  block?: boolean,
+  disabled?: boolean
+}>(), {
+  block: false,
+  disabled: false
 })
 </script>

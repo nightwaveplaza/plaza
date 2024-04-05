@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="440" fluidHeight name="about" title="About">
+  <win-window ref="win" :width="440" fluidHeight name="about" title="About" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
@@ -18,13 +18,13 @@
               <p class="lead mt-3">Contact Information</p>
               <p>Please send any enquiries you may have to <a href="mailto:mail@plaza.one">mail@plaza.one</a>.</p>
               <p>Any updates or upcoming maintenance on Nightwave Plaza can be found on our official Twitter account: <a
-                  href="https://twitter.com/nightwaveplaza/" target="_blank">@NightwavePlaza</a>.</p>
+                href="https://twitter.com/nightwaveplaza/" target="_blank">@NightwavePlaza</a>.</p>
               <p>Nightwave Plaza can also be found on <a href="https://plaza.one/youtube" target="_blank">YouTube</a>,
                 <a
-                    href="https://plaza.one/facebook" target="_blank">Facebook</a>,
+                  href="https://plaza.one/facebook" target="_blank">Facebook</a>,
                 <a href="https://plaza.one/vk" target="_blank">VK</a>, <a href="https://plaza.one/lastfm"
                                                                           target="_blank">Last.fm</a> and <a
-                    href="https://plaza.one/tunein" target="_blank">TuneIn</a>.
+                  href="https://plaza.one/tunein" target="_blank">TuneIn</a>.
               </p>
 
               <p class="lead mt-3">Streaming Links</p>
@@ -50,7 +50,7 @@
                 <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
               </p>
               <p class="mt-2">
-                Build date: __APP_VERSION__
+                Build date: {{ version }}
               </p>
             </win-memo>
           </div>
@@ -65,7 +65,7 @@
               <win-btn class="px-4 mr-2" @click="openNews">News</win-btn>
             </div>
             <div class="col-auto ml-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -75,23 +75,20 @@
   </win-window>
 </template>
 
-<script setup>
-import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import {onMounted} from "vue";
 
-const store = useStore()
+const windowsStore = useWindowsStore()
+const version = __APP_VERSION__ ?? "n/a";
 
-// Composable
-const { openWindow, closeWindow } = windowsComposable('about')
-
-// Methods
 const openCredits = () => {
-  openWindow('credits')
-  closeWindow()
+  windowsStore.open('credits')
+  windowsStore.close('about')
 }
 
 const openNews = () => {
-  openWindow('news')
-  closeWindow()
+  windowsStore.open('news')
+  windowsStore.close('about')
 }
 </script>

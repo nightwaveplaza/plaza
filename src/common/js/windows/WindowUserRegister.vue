@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="430" name="user-register" title="Registration">
+  <win-window ref="win" :width="430" name="user-register" title="Registration">
     <div class="p-2 noselect">
       <template v-if="step === 1">
         <div class="row no-gutters">
@@ -9,50 +9,50 @@
 
           <div class="col-12 col-sm-8 d-flex flex-column">
             <div class="d-flex flex-grow-1 flex-column mb-fix">
-                <p class="lead">User Information:</p>
-                <p class="mt-2 mb-3">Please fill out the registration form. All fields are required.</p>
+              <p class="lead">User Information:</p>
+              <p class="mt-2 mb-3">Please fill out the registration form. All fields are required.</p>
 
-                <!-- Username -->
-                <div class="row no-gutters mb-2">
-                  <div class="col-5 align-self-center">
-                    <label for="register-username"><u>U</u>sername:</label>
-                  </div>
-                  <div class="col-7">
-                    <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text"/>
-                  </div>
+              <!-- Username -->
+              <div class="row no-gutters mb-2">
+                <div class="col-5 align-self-center">
+                  <label for="register-username"><u>U</u>sername:</label>
                 </div>
+                <div class="col-7">
+                  <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text"/>
+                </div>
+              </div>
 
-                <!-- Password -->
-                <div class="row no-gutters mb-2">
-                  <div class="col-5 align-self-center">
-                    <label for="register-password"><u>P</u>assword:</label>
-                  </div>
-                  <div class="col-7">
-                    <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2"
-                           type="password"/>
-                  </div>
+              <!-- Password -->
+              <div class="row no-gutters mb-2">
+                <div class="col-5 align-self-center">
+                  <label for="register-password"><u>P</u>assword:</label>
                 </div>
+                <div class="col-7">
+                  <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2"
+                         type="password"/>
+                </div>
+              </div>
 
-                <!-- Password repeat -->
-                <div class="row no-gutters mb-2">
-                  <div class="col-5 align-self-center">
-                    <label for="register-password-repeat"><u>P</u>assword repeat:</label>
-                  </div>
-                  <div class="col-7">
-                    <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3"
-                           type="password"/>
-                  </div>
+              <!-- Password repeat -->
+              <div class="row no-gutters mb-2">
+                <div class="col-5 align-self-center">
+                  <label for="register-password-repeat"><u>P</u>assword repeat:</label>
                 </div>
+                <div class="col-7">
+                  <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3"
+                         type="password"/>
+                </div>
+              </div>
 
-                <!-- Email -->
-                <div class="row no-gutters mb-2">
-                  <div class="col-5 align-self-center">
-                    <label for="register-email"><u>E</u>mail:</label>
-                  </div>
-                  <div class="col-7">
-                    <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email"/>
-                  </div>
+              <!-- Email -->
+              <div class="row no-gutters mb-2">
+                <div class="col-5 align-self-center">
+                  <label for="register-email"><u>E</u>mail:</label>
                 </div>
+                <div class="col-7">
+                  <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email"/>
+                </div>
+              </div>
             </div>
 
             <div class="d-flex flex-grow-0">
@@ -75,41 +75,39 @@
         <p class="mt-2">Please fill this annoying captcha.</p>
         <div class="d-inline-block my-3">
           <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="fields.captcha_response"/>
-        </div><br />
+        </div>
+        <br/>
         <win-btn @click="completeCaptcha" class="mx-auto px-4 text-bold">Continue</win-btn>
       </div>
 
-<!--        <template v-else>-->
-<!--          <p class="lead">Registration complete</p>-->
-<!--          <p class="my-2">Welcome to Nightwave Plaza, <strong>{{ fields.username }}</strong>!</p>-->
-<!--          <p>Now you use the like button.</p>-->
-<!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <p class="lead">Registration complete</p>-->
+      <!--          <p class="my-2">Welcome to Nightwave Plaza, <strong>{{ fields.username }}</strong>!</p>-->
+      <!--          <p>Now you use the like button.</p>-->
+      <!--        </template>-->
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { computed, reactive, ref } from 'vue'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { UserRegister } from '@common/js/types'
 
 const router = useRouter()
+const windowsStore = useWindowsStore()
 
-// Props
-const props = defineProps({
-  direct: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  direct: boolean
+}>(), {
+  direct: false
 })
 
-// Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-register')
-
-// Reactive data
-const fields = reactive({
+const fields: UserRegister = reactive({
   username: '',
   email: '',
   password: '',
@@ -117,6 +115,8 @@ const fields = reactive({
 })
 const step = ref(1)
 const passwordR = ref('')
+
+const win = ref<InstanceType<typeof WinWindow>>()
 
 // Non-reactive
 let sending = false
@@ -134,54 +134,53 @@ function register () {
 
 function completeCaptcha () {
   if (fields.captcha_response === '') {
-    alert2('Captcha validation failed', 'Error')
+    windowsStore.alert('Captcha validation failed', 'Error')
     step.value = 1
     return
   }
 
   sending = true
 
-  user.register(fields).then(() => {
-    alert2(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
-    closeWindow()
-  }).catch(err => {
-    alert2(err.response.data.error, 'Error')
+  api.user.register(fields).then(() => {
+    windowsStore.alert(`Welcome to the Nightwave Plaza, <strong>${fields.username}</strong>!`, 'Registration complete', 'info')
+    win.value!.close()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
     step.value = 1
   }).finally(() => sending = false)
 }
 
 /**
  * Fields validation
- * @returns {boolean|void}
  */
-function validate () {
+function validate (): boolean {
   if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
-    alert2('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
+    windowsStore.alert('Incorrect username. Only letters, numbers and underscores allowed.', 'Error')
     return false
   }
 
   if (fields.username.length < 4) {
-    alert2('Username is too short.', 'Error')
+    windowsStore.alert('Username is too short.', 'Error')
     return false
   }
 
   if (fields.username.length > 32) {
-    alert2('Username is too long.', 'Error')
+    windowsStore.alert('Username is too long.', 'Error')
     return false
   }
 
   if (fields.password.length < 3) {
-    alert2('Password is too short.', 'Error')
+    windowsStore.alert('Password is too short.', 'Error')
     return false
   }
 
   if (fields.email.length < 3) {
-    alert2('Email is too short.', 'Error')
+    windowsStore.alert('Email is too short.', 'Error')
     return false
   }
 
   if (fields.password !== passwordR.value) {
-    alert2('Passwords don\'t match.', 'Error')
+    windowsStore.alert('Passwords don\'t match.', 'Error')
     return false
   }
 
@@ -192,7 +191,7 @@ function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    closeWindow()
+    win.value!.close()
   }
 }
 </script>

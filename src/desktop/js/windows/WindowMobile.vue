@@ -1,12 +1,11 @@
 <template>
-  <win-window ref="window" :width="320" name="mobile" title="Nightwave Plaza Mobile">
+  <win-window :width="320" name="mobile" title="Nightwave Plaza Mobile" v-slot="winProps">
     <div class="p-2">
       <div class="group-box p-2 mb-3">
         <div class="row no-gutters">
           <div class="col text-center mr-4">
             We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the
-            past
-            with the music of the future.
+            past with the music of the future.
           </div>
           <div class="col-auto">
             <img src="/img/mobilen.gif"/>
@@ -31,15 +30,9 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+          <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
-
-<script setup>
-import windowsComposable from '@common/js/composables/windowsComposable'
-
-const { closeWindow } = windowsComposable('mobile')
-</script>

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="450" fluidHeight name="user-favorites" title="My Favorites">
+  <win-window :width="450" fluidHeight name="user-favorites" title="My Favorites" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
@@ -7,38 +7,25 @@
             <div v-if="loading" class="content-loading noselect"></div>
 
             <win-list scroll ref="list">
-              <template v-if="likes.length > 0 && !loading">
+              <template v-if="data.favorites.length > 0 && !loading">
                 <table>
-                  <tr v-if="showCurrentLike">
-                    <td class="p-1 noselect" style="width: 62px">
-                      <img :src="currentSong.artwork_src ? currentSong.artwork_src : 'https://i.plaza.one/dead.jpg'"
-                           alt="artwork"/>
-                    </td>
-                    <td class="pl-1">
-                      <div class="artist">{{ currentSong.artist }}</div>
-                      <div class="title">{{ currentSong.title }}</div>
-                      <div class="date"><i>Now</i></div>
-                    </td>
-                    <td class="noselect" style="width: 70px"/>
-                  </tr>
-
-                  <tr v-for="(like, i) in likes" :class="{ strike: deleted.includes(like.id) }"
+                  <tr v-for="(fav, i) in data.favorites" :class="{ strike: deleted.includes(fav.id) }"
                       class="hover">
                     <td class="p-1 noselect" style="width: 62px">
-                      <img :src="like.song.artwork_src ? like.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
+                      <img :src="fav.song.artwork_src ? fav.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>
                     </td>
-                    <td class="pl-1 show-info" @click="songInfo2(like.song.id)">
-                      <div class="artist">{{ like.song.artist }}</div>
-                      <div class="title">{{ like.song.title }}</div>
+                    <td class="pl-1 show-info" @click="windowsStore.showSong(fav.song.id)">
+                      <div class="artist">{{ fav.song.artist }}</div>
+                      <div class="title">{{ fav.song.title }}</div>
                       <div class="date">
-                        <i>{{ sdy(like.created_at) }}</i>
+                        <i>{{ sdy(fav.created_at) }}</i>
                       </div>
                     </td>
                     <td class="text-center noselect" style="width: 70px">
-                      <a v-if="!deleted.includes(like.song.id)" class="link favorites-remove"
+                      <a v-if="!deleted.includes(fav.id)" class="link favorites-remove"
                          role="button"
-                         @click="deleteLike(like.id)">Remove</a>
+                         @click="deleteLike(fav.id)">Remove</a>
                     </td>
                   </tr>
                 </table>
@@ -56,10 +43,10 @@
         <div class="d-flex">
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
-              <win-pagination :pages="pages" @change="changePage"/>
+              <win-pagination :pages="data.pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -67,73 +54,68 @@
     </div>
 
     <div class="statusbar row no-gutters song-list-statusbar noselect">
-      <div class="col-3 cell d">Pages: {{ pages }}</div>
-      <div class="col cell">Songs: {{ total }}</div>
+      <div class="col-3 cell d">Pages: {{ data.pages }}</div>
+      <div class="col cell">Songs: {{ data.count }}</div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import WinList from '@common/js/components/WinList.vue'
+import type { FavoritesResponse } from '@common/js/types'
 
-// Composable
-const { alert2, closeWindow, openWindow, songInfo2 } = windowsComposable('user-favorites')
 const { sdy } = helperComposable()
 
-const store = useStore()
+const windowsStore = useWindowsStore()
 
-// Reactive data
+const data: FavoritesResponse = reactive({
+  per_page: 25,
+  pages: 4,
+  count: 0,
+  favorites: [],
+})
+
 const loading = ref(true)
-const likes = ref([])
-const deleted = ref([])
-const total = ref(0)
-const perPage = ref(25)
-const pages = ref(4)
+const deleted = ref([] as Array<number>)
 const page = ref(1)
 
-// Refs
-const list = ref(null)
+const list = ref<InstanceType<typeof WinList>>()
 
-//Computed
-const currentSong = computed(() => store.getters['player/currentSong'])
-const reaction = computed(() => store.getters['player/reaction'])
-// return this.currentSong.id === this.reaction.songId && this.page === 1 && this.reaction.score === 2
-const showCurrentLike = computed(() => false)
-
-// Methods
-function fetchLikes (page) {
-  list.value.scrollTop()
+function fetchLikes (page: number) {
+  list.value!.scrollTop()
   loading.value = true
 
-  user.favorites(page).then(res => {
-    perPage.value = res.data.per_page
-    pages.value = res.data.pages
-    likes.value = res.data.favorites
-    total.value = res.data.count
+  api.user.favorites(page).then(res => {
+    Object.assign(data, res.data)
     loading.value = false
-    list.value.refreshScrollbar()
-  }).catch(error => alert2(error.response.data.error, 'Error')).finally(() => {
+    list.value!.refreshScrollbar()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => {
     loading.value = false
   })
 }
 
-function changePage (newPage) {
+function changePage (newPage: number) {
   if (loading.value) {
-    return;
+    return
   }
 
   page.value = newPage
   fetchLikes(newPage)
 }
 
-function deleteLike (favoriteId) {
-  user.deleteFavorite(favoriteId).then(() => {
+function deleteLike (favoriteId: number) {
+  api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
-  }).catch(error => alert2(error.response.data.error, 'Error'))
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  })
 }
 
 onMounted(() => {

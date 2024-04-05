@@ -8,8 +8,8 @@
 
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
-        <div class="player-artist track-artist mb-2">{{ currentSong.artist }}</div>
-        <div class="player-title track-title">{{ currentSong.title }}</div>
+        <div class="player-artist track-artist mb-2">{{ playerPlaybackStore.artist }}</div>
+        <div class="player-title track-title">{{ playerPlaybackStore.title }}</div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-6 pr-0">
@@ -20,12 +20,12 @@
         </div>
 
         <div class="row no-gutters">
-          <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pr-2">
+          <div :class="{'col-6': !nativeStateStore.playing, 'col-4': nativeStateStore.playing}" class="mb-1 mb-sm-0 pr-2">
             <win-btn class="player-play" block @click="play">{{ playText }}</win-btn>
           </div>
 
-          <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-btn block @click="openWindow('player-timer')">
+          <div v-if="nativeStateStore.playing" class="col-2 mb-1 mb-sm-0 pr-2">
+            <win-btn block @click="windowsStore.open('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-btn>
           </div>
@@ -45,34 +45,34 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import useEmitter from '@mobile/js/extra/useEmitter'
 import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
 import { Native } from '@mobile/js/bridge/native'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
+import { useNativeStateStore } from '@mobile/js/stores/nativeStateStore'
 
-const store = useStore()
-
-// Composable
-const { openWindow, closeWindow } = windowsComposable()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
+const nativeStateStore = useNativeStateStore()
+const emitter = useEmitter()
 
 // Reactive data
 const isBuffering = ref(false)
-const currentSong = computed(() => store.getters['player/currentSong'])
-const isPlaying = computed(() => store.getters['isPlaying'])
-const sleepTime = computed(() => store.getters['sleepTime'])
+const sleepTime = computed(() => nativeStateStore.sleepTime)
 const artwork = computed(() => {
-  if (currentSong.value.id && currentSong.value.artwork_src)
-    return currentSong.value.artwork_src
+  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src)
+    return playerPlaybackStore.artwork_src
   else
     return 'https://i.plaza.one/artwork_dead.jpg'
 })
-const playText = computed(() => isBuffering.value ? 'Loading...' : isPlaying.value ? 'Stop' : 'Play')
+const playText = computed(() => isBuffering.value ? 'Loading...' : nativeStateStore.playing ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {
-  if (isPlaying.value) {
-    closeWindow('player-timer')
+  if (nativeStateStore.playing) {
+    windowsStore.close('player-timer')
   }
   Native.audioPlay()
 }
@@ -82,22 +82,17 @@ function openDrawer () {
 }
 
 onMounted(() => {
-  store.subscribe((mutation, state) => {
-    if (mutation.type === 'pushData') {
+  emitter.on('isPlaying', (isPlaying: boolean) => {
+    isBuffering.value = false
+    nativeStateStore.playing = isPlaying
+  })
 
-      if (mutation.payload.name === 'isPlaying') {
-        isBuffering.value = false
-        store.commit('isPlaying', state.data.isPlaying)
-      }
+  emitter.on('isBuffering', () => {
+    isBuffering.value = true
+  })
 
-      if (mutation.payload.name === 'isBuffering') {
-        isBuffering.value = true
-      }
-
-      if (mutation.payload.name === 'sleepTime') {
-        store.commit('sleepTime', state.data.sleepTime)
-      }
-    }
+  emitter.on('sleepTime', (sleepTime: number) => {
+    nativeStateStore.sleepTime = sleepTime
   })
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="250" name="user-email" title="Change Email">
+  <win-window ref="win" :width="250" name="user-email" title="Change Email" v-slot="winProps">
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">Email:</label>
@@ -15,26 +15,24 @@
           <win-btn block class="text-bold" @click="update">Change</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { user } from '@common/js/api/api'
+<script setup lang="ts">
+import { api } from '@common/js/api/api'
 import { onMounted, reactive, ref } from 'vue'
-import windowsComposable from '@common/js/composables/windowsComposable'
-import { useStore } from 'vuex'
+import type { UserEdit } from '@common/js/types'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
-// Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-email')
+const windowsStore = useWindowsStore()
 
-const store = useStore()
-
-// Reactive data
-const fields = reactive({
+const win = ref<InstanceType<typeof WinWindow>>()
+const fields: UserEdit = reactive({
   current_password: '',
   email: '',
 })
@@ -44,12 +42,12 @@ const disabled = ref(true)
 let sending = false
 
 function fetchUser () {
-  user.get().then((res) => {
+  api.user.get().then(res => {
     fields.email = res.data.email
     disabled.value = false
-  }).catch(err => {
-    alert2('Can\'t fetch user data.', 'Failed')
-    closeWindow()
+  }).catch(() => {
+    windowsStore.alert('Can\'t fetch user data.', 'Failed')
+    win.value!.close()
   })
 }
 
@@ -60,11 +58,11 @@ function update () {
 
   sending = true
 
-  user.edit(fields).then(() => {
-    alert2('Email has changed!', 'Success', 'info')
-    closeWindow()
-  }).catch(error => {
-    alert2(error.response.data.error, 'Error')
+  api.user.edit(fields).then(() => {
+    windowsStore.alert('Email has changed!', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
   }).finally(() => {
     sending = false
   })
@@ -72,7 +70,7 @@ function update () {
 
 function validate () {
   if (fields.current_password.length === 0) {
-    alert2('Enter current password.', 'Error')
+    windowsStore.alert('Enter current password.', 'Error')
     return false
   }
 

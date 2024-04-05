@@ -8,40 +8,35 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import settings from '@common/js/extras/settings'
 import noUiSlider from 'nouislider'
+import { prefs } from '@common/js/extras/prefs'
 
-// Emits
 const emit = defineEmits(['onload', 'onchange'])
 
-// Refs
-const volumeSlider = ref(null)
+const volumeSlider = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
 let volume = 0
 
-onMounted(() => {
-  volume = settings.load('volume')
-  if (volume === null) {
-    volume = 100
-  }
-
-  noUiSlider.create(volumeSlider.value, {
+function createSlider() {
+  noUiSlider.create(volumeSlider.value!, {
     start: [volume],
     range: {
       'min': [0],
       'max': [100],
     },
-  })
-
-  volumeSlider.value.noUiSlider.on('slide', (values, handle) => {
-    volume = parseInt(values)
-    settings.save('volume', volume)
+  }).on('slide', (values, handle) => {
+    volume = Math.round(values[0] as number)
+    prefs.save('volume', volume)
     emit('onchange', volume)
   })
+}
 
+onMounted(() => {
+  volume = prefs.get<number>('volume', 100)
+  createSlider()
   emit('onload', volume)
 })
 </script>

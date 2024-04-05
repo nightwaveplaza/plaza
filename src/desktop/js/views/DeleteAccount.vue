@@ -1,6 +1,6 @@
 <template>
   <div class="app-desktop theme-win98">
-    <win-window ref="window" :width="450" name="delete-account" title="Delete Account" @closed="close()">
+    <win-window :width="450" name="delete-account" title="Delete Account" @closed="close()" v-slot="winProps">
       <div class="p-2">
         <win-memo>
           <p class="lead mb-2 text-center">Account deletion</p>
@@ -9,32 +9,26 @@
         </win-memo>
 
         <div class="text-center mt-3">
-          <win-btn class="mx-auto px-4" @click="window.close()">Close</win-btn>
+          <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </win-window>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { onMounted } from 'vue'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
 const router = useRouter()
-const store = useStore()
-
-const { closeWindow } = windowsComposable('delete-account')
-
-const window = ref('window')
+const windowsStore = useWindowsStore()
 
 onMounted(() => {
-  store.commit('windows/pullUp', 'delete-account')
+  windowsStore.pullUp('delete-account')
 })
 
 function close () {
-  console.log("emit")
   router.push({ name: 'index' })
 }
 </script>

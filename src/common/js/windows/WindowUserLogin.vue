@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="480" name="user-login" title="Sign In">
+  <win-window ref="win" :width="480" name="user-login" title="Sign In" v-slot="winProps">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
@@ -53,28 +53,30 @@
         <div class="col-auto col-sm-2 p-0 login-buttons">
           <win-btn class="mb-2 text-bold" @click="login">Sign In</win-btn>
           <win-btn class="mb-2" @click="openRegister">Register</win-btn>
-          <win-btn @click="closeWindow">Cancel</win-btn>
+          <win-btn @click="winProps.close()">Cancel</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { UserLogin } from '@common/js/types'
 
-// Composable
 const { isMobile } = helperComposable()
-const { alert2, closeWindow, openWindow } = windowsComposable('user-login')
 
-const store = useStore()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
 
-// Reactive data
-const fields = reactive({
+const win = ref<InstanceType<typeof WinWindow>>()
+
+const fields: UserLogin = reactive({
   username: '',
   password: '',
 })
@@ -83,7 +85,6 @@ const remember = ref(false)
 // Non-reactive
 let sending = false
 
-// Methods
 function login () {
   if (!validate() || sending) {
     return
@@ -91,23 +92,18 @@ function login () {
 
   sending = true
 
-  user.auth(fields).then((res) => {
-    if (isMobile.value) {
-      store.dispatch('login', res.data)
-    } else {
-      store.dispatch('login', { user: res.data, remember: remember.value })
-    }
-
-    alert2('Authentication successful!', 'Success', 'info')
-    closeWindow()
-  })
-  .catch(err => alert2(err.response.data.error, 'Failed'))
-  .finally(() => sending = false)
+  api.user.login(fields).then(res => {
+    userAuthStore.login(res.data, remember.value)
+    windowsStore.alert('Authentication successful!', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Failed')
+  }).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    alert2('Wrong username or password.', 'Error')
+    windowsStore.alert('Wrong username or password.', 'Error')
     return false
   }
 
@@ -115,12 +111,12 @@ function validate () {
 }
 
 function openRegister () {
-  openWindow('user-register')
-  closeWindow()
+  windowsStore.open('user-register')
+  win.value!.close()
 }
 
 function openReset () {
-  openWindow('user-reset')
-  closeWindow()
+  windowsStore.open('user-reset')
+  win.value!.close()
 }
 </script>

@@ -1,11 +1,11 @@
 <template>
-  <div class="taskbar d-flex flex-nowrap">
+  <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': appearanceStore.taskbarPosition === 'top'}">
     <div style="flex: 0 0 10px">
       <div class="divider mx-1"/>
     </div>
     <win-btn class="mr-1" style="flex: 1 1 auto"
-             :class="{active: activeWindow === window.name && !isWindowMinimized(window.name)}"
-             v-for="window in windows"
+             :class="{active: windowsStore.activeWindow === window.name && !windowsStore.isMinimized(window.name)}"
+             v-for="window in windowsStore.windows"
              :key="window.name"
              @click="toggleMinimize(window.name)">
       <img src="@common/img/ball.png"/>
@@ -16,38 +16,37 @@
   </div>
 </template>
 
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import ticker from '@common/js/extras/ticker'
+<script setup lang="ts">
+import { onBeforeMount, onMounted, ref } from 'vue'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
+const appearanceStore = useAppearanceStore()
 
-// Reactive data
 const time = ref('0:00 PM')
-const isWindowOpen = computed(() => store.getters['windows/isWindowOpen'])
-const windows = computed(() => store.getters['windows/windows'])
-const activeWindow = computed(() => store.getters['windows/activeWindow'])
-const isWindowMinimized = computed(() => store.getters['windows/isWindowMinimized'])
 
-// Methods
 function getNow () {
   time.value = (new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }
 
-function toggleMinimize (name) {
-  if (isWindowMinimized.value(name)) {
-    store.dispatch('windows/restore', name)
+function toggleMinimize (name: string) {
+  if (windowsStore.isMinimized(name)) {
+    windowsStore.restore(name)
   } else {
-    if (activeWindow.value === name) {
-      store.dispatch('windows/minimize', name)
+    if (windowsStore.activeWindow === name) {
+      windowsStore.minimize(name)
     } else {
-      store.commit('windows/pullUp', name)
+      windowsStore.pullUp(name)
     }
   }
 }
 
+onBeforeMount(() => {
+  getNow()
+})
+
 onMounted(() => {
-  ticker.set(getNow, 1000)
+  setInterval(getNow, 1000)
 })
 </script>

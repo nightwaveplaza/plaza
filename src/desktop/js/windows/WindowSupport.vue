@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="450" name="support" title="Support Us">
+  <win-window ref="win" :width="450" name="support" title="Support Us">
     <div class="p-2">
       <div class="text-center">
         <win-memo>
@@ -24,11 +24,10 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-import windowsComposable from '@common/js/composables/windowsComposable'
-
-const { closeWindow } = windowsComposable('support')
+import { ref } from 'vue'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
 const router = useRouter()
 
@@ -39,11 +38,13 @@ const props = defineProps({
   },
 })
 
+const win = ref<InstanceType<typeof WinWindow>>()
+
 function close () {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {
-    closeWindow()
+    win.value!.close()
   }
 }
 </script>

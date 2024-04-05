@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="350" name="news" title="News">
+  <win-window :width="350" name="news" title="News" v-slot="winProps">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading"></div>
@@ -16,58 +16,46 @@
           <win-pagination v-if="length > 0" :pages="pages" @change="changePage"/>
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { news } from '@common/js/api/api'
-import settings from '@common/js/extras/settings'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
-const { closeWindow } = windowsComposable('news')
 const { sdy } = helperComposable()
+const windowsStore = useWindowsStore()
 
-// Reactive data
 const article = ref({
   text: '',
+  author: '',
   created_at: 0,
 })
 const page = ref(1)
 const length = ref(1)
 const pages = ref(1)
 
-// Non-reactive
-let latest = 0
-
-// Methods
 function getArticle () {
-  news.get(page.value).then(res => {
+  api.news.get(page.value).then(res => {
     article.value = res.data.articles[0]
     pages.value = res.data.pages
-
-    if (latest === 0) {
-      latest = article.value.created_at
-    }
-  }).catch(() => {})
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  })
 }
 
-function changePage (newPage) {
+function changePage (newPage: number) {
   page.value = newPage
   getArticle()
 }
 
 onMounted(() => {
   getArticle()
-})
-
-onBeforeUnmount(() => {
-  settings.save('latestNews', latest)
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="320" name="user-reset" title="Reset password">
+  <win-window ref="win" :width="320" name="user-reset" title="Reset password" v-slot="winProps">
     <div class="p-2">
 
       <p class="pb-3 px-3 text-center">Enter your email address and click the
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha" />
+      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha"/>
 
       <!-- Buttons -->
       <div class="row no-gutters">
@@ -23,7 +23,7 @@
               <win-btn block class="text-bold" @click="reset">Reset</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow">Close</win-btn>
+              <win-btn block @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -32,32 +32,26 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type { UserReset } from '@common/js/types'
 
-// Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-reset')
+const windowsStore = useWindowsStore()
 
-// Reactive data
-const fields = reactive({
-  email: ''
+const fields: UserReset = reactive({
+  email: '',
 })
 
-// Refs
+const win = ref<InstanceType<typeof WinWindow>>()
 const showCaptcha = ref(false)
 const captchaResponse = ref('')
 
 // Non-reactive
 let sending = false
-
-watch(captchaResponse, (value) => {
-  setTimeout(() => {
-    completeCaptcha(value)
-  }, 2000)
-})
 
 function reset () {
   if (!validate() || sending) {
@@ -67,28 +61,29 @@ function reset () {
   showCaptcha.value = true
 }
 
-function completeCaptcha() {
+function completeCaptcha () {
   sending = true
 
-  user.reset({...fields, captcha_response: captchaResponse.value}).then(() => {
-    alert2('Instructions have been sent to your email.', 'Success', 'info')
-    closeWindow()
-  }).catch(err => {
+  api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
+    windowsStore.alert('Instructions have been sent to your email.', 'Success', 'info')
+    win.value!.close()
+  }).catch(e => {
     showCaptcha.value = false
-    alert2(err.response.data.error, 'Error')
+    windowsStore.alert((e as Error).message, 'Error')
   }).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.email.length === 0) {
-    alert2('Enter email.', 'Error')
+    windowsStore.alert('Enter email.', 'Error')
     return false
   }
   return true
 }
 
-function refreshCaptcha (key) {
-  fields.key = key
-  fields.captcha = ''
-}
+watch(captchaResponse, () => {
+  setTimeout(() => {
+    completeCaptcha()
+  }, 2000)
+})
 </script>

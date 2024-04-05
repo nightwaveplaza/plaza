@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="250" name="user-password" title="Change Password">
+  <win-window ref="win" :width="250" name="user-password" title="Change Password" v-slot="winProps">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -19,7 +19,7 @@
               <win-btn block class="text-bold" @click="change">Change</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="closeWindow">Close</win-btn>
+              <win-btn block @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -28,19 +28,19 @@
   </win-window>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { useStore } from 'vuex'
-import { user } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import type { UserEdit } from '@common/js/types'
+import { useUserAuthStore } from '@common/js/stores/userAuthStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
 
-const store = useStore()
+const windowsStore = useWindowsStore()
+const userAuthStore = useUserAuthStore()
 
-// Composable
-const { alert2, closeWindow, openWindow } = windowsComposable('user-password')
-
-// Reactive data
-const fields = reactive({
+const win = ref<InstanceType<typeof WinWindow>>()
+const fields: UserEdit = reactive({
   current_password: '',
   password: '',
 })
@@ -56,27 +56,28 @@ function change () {
 
   sending = true
 
-  user.edit(fields).then(() => {
-    store.dispatch('logout')
-    alert2('Password has changed!', 'Success', 'info')
-    closeWindow()
-  }).catch(err => alert2(err.response.data.error, 'Error'))
-  .finally(() => sending = false)
+  api.user.edit(fields).then(() => {
+    userAuthStore.logout()
+    windowsStore.alert('Password has changed!', 'Success', 'info')
+    win.value!.close()
+  }).catch(e =>
+    windowsStore.alert((e as Error).message, 'Error')
+  ).finally(() => sending = false)
 }
 
 function validate () {
   if (fields.current_password.length === 0) {
-    alert2('Enter current password.', 'Error')
+    windowsStore.alert('Enter current password.', 'Error')
     return false
   }
 
-  if (fields.password.length < 3) {
-    alert2('Password too short.', 'Error')
+  if (fields.password!.length < 3) {
+    windowsStore.alert('Password too short.', 'Error')
     return false
   }
 
   if (fields.password !== passwordRepeat.value) {
-    alert2('Passwords didn\'t match.', 'Error')
+    windowsStore.alert('Passwords didn\'t match.', 'Error')
     return false
   }
 

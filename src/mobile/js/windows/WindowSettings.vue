@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="220" name="settings" title="Settings">
+  <win-window ref="win" :width="220" name="settings" title="Settings" v-slot="winProps">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
@@ -11,37 +11,36 @@
 
       <div class="row no-gutters justify-content-center">
         <div class="col-6">
-          <win-btn block @click="closeWindow">Close</win-btn>
+          <win-btn block @click="winProps.close()">Close</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
 
-<script setup>
-import {Native} from '@mobile/js/bridge/native';
+<script setup lang="ts">
+import { Native } from '@mobile/js/bridge/native'
 import { computed, onMounted, ref } from 'vue'
-import windowsComposable from '@common/js/composables/windowsComposable'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-// Composable
-const { openWindow, closeWindow } = windowsComposable('settings')
+const windowStore = useWindowsStore()
 
-// Reactive data
+const win = ref<InstanceType<typeof WinWindow>>()
 const lowQualityAudio = ref(false)
 const quality = computed(() => lowQualityAudio.value ? 'Eco' : 'High')
 
-// Methods
-function switchAudioQuality() {
-  lowQualityAudio.value = !lowQualityAudio.value;
-  Native.setAudioQuality(lowQualityAudio.value);
+function switchAudioQuality () {
+  lowQualityAudio.value = !lowQualityAudio.value
+  Native.setAudioQuality(lowQualityAudio.value)
 }
 
-function open(window) {
-  openWindow(window);
-  closeWindow();
+function open (window: string) {
+  windowStore.open(window)
+  win.value!.close()
 }
 
 onMounted(() => {
-  Native.getAudioQuality().then(q => lowQualityAudio.value = q)
+  Native.getAudioQuality()!.then(q => lowQualityAudio.value = q as boolean)
 })
 </script>

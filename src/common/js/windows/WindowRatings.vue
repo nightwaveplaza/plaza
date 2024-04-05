@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="window" :width="440" fluidHeight name="ratings" title="Ratings">
+  <win-window :width="440" fluidHeight name="ratings" title="Ratings" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
@@ -20,15 +20,15 @@
           <div style="position: relative" class="w-100">
             <div v-if="loading" class="content-loading"></div>
             <win-list scroll ref="list">
-              <tr v-for="(chart, i) in charts" class="hover">
-                <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * perPage + i + 1) }}
+              <tr v-for="(song, i) in data.songs" class="hover">
+                <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * data.per_page + i + 1) }}
                 </td>
-                <td class="py-1 show-info" @click="songInfo2(chart.id)">
-                  <div class="artist">{{ chart.artist }}</div>
-                  <div class="title">{{ chart.title }}</div>
+                <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
+                  <div class="artist">{{ song.artist }}</div>
+                  <div class="title">{{ song.title }}</div>
                 </td>
                 <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
-                  {{ chart.likes }}<i class="i icon-like ml-1" style="color: #c12727"/></td>
+                  {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727"/></td>
               </tr>
             </win-list>
           </div>
@@ -38,10 +38,10 @@
         <div class="d-flex">
           <div class="row no-gutters mt-2 w-100">
             <div class="col">
-              <win-pagination ref="pagination" :pages="pages" @change="changePage"/>
+              <win-pagination ref="pagination" :pages="data.pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="closeWindow">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
             </div>
           </div>
         </div>
@@ -49,37 +49,70 @@
     </div>
 
     <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">Pages: {{ pages }}</div>
-      <div class="col cell">Songs: {{ total }}</div>
+      <div class="col-3 cell d">Pages: {{ data.pages }}</div>
+      <div class="col cell">Songs: {{ data.count }}</div>
     </div>
   </win-window>
 </template>
 
 
-<script setup>
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { ratings } from '@common/js/api/api'
-import windowsComposable from '@common/js/composables/windowsComposable'
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { api } from '@common/js/api/api'
+import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@common/js/components/WinWindow.vue'
+import type WinList from '@common/js/components/WinList.vue'
+import type WinPagination from '@common/js/components/WinPagination.vue'
+import type { RatingsResponse } from '@common/js/types'
 
-// Composable
-const { alert2, closeWindow, songInfo2 } = windowsComposable('ratings')
+const windowsStore = useWindowsStore()
 
-// Reactive data
-const loading = ref(true)
-const charts = ref([])
-const total = ref(0)
-const perPage = ref(25)
-const pages = ref(4)
+
+const list = ref<InstanceType<typeof WinList>>()
+const pagination = ref<InstanceType<typeof WinPagination>>()
+
+const data: RatingsResponse = reactive({
+  per_page: 25,
+  pages: 4,
+  songs: [],
+  count: 0
+})
+
 const page = ref(1)
 const range = ref('overtime')
 
-// Refs
-const list = ref(null)
-const pagination = ref(null)
+let loading = false
+
+function fetchRatings (range: string, page: number) {
+  list.value!.scrollTop()
+
+  api.ratings.get(range, page).then(res => {
+    Object.assign(data, res.data)
+    list.value!.refreshScrollbar()
+  }).catch(e => {
+    windowsStore.alert((e as Error).message, 'Error')
+  }).finally(() => loading = false)
+}
+
+function changePage (newPage: number) {
+  if (!loading) {
+    page.value = newPage
+  }
+}
+
+function changeRange (newRange: string) {
+  if (!loading) {
+    range.value = newRange
+  }
+}
+
+function pad (n: number) {
+  return n.toString().padStart(3, '0')
+}
 
 watch(range, () => {
   page.value = 1
-  pagination.value.reset()
+  pagination.value!.reset()
   fetchRatings(range.value, page.value)
 })
 
@@ -87,40 +120,11 @@ watch(page, () => {
   fetchRatings(range.value, page.value)
 })
 
-// Methods
-function fetchRatings (range, page) {
-  list.value.scrollTop()
-
-  ratings.get(range, page).then(res => {
-    perPage.value = res.data.per_page
-    pages.value = res.data.pages
-    charts.value = res.data.songs
-    total.value = res.data.count
-    list.value.refreshScrollbar()
-  }).catch(err => alert2(err.response.data.error, 'Error')).finally(() => loading.value = false)
-}
-
-function changePage (newPage) {
-  if (!loading.value) {
-    page.value = newPage
-  }
-}
-
-function changeRange (newRange) {
-  if (!loading.value) {
-    range.value = newRange
-  }
-}
-
-function pad (s) {
-  return s.toString().padStart(3, '0')
-}
-
 onMounted(() => {
   fetchRatings(range.value, page.value)
 })
 
 onBeforeUnmount(() => {
-  charts.value = []
+  data.songs = []
 })
 </script>

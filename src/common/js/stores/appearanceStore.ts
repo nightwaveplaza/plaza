@@ -55,7 +55,13 @@ export const useAppearanceStore = defineStore('appearanceStore', {
     loadSettings() {
       this.background = prefs.get<Background>('background', this.background)
       this.theme = prefs.get<string>('theme', 'win98')
-      this.taskbarPosition = prefs.get<string>('taskbar_position', 'bottom')
+
+      let defaultTaskbarPosition = 'bottom'
+      let userAgent = window.navigator.userAgent
+      if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
+        defaultTaskbarPosition = 'top'
+      }
+      this.taskbarPosition = prefs.get<string>('taskbar_position', defaultTaskbarPosition)
     },
 
     loadRandomBackground () {

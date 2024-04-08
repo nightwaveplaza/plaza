@@ -7,6 +7,7 @@ import WinPlayerReactions from '@common/js/components/WinPlayerReactions.vue'
 import WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
 import WinTaskbar from '@common/js/components/WinTaskbar.vue'
 import WinWindow from '@common/js/components/WinWindow.vue'
+import WinStatusBar from '@common/js/components/WinStatusBar.vue'
 
 export default {
   install: (app: App) => {
@@ -16,6 +17,7 @@ export default {
     app.component('win-pagination', WinPagination)
     app.component('win-player-reactions', WinPlayerReactions)
     app.component('win-player-time', WinPlayerTime)
+    app.component('win-status-bar', WinStatusBar)
     app.component('win-taskbar', WinTaskbar)
     app.component('win-window', WinWindow)
   },

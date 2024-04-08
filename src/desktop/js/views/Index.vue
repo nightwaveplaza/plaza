@@ -6,6 +6,7 @@
     <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
 
     <win-taskbar/>
+    <win-status-bar />
   </div>
 </template>
 
@@ -31,5 +32,6 @@ onMounted(() => {
     appearanceStore.loadRandomBackground()
   }
   userAuthStore.loadUser()
+
 })
 </script>

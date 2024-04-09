@@ -16,10 +16,10 @@ const appearanceStore = useAppearanceStore()
 
 // Safari status bar
 watch(() => appearanceStore.theme, (n) => {
-  document.body.style.backgroundColor = themeColors[appearanceStore.theme]
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[appearanceStore.theme])
 })
 
 onMounted(() => {
-  document.body.style.backgroundColor = themeColors[appearanceStore.theme]
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[appearanceStore.theme])
 })
 </script>

@@ -32,6 +32,10 @@ let sending = false
 
 // Methods
 function like () {
+  if (playerPlaybackStore.songId !== userReactionStore.songId) {
+    userReactionStore.score = 0
+  }
+
   if (userReactionStore.score === 1) {
     send(2)
   } else if (userReactionStore.score === 2) {

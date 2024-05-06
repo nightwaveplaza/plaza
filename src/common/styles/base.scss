@@ -1,3 +1,5 @@
+@import "plaza/themes/elements.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +16,7 @@ html, body {
 }
 
 body {
-  background: transparent;
+
   //background: #008080 no-repeat fixed center center;
   //background-repeat: no-repeat;
   //background-attachment: fixed;

@@ -16,6 +16,10 @@
 @import "@common/styles/windows/user-login.scss";
 @import "@common/styles/windows/user-register.scss";
 
+body {
+  background: transparent;
+}
+
 .btn-start {
   background-image: url('@mobile/styles/icons/windows-0.png') !important;
   background-size: 21px 21px !important;

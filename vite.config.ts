@@ -9,7 +9,7 @@ export default ({ mode }: { mode: string }) => {
 
   // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
   const root: string = resolve(__dirname, 'src/' + process.env.VITE_APP)
-  const minify: boolean = process.env.VITE_USER_NODE_ENV !== 'development'
+  const minify: boolean = process.env.NODE_ENV !== 'development'
   const base: string = process.env.VITE_APP === 'mobile' ? '' : '/'
 
   return defineConfig({
@@ -50,7 +50,7 @@ export default ({ mode }: { mode: string }) => {
 }
 
 function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-  if (env.VITE_USER_NODE_ENV === 'development')
+  if (env.NODE_ENV === 'development')
     return null
   else
     return legacy({

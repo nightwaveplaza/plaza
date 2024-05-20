@@ -5,15 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "watch": "vite build --watch"
+    "watch": "cross-env NODE_ENV=development vite build --watch"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "sass": "^1.57.1",
     "terser": "^5.16.1",
     "vite": "^5.2.7",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-tsc": "^2.0.19"
   },
   "dependencies": {
     "@tsconfig/node20": "^20.1.2",

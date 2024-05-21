@@ -18,4 +18,12 @@
     width: 100%;
     height: auto;
   }
+
+  label[for=register-username]::first-letter,
+  label[for=register-password]::first-letter,
+  label[for=register-password-repeat]::first-letter,
+  label[for=register-email]::first-letter,
+  {
+    text-decoration: underline;
+  }
 }

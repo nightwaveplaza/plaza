@@ -1,25 +1,25 @@
 <template>
-  <win-window ref="win" :width="250" name="user-password" title="Change Password" v-slot="winProps">
+  <win-window ref="win" :width="250" name="user-password" :title="t('win.user_password.title')" v-slot="winProps">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
           <!-- Current password -->
-          <label for="current_password">Current password:</label>
+          <label for="current_password">{{ t('win.user_password.current') }}:</label>
           <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password"/>
           <!-- New password password -->
-          <label for="password">New password:</label>
+          <label for="password">{{ t('win.user_password.new') }}:</label>
           <input id="password" v-model="fields.password" class="d-block mb-2" type="password"/>
           <!-- Repeat password -->
-          <label for="password_repeat">Password repeat:</label>
+          <label for="password_repeat">{{ t('win.user_password.repeat') }}:</label>
           <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password"/>
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="change">Change</win-btn>
+              <win-btn block class="text-bold" @click="change" :disabled="sending">{{ t('buttons.change') }}</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="winProps.close()">Close</win-btn>
+              <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
             </div>
           </div>
         </div>
@@ -31,11 +31,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { api } from '@common/js/api/api'
+import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import type { UserEdit } from '@common/js/types'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const userAuthStore = useUserAuthStore()
 
@@ -45,42 +47,46 @@ const fields: UserEdit = reactive({
   password: '',
 })
 const passwordRepeat = ref('')
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 function change () {
-  if (!validate() || sending) {
-    return
+  try {
+    validate()
+  } catch (e) {
+    return windowsStore.alert(
+        t('alert.error.message', {error: (e as Error).message}),
+        t('alert.error.title')
+    )
   }
 
-  sending = true
+  sending.value = true
 
   api.user.edit(fields).then(() => {
     userAuthStore.logout()
-    windowsStore.alert('Password has changed!', 'Success', 'info')
+    windowsStore.alert(
+        t('alert.password_changed.message'),
+        t('alert.password_changed.title'), 'info'
+    )
     win.value!.close()
   }).catch(e =>
-    windowsStore.alert((e as Error).message, 'Error')
-  ).finally(() => sending = false)
+    windowsStore.alert(
+        t('alert.error.message', {error: (e as Error).message}),
+        t('alert.error.title')
+    )
+  ).finally(() => sending.value = false)
 }
 
 function validate () {
   if (fields.current_password.length === 0) {
-    windowsStore.alert('Enter current password.', 'Error')
-    return false
+    throw new Error(t('errors.enter_current_password'))
   }
 
   if (fields.password!.length < 3) {
-    windowsStore.alert('Password too short.', 'Error')
-    return false
+    throw new Error(t('errors.password_short'))
   }
 
   if (fields.password !== passwordRepeat.value) {
-    windowsStore.alert('Passwords didn\'t match.', 'Error')
-    return false
+    throw new Error(t('errors.passwords_match'))
   }
-
-  return true
 }
 </script>

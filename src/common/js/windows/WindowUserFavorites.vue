@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="450" fluidHeight name="user-favorites" title="My Favorites" v-slot="winProps">
+  <win-window :width="450" fluidHeight name="user-favorites" :title="t('win.user_favorites.title')" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
@@ -9,8 +9,7 @@
             <win-list scroll ref="list">
               <template v-if="data.favorites.length > 0 && !loading">
                 <table>
-                  <tr v-for="(fav, i) in data.favorites" :class="{ strike: deleted.includes(fav.id) }"
-                      class="hover">
+                  <tr v-for="(fav, i) in data.favorites" :class="{ strike: deleted.includes(fav.id) }" class="hover">
                     <td class="p-1 noselect" style="width: 62px">
                       <img :src="fav.song.artwork_src ? fav.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>
@@ -25,7 +24,7 @@
                     <td class="text-center noselect" style="width: 70px">
                       <a v-if="!deleted.includes(fav.id)" class="link favorites-remove"
                          role="button"
-                         @click="deleteLike(fav.id)">Remove</a>
+                         @click="deleteLike(fav.id)">{{ t('win.user_favorites.remove') }}</a>
                     </td>
                   </tr>
                 </table>
@@ -33,7 +32,11 @@
               </template>
 
               <div v-else-if="!loading" class="favorites-empty noselect">
-                <i>Your list is empty. Click the <i class="i icon-like"></i> buton to add songs to this list.</i>
+                <i18n-t keypath="win.user_favorites.list_empty" tag="i">
+                  <template #icon>
+                    <i class="i icon-like"></i>
+                  </template>
+                </i18n-t>
               </div>
             </win-list>
 
@@ -54,14 +57,15 @@
     </div>
 
     <div class="statusbar row no-gutters song-list-statusbar noselect">
-      <div class="col-3 cell d">Pages: {{ data.pages }}</div>
-      <div class="col cell">Songs: {{ data.count }}</div>
+      <div class="col-3 cell d">{{ t('pagination.pages', {n: data.pages}) }}</div>
+      <div class="col cell">{{ t('pagination.songs', {n: data.count}) }}</div>
     </div>
   </win-window>
 </template>
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
@@ -69,9 +73,9 @@ import WinWindow from '@common/js/components/WinWindow.vue'
 import WinList from '@common/js/components/WinList.vue'
 import type { FavoritesResponse } from '@common/js/types'
 
-const { sdy } = helperComposable()
-
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
+const { sdy } = helperComposable()
 
 const data: FavoritesResponse = reactive({
   per_page: 25,
@@ -95,7 +99,10 @@ function fetchLikes (page: number) {
     loading.value = false
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(
+        t('alert.error.message', {error: (e as Error).message}),
+        t('alert.error.title')
+    )
   }).finally(() => {
     loading.value = false
   })
@@ -114,7 +121,10 @@ function deleteLike (favoriteId: number) {
   api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(
+        t('alert.error.message', {error: (e as Error).message}),
+        t('alert.error.title')
+    )
   })
 }
 

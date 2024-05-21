@@ -25,7 +25,7 @@ body {
   min-height: 100%;
   color: #070707;
   font-family: Tahoma, Verdana, Segoe, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   position: relative;
   overflow: hidden;
 }
@@ -60,6 +60,15 @@ button.d-block, .button.d-block, input.d-block {
   display: block;
   width: 100%;
   box-sizing: border-box;
+}
+
+.about-info {
+  font-size: 12px;
+  line-height: 150%;
+  .lead {
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 
 /* MQ */

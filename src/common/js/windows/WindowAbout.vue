@@ -1,86 +1,86 @@
 <template>
-  <win-window ref="win" :width="440" fluidHeight name="about" title="About" v-slot="winProps">
-    <div class="content-fluid p-2">
-      <div class="d-flex flex-column h-100">
-        <div class="d-flex flex-grow-1 align-items-stretch">
-          <div style="position: relative" class="w-100">
-            <win-memo scroll>
-              <p class="lead">Welcome to Nightwave Plaza!</p>
-              <p>Nightwave Plaza is a free 24/7 online vaporwave radio station. The broadcast also includes some future
-                funk
-                and experimental genres. We hope you enjoy.</p>
-              <p>Join our community <a href="https://plaza.one/discord">Discord server</a>!</p>
-
-              <p class="lead mt-3">Submissions</p>
-              <p>Please use <a href="https://plaza.one/submissions" target="blank">this form</a> to send music for
-                broadcasting.</p>
-
-              <p class="lead mt-3">Contact Information</p>
-              <p>Please send any enquiries you may have to <a href="mailto:mail@plaza.one">mail@plaza.one</a>.</p>
-              <p>Any updates or upcoming maintenance on Nightwave Plaza can be found on our official Twitter account: <a
-                href="https://twitter.com/nightwaveplaza/" target="_blank">@NightwavePlaza</a>.</p>
-              <p>Nightwave Plaza can also be found on <a href="https://plaza.one/youtube" target="_blank">YouTube</a>,
-                <a
-                  href="https://plaza.one/facebook" target="_blank">Facebook</a>,
-                <a href="https://plaza.one/vk" target="_blank">VK</a>, <a href="https://plaza.one/lastfm"
-                                                                          target="_blank">Last.fm</a> and <a
-                  href="https://plaza.one/tunein" target="_blank">TuneIn</a>.
-              </p>
-
-              <p class="lead mt-3">Streaming Links</p>
-              <p>You are able to listen to Nightwave Plaza's broadcasts through your favorite music player instead of a
-                browser! Use the following links:</p>
-              <p class="mt-2">
-                <b>Playlists</b><br/>
-                <a href="https://plaza.one/plaza.m3u" target="_blank">m3u file for Winamp</a><br/>
-                <a href="https://plaza.one/plaza.pls" target="_blank">pls file for foobar2k</a><br/>
-              </p>
-              <p class="mt-2">
-                <b>Streams</b><br/>
-                <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus /
-                96kbps)<br/>
-                <a href="http://radio.plaza.one/ogg_low" target="_blank">http://radio.plaza.one/ogg_low</a> (opus /
-                64kbps)<br/>
-                <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
-                <a href="http://radio.plaza.one/mp3_low" target="_blank">http://radio.plaza.one/mp3_low</a> (mp3 /
-                96kbps)<br/>
-              </p>
-
-              <p class="mt-4">
-                <a href="https://plaza.one/privacy" target="_blank">Privacy policy</a>
-              </p>
-              <p class="mt-2">
-                Build date: {{ version }}
-              </p>
-            </win-memo>
-          </div>
+  <win-window ref="win" :width="380" name="about" :title="t('win.about.title')" v-slot="winProps">
+    <div class="content p-2">
+      <div class="row mb-4">
+        <div class="col align-self-center text-center">
+          <p class="lead mb-1">Nightwave Plaza</p>
+          <p><i>{{ t('win.about.welcome') }}</i></p>
         </div>
+        <div class="col-auto align-self-center">
+          <img src="/img/pc.png" style="width: 70px" />
+        </div>
+      </div>
 
-        <div class="d-flex">
-          <div class="row buttons no-gutters mt-2 w-100">
-            <div class="col-auto">
-              <win-btn class="px-4 mr-2" @click="openCredits">Credits</win-btn>
-            </div>
-            <div class="col-auto">
-              <win-btn class="px-4 mr-2" @click="openNews">News</win-btn>
-            </div>
-            <div class="col-auto ml-auto">
-              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
-            </div>
-          </div>
+      <div class="group-box p-2 mb-3">
+        <div class="gb-label noselect">{{ t('win.about.contact_info') }}</div>
+
+        <i18n-t keypath="win.about.send_enquires" tag="p">
+          <template #link>
+            <a href="https://plaza.one/submissions" target="_blank">mail@plaza.one</a>
+          </template>
+        </i18n-t>
+
+        <i18n-t keypath="win.about.discord" tag="p">
+          <template #discord>
+            <a href="https://plaza.one/discord" target="_blank">Discord</a>
+          </template>
+        </i18n-t>
+      </div>
+
+      <div class="group-box p-2 mb-3">
+        <div class="gb-label noselect">{{ t('win.about.submissions') }}</div>
+
+        <i18n-t keypath="win.about.submission_form" tag="p">
+          <template #link>
+            <a href="https://plaza.one/submissions" target="_blank">{{ t('win.about.submission_link') }}</a>
+          </template>
+        </i18n-t>
+      </div>
+
+      <div class="group-box p-2 mb-3">
+        <div class="gb-label noselect">{{ t('win.about.useful_links') }}</div>
+        <p >
+          {{ t('win.about.playlists') }}<br/>
+          <a href="https://plaza.one/plaza.m3u" target="_blank">m3u file for Winamp</a><br/>
+          <a href="https://plaza.one/plaza.pls" target="_blank">pls file for foobar2k</a><br/>
+        </p>
+        <p class="mt-2">
+          {{ t('win.about.streams') }}<br/>
+          <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
+          <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus /
+          96kbps)<br/>
+        </p>
+      </div>
+
+      <div class="row buttons no-gutters mt-2 w-100">
+        <div class="col-auto">
+          <win-btn class="px-4 mr-2" @click="openCredits">{{ t('win.about.credits') }}</win-btn>
+        </div>
+        <div class="col-auto">
+          <win-btn class="px-4 mr-2" @click="openNews">{{ t('win.about.news') }}</win-btn>
+        </div>
+        <div class="col-auto ml-auto">
+          <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>
 
     </div>
+    <div class="statusbar row no-gutters">
+      <div class="col cell">{{ t('win.about.version') }}: {{ version }}</div>
+    </div>
+
   </win-window>
 </template>
 
 <script setup lang="ts">
 import { useWindowsStore } from '@common/js/stores/windowsStore'
-import {onMounted} from "vue";
+import { useI18n } from 'vue-i18n'
+import WinWindow from '@common/js/components/WinWindow.vue'
+
+const { t } = useI18n()
 
 const windowsStore = useWindowsStore()
-const version = __APP_VERSION__ ?? "n/a";
+const version = __APP_VERSION__ ?? 'n/a'
 
 const openCredits = () => {
   windowsStore.open('credits')

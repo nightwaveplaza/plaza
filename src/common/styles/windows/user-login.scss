@@ -9,4 +9,10 @@
     width: 76px;
     display: block;
   }
+
+  label[for=username]::first-letter,
+  label[for=password]::first-letter,
+  {
+    text-decoration: underline;
+  }
 }

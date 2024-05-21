@@ -1,13 +1,13 @@
 <template>
-  <win-window :width="220" name="user" title="My Plaza" v-slot="winProps">
+  <win-window :width="220" name="user" :title="t('win.user.title')" v-slot="winProps">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-btn block class="mb-2" @click="open('user-favorites')" v-if="!isMobile">My Favorites</win-btn>
-          <win-btn block class="mb-2" @click="open('user-email')">Change Email</win-btn>
-          <win-btn block class="mb-2" @click="open('user-password')">Change Password</win-btn>
-          <win-btn block class="mb-2" @click="logout">Logout</win-btn>
-          <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">Close</win-btn>
+          <win-btn block class="mb-2" @click="open('user-favorites')" v-if="!isMobile">{{ t('win.user_favorites.title') }}</win-btn>
+          <win-btn block class="mb-2" @click="open('user-email')">{{ t('win.user_email.title') }}</win-btn>
+          <win-btn block class="mb-2" @click="open('user-password')">{{ t('win.user_password.title') }}</win-btn>
+          <win-btn block class="mb-2" @click="logout">{{ t('win.user.logout') }}</win-btn>
+          <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>
     </div>
@@ -15,11 +15,13 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 
+const { t } = useI18n()
 const { isMobile } = helperComposable()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()

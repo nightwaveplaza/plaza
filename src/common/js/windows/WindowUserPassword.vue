@@ -4,13 +4,13 @@
       <div class="row no-gutters">
         <div class="col-10 offset-1">
           <!-- Current password -->
-          <label for="current_password">{{ t('win.user_password.current') }}:</label>
+          <label for="current_password">{{ t('fields.current_password') }}:</label>
           <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password"/>
           <!-- New password password -->
-          <label for="password">{{ t('win.user_password.new') }}:</label>
+          <label for="password">{{ t('fields.new_password') }}:</label>
           <input id="password" v-model="fields.password" class="d-block mb-2" type="password"/>
           <!-- Repeat password -->
-          <label for="password_repeat">{{ t('win.user_password.repeat') }}:</label>
+          <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
           <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password"/>
 
           <!-- Buttons -->

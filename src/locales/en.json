@@ -1,14 +1,4 @@
 {
-  "alert": {
-    "error": {
-      "message": "Error: {error}",
-      "title": "Error"
-    },
-    "reaction_tip": {
-      "message": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
-      "title": "N I C E"
-    }
-  },
   "buttons": {
     "cancel": "Cancel",
     "change": "Change",
@@ -17,20 +7,27 @@
     "ok": "OK"
   },
   "errors": {
-    "server": "{error}",
     "email_incorrect": "Email is incorrect.",
     "enter_current_password": "Enter current password.",
     "enter_email": "Please enter email.",
-    "enter_password": "Enter current password.",
     "enter_user_pass": "Please enter user name and password.",
     "error": "Error",
     "password_short": "Password too short.",
     "passwords_match": "Passwords didn't match.",
     "please_sign": "Please sign in to your Nightwave Plaza account to use the like button.",
+    "server": "{error}",
     "user_fetch": "Can't fetch user data.",
     "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",
     "username_long": "User name is too long.",
     "username_short": "User name is too short."
+  },
+  "fields": {
+    "current_password": "Current password",
+    "email": "Email",
+    "new_password": "New password",
+    "password": "Password",
+    "repeat_password": "Password repeat",
+    "username": "User name"
   },
   "loading": "Loading...",
   "menu": {
@@ -43,7 +40,9 @@
   "messages": {
     "auth_success": "Authentication successful!",
     "email_changed": "Email has changed!",
+    "nice": "N I C E",
     "password_changed": "Password has changed!",
+    "reaction_tip": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
     "reset_success": "Instructions have been sent to your email.",
     "success": "Success!"
   },
@@ -137,8 +136,6 @@
       "title": "My Profile"
     },
     "user_email": {
-      "email": "Email",
-      "password": "Current password",
       "title": "Change Email"
     },
     "user_favorites": {
@@ -147,34 +144,25 @@
       "title": "My Favorites"
     },
     "user_login": {
-      "password": "Password",
       "register": "Register",
       "remember_me": "Remember me",
       "reset": "Reset",
       "sign_in": "Sign In",
       "title": "Sign In",
-      "type_username": "Type a username and password to sign in to the Nightwave Plaza.",
-      "username": "User name"
+      "type_username": "Type a username and password to sign in to the Nightwave Plaza."
     },
     "user_password": {
-      "current": "Current password",
-      "new": "New password",
-      "repeat": "Password repeat",
       "title": "Change Password"
     },
     "user_register": {
       "captcha_desc": "Please fill this annoying captcha.",
       "captcha_fail": "Captcha validation failed.",
       "captcha_title": "are you still human?",
-      "email": "Email",
-      "password": "Password",
-      "password_repeat": "Password repeat",
       "please_fill": "Please fill out the registration form. All fields are required.",
       "register": "Register",
       "success": "Registration complete",
       "title": "Registration",
       "user_information": "User Information",
-      "username": "User name",
       "welcome": "Welcome to the Nightwave Plaza, {user}!"
     },
     "user_reset": {

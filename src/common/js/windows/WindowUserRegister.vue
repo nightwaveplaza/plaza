@@ -15,7 +15,7 @@
               <!-- Username -->
               <div class="row no-gutters mb-2">
                 <div class="col-5 align-self-center">
-                  <label for="register-username">{{ t('win.user_register.username') }}:</label>
+                  <label for="register-username">{{ t('fields.username') }}:</label>
                 </div>
                 <div class="col-7">
                   <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text"/>
@@ -25,7 +25,7 @@
               <!-- Password -->
               <div class="row no-gutters mb-2">
                 <div class="col-5 align-self-center">
-                  <label for="register-password">{{ t('win.user_register.password') }}:</label>
+                  <label for="register-password">{{ t('fields.password') }}:</label>
                 </div>
                 <div class="col-7">
                   <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2"
@@ -36,7 +36,7 @@
               <!-- Password repeat -->
               <div class="row no-gutters mb-2">
                 <div class="col-5 align-self-center">
-                  <label for="register-password-repeat">{{ t('win.user_register.password_repeat') }}:</label>
+                  <label for="register-password-repeat">{{ t('fields.repeat_password') }}:</label>
                 </div>
                 <div class="col-7">
                   <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3"
@@ -47,7 +47,7 @@
               <!-- Email -->
               <div class="row no-gutters mb-2">
                 <div class="col-5 align-self-center">
-                  <label for="register-email">{{ t('win.user_register.email') }}:</label>
+                  <label for="register-email">{{ t('fields.email') }}:</label>
                 </div>
                 <div class="col-7">
                   <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email"/>

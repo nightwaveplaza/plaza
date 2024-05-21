@@ -16,7 +16,7 @@
           <!-- Username -->
           <div class="row no-gutters">
             <div class="col-8 col-sm-3 align-self-center">
-              <label class="mt-0" for="username">{{ t('win.user_login.username') }}:</label>
+              <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
             </div>
             <div class="col-8 col-sm-6">
               <input id="username" v-model="fields.username" class="mr-0 ml-0 w-100" type="text"/>
@@ -26,7 +26,7 @@
           <!-- Password -->
           <div class="row mt-1 no-gutters">
             <div class="col-8 col-sm-3 align-self-center">
-              <label class="mt-0" for="password">{{ t('win.user_login.password') }}:</label>
+              <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
             </div>
             <div class="col-8 col-sm-6">
               <input id="password" v-model="fields.password" class="mr-0 ml-0 w-100" type="password"/>

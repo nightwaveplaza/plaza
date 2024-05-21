@@ -73,8 +73,8 @@ function showTip () {
   if (showed > 0) return
 
   windowsStore.alert(
-      t('alert.reaction_tip.message', {icon: '<i class="i icon-like"></i>'}),
-      t('alert.reaction_tip.title'),
+      t('messages.reaction_tip', {icon: '<i class="i icon-like"></i>'}),
+      t('messages.nice'),
       'info'
   )
 

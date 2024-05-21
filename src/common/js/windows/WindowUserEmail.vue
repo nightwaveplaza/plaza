@@ -2,11 +2,11 @@
   <win-window ref="win" :width="250" name="user-email" :title="t('win.user_email.title')" v-slot="winProps">
     <div class="py-2 px-3">
       <!-- Email -->
-      <label for="email">{{ t('win.user_email.email') }}:</label>
+      <label for="email">{{ t('fields.email') }}:</label>
       <input id="email" :disabled="disabled" v-model="fields.email" class="d-block mb-2" type="email"/>
 
       <!-- Current password -->
-      <label for="password">{{ t('win.user_email.password') }}:</label>
+      <label for="password">{{ t('fields.current_password') }}:</label>
       <input id="password" :disabled="disabled" v-model="fields.current_password" class="d-block mb-2" type="password"/>
 
       <!-- Buttons -->
@@ -53,7 +53,7 @@ function fetchUser () {
 
 function update () {
   if (fields.current_password.length === 0) {
-    return windowsStore.alert(t('errors.enter_password'), t('errors.error'))
+    return windowsStore.alert(t('errors.enter_current_password'), t('errors.error'))
   }
 
   sending.value = true

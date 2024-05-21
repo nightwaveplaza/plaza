@@ -61,7 +61,7 @@ function send (score: number) {
     showTip()
   }).catch(e => {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('alert.please_sign.message'), t('alert.please_sign.title'))
+      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
   }).finally(() => {
     sending = false

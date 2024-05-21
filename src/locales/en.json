@@ -1,40 +1,12 @@
 {
   "alert": {
-    "auth_success": {
-      "message": "Authentication successful!",
-      "title": "Success"
-    },
-    "email_changed": {
-      "message": "Email has changed!",
-      "title": "Success"
-    },
-    "enter_password": {
-      "message": "Enter current password.",
-      "title": "Error"
-    },
     "error": {
       "message": "Error: {error}",
       "title": "Error"
     },
-    "password_changed": {
-      "message": "Password has changed!",
-      "title": "Success"
-    },
-    "please_sign": {
-      "message": "Please sign in to your Nightwave Plaza account to use the like button.",
-      "title": "Error"
-    },
     "reaction_tip": {
-      "message": "You have liked the song. Nice!<br />\nClicking the {icon} button twice will add song to your favorites list. Give it a try!",
+      "message": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
       "title": "N I C E"
-    },
-    "reset_success": {
-      "message": "Instructions have been sent to your email.",
-      "title": "Success"
-    },
-    "user_fetch_error": {
-      "message": "Can't fetch user data.",
-      "title": "Error"
     }
   },
   "buttons": {
@@ -45,12 +17,17 @@
     "ok": "OK"
   },
   "errors": {
+    "server": "{error}",
     "email_incorrect": "Email is incorrect.",
     "enter_current_password": "Enter current password.",
     "enter_email": "Please enter email.",
+    "enter_password": "Enter current password.",
     "enter_user_pass": "Please enter user name and password.",
+    "error": "Error",
     "password_short": "Password too short.",
     "passwords_match": "Passwords didn't match.",
+    "please_sign": "Please sign in to your Nightwave Plaza account to use the like button.",
+    "user_fetch": "Can't fetch user data.",
     "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",
     "username_long": "User name is too long.",
     "username_short": "User name is too short."
@@ -62,6 +39,13 @@
     "play_history": "Play History",
     "ratings": "Ratings",
     "support_us": "Support Us"
+  },
+  "messages": {
+    "auth_success": "Authentication successful!",
+    "email_changed": "Email has changed!",
+    "password_changed": "Password has changed!",
+    "reset_success": "Instructions have been sent to your email.",
+    "success": "Success!"
   },
   "pagination": {
     "pages": "Pages: {n}",

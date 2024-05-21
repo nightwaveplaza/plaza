@@ -48,10 +48,7 @@ function getArticle () {
     article.value = res.data.articles[0]
     pages.value = res.data.pages
   }).catch(e => {
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   })
 }
 

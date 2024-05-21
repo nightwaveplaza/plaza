@@ -54,8 +54,7 @@ const sending = ref(false)
 
 function reset () {
   if (fields.email.length === 0) {
-    windowsStore.alert(t('errors.enter_email'), t('alert.error.title'))
-    return false
+    return windowsStore.alert(t('errors.enter_email'), t('errors.error'))
   }
 
   showCaptcha.value = true
@@ -65,17 +64,11 @@ function completeCaptcha () {
   sending.value = true
 
   api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
-    windowsStore.alert(
-        t('alert.reset_success.message'),
-        t('alert.reset_success.title'), 'info'
-    )
+    windowsStore.alert(t('messages.reset_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
     showCaptcha.value = false
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

@@ -12,7 +12,7 @@
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-btn block class="text-bold" @click="update">{{ t('buttons.change') }}</win-btn>
+          <win-btn block class="text-bold" @click="update" :disabled="sending">{{ t('buttons.change') }}</win-btn>
         </div>
         <div class="col-4">
           <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
@@ -39,55 +39,33 @@ const fields: UserEdit = reactive({
   email: '',
 })
 const disabled = ref(true)
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 function fetchUser () {
   api.user.get().then(res => {
     fields.email = res.data.email
     disabled.value = false
   }).catch(() => {
-    windowsStore.alert(t('alerts.user_fetch_error.message'), t('alerts.user_fetch_error.title'))
+    windowsStore.alert(t('errors.user_fetch'), t('errors.error'))
     win.value!.close()
   })
 }
 
 function update () {
-  if (!validate() || sending) {
-    return
+  if (fields.current_password.length === 0) {
+    return windowsStore.alert(t('errors.enter_password'), t('errors.error'))
   }
 
-  sending = true
+  sending.value = true
 
   api.user.edit(fields).then(() => {
-    windowsStore.alert(
-        t('alerts.email_changed.message'),
-        t('alerts.email_changed.title'),
-        'info'
-    )
+    windowsStore.alert(t('messages.email_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(
-        t('alerts.error.message', {error: (e as Error).message}),
-        t('alerts.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => {
-    sending = false
+    sending.value = false
   })
-}
-
-function validate () {
-  if (fields.current_password.length === 0) {
-    windowsStore.alert(
-        t('alerts.enter_password.message'),
-        t('alerts.enter_password.title'),
-        'info'
-    )
-    return false
-  }
-
-  return true
 }
 
 onMounted(() => {

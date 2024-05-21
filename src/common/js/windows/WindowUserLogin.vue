@@ -86,10 +86,7 @@ const sending = ref<Boolean>(false)
 
 function login () {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    windowsStore.alert(
-        t('errors.enter_user_pass'),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.enter_user_pass'), t('errors.error'))
     return false
   }
 
@@ -97,16 +94,10 @@ function login () {
 
   api.user.login(fields).then(res => {
     userAuthStore.login(res.data, remember.value)
-    windowsStore.alert(
-        t('alert.auth_success.message'),
-        t('alert.auth_success.title'), 'info'
-    )
+    windowsStore.alert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

@@ -99,10 +99,7 @@ function fetchLikes (page: number) {
     loading.value = false
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => {
     loading.value = false
   })
@@ -121,10 +118,7 @@ function deleteLike (favoriteId: number) {
   api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   })
 }
 

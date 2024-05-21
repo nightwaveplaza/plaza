@@ -53,26 +53,17 @@ function change () {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    return windowsStore.alert((e as Error).message, t('errors.error'))
   }
 
   sending.value = true
 
   api.user.edit(fields).then(() => {
     userAuthStore.logout()
-    windowsStore.alert(
-        t('alert.password_changed.message'),
-        t('alert.password_changed.title'), 'info'
-    )
+    windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e =>
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+      windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   ).finally(() => sending.value = false)
 }
 

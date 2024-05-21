@@ -128,10 +128,7 @@ function register () {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    return windowsStore.alert((e as Error).message, t('errors.error'))
   }
 
   step.value = 2
@@ -140,7 +137,7 @@ function register () {
 function completeCaptcha () {
   if (fields.captcha_response === '') {
     step.value = 1
-    return windowsStore.alert(t('win.user_register.captcha_fail'), t('alert.error.title'))
+    return windowsStore.alert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
   sending.value = true
@@ -152,7 +149,7 @@ function completeCaptcha () {
     )
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
     step.value = 1
   }).finally(() => sending.value = false)
 }

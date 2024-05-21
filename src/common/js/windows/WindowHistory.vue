@@ -90,10 +90,7 @@ async function fetchHistory (page: number) {
     Object.assign(data, res.data)
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert(
-        t('alert.error.message', {error: (e as Error).message}),
-        t('alert.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => {
     loading.value = false
   })

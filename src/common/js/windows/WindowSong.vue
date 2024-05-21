@@ -89,10 +89,7 @@ function fetchSongInfo (songId: string) {
   api.songs.get(songId).then(res => {
     Object.assign(song, res.data)
   }).catch(e => {
-    windowsStore.alert(
-        t('alerts.error.message', {error: (e as Error).message}),
-        t('alerts.error.title')
-    )
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
     win.value!.close()
   })
 }
@@ -112,7 +109,7 @@ async function favoriteSong () {
     }
   } catch(e) {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('alerts.please_sign.message'), t('alerts.please_sign.title'))
+      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {
     sending = false

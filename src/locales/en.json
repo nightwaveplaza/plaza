@@ -14,7 +14,7 @@
         "error": "Error",
         "password_short": "Password too short.",
         "passwords_match": "Passwords didn't match.",
-        "please_sign": "Please sign in to your Nightwave Plaza account to use the like button.",
+        "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
         "server": "{error}",
         "user_fetch": "Can't fetch user data.",
         "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",

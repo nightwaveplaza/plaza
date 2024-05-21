@@ -39,25 +39,24 @@
 
       <div class="group-box p-2 mb-3">
         <div class="gb-label noselect">{{ t('win.about.useful_links') }}</div>
-        <p >
-          {{ t('win.about.playlists') }}<br/>
-          <a href="https://plaza.one/plaza.m3u" target="_blank">m3u file for Winamp</a><br/>
-          <a href="https://plaza.one/plaza.pls" target="_blank">pls file for foobar2k</a><br/>
+        <p>
+          <strong>{{ t('win.about.playlists') }}</strong><br/>
+          <a href="https://plaza.one/plaza.m3u" target="_blank">M3U (Winamp)</a>
+          <a class="ml-3" href="https://plaza.one/plaza.pls" target="_blank">PLS (Foobar2000)</a>
         </p>
         <p class="mt-2">
-          {{ t('win.about.streams') }}<br/>
+          <strong>{{ t('win.about.streams') }}</strong><br/>
           <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
-          <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus /
-          96kbps)<br/>
+          <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus / 96kbps)
         </p>
       </div>
 
       <div class="row buttons no-gutters mt-2 w-100">
         <div class="col-auto">
-          <win-btn class="px-4 mr-2" @click="openCredits">{{ t('win.about.credits') }}</win-btn>
+          <win-btn class="px-4 mr-2" @click="openCredits">{{ t('win.about.btn_credits') }}</win-btn>
         </div>
         <div class="col-auto">
-          <win-btn class="px-4 mr-2" @click="openNews">{{ t('win.about.news') }}</win-btn>
+          <win-btn class="px-4 mr-2" @click="openNews">{{ t('win.about.btn_news') }}</win-btn>
         </div>
         <div class="col-auto ml-auto">
           <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>

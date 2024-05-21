@@ -19,7 +19,7 @@
         <div class="col-sm-8 offset-sm-2">
           <div class="py-2 row no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="reset" :disabled="sending">{{ t('win.user_login.reset') }}</win-btn>
+              <win-btn block class="text-bold" @click="reset" :disabled="sending">{{ t('win.user_login.btn_reset') }}</win-btn>
             </div>
             <div class="col-4">
               <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>

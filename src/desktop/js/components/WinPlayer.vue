@@ -90,9 +90,9 @@ const artwork = computed(() => {
   else return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => {
-  if (state.value === STATE_IDLE) return 'Play'
-  else if (state.value === STATE_LOADING) return 'Loading...'
-  else return 'Stop'
+  if (state.value === STATE_IDLE) return t('win.player.btn_play')
+  else if (state.value === STATE_LOADING) return t('loading')
+  else return t('win.player.btn_stop')
 })
 
 // Non-reactive

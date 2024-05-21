@@ -29,7 +29,7 @@
     "repeat_password": "Password repeat",
     "username": "User name"
   },
-  "loading": "Loading...",
+  "loading": "Loading…",
   "menu": {
     "about": "About",
     "mobile": "Mobile",
@@ -52,10 +52,10 @@
   },
   "win": {
     "about": {
+      "btn_credits": "Credits",
+      "btn_news": "News",
       "contact_info": "Contact Information",
-      "credits": "Credits",
       "discord": "Join our community {discord} server!",
-      "news": "News",
       "playlists": "Playlists",
       "send_enquires": "Please send any enquiries you may have to {link}.",
       "streams": "Streams",
@@ -90,25 +90,27 @@
       "title": "News"
     },
     "player": {
+      "btn_play": "Play",
+      "btn_stop": "Stop",
       "listeners": "Listeners: {listeners}",
       "user": "Logged as: {user}",
       "volume": "Volume:  {volume}%",
       "welcome": "Welcome back!"
     },
     "ratings": {
-      "monthly": "Monthly",
-      "overtime": "Overtime",
-      "title": "Ratings",
-      "weekly": "Weekly"
+      "btn_monthly": "Monthly",
+      "btn_overtime": "Overtime",
+      "btn_weekly": "Weekly",
+      "title": "Ratings"
     },
     "settings": {
       "author": "Author",
       "background": "Background",
       "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
       "bottom": "Bottom",
+      "btn_random": "Random",
+      "btn_solid": "Solid",
       "let_us_know": "Let us know!",
-      "random": "Random",
-      "solid": "Solid",
       "source": "Source",
       "taskbar": "Taskbar",
       "theme": "Theme",
@@ -118,10 +120,10 @@
     "song": {
       "album": "Album",
       "artist": "Artist",
+      "btn_play_preview": "Play preview",
+      "btn_stop": "Stop ({time})",
       "first_played": "First played",
-      "play_preview": "Play preview",
       "song_title": "Title",
-      "stop": "Stop ({time})",
       "title": "Song Info"
     },
     "support": {
@@ -132,7 +134,7 @@
       "title2": "Love Nightwave Plaza?"
     },
     "user": {
-      "logout": "Logout",
+      "btn_logout": "Logout",
       "title": "My Profile"
     },
     "user_email": {
@@ -144,10 +146,10 @@
       "title": "My Favorites"
     },
     "user_login": {
-      "register": "Register",
+      "btn_register": "Register",
+      "btn_reset": "Reset",
+      "btn_sign_in": "Sign In",
       "remember_me": "Remember me",
-      "reset": "Reset",
-      "sign_in": "Sign In",
       "title": "Sign In",
       "type_username": "Type a username and password to sign in to the Nightwave Plaza."
     },
@@ -155,11 +157,11 @@
       "title": "Change Password"
     },
     "user_register": {
+      "btn_register": "Register",
       "captcha_desc": "Please fill this annoying captcha.",
       "captcha_fail": "Captcha validation failed.",
       "captcha_title": "are you still human?",
       "please_fill": "Please fill out the registration form. All fields are required.",
-      "register": "Register",
       "success": "Registration complete",
       "title": "Registration",
       "user_information": "User Information",

@@ -34,7 +34,7 @@
             <win-btn block :disabled="song.preview_src === null" @click="play">{{ playText }}</win-btn>
           </div>
           <div class="col-2 pl-0">
-            <win-btn block @click="favoriteSong"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
+            <win-btn block @click="favoriteSong" :disabled="sending"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
           </div>
           <div class="col-auto ml-auto">
             <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
@@ -77,13 +77,15 @@ const song: SongResponse = reactive({
 })
 
 const isPlaying = ref(false)
+const sending = ref(false)
 const playTimeLeft = ref(0)
 const songLength = computed(() => dur(song.length!))
-const playText = computed(() => isPlaying.value ? t('win.song.stop', {time: dur(playTimeLeft.value)}) : t('win.song.play_preview'))
 const artwork = computed(() => song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
 const favoriteColor = computed(() => song.favorite_id ? '#FFD300' : '')
-
-let sending = false
+const playText = computed(() => isPlaying.value
+    ? t('win.song.btn_stop', {time: dur(playTimeLeft.value)})
+    : t('win.song.btn_play_preview')
+)
 
 function fetchSongInfo (songId: string) {
   api.songs.get(songId).then(res => {
@@ -95,9 +97,7 @@ function fetchSongInfo (songId: string) {
 }
 
 async function favoriteSong () {
-  if (sending) return
-
-  sending = true
+  sending.value = true
 
   try {
     if (song.favorite_id) {
@@ -112,7 +112,7 @@ async function favoriteSong () {
       windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {
-    sending = false
+    sending.value = false
   }
 }
 

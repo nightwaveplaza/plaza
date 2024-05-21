@@ -41,10 +41,10 @@
             <win-btn block @click="nextBg(1)">&gt;</win-btn>
           </div>
           <div class="col-4 pr-1">
-            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">{{ t('win.settings.random') }}</win-btn>
+            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">{{ t('win.settings.btn_random') }}</win-btn>
           </div>
           <div class="col-4">
-            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">{{ t('win.settings.solid') }}</win-btn>
+            <win-btn block :class="{active: appearanceStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">{{ t('win.settings.btn_solid') }}</win-btn>
           </div>
         </div>
 

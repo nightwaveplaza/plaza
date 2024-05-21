@@ -6,7 +6,7 @@
           <win-btn block class="mb-2" @click="open('user-favorites')" v-if="!isMobile">{{ t('win.user_favorites.title') }}</win-btn>
           <win-btn block class="mb-2" @click="open('user-email')">{{ t('win.user_email.title') }}</win-btn>
           <win-btn block class="mb-2" @click="open('user-password')">{{ t('win.user_password.title') }}</win-btn>
-          <win-btn block class="mb-2" @click="logout">{{ t('win.user.logout') }}</win-btn>
+          <win-btn block class="mb-2" @click="logout">{{ t('win.user.btn_logout') }}</win-btn>
           <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>

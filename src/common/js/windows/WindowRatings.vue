@@ -5,13 +5,13 @@
         <!-- Range buttons -->
         <div class="d-flex mb-1">
           <win-btn :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
-            {{ t('win.ratings.overtime') }}
+            {{ t('win.ratings.btn_overtime') }}
           </win-btn>
           <win-btn :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
-            {{ t('win.ratings.monthly') }}
+            {{ t('win.ratings.btn_monthly') }}
           </win-btn>
           <win-btn :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
-            {{ t('win.ratings.weekly') }}
+            {{ t('win.ratings.btn_weekly') }}
           </win-btn>
         </div>
 

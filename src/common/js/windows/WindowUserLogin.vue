@@ -49,8 +49,8 @@
 
         <!-- Buttons -->
         <div class="col-auto col-sm-2 p-0 login-buttons">
-          <win-btn class="mb-2 text-bold" @click="login" :disabled="sending">{{ t('win.user_login.sign_in') }}</win-btn>
-          <win-btn class="mb-2" @click="openRegister">{{ t('win.user_login.register') }}</win-btn>
+          <win-btn class="mb-2 text-bold" @click="login" :disabled="sending">{{ t('win.user_login.btn_sign_in') }}</win-btn>
+          <win-btn class="mb-2" @click="openRegister">{{ t('win.user_login.btn_register') }}</win-btn>
           <win-btn @click="winProps.close()">{{ t('buttons.cancel') }}</win-btn>
         </div>
       </div>

@@ -1,1 +1,21 @@
-{}
+{
+    "buttons": {
+        "change": "Cambiar",
+        "close": "Cerrar",
+        "cancel": "Cancelar",
+        "continue": "Continuar",
+        "ok": "Aceptar"
+    },
+    "errors": {
+        "email_incorrect": "El Email es incorrecto.",
+        "enter_email": "Por favor ingrese el email.",
+        "enter_user_pass": "Por favor ingrese nombre de usuario y contraseña.",
+        "error": "Error",
+        "password_short": "La contraseña es muy corta.",
+        "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para usar el botón Like.",
+        "server": "{error}",
+        "user_fetch": "No se pueden recuperar los datos del usuario.",
+        "enter_current_password": "Ingrese la contraseña actual.",
+        "passwords_match": "La contraseña no coincide."
+    }
+}

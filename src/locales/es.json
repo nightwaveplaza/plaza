@@ -95,7 +95,8 @@
             "theme": "Tema",
             "title": "Configuración de apariencia",
             "top": "Primero",
-            "author": "Autor"
+            "author": "Autor",
+            "language": "Idioma…"
         },
         "song": {
             "album": "Álbum",
@@ -128,11 +129,54 @@
         },
         "support": {
             "boosty": "Apóyanos en Boosty",
-            "rewards": "¡Puedes patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y obtener recompensas especiales de Discord!"
+            "rewards": "¡Puedes patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y obtener recompensas especiales de Discord!",
+            "thanks": "Gracias por las donaciones, serán dirigídas a financiar la estación.",
+            "title": "Apóyanos",
+            "title2": "¿Te gusta Nightwave Plaza?"
         },
         "settings_language": {
             "select": "Seleccione el idioma",
-            "title": "Selección de idioma"
+            "title": "Selección de idioma",
+            "help": "¿Quieres ayudar a traducir Nightwave Plaza? {link}"
+        },
+        "user_register": {
+            "title": "Registro",
+            "btn_register": "Registrarse",
+            "captcha_desc": "Por favor completa este irritante captcha.",
+            "captcha_fail": "La validación del captcha falló.",
+            "user_information": "Información de usuario",
+            "welcome": "¡Bienvenido a Nightwave Plaza, {user}!",
+            "captcha_title": "¿Sigues siendo un humano?",
+            "please_fill": "Por favor complete el formulario de registro. Todos los campos son obligatorios.",
+            "success": "Registro completo"
+        },
+        "user": {
+            "btn_logout": "Cerrar sesión",
+            "title": "Mi Perfil"
+        },
+        "user_email": {
+            "title": "Cambiar correo electrónico"
+        },
+        "user_favorites": {
+            "list_empty": "Tu lista está vacía. Haga clic en el botón {icon} para agregar canciones a esta lista.",
+            "remove": "Eliminar",
+            "title": "Mis favoritos"
+        },
+        "user_login": {
+            "btn_register": "Registrarse",
+            "btn_reset": "Reiniciar",
+            "btn_sign_in": "Iniciar sesión",
+            "remember_me": "Recordar usuario",
+            "title": "Iniciar sesión",
+            "type_username": "Escriba nombre de usuario y contraseña para iniciar sesión en Nightwave Plaza."
+        },
+        "user_password": {
+            "title": "Cambiar contraseña"
+        },
+        "user_reset": {
+            "enter_email": "Introduce tu correo electrónico",
+            "instruction": "Ingrese su dirección de correo electrónico y haga clic en el botón — se le enviará un correo electrónico con un enlace para restablecer su contraseña.",
+            "title": "Restablecer contraseña"
         }
     }
 }

@@ -7,6 +7,7 @@ import WindowLoading from '@common/js/windows/WindowLoading.vue'
 import WindowNews from '@common/js/windows/WindowNews.vue'
 import WindowRatings from '@common/js/windows/WindowRatings.vue'
 import WindowSettingsBackground from '@common/js/windows/WindowSettingsBackground.vue'
+import WindowSettingsLanguage from '@common/js/windows/WindowSettingsLanguage.vue'
 import WindowSong from '@common/js/windows/WindowSong.vue'
 import WindowUser from '@common/js/windows/WindowUser.vue'
 import WindowUserEmail from '@common/js/windows/WindowUserEmail.vue'
@@ -26,6 +27,7 @@ export default {
     app.component('window-news', WindowNews)
     app.component('window-ratings', WindowRatings)
     app.component('window-settings-background', WindowSettingsBackground)
+    app.component('window-settings-language', WindowSettingsLanguage)
     app.component('window-song', WindowSong)
     app.component('window-user', WindowUser)
     app.component('window-user-email', WindowUserEmail)

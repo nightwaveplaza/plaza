@@ -1,5 +1,20 @@
 {
-    "errors": {
-        "server": "{error}"
+  "buttons": {
+    "cancel": "Cancel",
+    "change": "Change",
+    "close": "Закрыть",
+    "continue": "Continue",
+    "ok": "OK"
+  },
+  "errors": {
+    "server": "{error}"
+  },
+  "loading": "asd",
+  "win": {
+    "settings_language": {
+      "help": "",
+      "select": "",
+      "title": ""
     }
+  }
 }

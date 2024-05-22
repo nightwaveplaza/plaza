@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="row no-gutters mb-2">
+      <div class="row no-gutters mb-3">
         <div class="col-7">
           <div class="group-box p-2 mr-1">
             <div class="gb-label noselect">{{ t('win.settings.theme') }}</div>
@@ -81,9 +81,9 @@
         </div>
       </div>
 
-
-      <div class="text-center">
-        <win-btn class="mx-auto px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+      <div class="d-flex justify-content-between">
+        <win-btn class="px-2" @click="openLanguageSettings">Language…</win-btn>
+        <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
       </div>
     </div>
   </win-window>
@@ -95,8 +95,11 @@ import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { enBackgroundMode, type BackgroundImage } from '@common/js/types'
+import { useWindowsStore } from '@common/js/stores/windowsStore.ts'
 
 const { t } = useI18n()
+
+const windowsStore = useWindowsStore()
 const appearanceStore = useAppearanceStore()
 const backgroundList = ref<BackgroundImage[]>([])
 
@@ -169,6 +172,11 @@ function findIndex (background: BackgroundImage) {
   })
 
   return index < 0 ? 0 : index
+}
+
+function openLanguageSettings() {
+  windowsStore.open('settings-language')
+  windowsStore.close('settings-background')
 }
 
 onMounted(() => {

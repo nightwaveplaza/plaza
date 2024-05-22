@@ -13,7 +13,7 @@
         "enter_user_pass": "Por favor ingrese nombre de usuario y contraseña.",
         "error": "Error",
         "password_short": "La contraseña es muy corta.",
-        "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para poder usar esta función.",
+        "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para poder usar esta función.",
         "server": "{error}",
         "user_fetch": "No es posible obtener los datos del usuario.",
         "enter_current_password": "Ingrese la contraseña actual.",
@@ -109,7 +109,7 @@
             "title": "Información de la canción"
         },
         "mobile": {
-            "description": "Disponemos de las aplicaciones oficiales de Android e iOS. Por favor, descárgalelas y deje que Nightwave Plaza le muestre el pasado a través de la música del futuro."
+            "description": "Disponemos de las aplicaciones oficiales de Android e iOS. Por favor, descárgalelas y deje que Nightwave Plaza le muestre el pasado a través de la música del futuro."
         },
         "news": {
             "title": "Novedades"
@@ -138,7 +138,7 @@
         "settings_language": {
             "select": "Seleccione el idioma",
             "title": "Selección de idioma",
-            "help": "¿Quieres ayudar a traducir Nightwave Plaza? {link}"
+            "help": "¿Quieres ayudar a traducir Nightwave Plaza? {link}"
         },
         "user_register": {
             "title": "Registro",
@@ -169,7 +169,7 @@
             "btn_sign_in": "Iniciar sesión",
             "remember_me": "Recordar usuario",
             "title": "Iniciar sesión",
-            "type_username": "Escriba nombre de usuario y contraseña para iniciar sesión en Nightwave Plaza."
+            "type_username": "Escriba nombre de usuario y contraseña para iniciar sesión en Nightwave Plaza."
         },
         "user_password": {
             "title": "Cambiar contraseña"

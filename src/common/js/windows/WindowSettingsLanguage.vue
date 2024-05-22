@@ -1,12 +1,14 @@
 <template>
   <win-window :width="250" name="settings-language" :title="t('win.settings_language.title')" v-slot="winProps">
-    <div class="p-3">
-      <div class="group-box p-2">
+    <div class="p-2">
+      <div class="group-box">
         <div class="gb-label noselect">{{ t('win.settings_language.select') }}</div>
-        <div class="select">
-          <select @change="switchLanguage">
-            <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === settingsStore.language"  />
-          </select>
+        <div class="gb-content p-2">
+          <div class="select">
+            <select @change="switchLanguage">
+              <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === settingsStore.language"  />
+            </select>
+          </div>
         </div>
       </div>
 

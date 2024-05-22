@@ -2,28 +2,30 @@
   <win-window :width="360" :name="name" :title="t('win.song.title')" v-slot="winProps">
     <div class="p-2 song-info">
       <div v-if="song.id !== ''">
-        <div class="group-box p-2 m-0">
-          <div class="row">
-            <div class="col">
-              <div class="mb-1">
-                <div class="noselect"><strong>{{ t('win.song.artist') }}:</strong><br/></div>
-                {{ song.artist }}
+        <div class="group-box m-0">
+          <div class="gb-content p-2">
+            <div class="row mt-0">
+              <div class="col">
+                <div class="mb-1">
+                  <div class="noselect"><strong>{{ t('win.song.artist') }}:</strong><br/></div>
+                  {{ song.artist }}
+                </div>
+                <div class="mb-1">
+                  <div class="noselect"><strong>{{ t('win.song.album') }}:</strong><br/></div>
+                  {{ song.album }}
+                </div>
+                <div class="mb-2">
+                  <div class="noselect"><strong>{{ t('win.song.song_title') }}:</strong><br/></div>
+                  {{ song.title }}
+                </div>
+                <div>
+                  <i class="i icon-clock"/> {{ songLength }} &nbsp;
+                  <i class="i icon-like" style="color: #c12727"/> {{ song.likes }}
+                </div>
               </div>
-              <div class="mb-1">
-                <div class="noselect"><strong>{{ t('win.song.album') }}:</strong><br/></div>
-                {{ song.album }}
+              <div class="col-5">
+                <img :src="artwork" alt="artwork" class="artwork simple-border">
               </div>
-              <div class="mb-2">
-                <div class="noselect"><strong>{{ t('win.song.song_title') }}:</strong><br/></div>
-                {{ song.title }}
-              </div>
-              <div>
-                <i class="i icon-clock"/> {{ songLength }} &nbsp;
-                <i class="i icon-like" style="color: #c12727"/> {{ song.likes }}
-              </div>
-            </div>
-            <div class="col-5">
-              <img :src="artwork" alt="artwork" class="artwork simple-border">
             </div>
           </div>
         </div>

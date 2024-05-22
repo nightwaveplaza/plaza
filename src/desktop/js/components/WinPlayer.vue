@@ -128,7 +128,7 @@ function startPlay () {
   const noCacheStr = 'nocache=' + Date.now()
   audio.value!.type = 'audio/mpeg'
   if (settingsStore.lowQuality) {
-    audio.value!.src = 'https://radio.plaza.one/mp3_96?' + noCacheStr
+    audio.value!.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
   } else {
     audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
   }

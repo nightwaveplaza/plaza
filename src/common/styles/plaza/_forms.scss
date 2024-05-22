@@ -3,18 +3,25 @@
 
 .group-box {
   position: relative;
-  margin-top: 4px;
-  padding-top: 12px !important;
-  border: 1px solid;
-  @include border-shadow('window-shadow');
-  @include border-color-tl('content-border-left');
-  @include border-color-rb('content-border-right');
+  padding-top: 4px;
+
+  .gb-content {
+    position: relative;
+    border: 1px solid;
+    @include border-shadow('window-shadow');
+    @include border-color-tl('content-border-left');
+    @include border-color-rb('content-border-right');
+
+    > div {
+      margin-top: 2px;
+    }
+  }
 
   .gb-label {
     position: absolute;
-    top: -8px;
-    left: 5px;
-    padding: 0 2px;
+    top: -3px;
+    left: 8px;
+    z-index: 5;
     @include background-color('btn-bg-color');
   }
 }

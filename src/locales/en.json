@@ -1,180 +1,181 @@
 {
-  "buttons": {
-    "cancel": "Cancel",
-    "change": "Change",
-    "close": "Close",
-    "continue": "Continue",
-    "ok": "OK"
-  },
-  "errors": {
-    "email_incorrect": "Email is incorrect.",
-    "enter_current_password": "Enter current password.",
-    "enter_email": "Please enter email.",
-    "enter_user_pass": "Please enter user name and password.",
-    "error": "Error",
-    "password_short": "Password too short.",
-    "passwords_match": "Passwords didn't match.",
-    "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
-    "server": "{error}",
-    "user_fetch": "Can't fetch user data.",
-    "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",
-    "username_long": "User name is too long.",
-    "username_short": "User name is too short."
-  },
-  "fields": {
-    "current_password": "Current password",
-    "email": "Email",
-    "new_password": "New password",
-    "password": "Password",
-    "repeat_password": "Password repeat",
-    "username": "User name"
-  },
-  "loading": "Loading…",
-  "menu": {
-    "about": "About",
-    "mobile": "Mobile",
-    "play_history": "Play History",
-    "ratings": "Ratings",
-    "support_us": "Support Us"
-  },
-  "messages": {
-    "auth_success": "Authentication successful!",
-    "email_changed": "Email has changed!",
-    "nice": "N I C E",
-    "password_changed": "Password has changed!",
-    "reaction_tip": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
-    "reset_success": "Instructions have been sent to your email.",
-    "success": "Success!"
-  },
-  "pagination": {
-    "pages": "Pages: {n}",
-    "songs": "Songs: {n}"
-  },
-  "win": {
-    "about": {
-      "btn_credits": "Credits",
-      "btn_news": "News",
-      "contact_info": "Contact Information",
-      "discord": "Join our community {discord} server!",
-      "playlists": "Playlists",
-      "send_enquires": "Please send any enquiries you may have to {link}.",
-      "streams": "Streams",
-      "submission_form": "Please use {link} to send music for broadcasting.",
-      "submission_link": "this form",
-      "submissions": "Submissions",
-      "title": "About",
-      "useful_links": "Useful links",
-      "version": "Version",
-      "welcome": "Welcome to 24/7 online vaporwave and future funk radio station."
+    "buttons": {
+        "cancel": "Cancel",
+        "change": "Change",
+        "close": "Close",
+        "continue": "Continue",
+        "ok": "OK"
     },
-    "credits": {
-      "content": "All music and background images",
-      "content_by": "{content} belong to the authors. Musical content has been provided by authors and music labels. If you have any copyright issue, please let us know.",
-      "created_by": "{app} website and apps created and maintained by {author}.",
-      "title": "Credits"
+    "errors": {
+        "email_incorrect": "Email is incorrect.",
+        "enter_current_password": "Enter current password.",
+        "enter_email": "Please enter email.",
+        "enter_user_pass": "Please enter user name and password.",
+        "error": "Error",
+        "password_short": "Password is too short.",
+        "passwords_match": "Passwords didn't match.",
+        "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
+        "server": "{error}",
+        "user_fetch": "Can't fetch user data.",
+        "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",
+        "username_long": "User name is too long.",
+        "username_short": "User name is too short."
     },
-    "delete_account": {
-      "if_you_want": "If you want to delete your account please contact us on {email}",
-      "title": "Delete Account",
-      "title2": "Account deletion",
-      "will_be_deleted": "You account and all associated data will be permanently deleted (favorites and like history)."
+    "fields": {
+        "current_password": "Current password",
+        "email": "Email",
+        "new_password": "New password",
+        "password": "Password",
+        "repeat_password": "Password repeat",
+        "username": "User name"
     },
-    "history": {
-      "showing_history": "Showing history: {from} — {to}.",
-      "title": "Play History"
+    "loading": "Loading…",
+    "menu": {
+        "about": "About",
+        "mobile": "Mobile",
+        "play_history": "Play History",
+        "ratings": "Ratings",
+        "support_us": "Support Us"
     },
-    "mobile": {
-      "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
+    "messages": {
+        "auth_success": "Authentication successful!",
+        "email_changed": "Email has changed!",
+        "nice": "N I C E",
+        "password_changed": "Password has changed!",
+        "reaction_tip": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
+        "reset_success": "Instructions have been sent to your email.",
+        "success": "Success!"
     },
-    "news": {
-      "title": "News"
+    "pagination": {
+        "pages": "Pages: {n}",
+        "songs": "Songs: {n}"
     },
-    "player": {
-      "btn_play": "Play",
-      "btn_stop": "Stop",
-      "listeners": "Listeners: {listeners}",
-      "user": "Logged as: {user}",
-      "volume": "Volume:  {volume}%",
-      "welcome": "Welcome back!"
-    },
-    "ratings": {
-      "btn_monthly": "Monthly",
-      "btn_overtime": "Overtime",
-      "btn_weekly": "Weekly",
-      "title": "Ratings"
-    },
-    "settings": {
-      "author": "Author",
-      "background": "Background",
-      "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
-      "bottom": "Bottom",
-      "btn_random": "Random",
-      "btn_solid": "Solid",
-      "let_us_know": "Let us know!",
-      "source": "Source",
-      "taskbar": "Taskbar",
-      "theme": "Theme",
-      "title": "Appearance Settings",
-      "top": "Top"
-    },
-    "settings_language": {
-      "select": "Select language",
-      "title": "Language Selection"
-    },
-    "song": {
-      "album": "Album",
-      "artist": "Artist",
-      "btn_play_preview": "Play preview",
-      "btn_stop": "Stop ({time})",
-      "first_played": "First played",
-      "song_title": "Title",
-      "title": "Song Info"
-    },
-    "support": {
-      "boosty": "Support on Boosty",
-      "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
-      "thanks": "Thank you for donations, they will go straight into funding the station.",
-      "title": "Support Us",
-      "title2": "Love Nightwave Plaza?"
-    },
-    "user": {
-      "btn_logout": "Logout",
-      "title": "My Profile"
-    },
-    "user_email": {
-      "title": "Change Email"
-    },
-    "user_favorites": {
-      "list_empty": "Your list is empty. Click the {icon} button to add songs to this list.",
-      "remove": "Remove",
-      "title": "My Favorites"
-    },
-    "user_login": {
-      "btn_register": "Register",
-      "btn_reset": "Reset",
-      "btn_sign_in": "Sign In",
-      "remember_me": "Remember me",
-      "title": "Sign In",
-      "type_username": "Type a username and password to sign in to the Nightwave Plaza."
-    },
-    "user_password": {
-      "title": "Change Password"
-    },
-    "user_register": {
-      "btn_register": "Register",
-      "captcha_desc": "Please fill this annoying captcha.",
-      "captcha_fail": "Captcha validation failed.",
-      "captcha_title": "are you still human?",
-      "please_fill": "Please fill out the registration form. All fields are required.",
-      "success": "Registration complete",
-      "title": "Registration",
-      "user_information": "User Information",
-      "welcome": "Welcome to Nightwave Plaza, {user}!"
-    },
-    "user_reset": {
-      "enter_email": "Enter your Email",
-      "instruction": "Enter your email address and click the button — an email will be sent to you with a link to reset your password.",
-      "title": "Reset password"
+    "win": {
+        "about": {
+            "btn_credits": "Credits",
+            "btn_news": "News",
+            "contact_info": "Contact Information",
+            "discord": "Join our community {discord} server!",
+            "playlists": "Playlists",
+            "send_enquires": "Please send any enquiries you may have to {link}.",
+            "streams": "Streams",
+            "submission_form": "Please use {link} to send music for broadcasting.",
+            "submission_link": "this form",
+            "submissions": "Submissions",
+            "title": "About",
+            "useful_links": "Useful links",
+            "version": "Version",
+            "welcome": "Welcome to 24/7 online vaporwave and future funk radio station."
+        },
+        "credits": {
+            "content": "All music and background images",
+            "content_by": "{content} belong to the authors. Musical content has been provided by authors and music labels. If you have any copyright issue, please let us know.",
+            "created_by": "{app} website and apps created and maintained by {author}.",
+            "title": "Credits"
+        },
+        "delete_account": {
+            "if_you_want": "If you want to delete your account please contact us on {email}",
+            "title": "Delete Account",
+            "title2": "Account deletion",
+            "will_be_deleted": "You account and all associated data will be permanently deleted (favorites and like history)."
+        },
+        "history": {
+            "showing_history": "Showing history: {from} — {to}.",
+            "title": "Play History"
+        },
+        "mobile": {
+            "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
+        },
+        "news": {
+            "title": "News"
+        },
+        "player": {
+            "btn_play": "Play",
+            "btn_stop": "Stop",
+            "listeners": "Listeners: {listeners}",
+            "user": "Logged as: {user}",
+            "volume": "Volume: {volume}%",
+            "welcome": "Welcome back!"
+        },
+        "ratings": {
+            "btn_monthly": "Monthly",
+            "btn_overtime": "Overtime",
+            "btn_weekly": "Weekly",
+            "title": "Ratings"
+        },
+        "settings": {
+            "author": "Author",
+            "background": "Background",
+            "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
+            "bottom": "Bottom",
+            "btn_random": "Random",
+            "btn_solid": "Solid",
+            "let_us_know": "Let us know!",
+            "source": "Source",
+            "taskbar": "Taskbar",
+            "theme": "Theme",
+            "title": "Appearance Settings",
+            "top": "Top"
+        },
+        "settings_language": {
+            "select": "Select language",
+            "title": "Language Selection",
+            "help": "Do you want to help translate Nightwave Plaza? {link}"
+        },
+        "song": {
+            "album": "Album",
+            "artist": "Artist",
+            "btn_play_preview": "Play preview",
+            "btn_stop": "Stop ({time})",
+            "first_played": "First played",
+            "song_title": "Title",
+            "title": "Song Info"
+        },
+        "support": {
+            "boosty": "Support on Boosty",
+            "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
+            "thanks": "Thank you for donations, they will go straight into funding the station.",
+            "title": "Support Us",
+            "title2": "Love Nightwave Plaza?"
+        },
+        "user": {
+            "btn_logout": "Logout",
+            "title": "My Profile"
+        },
+        "user_email": {
+            "title": "Change Email"
+        },
+        "user_favorites": {
+            "list_empty": "Your list is empty. Click the {icon} button to add songs to this list.",
+            "remove": "Remove",
+            "title": "My Favorites"
+        },
+        "user_login": {
+            "btn_register": "Register",
+            "btn_reset": "Reset",
+            "btn_sign_in": "Sign In",
+            "remember_me": "Remember me",
+            "title": "Sign In",
+            "type_username": "Type a username and password to sign in to the Nightwave Plaza."
+        },
+        "user_password": {
+            "title": "Change Password"
+        },
+        "user_register": {
+            "btn_register": "Register",
+            "captcha_desc": "Please fill this annoying captcha.",
+            "captcha_fail": "Captcha validation failed.",
+            "captcha_title": "are you still human?",
+            "please_fill": "Please fill out the registration form. All fields are required.",
+            "success": "Registration complete",
+            "title": "Registration",
+            "user_information": "User Information",
+            "welcome": "Welcome to Nightwave Plaza, {user}!"
+        },
+        "user_reset": {
+            "enter_email": "Enter your Email",
+            "instruction": "Enter your email address and click the button — an email will be sent to you with a link to reset your password.",
+            "title": "Reset password"
+        }
     }
-  }
 }

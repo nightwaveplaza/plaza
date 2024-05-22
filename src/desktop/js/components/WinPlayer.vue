@@ -26,17 +26,17 @@
         </div>
 
         <div class="row no-gutters">
-          <div class="col-6 col-md-7 pr-md-2">
+          <div class="col-7 col-md-7 pr-md-2">
             <div class="row no-gutters">
-              <div class="col-6 col-md-8">
+              <div class="col-7 col-md-8">
                 <win-btn class="player-play" block @click="play()" v-html="playText"/>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-5 col-md-4">
                 <win-player-reactions/>
               </div>
             </div>
           </div>
-          <div class="col-6 col-md-5">
+          <div class="col-5 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
                 <win-btn block @click="userAuthStore.signed ? windowsStore.open('user') : windowsStore.open('user-login')">

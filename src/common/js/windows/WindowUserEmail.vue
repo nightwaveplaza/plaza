@@ -1,21 +1,21 @@
 <template>
-  <win-window ref="win" :width="250" name="user-email" title="Change Email" v-slot="winProps">
+  <win-window ref="win" :width="250" name="user-email" :title="t('win.user_email.title')" v-slot="winProps">
     <div class="py-2 px-3">
       <!-- Email -->
-      <label for="email">Email:</label>
+      <label for="email">{{ t('fields.email') }}:</label>
       <input id="email" :disabled="disabled" v-model="fields.email" class="d-block mb-2" type="email"/>
 
       <!-- Current password -->
-      <label for="password">Current password:</label>
+      <label for="password">{{ t('fields.current_password') }}:</label>
       <input id="password" :disabled="disabled" v-model="fields.current_password" class="d-block mb-2" type="password"/>
 
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-btn block class="text-bold" @click="update">Change</win-btn>
+          <win-btn block class="text-bold" @click="update" :disabled="sending">{{ t('buttons.change') }}</win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="winProps.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>
     </div>
@@ -28,7 +28,9 @@ import { onMounted, reactive, ref } from 'vue'
 import type { UserEdit } from '@common/js/types'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
@@ -37,44 +39,33 @@ const fields: UserEdit = reactive({
   email: '',
 })
 const disabled = ref(true)
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 function fetchUser () {
   api.user.get().then(res => {
     fields.email = res.data.email
     disabled.value = false
   }).catch(() => {
-    windowsStore.alert('Can\'t fetch user data.', 'Failed')
+    windowsStore.alert(t('errors.user_fetch'), t('errors.error'))
     win.value!.close()
   })
 }
 
 function update () {
-  if (!validate() || sending) {
-    return
+  if (fields.current_password.length === 0) {
+    return windowsStore.alert(t('errors.enter_current_password'), t('errors.error'))
   }
 
-  sending = true
+  sending.value = true
 
   api.user.edit(fields).then(() => {
-    windowsStore.alert('Email has changed!', 'Success', 'info')
+    windowsStore.alert(t('messages.email_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => {
-    sending = false
+    sending.value = false
   })
-}
-
-function validate () {
-  if (fields.current_password.length === 0) {
-    windowsStore.alert('Enter current password.', 'Error')
-    return false
-  }
-
-  return true
 }
 
 onMounted(() => {

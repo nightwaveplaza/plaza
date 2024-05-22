@@ -1,12 +1,13 @@
 <template>
-  <win-window :width="400" fluidHeight name="history" title="Play History" v-slot="winProps">
+  <win-window :width="400" fluidHeight name="history" :title="t('win.history.title')" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
-            <div v-if="data.songs.length > 0" class="col">Showing history: {{ sd(data.from_date) }} &mdash; {{ sd(data.to_date) }}.
+            <div v-if="data.songs.length > 0" class="col">
+              {{ t('win.history.showing_history', {from: sd(data.from_date), to: sd(data.to_date)}) }}
             </div>
-            <div class="col-auto"><a href="https://plaza.one/lastfm" target="_blank">Last.fm history</a></div>
+            <div class="col-auto"><a href="https://plaza.one/lastfm" target="_blank">Last.fm</a></div>
           </div>
         </div>
 
@@ -34,7 +35,7 @@
               <win-pagination v-if="data.songs.length > 0" :pages="data.pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
             </div>
           </div>
         </div>
@@ -42,8 +43,8 @@
     </div>
 
     <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">Pages: {{ data.pages }}</div>
-      <div class="col cell">Songs: {{ data.count }}</div>
+      <div class="col-3 cell d">{{ t('pagination.pages', {n: data.pages}) }}</div>
+      <div class="col cell">{{ t('pagination.songs', {n: data.count}) }}</div>
     </div>
   </win-window>
 </template>
@@ -51,12 +52,14 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import type WinList from '@common/js/components/WinList.vue'
 import type { HistoryResponse } from '@common/js/types'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const { sd, gt } = helperComposable()
 
@@ -87,7 +90,7 @@ async function fetchHistory (page: number) {
     Object.assign(data, res.data)
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => {
     loading.value = false
   })

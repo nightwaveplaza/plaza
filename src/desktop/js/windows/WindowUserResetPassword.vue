@@ -4,20 +4,20 @@
       <div class="row no-gutters">
         <div class="col-10 offset-1">
           <!-- New password -->
-          <label for="password">New password:</label>
+          <label for="password">{{ t('win.user_password.new') }}:</label>
           <input class="d-block mb-2" id="password" type="password" v-model="password"/>
 
           <!-- Repeat password -->
-          <label for="password_repeat">Password repeat:</label>
+          <label for="password_repeat">{{ t('win.user_password.repeat') }}:</label>
           <input class="d-block" id="password_repeat" type="password" v-model="passwordRepeat"/>
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block @click="change" class="text-bold">Change</win-btn>
+              <win-btn block @click="change" class="text-bold">{{ t('buttons.change') }}</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="router.push({name: 'index'})">Cancel</win-btn>
+              <win-btn block @click="router.push({name: 'index'})">{{ t('buttons.cancel') }}</win-btn>
             </div>
           </div>
         </div>
@@ -32,7 +32,9 @@ import { useRouter } from 'vue-router'
 import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const windowsStore = useWindowsStore()
 
@@ -47,36 +49,32 @@ const props = defineProps({
 const win = ref<InstanceType<typeof WinWindow>>()
 const password = ref('')
 const passwordRepeat = ref('')
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 function change () {
-  if (!validate() || sending) {
-    return
+  try {
+    validate()
+  } catch (e) {
+    return windowsStore.alert((e as Error).message, t('errors.error'))
   }
 
-  sending = true
+  sending.value = true
 
   api.user.confirmReset({ token: props.token, password: password.value }).then(() => {
-    windowsStore.alert('Password has changed.', 'Success', 'info')
+    windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
-  }).finally(() => sending = false)
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+  }).finally(() => sending.value = false)
 }
 
 function validate () {
   if (password.value.length < 3) {
-    windowsStore.alert('Password is too short.', 'Error')
-    return false
+    throw new Error(t('errors.password_short'))
   }
 
   if (password.value !== passwordRepeat.value) {
-    windowsStore.alert('Passwords didn\'t match.', 'Error')
-    return false
+    throw new Error(t('errors.passwords_match'))
   }
-
-  return true
 }
 </script>

@@ -11,11 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useAppearanceStore } from '@common/js/stores/appearanceStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
+const i18n = useI18n()
 const appearanceStore = useAppearanceStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
@@ -23,6 +26,10 @@ const windowsStore = useWindowsStore()
 // Appearance
 const backgroundImage = computed(() => appearanceStore.backgroundSrc)
 const backgroundColor = computed(() => appearanceStore.background.color)
+
+watch(() => appearanceStore.language, () => {
+  i18n.locale.value = appearanceStore.language
+})
 
 onMounted(() => {
   windowsStore.open('loading')
@@ -32,6 +39,5 @@ onMounted(() => {
     appearanceStore.loadRandomBackground()
   }
   userAuthStore.loadUser()
-
 })
 </script>

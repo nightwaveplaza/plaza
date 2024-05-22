@@ -5,7 +5,7 @@
     </template>
 
     <div class="p-3">
-      <p class="text-center"><strong>Loading...</strong></p>
+      <p class="text-center"><strong>{{ t('loading') }}</strong></p>
       <div ref="bar" class="text-field progress-bar">
         <div ref="progress" :style="style" class="progress">
           <div/>
@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { MutationType } from 'pinia'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
@@ -28,6 +29,7 @@ import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
@@ -67,7 +69,7 @@ onMounted(() => {
   move()
 
   // waiting for the first status response then check news and open up player
-  playerPlaybackStore.$subscribe((mutation, state) => {
+  playerPlaybackStore.$subscribe((mutation) => {
     if (mutation.type === MutationType.patchObject) {
       api.news.latest().then(res => {
         const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!

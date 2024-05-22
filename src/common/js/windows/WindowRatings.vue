@@ -1,17 +1,17 @@
 <template>
-  <win-window :width="440" fluidHeight name="ratings" title="Ratings" v-slot="winProps">
+  <win-window :width="440" fluidHeight name="ratings" :title="t('win.ratings.title')" v-slot="winProps">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
           <win-btn :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
-            Overtime
+            {{ t('win.ratings.btn_overtime') }}
           </win-btn>
           <win-btn :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
-            Monthly
+            {{ t('win.ratings.btn_monthly') }}
           </win-btn>
           <win-btn :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
-            Weekly
+            {{ t('win.ratings.btn_weekly') }}
           </win-btn>
         </div>
 
@@ -41,7 +41,7 @@
               <win-pagination ref="pagination" :pages="data.pages" @change="changePage"/>
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
             </div>
           </div>
         </div>
@@ -49,8 +49,8 @@
     </div>
 
     <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">Pages: {{ data.pages }}</div>
-      <div class="col cell">Songs: {{ data.count }}</div>
+      <div class="col-3 cell d">{{ t('pagination.pages', {n: data.pages}) }}</div>
+      <div class="col cell">{{ t('pagination.songs', {n: data.count}) }}</div>
     </div>
   </win-window>
 </template>
@@ -64,9 +64,10 @@ import WinWindow from '@common/js/components/WinWindow.vue'
 import type WinList from '@common/js/components/WinList.vue'
 import type WinPagination from '@common/js/components/WinPagination.vue'
 import type { RatingsResponse } from '@common/js/types'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
-
 
 const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()
@@ -90,7 +91,7 @@ function fetchRatings (range: string, page: number) {
     Object.assign(data, res.data)
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   }).finally(() => loading = false)
 }
 

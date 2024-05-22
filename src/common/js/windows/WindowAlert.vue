@@ -11,17 +11,21 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="winProps.close()">OK</win-btn>
+        <win-btn class="mt-2 mx-auto px-4" @click="winProps.close()">{{ t('buttons.ok') }}</win-btn>
       </div>
     </div>
   </win-window>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = defineProps<{
   text: string,
   title: string,
   name: string,
   type: string,
 }>()
+
 </script>

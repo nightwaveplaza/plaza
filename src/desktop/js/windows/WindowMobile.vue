@@ -3,10 +3,7 @@
     <div class="p-2">
       <div class="group-box p-2 mb-3">
         <div class="row no-gutters">
-          <div class="col text-center mr-4">
-            We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the
-            past with the music of the future.
-          </div>
+          <div class="col text-center mr-4">{{ t('win.mobile.description') }}</div>
           <div class="col-auto">
             <img src="/img/mobilen.gif"/>
           </div>
@@ -30,9 +27,15 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="winProps.close()">Close</win-btn>
+          <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>
     </div>
   </win-window>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>

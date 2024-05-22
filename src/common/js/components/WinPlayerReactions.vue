@@ -5,17 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
+import { AxiosError } from 'axios'
+import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserReactionStore } from '@common/js/stores/userReactionStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { prefs } from '@common/js/extras/prefs'
-import { AxiosError } from 'axios'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
 
+const { t } = useI18n()
 const playerPlaybackStore = usePlayerPlaybackStore()
 const userReactionStore = useUserReactionStore()
 const windowsStore = useWindowsStore()
@@ -59,7 +61,7 @@ function send (score: number) {
     showTip()
   }).catch(e => {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert('Please sign in to your Nightwave Plaza account to use the like button.', 'Error')
+      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
   }).finally(() => {
     sending = false
@@ -70,14 +72,12 @@ function showTip () {
   const showed = prefs.get<number>('reactionTip', 0)
   if (showed > 0) return
 
-  windowsStore.alert(`You have liked the song. Nice!<br />
-                        Clicking the <i class="i icon-like"></i> button twice will add song to your favorites list. Give it a try!`,
-    'N I C E', 'info')
+  windowsStore.alert(
+      t('messages.reaction_tip', {icon: '<i class="i icon-like"></i>'}),
+      t('messages.nice'),
+      'info'
+  )
 
   prefs.save('reactionTip', 1)
 }
-
-onMounted(() => {
-
-})
 </script>

@@ -61,18 +61,20 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { MutationType } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import visualComposable from '@common/js/composables/visualComposable'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import type WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
-import { MutationType } from 'pinia'
 
 // const
 const STATE_IDLE = 0
 const STATE_LOADING = 1
 const STATE_PLAYING = 2
 
+const { t } = useI18n()
 const { startVisual } = visualComposable()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
@@ -88,9 +90,9 @@ const artwork = computed(() => {
   else return 'https://i.plaza.one/artwork_dead.jpg'
 })
 const playText = computed(() => {
-  if (state.value === STATE_IDLE) return 'Play'
-  else if (state.value === STATE_LOADING) return 'Loading...'
-  else return 'Stop'
+  if (state.value === STATE_IDLE) return t('win.player.btn_play')
+  else if (state.value === STATE_LOADING) return t('loading')
+  else return t('win.player.btn_stop')
 })
 
 // Non-reactive
@@ -154,7 +156,7 @@ function stopPlay () {
 
 function setVolume (volume: number) {
   updateVolume(volume)
-  time.value!.showText('Volume: ' + volume + '%')
+  time.value!.showText(t('win.player.volume', {volume}))
 }
 
 function updateVolume (newVolume: number) {

@@ -4,4 +4,19 @@
       bottom: 0;
     }
   }
+
+  .gb-label {
+    font-size: 12px;
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 150%;
+
+    &.lead {
+      font-size: 14px;
+      font-style: italic;
+      font-weight: 700;
+    }
+  }
 }

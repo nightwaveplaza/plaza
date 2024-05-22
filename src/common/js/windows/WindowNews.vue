@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="350" name="news" title="News" v-slot="winProps">
+  <win-window :width="350" name="news" :title="t('win.news.title')" v-slot="winProps">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading"></div>
@@ -16,7 +16,7 @@
           <win-pagination v-if="length > 0" :pages="pages" @change="changePage"/>
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="winProps.close()">Close</win-btn>
+          <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
         </div>
       </div>
     </div>
@@ -28,7 +28,9 @@ import { onMounted, ref } from 'vue'
 import { api } from '@common/js/api/api'
 import helperComposable from '@common/js/composables/helperComposable'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const { sdy } = helperComposable()
 const windowsStore = useWindowsStore()
 
@@ -46,7 +48,7 @@ function getArticle () {
     article.value = res.data.articles[0]
     pages.value = res.data.pages
   }).catch(e => {
-    windowsStore.alert((e as Error).message, 'Error')
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
   })
 }
 

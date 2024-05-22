@@ -19,23 +19,21 @@
 
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
-      <div class="col cell">
-        Listeners: {{ playerPlaybackStore.listeners }}
-      </div>
-      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
-        Logged as: {{ userAuthStore.username }}
-      </div>
+      <div class="col cell">{{ t('win.player.listeners', {listeners: playerPlaybackStore.listeners}) }}</div>
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">{{ t('win.player.user', {user: userAuthStore.username}) }}</div>
     </div>
   </win-window>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 
+const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()

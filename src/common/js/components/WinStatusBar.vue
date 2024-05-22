@@ -15,11 +15,11 @@ const themeColors = {
 const appearanceStore = useAppearanceStore()
 
 // Safari status bar
-watch(() => appearanceStore.theme, (n) => {
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[appearanceStore.theme])
+watch(() => appearanceStore.theme, () => {
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[appearanceStore.theme as keyof typeof themeColors])
 })
 
 onMounted(() => {
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[appearanceStore.theme])
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[appearanceStore.theme as keyof typeof themeColors])
 })
 </script>

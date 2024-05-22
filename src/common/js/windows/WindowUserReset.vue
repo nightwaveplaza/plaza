@@ -1,14 +1,13 @@
 <template>
-  <win-window ref="win" :width="320" name="user-reset" title="Reset password" v-slot="winProps">
+  <win-window ref="win" :width="320" name="user-reset" :title="t('win.user_reset.title')" v-slot="winProps">
     <div class="p-2">
 
-      <p class="pb-3 px-3 text-center">Enter your email address and click the
-        button &mdash; an email will be sent to you with a link to reset your password.</p>
+      <p class="pb-3 px-3 text-center">{{ t('win.user_reset.instruction') }}</p>
 
       <!-- Email -->
       <div class="row no-gutters mb-3">
         <div class="col-6 offset-3">
-          <label for="email">Enter your Email:</label>
+          <label for="email">{{ t('win.user_reset.enter_email') }}:</label>
           <input id="email" v-model="fields.email" class="d-block" type="email"/>
         </div>
       </div>
@@ -20,10 +19,10 @@
         <div class="col-sm-8 offset-sm-2">
           <div class="py-2 row no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="reset">Reset</win-btn>
+              <win-btn block class="text-bold" @click="reset" :disabled="sending">{{ t('win.user_login.btn_reset') }}</win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="winProps.close()">Close</win-btn>
+              <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
             </div>
           </div>
         </div>
@@ -34,12 +33,14 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@common/js/components/WinWindow.vue'
 import type { UserReset } from '@common/js/types'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 
 const fields: UserReset = reactive({
@@ -49,36 +50,26 @@ const fields: UserReset = reactive({
 const win = ref<InstanceType<typeof WinWindow>>()
 const showCaptcha = ref(false)
 const captchaResponse = ref('')
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 function reset () {
-  if (!validate() || sending) {
-    return
+  if (fields.email.length === 0) {
+    return windowsStore.alert(t('errors.enter_email'), t('errors.error'))
   }
 
   showCaptcha.value = true
 }
 
 function completeCaptcha () {
-  sending = true
+  sending.value = true
 
   api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
-    windowsStore.alert('Instructions have been sent to your email.', 'Success', 'info')
+    windowsStore.alert(t('messages.reset_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
     showCaptcha.value = false
-    windowsStore.alert((e as Error).message, 'Error')
-  }).finally(() => sending = false)
-}
-
-function validate () {
-  if (fields.email.length === 0) {
-    windowsStore.alert('Enter email.', 'Error')
-    return false
-  }
-  return true
+    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+  }).finally(() => sending.value = false)
 }
 
 watch(captchaResponse, () => {

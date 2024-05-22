@@ -115,7 +115,8 @@
             "taskbar": "Taskbar",
             "theme": "Theme",
             "title": "Appearance Settings",
-            "top": "Top"
+            "top": "Top",
+            "language": "Language…"
         },
         "settings_language": {
             "select": "Select language",

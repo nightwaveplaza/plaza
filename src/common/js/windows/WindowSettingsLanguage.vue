@@ -5,7 +5,7 @@
         <div class="gb-label noselect">{{ t('win.settings_language.select') }}</div>
         <div class="select">
           <select @change="switchLanguage">
-            <option v-for="(lang, name) in _locales" :value="lang" v-html="lang.name" :selected="name === appearanceStore.language"  />
+            <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === appearanceStore.language"  />
           </select>
         </div>
       </div>

@@ -5,17 +5,17 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
 
-import { useAppearanceStore } from '@common/js/stores/appearanceStore.js'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 import { useI18n } from 'vue-i18n'
 
-const appearanceStore = useAppearanceStore()
+const settingsStore = useSettingsStore()
 const i18n = useI18n()
 
-watch(() => appearanceStore.language, () => {
-  i18n.locale.value = appearanceStore.language
+watch(() => settingsStore.language, () => {
+  i18n.locale.value = settingsStore.language
 })
 
 onMounted(() => {
-  appearanceStore.loadSettings()
+  settingsStore.loadSettings()
 })
 </script>

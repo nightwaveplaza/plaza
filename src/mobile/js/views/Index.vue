@@ -1,5 +1,5 @@
 <template>
-  <div :class="appearanceStore.themeName" :style="{backgroundColor}" class="app-desktop">
+  <div :class="settingsStore.themeName" :style="{backgroundColor}" class="app-desktop">
     <component v-for="window in windowsStore.windows" :is="window.form"/>
 
     <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue'
 import { Native } from '@mobile/js/bridge/native'
-import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { enBackgroundMode, type Background } from '@common/js/types'
@@ -20,17 +20,17 @@ import useEmitter from '@mobile/js/extra/useEmitter'
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
 
-const appearanceStore = useAppearanceStore()
+const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const emitter = useEmitter()
 
 const backgroundColor = computed(() => {
-  return appearanceStore.background.mode === enBackgroundMode.SOLID ? appearanceStore.background.color : 'transparent'
+  return settingsStore.background.mode === enBackgroundMode.SOLID ? settingsStore.background.color : 'transparent'
 })
 
 function registerEmitterEvents () {
-  emitter.on('resume', () => updateBackgroundNative(appearanceStore.background))
+  emitter.on('resume', () => updateBackgroundNative(settingsStore.background))
   emitter.on('closeWindow', (name: string) => windowsStore.close(name))
   emitter.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
@@ -47,7 +47,7 @@ function updateBackgroundNative (bg: Background) {
 }
 
 // Watch background for changes
-watch(() => appearanceStore.background, (b) => {
+watch(() => settingsStore.background, (b) => {
     if (b.image) {
       updateBackgroundNative(b as Background)
     }
@@ -62,11 +62,11 @@ onMounted(() => {
 
   windowsStore.open('loading')
 
-  appearanceStore.loadSettings()
-  if (appearanceStore.isBackgroundRandomMode) {
-    appearanceStore.loadRandomBackground()
+  settingsStore.loadSettings()
+  if (settingsStore.isBackgroundRandomMode) {
+    settingsStore.loadRandomBackground()
   } else {
-    updateBackgroundNative(appearanceStore.background)
+    updateBackgroundNative(settingsStore.background)
   }
 
   Native.getAuthToken()!.then(t => {

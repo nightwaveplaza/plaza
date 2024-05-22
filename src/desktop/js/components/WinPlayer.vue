@@ -68,6 +68,7 @@ import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import type WinPlayerTime from '@common/js/components/WinPlayerTime.vue'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 
 // const
 const STATE_IDLE = 0
@@ -76,6 +77,7 @@ const STATE_PLAYING = 2
 
 const { t } = useI18n()
 const { startVisual } = visualComposable()
+const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
@@ -125,7 +127,11 @@ function play () {
 function startPlay () {
   const noCacheStr = 'nocache=' + Date.now()
   audio.value!.type = 'audio/mpeg'
-  audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+  if (settingsStore.lowQuality) {
+    audio.value!.src = 'https://radio.plaza.one/mp3_96?' + noCacheStr
+  } else {
+    audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+  }
 
   audio.value!.load()
   audio.value!.volume = volume

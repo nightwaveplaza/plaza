@@ -7,10 +7,11 @@ interface State {
   background: Background,
   theme: string,
   taskbarPosition: string,
-  language: string
+  language: string,
+  lowQuality: number
 }
 
-export const useAppearanceStore = defineStore('appearanceStore', {
+export const useSettingsStore = defineStore('settingsStore', {
   state: (): State => ({
     background: {
       image: undefined,
@@ -20,7 +21,8 @@ export const useAppearanceStore = defineStore('appearanceStore', {
     },
     theme: 'win98',
     taskbarPosition: 'bottom',
-    language: 'en'
+    language: 'en',
+    lowQuality: 0
   }),
 
   getters: {
@@ -42,6 +44,10 @@ export const useAppearanceStore = defineStore('appearanceStore', {
   },
 
   actions: {
+    saveBackground () {
+      prefs.save<Background>('background', this.background)
+    },
+
     saveTheme () {
       prefs.save<string>('theme', this.theme)
     },
@@ -50,18 +56,19 @@ export const useAppearanceStore = defineStore('appearanceStore', {
       prefs.save<string>('taskbar_position', this.taskbarPosition)
     },
 
-    saveBackground () {
-      prefs.save<Background>('background', this.background)
-    },
-
     saveLanguage() {
       prefs.save<string>('language', this.language)
+    },
+
+    saveQuality() {
+      prefs.save<number>('low_quality', this.lowQuality)
     },
 
     loadSettings() {
       this.background = prefs.get<Background>('background', this.background)
       this.theme = prefs.get<string>('theme', 'win98')
       this.language = prefs.get<string>('language', 'en')
+      this.lowQuality = prefs.get<number>('low_quality', 0)
 
       let defaultTaskbarPosition = 'bottom'
       let userAgent = window.navigator.userAgent

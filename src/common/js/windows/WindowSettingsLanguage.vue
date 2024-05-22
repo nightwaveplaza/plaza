@@ -5,7 +5,7 @@
         <div class="gb-label noselect">{{ t('win.settings_language.select') }}</div>
         <div class="select">
           <select @change="switchLanguage">
-            <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === appearanceStore.language"  />
+            <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === settingsStore.language"  />
           </select>
         </div>
       </div>
@@ -25,14 +25,14 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useAppearanceStore } from '@common/js/stores/appearanceStore.ts'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 import _locales from '@locales/_locales'
 
 const { t } = useI18n()
-const appearanceStore = useAppearanceStore()
+const settingsStore = useSettingsStore()
 
 function switchLanguage(e: Event) {
-  appearanceStore.language = (e.target as HTMLSelectElement).value
-  appearanceStore.saveLanguage()
+  settingsStore.language = (e.target as HTMLSelectElement).value
+  settingsStore.saveLanguage()
 }
 </script>

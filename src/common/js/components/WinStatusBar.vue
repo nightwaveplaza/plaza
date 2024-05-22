@@ -2,7 +2,7 @@
 // iOS safari status bar
 
 import { onMounted, watch } from 'vue'
-import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 
 const themeColors = {
   'win98': '#c0c0c0',
@@ -12,14 +12,14 @@ const themeColors = {
   'desert': '#d5ccbb'
 }
 
-const appearanceStore = useAppearanceStore()
+const settingsStore = useSettingsStore()
 
 // Safari status bar
-watch(() => appearanceStore.theme, () => {
-  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[appearanceStore.theme as keyof typeof themeColors])
+watch(() => settingsStore.theme, () => {
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[settingsStore.theme as keyof typeof themeColors])
 })
 
 onMounted(() => {
-  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[appearanceStore.theme as keyof typeof themeColors])
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[settingsStore.theme as keyof typeof themeColors])
 })
 </script>

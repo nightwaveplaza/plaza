@@ -1,5 +1,5 @@
 <template>
-  <div class="app-desktop" :class="appearanceStore.themeName" :style="{backgroundImage, backgroundColor}">
+  <div class="app-desktop" :class="settingsStore.themeName" :style="{backgroundImage, backgroundColor}">
     <component v-for="window in windowsStore.windows" :is="window.form"/>
 
     <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
@@ -12,23 +12,23 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { useAppearanceStore } from '@common/js/stores/appearanceStore'
+import { useSettingsStore } from '@common/js/stores/settingsStore'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 
-const appearanceStore = useAppearanceStore()
+const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 
 // Appearance
-const backgroundImage = computed(() => appearanceStore.backgroundSrc)
-const backgroundColor = computed(() => appearanceStore.background.color)
+const backgroundImage = computed(() => settingsStore.backgroundSrc)
+const backgroundColor = computed(() => settingsStore.background.color)
 
 onMounted(() => {
   windowsStore.open('loading')
 
-  if (appearanceStore.isBackgroundRandomMode) {
-    appearanceStore.loadRandomBackground()
+  if (settingsStore.isBackgroundRandomMode) {
+    settingsStore.loadRandomBackground()
   }
 
   userAuthStore.loadUser()

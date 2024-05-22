@@ -37,11 +37,11 @@ export const useUserAuthStore = defineStore('userAuthStore', {
         api.user.get().then(res => {
           this.signed = true
           this.username = res.data.username
-        }).catch(() => {})
+        })
       }
     },
 
-    login(userProfile: UserProfile, remember: boolean = false) {
+    login(userProfile: UserProfile, remember = false) {
       if (remember && navigator.cookieEnabled) {
         cookieApi.set('token', userProfile.token, { expires: 180 })
       } else {

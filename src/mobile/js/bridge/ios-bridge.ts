@@ -25,8 +25,7 @@ export const iOSBridge = {
 
 function sendMessage (name: string, args?: string[]) {
 
-  if (window.webkit && window.webkit.messageHandlers &&
-    window.webkit.messageHandlers.plaza) {
+  if (window.webkit?.messageHandlers && window.webkit?.messageHandlers.plaza) {
     const callbackId = uuid.v4()
 
     window.webkit.messageHandlers.plaza.postMessage({

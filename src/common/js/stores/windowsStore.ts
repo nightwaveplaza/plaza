@@ -69,7 +69,7 @@ export const useWindowsStore = defineStore('windowsStore', {
       }
     },
 
-    alert (text: string, title: string, type: string = 'warn') {
+    alert (text: string, title: string, type = 'warn') {
       const id = Math.random().toString(36).substr(2, 9)
       this.open('alert-' + id, {
         id, text, title, type,

@@ -11,7 +11,7 @@ const app = createApp({
   emitter: null,
 
   created () {
-    (<any>window).plaza.vue = this
+    (window as any).plaza.vue = this
   },
 
   methods: {

@@ -119,7 +119,7 @@ export interface UserResponse {
   email: string
 }
 
-export type StatusResponse = {
+export interface StatusResponse {
   song: {
     id: string
     artist: string
@@ -135,12 +135,12 @@ export type StatusResponse = {
   updated_at: number
 }
 
-export type NewsLatestResponse = {
+export interface NewsLatestResponse {
   id: number
   updated_at: number
 }
 
-export type NewsResponse = {
+export interface NewsResponse {
   per_page: number
   pages: number
   count: number
@@ -151,7 +151,7 @@ export type NewsResponse = {
   }[]
 }
 
-export type SongResponse = {
+export interface SongResponse {
   id: string
   artist?: string
   title?: string

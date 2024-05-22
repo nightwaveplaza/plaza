@@ -1,3 +1,5 @@
+[![Translation status](http://weblate.plaza.one/widget/nightwave-plaza/plaza-app/svg-badge.svg)](http://weblate.plaza.one/engage/nightwave-plaza/)
+
 # Nightwave Plaza 
 
 Monorepo for the web app and the mobile app view.

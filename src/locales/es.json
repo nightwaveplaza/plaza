@@ -34,7 +34,7 @@
         "about": "Acerca de",
         "mobile": "Móvil",
         "play_history": "Reproducir historial",
-        "ratings": "Calificaciones",
+        "ratings": "Popularidad",
         "support_us": "Apóyenos"
     },
     "messages": {
@@ -59,7 +59,7 @@
             "playlists": "Listas de reproducción",
             "send_enquires": "Por favor envíe cualquier consulta que tenga a {link}.",
             "streams": "Transmisiones",
-            "submission_form": "Por favor utilice {link} para enviarnos tu música.",
+            "submission_form": "Por favor utilice {link} para enviarnos su música.",
             "submission_link": "esta forma",
             "submissions": "Envíanos tu música",
             "title": "Acerca de",
@@ -125,7 +125,7 @@
             "btn_monthly": "Mensual",
             "btn_overtime": "A lo largo del tiempo",
             "btn_weekly": "Semanal",
-            "title": "Calificaciones"
+            "title": "Popularidad"
         },
         "support": {
             "boosty": "Apóyanos en Boosty",

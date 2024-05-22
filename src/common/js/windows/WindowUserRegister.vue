@@ -57,11 +57,11 @@
 
             <div class="d-flex flex-grow-0">
               <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
-                <div class="col-4">
-                  <win-btn block class="text-bold" @click="register" :disabled="sending">{{ t('win.user_register.btn_register') }}</win-btn>
+                <div class="col-auto">
+                  <win-btn block class="text-bold px-3" @click="register" :disabled="sending">{{ t('win.user_register.btn_register') }}</win-btn>
                 </div>
-                <div class="col-4">
-                  <win-btn block @click="close">{{ t('buttons.cancel') }}</win-btn>
+                <div class="col-auto">
+                  <win-btn block class="px-3" @click="close">{{ t('buttons.cancel') }}</win-btn>
                 </div>
               </div>
             </div>

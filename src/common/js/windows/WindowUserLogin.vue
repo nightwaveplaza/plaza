@@ -15,20 +15,20 @@
 
           <!-- Username -->
           <div class="row no-gutters">
-            <div class="col-8 col-sm-3 align-self-center">
+            <div class="col-8 col-sm-4 align-self-center">
               <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
             </div>
-            <div class="col-8 col-sm-6">
+            <div class="col-8 col-sm-5">
               <input id="username" v-model="fields.username" class="mr-0 ml-0 w-100" type="text"/>
             </div>
           </div>
 
           <!-- Password -->
           <div class="row mt-1 no-gutters">
-            <div class="col-8 col-sm-3 align-self-center">
+            <div class="col-8 col-sm-4 align-self-center">
               <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
             </div>
-            <div class="col-8 col-sm-6">
+            <div class="col-8 col-sm-5">
               <input id="password" v-model="fields.password" class="mr-0 ml-0 w-100" type="password"/>
             </div>
             <div class="col-2 col-sm-2 ml-2 align-self-center">
@@ -38,7 +38,7 @@
 
           <!-- Remember -->
           <div class="row mt-1 no-gutters justify-content-end" v-if="!isMobile">
-            <div class="col-12 col-sm-9">
+            <div class="col-12 col-sm-8">
               <div class="checkbox">
                 <input id="remember" v-model="remember" type="checkbox"/>
                 <label for="remember">{{ t('win.user_login.remember_me') }}</label>

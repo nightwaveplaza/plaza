@@ -17,7 +17,7 @@
         "user_fetch": "No es posible obtener los datos del usuario.",
         "enter_current_password": "Ingrese la contraseña actual.",
         "passwords_match": "La contraseña no coincide.",
-        "username_incorrect": "Nombre de usuario incorrecto. Únicamente letras, números y guión bajo permitidos.",
+        "username_incorrect": "Nombre de usuario incorrecto. Únicamente letras (alfabeto inglés), números y guión bajo permitidos.",
         "username_long": "Nombre de usuario demasiado largo.",
         "username_short": "Nombre de usuario demasiado corto."
     },
@@ -49,5 +49,90 @@
     "pagination": {
         "pages": "Páginas: {n}",
         "songs": "Canciones: {n}"
+    },
+    "win": {
+        "about": {
+            "btn_credits": "Créditos",
+            "btn_news": "Novedades",
+            "contact_info": "Información de contacto",
+            "discord": "¡Únete a nuestra comunidad {discord}!",
+            "playlists": "Listas de reproducción",
+            "send_enquires": "Por favor envíe cualquier consulta que tenga a {link}.",
+            "streams": "Transmisiones",
+            "submission_form": "Por favor utilice {link} para difundir música.",
+            "submission_link": "esta forma",
+            "submissions": "Entregas",
+            "title": "Acerca de",
+            "useful_links": "Enlaces útiles",
+            "version": "Versión",
+            "welcome": "Bienvenido a la estación de radio en línea de vaporwave y future funk las 24 horas del día, los 7 días a la semana."
+        },
+        "credits": {
+            "content": "Toda la música e imágenes de fondo",
+            "content_by": "{content} pertenece a sus autores. El contenido musical ha sido proporcionado por sus respectivos autores y sellos musicales. Si tiene algún problema de derechos de autor, por favor háganoslo saber.",
+            "created_by": "El sitio web {app} y sus aplicaciones fueron creadas y son mantenidas por {author}.",
+            "title": "Créditos"
+        },
+        "delete_account": {
+            "if_you_want": "Si desea eliminar su cuenta, contáctenos a {email}",
+            "title": "Eliminar cuenta",
+            "title2": "Eliminación de cuenta",
+            "will_be_deleted": "Su cuenta y todos los datos asociados se eliminarán permanentemente (favoritos e historial)."
+        },
+        "history": {
+            "showing_history": "Mostrando historial: {from} — {to}.",
+            "title": "Reproducir historial"
+        },
+        "settings": {
+            "bg_notice": "Todas las imágenes de fondo se encontraron en Internet. ¿Conoces al autor? {link}",
+            "background": "Imágen de fondo",
+            "bottom": "Último",
+            "btn_random": "Aleatorio",
+            "btn_solid": "Sólido",
+            "let_us_know": "¡Haznos saber!",
+            "source": "Fuente",
+            "taskbar": "Barra de tareas",
+            "theme": "Tema",
+            "title": "Configuración de apariencia",
+            "top": "Primero",
+            "author": "Autor"
+        },
+        "song": {
+            "album": "Álbum",
+            "artist": "Artista",
+            "btn_play_preview": "Reproducir vista previa",
+            "btn_stop": "Detener ({time})",
+            "first_played": "Primer reproducción",
+            "song_title": "Título",
+            "title": "Información de la canción"
+        },
+        "mobile": {
+            "description": "Disponemos de las aplicaciones oficiales de Android e iOS. Por favor, descárgalelas y deje que Nightwave Plaza le muestre el pasado a través de la música del futuro."
+        },
+        "news": {
+            "title": "Novedades"
+        },
+        "player": {
+            "btn_play": "Reproducir",
+            "btn_stop": "Detener",
+            "listeners": "Oyentes: {listeners}",
+            "user": "Registrado como: {user}",
+            "volume": "Volumen: {volume}%",
+            "welcome": "¡Bienvenido nuevamente!"
+        },
+        "ratings": {
+            "btn_monthly": "Mensual",
+            "btn_overtime": "A lo largo del tiempo",
+            "btn_weekly": "Semanal",
+            "title": "Calificaciones"
+        },
+        "support": {
+            "boosty": "Apóyanos en Boosty",
+            "rewards": "¡Puedes patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y obtener recompensas especiales de Discord!"
+        },
+        "settings_language": {
+            "select": "Seleccione el idioma",
+            "title": "Selección de idioma"
+        }
     }
 }

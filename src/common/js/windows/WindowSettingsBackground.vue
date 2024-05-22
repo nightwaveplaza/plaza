@@ -88,8 +88,8 @@
         <div class="gb-label noselect">{{ t('win.settings.application') }}</div>
 
         <div class="row">
-          <div class="col-5 align-self-center">{{ t('win.settings.audio_quality') }}:</div>
-          <div class="col-5">
+          <div class="col-6 align-self-center">{{ t('win.settings.audio_quality') }}:</div>
+          <div class="col-6">
             <div class="checkbox">
               <input id="low_quality" type="checkbox" @change="qualityChanged" />
               <label for="low_quality">{{ t('win.settings.low_quality') }}</label>

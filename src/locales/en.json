@@ -15,7 +15,7 @@
         "error": "Error",
         "password_short": "Password is too short.",
         "passwords_match": "Passwords didn't match.",
-        "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
+        "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
         "server": "{error}",
         "user_fetch": "Can't fetch user data.",
         "username_incorrect": "Incorrect user name. Only letters, numbers and underscores allowed.",
@@ -87,7 +87,7 @@
             "title": "Play History"
         },
         "mobile": {
-            "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
+            "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
         },
         "news": {
             "title": "News"
@@ -129,7 +129,7 @@
         "settings_language": {
             "select": "Select language",
             "title": "Language Selection",
-            "help": "Do you want to help translate Nightwave Plaza? {link}"
+            "help": "Do you want to help translate Nightwave Plaza? {link}"
         },
         "song": {
             "album": "Album",
@@ -165,7 +165,7 @@
             "btn_sign_in": "Sign In",
             "remember_me": "Remember me",
             "title": "Sign In",
-            "type_username": "Type a username and password to sign in to the Nightwave Plaza."
+            "type_username": "Type a username and password to sign in to the Nightwave Plaza."
         },
         "user_password": {
             "title": "Change Password"

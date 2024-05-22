@@ -1,6 +1,6 @@
 <template>
-  <win-window :width="240" name="settings-language" :title="t('win.settings_language.title')" v-slot="winProps">
-    <div class="p-2">
+  <win-window :width="250" name="settings-language" :title="t('win.settings_language.title')" v-slot="winProps">
+    <div class="p-3">
       <div class="group-box p-2">
         <div class="gb-label noselect">{{ t('win.settings_language.select') }}</div>
         <div class="select">

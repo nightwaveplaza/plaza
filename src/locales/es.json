@@ -7,15 +7,46 @@
         "ok": "Aceptar"
     },
     "errors": {
-        "email_incorrect": "El Email es incorrecto.",
-        "enter_email": "Por favor ingrese el email.",
+        "email_incorrect": "El correo electrónico es incorrecto.",
+        "enter_email": "Por favor ingrese el correo electrónico.",
         "enter_user_pass": "Por favor ingrese nombre de usuario y contraseña.",
         "error": "Error",
         "password_short": "La contraseña es muy corta.",
-        "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para usar el botón Like.",
+        "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para poder usar esta función.",
         "server": "{error}",
-        "user_fetch": "No se pueden recuperar los datos del usuario.",
+        "user_fetch": "No es posible obtener los datos del usuario.",
         "enter_current_password": "Ingrese la contraseña actual.",
-        "passwords_match": "La contraseña no coincide."
+        "passwords_match": "La contraseña no coincide.",
+        "username_incorrect": "Nombre de usuario incorrecto. Únicamente letras, números y guión bajo permitidos.",
+        "username_long": "Nombre de usuario demasiado largo.",
+        "username_short": "Nombre de usuario demasiado corto."
+    },
+    "fields": {
+        "current_password": "Contraseña actual",
+        "email": "Correo electrónico",
+        "new_password": "Nueva contraseña",
+        "repeat_password": "Repita la contraseña",
+        "password": "Contraseña",
+        "username": "Nombre de usuario"
+    },
+    "loading": "Cargando…",
+    "menu": {
+        "about": "Acerca de",
+        "mobile": "Móvil",
+        "play_history": "Reproducir historial",
+        "ratings": "Calificaciones",
+        "support_us": "Apóyenos"
+    },
+    "messages": {
+        "auth_success": "¡Autenticación exitosa!",
+        "nice": "N I C E",
+        "password_changed": "¡La contraseña ha cambiado!",
+        "reset_success": "Las instrucciones han sido enviadas a su correo electrónico.",
+        "success": "¡Éxito!",
+        "email_changed": "¡El correo electrónico ha cambiado!",
+        "reaction_tip": "Te ha gustado la canción. ¡Genial! Al hacer clic en el botón {icon} dos veces, se agregará la canción a su lista de favoritos. ¡Pruébelo!"
+    },
+    "pagination": {
+        "pages": "Páginas: {n}"
     }
 }

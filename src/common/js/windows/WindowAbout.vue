@@ -40,6 +40,10 @@
       <div class="group-box p-2 mb-3">
         <div class="gb-label noselect">{{ t('win.about.useful_links') }}</div>
         <p>
+          <strong>{{ t('win.about.mobile') }}</strong><br/>
+          <a role="button" @click="openMobile">{{ t('win.about.show_more') }}</a>
+        </p>
+        <p class="mt-2">
           <strong>{{ t('win.about.playlists') }}</strong><br/>
           <a href="https://plaza.one/plaza.m3u" target="_blank">M3U (Winamp)</a>
           <a class="ml-3" href="https://plaza.one/plaza.pls" target="_blank">PLS (Foobar2000)</a>
@@ -81,13 +85,20 @@ const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const version = __APP_VERSION__ ?? 'n/a'
 
-const openCredits = () => {
+function openCredits() {
   windowsStore.open('credits')
   windowsStore.close('about')
 }
 
-const openNews = () => {
+function openNews() {
   windowsStore.open('news')
   windowsStore.close('about')
+}
+
+function openMobile() {
+  windowsStore.open('mobile')
+  windowsStore.close('about')
+
+
 }
 </script>

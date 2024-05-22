@@ -14,9 +14,6 @@
         <div class="action">
           <a role="button" tabindex="3" @click="windowsStore.open('support')">{{ t('menu.support_us') }}</a>
         </div>
-        <div class="action">
-          <a role="button" tabindex="4" @click="windowsStore.open('mobile')">{{ t('menu.mobile') }}</a>
-        </div>
       </div>
     </div>
   </div>

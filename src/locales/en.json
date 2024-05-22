@@ -33,7 +33,6 @@
     "loading": "Loading…",
     "menu": {
         "about": "About",
-        "mobile": "Mobile",
         "play_history": "Play History",
         "ratings": "Ratings",
         "support_us": "Support Us"
@@ -45,7 +44,8 @@
         "password_changed": "Password has changed!",
         "reaction_tip": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!",
         "reset_success": "Instructions have been sent to your email.",
-        "success": "Success!"
+        "success": "Success!",
+        "saved": "Saved"
     },
     "pagination": {
         "pages": "Pages: {n}",
@@ -66,7 +66,9 @@
             "title": "About",
             "useful_links": "Useful links",
             "version": "Version",
-            "welcome": "Welcome to 24/7 online vaporwave and future funk radio station."
+            "welcome": "Welcome to 24/7 online vaporwave and future funk radio station.",
+            "mobile": "Mobile applications (iOS / Android)",
+            "show_more": "Show more"
         },
         "credits": {
             "content": "All music and background images",
@@ -106,7 +108,9 @@
         },
         "settings": {
             "author": "Author",
-            "background": "Background",
+            "background": "Background Settings",
+            "appearance": "Appearance Settings",
+            "application": "Application Settings",
             "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
             "bottom": "Bottom",
             "btn_random": "Random",
@@ -115,9 +119,12 @@
             "source": "Source",
             "taskbar": "Taskbar",
             "theme": "Theme",
-            "title": "Appearance Settings",
+            "title": "Application Settings",
             "top": "Top",
-            "language": "Language…"
+            "language": "Change Language",
+            "audio_quality": "Audio quality",
+            "low_quality": "Low quality",
+            "quality_changed": "Audio quality has changed. Please restart the playback."
         },
         "settings_language": {
             "select": "Select language",

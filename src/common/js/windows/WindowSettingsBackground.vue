@@ -3,7 +3,7 @@
     <div class="p-2">
       <!-- Background -->
       <div class="group-box mb-2">
-        <div class="gb-label noselect">{{ t('win.settings.background') }}</div>
+        <div class="gb-label noselect"><span>{{ t('win.settings.background') }}</span></div>
         <div class="gb-content p-2">
           <div class="row palette no-gutters" v-if="settingsStore.background.mode === enBackgroundMode.SOLID">
             <div class="col-auto" v-for="color in palette">
@@ -60,7 +60,7 @@
 
       <!-- Appearance Settings -->
       <div class="group-box mb-2">
-        <div class="gb-label noselect">{{ t('win.settings.appearance') }}</div>
+        <div class="gb-label noselect"><span>{{ t('win.settings.appearance') }}</span></div>
         <div class="gb-content p-2">
           <div class="row no-gutters">
             <div class="col-7">
@@ -88,7 +88,7 @@
 
       <!-- App Settings -->
       <div class="group-box mb-3">
-        <div class="gb-label noselect">{{ t('win.settings.application') }}</div>
+        <div class="gb-label noselect"><span>{{ t('win.settings.application') }}</span></div>
         <div class="gb-content p-2">
           <div class="row">
             <div class="col-6 align-self-center">{{ t('win.settings.audio_quality') }}:</div>

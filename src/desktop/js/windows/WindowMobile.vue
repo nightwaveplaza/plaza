@@ -1,26 +1,30 @@
 <template>
   <win-window :width="320" name="mobile" title="Nightwave Plaza Mobile" v-slot="winProps">
     <div class="p-2">
-      <div class="group-box p-2 mb-3">
-        <div class="row no-gutters">
-          <div class="col text-center mr-4">{{ t('win.mobile.description') }}</div>
-          <div class="col-auto">
-            <img src="/img/mobilen.gif"/>
+      <div class="group-box mb-3">
+        <div class="gb-content p-2">
+          <div class="row no-gutters">
+            <div class="col text-center mr-4">{{ t('win.mobile.description') }}</div>
+            <div class="col-auto">
+              <img src="/img/mobilen.gif"/>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="group-box p-3 text-center">
-        <div class="row no-gutters">
-          <div class="col">
-            <a href="https://plaza.one/googleplay" target="_blank" class="d-block">
-              <img src="/img/gplay.png" style="height: 38px; width: auto"/>
-            </a>
-          </div>
-          <div class="col">
-            <a href="https://plaza.one/ios" target="_blank" class="d-block">
-              <img src="/img/appstore.png" style="height: 38px; width: auto"/>
-            </a>
+      <div class="group-box text-center">
+        <div class="gb-content p-2">
+          <div class="row no-gutters">
+            <div class="col align-self-center">
+              <a href="https://plaza.one/googleplay" target="_blank" class="d-block" style="line-height: 0">
+                <img src="/img/gplay.png" style="height: 38px; width: auto"/>
+              </a>
+            </div>
+            <div class="col align-self-center">
+              <a href="https://plaza.one/ios" target="_blank" class="d-block" style="line-height: 0">
+                <img src="/img/appstore.png" style="height: 38px; width: auto"/>
+              </a>
+            </div>
           </div>
         </div>
       </div>

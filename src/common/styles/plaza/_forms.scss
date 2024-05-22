@@ -2,27 +2,24 @@
 @import "themes/elements.scss";
 
 .group-box {
-  position: relative;
-  padding-top: 4px;
-
   .gb-content {
-    position: relative;
     border: 1px solid;
     @include border-shadow('window-shadow');
     @include border-color-tl('content-border-left');
     @include border-color-rb('content-border-right');
-
-    > div {
-      margin-top: 2px;
-    }
   }
 
   .gb-label {
-    position: absolute;
-    top: -3px;
-    left: 8px;
-    z-index: 5;
-    @include background-color('btn-bg-color');
+    position: relative;
+    height: 5px;
+
+    span {
+      position: absolute;
+      top: -2px;
+      left: 8px;
+      z-index: 5;
+      @include background-color('btn-bg-color');
+    }
   }
 }
 

@@ -2,7 +2,7 @@
   <win-window :width="250" name="settings-language" :title="t('win.settings_language.title')" v-slot="winProps">
     <div class="p-2">
       <div class="group-box">
-        <div class="gb-label noselect">{{ t('win.settings_language.select') }}</div>
+        <div class="gb-label noselect"><span>{{ t('win.settings_language.select') }}</span></div>
         <div class="gb-content p-2">
           <div class="select">
             <select @change="switchLanguage">

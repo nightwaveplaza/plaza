@@ -82,7 +82,7 @@
       </div>
 
       <div class="d-flex justify-content-between">
-        <win-btn class="px-2" @click="openLanguageSettings">Language…</win-btn>
+        <win-btn class="px-2" @click="openLanguageSettings">{{ t('win.settings.language') }}</win-btn>
         <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
       </div>
     </div>

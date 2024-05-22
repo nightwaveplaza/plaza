@@ -47,6 +47,7 @@
         "reaction_tip": "Te ha gustado la canción. ¡Genial! Al hacer clic en el botón {icon} dos veces, se agregará la canción a su lista de favoritos. ¡Pruébelo!"
     },
     "pagination": {
-        "pages": "Páginas: {n}"
+        "pages": "Páginas: {n}",
+        "songs": "Canciones: {n}"
     }
 }

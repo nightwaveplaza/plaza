@@ -1,20 +1,181 @@
 {
-  "buttons": {
-    "cancel": "Cancel",
-    "change": "Change",
-    "close": "Закрыть",
-    "continue": "Continue",
-    "ok": "OK"
-  },
-  "errors": {
-    "server": "{error}"
-  },
-  "loading": "asd",
-  "win": {
-    "settings_language": {
-      "help": "",
-      "select": "",
-      "title": ""
+    "buttons": {
+        "cancel": "Отмена",
+        "change": "Изменить",
+        "close": "Закрыть",
+        "continue": "Продолжить",
+        "ok": "OK"
+    },
+    "errors": {
+        "server": "{error}",
+        "email_incorrect": "Email неверный.",
+        "enter_current_password": "Введите текущий пароль.",
+        "enter_email": "Пожалуйста, введите Email.",
+        "enter_user_pass": "Пожалуйста, введите имя пользователя и пароль.",
+        "error": "Ошибка",
+        "password_short": "Пароль слишком короткий.",
+        "passwords_match": "Пароли не совпадают.",
+        "user_fetch": "Не удается загрузить пользователя.",
+        "username_incorrect": "Неверное имя пользователя.Допустимы только латинские буквы, цифры и подчеркивания .",
+        "username_long": "Имя пользователя слишком длинное.",
+        "username_short": "Имя пользователя слишком короткое.",
+        "please_sign": "Пожалуйста, войдите в свою учетную запись Nightwave Plaza, чтобы использовать эту функцию."
+    },
+    "loading": "Загрузка…",
+    "win": {
+        "settings_language": {
+            "help": "Хотите помочь перевести Nightwave Plaza? {link}",
+            "select": "Выберите язык",
+            "title": "Выбор языка"
+        },
+        "about": {
+            "discord": "Присоединяйтесь к нашему сообществу {discord}!",
+            "playlists": "Плейлисты",
+            "contact_info": "Контактная информация",
+            "streams": "Ссылки",
+            "submission_form": "Пожалуйста, используйте {link} для отправки вашей музыки.",
+            "submission_link": "эту форму",
+            "submissions": "Предложить музыку",
+            "title": "О Plaza",
+            "useful_links": "Полезные ссылки",
+            "version": "Версия",
+            "send_enquires": "Пожалуйста, присылайте любые вопросы, которые могут у вас возникнуть, на адрес {link}.",
+            "welcome": "Добро пожаловать на vaporwave и future funk онлайн радио.",
+            "btn_credits": "Авторы",
+            "btn_news": "Новости"
+        },
+        "credits": {
+            "content": "Вся музыка и фоновые изображения",
+            "created_by": "{app} сайт и приложение созданы и поддерживаются {author}.",
+            "title": "Авторы",
+            "content_by": "{content} принадлежат авторам. Музыка была предоставлена авторами или лейблами. Если у вас есть вопросы касательно авторского права, пожалуйста, сообщите нам об этом."
+        },
+        "delete_account": {
+            "if_you_want": "Если вы хотите удалить свою учетную запись, напишите нам на {email}",
+            "title": "Удаление аккаунта",
+            "title2": "Удаление аккаунта",
+            "will_be_deleted": "Ваша учетная запись и все связанные с ней данные будут безвозвратно удалены."
+        },
+        "history": {
+            "showing_history": "Показана история: {from} — {to}.",
+            "title": "История воспроизведения"
+        },
+        "news": {
+            "title": "Новости"
+        },
+        "player": {
+            "listeners": "Слушатели: {listeners}",
+            "user": "Вошли как: {user}",
+            "volume": "Громкость: {volume}%",
+            "welcome": "С возвращением!",
+            "btn_stop": "Стоп",
+            "btn_play": "Воспроизвести"
+        },
+        "ratings": {
+            "title": "Рейтинги",
+            "btn_monthly": "За месяц",
+            "btn_overtime": "За всё время",
+            "btn_weekly": "За неделю"
+        },
+        "settings": {
+            "author": "Автор",
+            "background": "Изображение",
+            "bg_notice": "Все фоновые изображения были найдены в Интернете. Узнали автора? {link}",
+            "bottom": "Снизу",
+            "btn_random": "Случайно",
+            "btn_solid": "Цвет",
+            "let_us_know": "Дайте нам знать!",
+            "source": "Источник",
+            "taskbar": "Панель задач",
+            "theme": "Тема",
+            "title": "Настройки вида",
+            "top": "Сверху"
+        },
+        "song": {
+            "first_played": "Впервые в эфире",
+            "artist": "Исполнитель",
+            "song_title": "Название",
+            "title": "Информация о песне",
+            "btn_stop": "Стоп ({time})",
+            "btn_play_preview": "Прослушать",
+            "album": "Альбом"
+        },
+        "support": {
+            "boosty": "Поддержать нас на Boosty",
+            "thanks": "Спасибо за ваши пожертвования! Они пойдут на развитие радио.",
+            "title": "Поддержать нас",
+            "title2": "Нравится Nightwave Plaza?",
+            "rewards": "Вы можете поддержать радио и будущие обновление с помощью пожертвования на Boosty, а так же получить уникальные награды в нашем Discord!"
+        },
+        "user": {
+            "title": "Мой профиль",
+            "btn_logout": "Выйти"
+        },
+        "user_email": {
+            "title": "Изменить Email"
+        },
+        "mobile": {
+            "description": "У нас есть официальное приложение для Android и iOS. Скачайте его и позвольте Nightwave Plaza показать вам прошлое с помощью музыки будущего."
+        },
+        "user_register": {
+            "captcha_desc": "Пожалуйста, решите капчу.",
+            "btn_register": "Зарегистрироваться",
+            "captcha_fail": "Капча не пройдена.",
+            "captcha_title": "Вы человек или робот?",
+            "please_fill": "Пожалуйста, заполните регистрационную форму. Все поля обязательны для заполнения.",
+            "success": "Регистрация завершена",
+            "title": "Регистрация",
+            "user_information": "Информация о пользователе",
+            "welcome": "Добро пожаловать в Nightwave Plaza, {user}!"
+        },
+        "user_favorites": {
+            "list_empty": "Ваш список пуст. Кликните на кнопку {icon} , чтобы добавить песни в этот список.",
+            "remove": "Удалить",
+            "title": "Избранное"
+        },
+        "user_login": {
+            "btn_register": "Регистрация",
+            "btn_reset": "Сбросить",
+            "btn_sign_in": "Войти",
+            "remember_me": "Запомнить меня",
+            "title": "Вход",
+            "type_username": "Введите имя пользователя и пароль , чтобы войти в Nightwave Plaza."
+        },
+        "user_password": {
+            "title": "Изменить пароль"
+        },
+        "user_reset": {
+            "enter_email": "Введите свой Email",
+            "instruction": "Введите свой email и нажмите кнопку — мы вышлем на вашу почту ссылку для сброса пароля.",
+            "title": "Сброс пароля"
+        }
+    },
+    "menu": {
+        "mobile": "Приложение",
+        "about": "Plaza",
+        "play_history": "История",
+        "support_us": "Поддержать нас",
+        "ratings": "Рейтинги"
+    },
+    "messages": {
+        "nice": "N I C E",
+        "auth_success": "Вы успешно вошли!",
+        "email_changed": "Email был изменен!",
+        "success": "Успешно!",
+        "password_changed": "Пароль был изменен!",
+        "reaction_tip": "Вам понравилась песня. Круто! Нажав на кнопку {icon} дважды, вы добавите песню в свой список избранных . Попробуйте!",
+        "reset_success": "Инструкции были отправлены на ваш электронный адрес."
+    },
+    "fields": {
+        "current_password": "Текущий пароль",
+        "email": "Email",
+        "new_password": "Новый пароль",
+        "password": "Пароль",
+        "repeat_password": "Повторите пароль",
+        "username": "Имя пользователя"
+    },
+    "pagination": {
+        "pages": "Страниц: {n}",
+        "songs": "Песни: {n}"
     }
-  }
 }

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { enBackgroundMode, type Background } from '@common/js/types'
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
+import _locales from '@locales/_locales.ts'
 
 interface State {
   background: Background,
@@ -9,6 +10,24 @@ interface State {
   taskbarPosition: string,
   language: string,
   lowQuality: number
+}
+
+function getDefaultLanguage(): string {
+  const lang = window.navigator.language
+  if (_locales.hasOwnProperty(lang)) {
+    return lang
+  } else {
+    return 'en'
+  }
+}
+
+function getDefaultTaskbarPosition (): string {
+  let userAgent = window.navigator.userAgent
+  if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
+    return 'top'
+  } else {
+    return 'bottom'
+  }
 }
 
 export const useSettingsStore = defineStore('settingsStore', {
@@ -67,15 +86,9 @@ export const useSettingsStore = defineStore('settingsStore', {
     loadSettings() {
       this.background = prefs.get<Background>('background', this.background)
       this.theme = prefs.get<string>('theme', 'win98')
-      this.language = prefs.get<string>('language', 'en')
+      this.language = prefs.get<string>('language', getDefaultLanguage())
       this.lowQuality = prefs.get<number>('low_quality', 0)
-
-      let defaultTaskbarPosition = 'bottom'
-      let userAgent = window.navigator.userAgent
-      if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
-        defaultTaskbarPosition = 'top'
-      }
-      this.taskbarPosition = prefs.get<string>('taskbar_position', defaultTaskbarPosition)
+      this.taskbarPosition = prefs.get<string>('taskbar_position', getDefaultTaskbarPosition())
     },
 
     loadRandomBackground () {

@@ -94,7 +94,7 @@ function changePage (newPage: number): void {
   }
 }
 
-async function fetchHistory (page: number): void {
+async function fetchHistory (page: number): Promise<void> {
   list.value!.scrollTop()
   loading.value = true
 

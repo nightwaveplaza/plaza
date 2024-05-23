@@ -8,7 +8,7 @@
         <div class="gb-content p-2">
           <div class="select">
             <select @change="switchLanguage">
-              <option v-for="(lang, name) in _locales" :key="lang" :value="name" :selected="name === settingsStore.language">
+              <option v-for="(lang, name) in _locales" :key="name" :value="name" :selected="name === settingsStore.language">
                 {{ lang.name }}
               </option>
             </select>

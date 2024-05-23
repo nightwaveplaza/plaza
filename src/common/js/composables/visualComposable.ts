@@ -17,7 +17,7 @@ export default function (): {
 
   function startVisual (audio: HTMLAudioElement, cvs: HTMLCanvasElement): void {
     if (!context || !source || !analyser) {
-      context = new (window.AudioContext || (window as any).webkitAudioContext)()
+      context = new (window.AudioContext || window.webkitAudioContext)()
       analyser = context.createAnalyser()
       source = context.createMediaElementSource(audio)
     }

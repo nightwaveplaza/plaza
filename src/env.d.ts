@@ -10,3 +10,7 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+interface Window {
+  webkitAudioContext?: typeof AudioContext;
+}

@@ -2,26 +2,30 @@
   <div class="row no-gutters">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0 px-4 px-sm-0">
       <div class="cover simple-border noselect">
-        <img :src="artwork" alt="artwork" @click="showSongInfo"/>
+        <img :src="artwork" alt="artwork" @click="showSongInfo">
       </div>
-      <audio ref="audio" crossorigin="anonymous" preload="auto" @loadedmetadata="audioCanPlay"/>
+      <audio ref="audio" crossorigin="anonymous" preload="auto" @loadedmetadata="audioCanPlay" />
     </div>
 
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
-        <div class="player-artist track-artist mb-2">{{ playerPlaybackStore.artist }}</div>
-        <div class="player-title track-title">{{ playerPlaybackStore.title }}</div>
+        <div class="player-artist track-artist mb-2">
+          {{ playerPlaybackStore.artist }}
+        </div>
+        <div class="player-title track-title">
+          {{ playerPlaybackStore.title }}
+        </div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
-              <canvas ref="canvas" class="player-visual"/>
-              <win-player-time ref="time"/>
+              <canvas ref="canvas" class="player-visual" />
+              <win-player-time ref="time" />
             </div>
           </div>
 
           <div class="col col-md-5 d-none d-md-block">
-            <win-player-volume @onchange="setVolume" @onload="updateVolume"/>
+            <win-player-volume @onchange="setVolume" @onload="updateVolume" />
           </div>
         </div>
 
@@ -29,33 +33,32 @@
           <div class="col-7 col-md-7 pr-md-2">
             <div class="row no-gutters">
               <div class="col-7 col-md-8">
-                <win-btn class="player-play" block @click="play()" v-html="playText"/>
+                <win-btn class="player-play" block @click="play()">{{ playText }}</win-btn>
               </div>
               <div class="col-5 col-md-4">
-                <win-player-reactions/>
+                <win-player-reactions />
               </div>
             </div>
           </div>
           <div class="col-5 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="userAuthStore.signed ? windowsStore.open('user') : windowsStore.open('user-login')">
-                  <i class="i icon-user mr-0"/>
+                <win-btn block @click="openUserWindow()">
+                  <i class="i icon-user mr-0" />
                 </win-btn>
               </div>
               <div class="col-6">
                 <win-btn block @click="windowsStore.open('settings-background')">
-                  <i class="i icon-cog mr-0"/>
+                  <i class="i icon-cog mr-0" />
                 </win-btn>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <win-player-status ref="status"/>
+    <win-player-status ref="status" />
   </div>
 </template>
 
@@ -88,20 +91,20 @@ const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
 const state = ref(STATE_IDLE)
 
 const artwork = computed(() => {
-  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src) return playerPlaybackStore.artwork_src
-  else return 'https://i.plaza.one/artwork_dead.jpg'
+  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src) {return playerPlaybackStore.artwork_src}
+  else {return 'https://i.plaza.one/artwork_dead.jpg'}
 })
 const playText = computed(() => {
-  if (state.value === STATE_IDLE) return t('win.player.btn_play')
-  else if (state.value === STATE_LOADING) return t('loading')
-  else return t('win.player.btn_stop')
+  if (state.value === STATE_IDLE) {return t('win.player.btn_play')}
+  else if (state.value === STATE_LOADING) {return t('loading')}
+  else {return t('win.player.btn_stop')}
 })
 
 // Non-reactive
 let offline = false
 let volume = 100
 
-function updateSong () {
+function updateSong (): void {
   if (offline && state.value === STATE_PLAYING) {
     stopPlay()
     setTimeout(play, 2000)
@@ -115,7 +118,7 @@ function updateSong () {
   offline = false
 }
 
-function play () {
+function play (): void {
   if (state.value === STATE_IDLE) {
     state.value = STATE_LOADING
     startPlay()
@@ -124,9 +127,9 @@ function play () {
   }
 }
 
-function startPlay () {
+function startPlay (): void {
   const noCacheStr = 'nocache=' + Date.now()
-  audio.value!.type = 'audio/mpeg'
+  // audio.value!.type = 'audio/mpeg' TODO: why
   if (settingsStore.lowQuality) {
     audio.value!.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
   } else {
@@ -139,7 +142,7 @@ function startPlay () {
   document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
 }
 
-function audioCanPlay () {
+function audioCanPlay (): void {
   if (state.value === STATE_LOADING) {
     state.value = STATE_PLAYING
 
@@ -151,7 +154,7 @@ function audioCanPlay () {
   }
 }
 
-function stopPlay () {
+function stopPlay (): void {
   audio.value!.pause()
   audio.value!.currentTime = 0
 
@@ -160,25 +163,25 @@ function stopPlay () {
   document.title = 'Nightwave Plaza - Online Vaporwave Radio'
 }
 
-function setVolume (volume: number) {
+function setVolume (volume: number): void {
   updateVolume(volume)
   time.value!.showText(t('win.player.volume', {volume}))
 }
 
-function updateVolume (newVolume: number) {
+function updateVolume (newVolume: number): void {
   volume = newVolume / 100
   if (state.value === STATE_PLAYING) {
     audio.value!.volume = volume
   }
 }
 
-function showSongInfo () {
+function showSongInfo (): void {
   if (playerPlaybackStore.songId) {
     windowsStore.showSong(playerPlaybackStore.songId)
   }
 }
 
-function updateMediaSession () {
+function updateMediaSession (): void {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: playerPlaybackStore.title,
@@ -194,7 +197,7 @@ function updateMediaSession () {
   }
 }
 
-function setMediaSessionActions () {
+function setMediaSessionActions (): void {
   if ('mediaSession' in navigator) {
     const actionHandlers = [
       ['play', play],
@@ -212,14 +215,22 @@ function setMediaSessionActions () {
   }
 }
 
-function setMediaSessionState (state: string) {
+function setMediaSessionState (state: string): void {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.playbackState = state as MediaSessionPlaybackState
   }
 }
 
+function openUserWindow(): void {
+  if (userAuthStore.signed) {
+    windowsStore.open('user')
+  } else {
+    windowsStore.open('user-login')
+  }
+}
+
 onMounted(() => {
-  playerPlaybackStore.$subscribe((mutation, state) => {
+  playerPlaybackStore.$subscribe((mutation) => {
     if (mutation.type === MutationType.patchObject) {
       updateSong()
     }

@@ -1,9 +1,11 @@
 <template>
-  <div class="player-time">{{ display }}</div>
+  <div class="player-time">
+    {{ display }}
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
@@ -50,7 +52,7 @@ function tick () {
 
 onMounted(() => {
   showText(t('win.player.welcome'))
-  intervalId = setInterval(tick, CLOCK_REFRESH)
+  intervalId = window.setInterval(tick, CLOCK_REFRESH)
 
   playerPlaybackStore.$subscribe((mutation, state) => {
     if (mutation.type === MutationType.patchObject) {
@@ -59,6 +61,10 @@ onMounted(() => {
       songUpdatedAt = Date.now()
     }
   })
+})
+
+onUnmounted(() => {
+  window.clearInterval(intervalId)
 })
 
 defineExpose({

@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-7">
                   <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2"
-                         type="password"/>
+                         type="password" />
                 </div>
               </div>
 

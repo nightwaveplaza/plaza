@@ -28,7 +28,7 @@ const emit = defineEmits(['change'])
 const pageInput = ref<HTMLInputElement | null>(null)
 const page = ref(1)
 
-function nextPage (dir: number) {
+function nextPage (dir: number): void {
   let newPage = page.value + dir
   if (newPage < 1) {
     newPage = 1
@@ -39,14 +39,14 @@ function nextPage (dir: number) {
   page.value = newPage
 }
 
-function setPage (e: Event) {
-  const newPage = parseInt((e.target as HTMLInputElement).value)
+function setPage (e: Event): void {
+  const newPage = parseInt((e.target as HTMLInputElement).value, 10)
   if (!isNaN(newPage) && newPage > 0 && newPage <= props.pages) {
     page.value = newPage
   }
 }
 
-function reset () {
+function reset (): void {
   page.value = 1
 }
 

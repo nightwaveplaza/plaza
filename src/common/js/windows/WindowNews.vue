@@ -43,9 +43,9 @@ const page = ref(1)
 const length = ref(1)
 const pages = ref(1)
 
-function getArticle () {
+function getArticle (): void {
   api.news.get(page.value).then(res => {
-    article.value = res.data.articles[0]
+    article.value = res.data.articles[0]!
     pages.value = res.data.pages
   }).catch(e => {
     windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))

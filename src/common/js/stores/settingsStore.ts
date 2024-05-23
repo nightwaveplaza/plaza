@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { enBackgroundMode, type Background } from '@common/js/types'
 import { api } from '@common/js/api/api'
 import { prefs } from '@common/js/extras/prefs'
-import _locales from '@locales/_locales.ts'
+import _locales from '@locales/_locales'
 
 interface State {
   background: Background,
@@ -14,7 +14,7 @@ interface State {
 
 function getDefaultLanguage(): string {
   const lang = window.navigator.language
-  if (_locales.hasOwnProperty(lang)) {
+  if (Object.prototype.hasOwnProperty.call(_locales, lang)) {
     return lang
   } else {
     return 'en'
@@ -22,7 +22,7 @@ function getDefaultLanguage(): string {
 }
 
 function getDefaultTaskbarPosition (): string {
-  let userAgent = window.navigator.userAgent
+  const userAgent = window.navigator.userAgent
   if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
     return 'top'
   } else {

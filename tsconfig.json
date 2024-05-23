@@ -1,35 +1,94 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    /* Base options */
+    "baseUrl": "./",
+    // Specifies the base directory for resolving module names.
+    "esModuleInterop": true,
+    // Enables compatibility with CommonJS and AMD modules.
+    "forceConsistentCasingInFileNames": true,
+    // Enforces consistent casing of file names.
     "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    // Skips type checking of declaration files.
+    "target": "es2022",
+    // Sets the ECMAScript target version for the compiled JavaScript.
+    "verbatimModuleSyntax": true,
+    // Treats all module files as written in ECMAScript modules.
+    "allowJs": true,
+    // Allows JavaScript files to be included in the TypeScript project.
     "resolveJsonModule": true,
+    // Allows importing JSON files as modules.
+    "moduleDetection": "force",
+    // Forces TypeScript to always assume modules are present.
+    "allowImportingTsExtensions": true,
+    // Allows importing TypeScript files with `.ts` extension.
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
-    "baseUrl": ".",
-
+    // Enforces stricter module boundaries by treating each file as a separate module.
+    "useDefineForClassFields": true,
+    // Allows initializing class fields directly within the class body without a constructor.
     "paths": {
-      "@common/*": ["./src/common/*"],
-      "@desktop/*": ["./src/desktop/*"],
-      "@mobile/*": ["./src/mobile/*"],
-      "@locales/*": ["./src/locales/*"]    }
+      "@/*": [
+        "src/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
+      ],
+      "@desktop/*": [
+        "./src/desktop/*"
+      ],
+      "@mobile/*": [
+        "./src/mobile/*"
+      ],
+      "@locales/*": [
+        "./src/locales/*"
+      ]
+    },
+    /* Linting */
+    "noUnusedLocals": true,
+    // Reports unused local variables as errors.
+    "noUnusedParameters": true,
+    // Reports unused function parameters as errors.
+    "noFallthroughCasesInSwitch": true,
+    // Reports missing `break` statements in `switch` cases as errors.
+
+    /* Strictness */
+    "strict": true,
+    // Enables all strict type checking options.
+    "noUncheckedIndexedAccess": true,
+    // Checks that indexed accesses are not possibly undefined or null.
+
+    /* If transpiling with TypeScript */
+    // "moduleResolution": "NodeNext", // Resolves module names using the Node.js resolution algorithm.
+    // "module": "NodeNext", // Sets the module code generation to Node.js-compatible modules.
+
+    /* If NOT transpiling with TypeScript */
+    "moduleResolution": "bundler",
+    // Resolves module names using a bundler.
+    "module": "esnext",
+    // Sets the module code generation to ECMAScript modules.
+    "noEmit": true,
+    // Disables emitting compiled output files.
+
+    "lib": [
+      "es2020",
+      "dom"
+    ]
+    // Specifies the library files to be included during compilation.
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "src/mobile/*"
+  ],
+  // Specifies the files to be included in the compilation.
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+  // Sets up project references to another TypeScript project.
 }

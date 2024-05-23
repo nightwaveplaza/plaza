@@ -9,9 +9,5 @@ export const useUserReactionStore = defineStore('userReactionStore', {
   state: (): State => ({
     score: 0,
     songId: '',
-  }),
-
-  persist: {
-    key: 'prefs_reaction'
-  }
+  })
 })

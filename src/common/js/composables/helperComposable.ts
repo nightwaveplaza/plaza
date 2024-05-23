@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { i18n } from '@locales/_i18n.ts'
+import { i18n } from '@locales/_i18n'
 
 export default function () {
   const isMobile = computed(() => import.meta.env.VITE_APP === 'mobile')

@@ -11,50 +11,92 @@ import type {
   RatingsResponse,
   FavoritesResponse,
   BackgroundImage,
-  NewsLatestResponse, StatusResponse, NewsResponse, SongResponse,
+  NewsLatestResponse,
+  StatusResponse,
+  NewsResponse,
+  SongResponse,
 } from '@common/js/types'
+import type { AxiosResponse } from 'axios'
 
 export const api = {
   status: {
-    get: () => Repository.get<StatusResponse>('status'),
+    get: ():
+      Promise<AxiosResponse<StatusResponse>> =>
+      Repository.get<StatusResponse>('status'),
   },
 
   news: {
-    latest: () => Repository.get<NewsLatestResponse>(`news/latest`),
-    get: (page: number) => Repository.get<NewsResponse>(`news/${page}`),
+    latest: ():
+      Promise<AxiosResponse<NewsLatestResponse>> =>
+      Repository.get<NewsLatestResponse>(`news/latest`),
+    get: (page: number):
+      Promise<AxiosResponse<NewsResponse>> =>
+      Repository.get<NewsResponse>(`news/${page}`),
   },
 
   history: {
-    get: (page: number) => Repository.get<HistoryResponse>(`history/${page}`),
+    get: (page: number):
+      Promise<AxiosResponse<HistoryResponse>> =>
+      Repository.get<HistoryResponse>(`history/${page}`),
   },
 
   reactions: {
-    react: (reaction: number) => Repository.post<ReactResponse>('reactions', { reaction })
+    react: (reaction: number):
+      Promise<AxiosResponse<ReactResponse>> =>
+      Repository.post<ReactResponse>('reactions', { reaction }),
   },
 
   ratings: {
-    get: (range: string, page: number) => Repository.get<RatingsResponse>(`ratings/${range}/${page}`),
+    get: (range: string, page: number):
+      Promise<AxiosResponse<RatingsResponse>> =>
+      Repository.get<RatingsResponse>(`ratings/${range}/${page}`),
   },
 
   songs: {
-    get: (id: string) => Repository.get<SongResponse>(`songs/${id}`),
+    get: (id: string):
+      Promise<AxiosResponse<SongResponse>> =>
+      Repository.get<SongResponse>(`songs/${id}`),
   },
 
   backgrounds: {
-    get: () => Repository.get<BackgroundImage[]>('backgrounds'),
-    random: () => Repository.get<BackgroundImage>('backgrounds/random'),
+    get: ():
+      Promise<AxiosResponse<BackgroundImage[]>> =>
+      Repository.get<BackgroundImage[]>('backgrounds'),
+    random: ():
+      Promise<AxiosResponse<BackgroundImage>> =>
+      Repository.get<BackgroundImage>('backgrounds/random'),
   },
 
   user: {
-    login: (data: UserLogin) => Repository.post('user/auth', data),
-    register: (data: UserRegister) => Repository.post('user/register', data),
-    get: () => Repository.get<UserResponse>('user'),
-    edit: (data: UserEdit) => Repository.put('user', data),
-    favorites: (page: number) => Repository.get<FavoritesResponse>(`user/favorites/${page}`),
-    addFavorite: (song_id: string) => Repository.post('user/favorites', { song_id }),
-    deleteFavorite: (favoriteId: number) => Repository.delete(`user/favorites/${favoriteId}`),
-    reset: (data: UserReset) => Repository.post('user/reset', data),
-    confirmReset: (data: UserResetConfirm) => Repository.post('user/reset/confirm', data),
-    logout: () => Repository.post('user/logout')
+    login: (data: UserLogin):
+      Promise<AxiosResponse> =>
+      Repository.post('user/auth', data),
+    register: (data: UserRegister):
+      Promise<AxiosResponse> =>
+      Repository.post('user/register', data),
+    get: ():
+      Promise<AxiosResponse<UserResponse>> =>
+      Repository.get<UserResponse>('user'),
+    edit: (data: UserEdit):
+      Promise<AxiosResponse> =>
+      Repository.put('user', data),
+    favorites: (page: number):
+      Promise<AxiosResponse<FavoritesResponse>> =>
+      Repository.get<FavoritesResponse>(`user/favorites/${page}`),
+    addFavorite: (song_id: string):
+      Promise<AxiosResponse> =>
+      Repository.post('user/favorites', { song_id }),
+    deleteFavorite: (favoriteId: number):
+      Promise<AxiosResponse> =>
+      Repository.delete(`user/favorites/${favoriteId}`),
+    reset: (data: UserReset):
+      Promise<AxiosResponse> =>
+      Repository.post('user/reset', data),
+    confirmReset: (data: UserResetConfirm):
+      Promise<AxiosResponse> =>
+      Repository.post('user/reset/confirm', data),
+    logout: ():
+      Promise<AxiosResponse> =>
+      Repository.post('user/logout'),
   },
 }

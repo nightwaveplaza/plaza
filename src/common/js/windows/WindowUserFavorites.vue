@@ -9,7 +9,7 @@
             <win-list scroll ref="list">
               <template v-if="data.favorites.length > 0 && !loading">
                 <table>
-                  <tr v-for="(fav, i) in data.favorites" :class="{ strike: deleted.includes(fav.id) }" class="hover">
+                  <tr v-for="(fav, i) in data.favorites" :key="i" :class="{ strike: deleted.includes(fav.id) }" class="hover">
                     <td class="p-1 noselect" style="width: 62px">
                       <img :src="fav.song.artwork_src ? fav.song.artwork_src : 'https://i.plaza.one/dead.jpg'"
                            alt="artwork"/>

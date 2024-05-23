@@ -10,7 +10,7 @@ import WinWindow from '@common/js/components/WinWindow.vue'
 import WinStatusBar from '@common/js/components/WinStatusBar.vue'
 
 export default {
-  install: (app: App) => {
+  install: (app: App): void => {
     app.component('win-btn', WinButton)
     app.component('win-list', WinList)
     app.component('win-memo', WinMemo)

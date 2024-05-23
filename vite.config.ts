@@ -1,10 +1,10 @@
 import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv, Plugin } from 'vite'
+import { defineConfig, loadEnv, type Plugin, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
 
-export default ({ mode }: { mode: string }) => {
+export default ({ mode }: { mode: string }): UserConfig => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
   // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
@@ -51,13 +51,15 @@ export default ({ mode }: { mode: string }) => {
 }
 
 function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-  if (env.NODE_ENV === 'development')
+  if (env.NODE_ENV === 'development') {
     return null
-  else
+  }
+  else {
     return legacy({
       targets: 'defaults, android >= 4.4.4, ios >= 7',
       externalSystemJS: true,
     })
+  }
 }
 
 // function getSplitVendorChunkPlugin (env: NodeJS.ProcessEnv) {

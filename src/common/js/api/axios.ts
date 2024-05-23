@@ -1,10 +1,13 @@
-import axios, { AxiosError } from 'axios'
+import axios, {
+  type InternalAxiosRequestConfig,
+  type AxiosInstance,
+} from 'axios'
 import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 
 const baseURL: string = import.meta.env.VITE_API_URL
-const instance = axios.create({ baseURL })
+const instance: AxiosInstance = axios.create({ baseURL })
 
-instance.interceptors.request.use((config) => {
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const userAuthStore = useUserAuthStore()
   config.headers.Authorization = 'Bearer ' + userAuthStore.token
   config.headers['NP-User-Agent'] = userAuthStore.agent
@@ -19,7 +22,7 @@ instance.interceptors.response.use(
         rej.message = rej.response.data.error
       }
     }
-    return Promise.reject(rej);
+    return Promise.reject(rej)
   })
 
 export default instance

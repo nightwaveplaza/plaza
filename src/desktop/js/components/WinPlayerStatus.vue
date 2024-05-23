@@ -1,4 +1,4 @@
-<template/>
+<template />
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
@@ -11,7 +11,7 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 let unmounted = false
 let intervalId = 0
 
-function updateStatus () {
+function updateStatus (): void {
   api.status.get().then((res) => {
     playerPlaybackStore.$patch({
       songId: res.data.song.id,
@@ -30,7 +30,7 @@ function updateStatus () {
   })
 
   if (!unmounted) {
-    intervalId = setTimeout(updateStatus, STATUS_UPDATE_INTERVAL)
+    intervalId = window.setTimeout(updateStatus, STATUS_UPDATE_INTERVAL)
   }
 }
 

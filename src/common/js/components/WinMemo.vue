@@ -1,6 +1,6 @@
 <template>
   <div ref="memo" class="memo p-2" :class="{scroll: scroll}">
-    <slot/>
+    <slot />
   </div>
 </template>
 

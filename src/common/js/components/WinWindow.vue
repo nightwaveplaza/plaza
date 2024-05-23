@@ -1,21 +1,24 @@
 <template>
-  <div :id="'window-' + name" ref="frame" class="frame row align-items-center" v-show="!isMinimized">
+  <div v-show="!isMinimized" :id="'window-' + name" ref="frame" class="frame row align-items-center">
     <div :class="{alert: props.isAlert, 'fluid-height': props.fluidHeight}" class="win98 col pl-0 pr-0">
-      <div ref="windowRef" :style="style" class="window" @mousedown="pullUp">
+      <div ref="windowRef" class="window" :style="style" @mousedown="pullUp">
         <div class="inner">
-          <div class="header header-draggable noselect" @dblclick="resetPosition" @mousedown="startMove"
-               :class="{inactive: isWindowInactive}">
-            <div class="icon"></div>
+          <div class="header header-draggable noselect" :class="{inactive: isWindowInactive}"
+               @dblclick="resetPosition" @mousedown="startMove"
+          >
+            <div class="icon" />
             {{ title }}
             <slot name="header">
               <div class="buttons">
-                <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
-                <win-btn class="button-close" @click="close"><span/></win-btn>
+                <win-btn class="button-minimize" @click="minimize"><span /></win-btn>
+                <win-btn class="button-close" @click="close">
+                  <span />
+                </win-btn>
               </div>
             </slot>
           </div>
 
-          <slot :close="close"/>
+          <slot :close="close" />
         </div>
       </div>
     </div>
@@ -38,6 +41,7 @@ const props = withDefaults(defineProps<{
   width?: number,
   fluidHeight?: boolean
 }>(), {
+  title: ' ',
   width: 500,
   fluidHeight: false,
 })
@@ -56,87 +60,92 @@ const isMinimized = computed(() => windowsStore.isMinimized(props.name))
 const windowRef = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
-let windowDefaultPosition = [0, 0]
-let borders = [0, 0]
-let offsets = [0, 0]
+let winDefPositionX = 0
+let winDefPositionY = 0
+let borderX = 0
+let borderY = 0
+let offsetX = 0
+let offsetY = 0
 let moving = false
 
 // Methods
-function resetPosition () {
+function resetPosition (): void {
   windowPos.value = [0, 0]
 }
 
-function pullUp () {
+function pullUp (): void {
   windowsStore.pullUp(props.name)
   style.zIndex = windowsStore.activeZIndex
 }
 
-function startMove (e: MouseEvent) {
+function startMove (e: MouseEvent): void {
   if ((e.target as HTMLElement).tagName === 'BUTTON' || (e.target as HTMLElement).tagName === 'SPAN') {
     return
   }
 
   recalculatePositions()
   moving = true
-  offsets = [e.offsetX, e.offsetY]
+  offsetX = e.offsetX
+  offsetY = e.offsetY
 }
 
-function move (e: MouseEvent) {
-  if (!moving) return
+function move (e: MouseEvent): void {
+  if (!moving) {return}
   e.preventDefault()
 
-  const mousePos = [e.clientX - offsets[0], e.clientY - offsets[1]]
-  let x = mousePos[0] - windowDefaultPosition[0]
-  let y = mousePos[1] - windowDefaultPosition[1]
+  const mousePosX = e.clientX - offsetX
+  const mousePosY = e.clientY - offsetY
+  let x = mousePosX - winDefPositionX
+  let y = mousePosY - winDefPositionY
 
-  if (mousePos[0] - SNAP_SIZE <= 0) {
-    x = 0 - windowDefaultPosition[0]
+  if (mousePosX - SNAP_SIZE <= 0) {
+    x = 0 - winDefPositionX
   }
 
-  if (mousePos[1] - SNAP_SIZE <= 0) {
-    y = 0 - windowDefaultPosition[1]
+  if (mousePosY - SNAP_SIZE <= 0) {
+    y = 0 - winDefPositionY!
   }
 
-  if (mousePos[0] + SNAP_SIZE >= borders[0]) {
-    x = windowDefaultPosition[0]
+  if (mousePosX + SNAP_SIZE >= borderX) {
+    x = winDefPositionX
   }
 
-  if (mousePos[1] + SNAP_SIZE >= borders[1]) {
-    y = borders[1] - windowDefaultPosition[1]
+  if (mousePosY + SNAP_SIZE >= borderY) {
+    y = borderY - winDefPositionY
   }
 
   windowPos.value = [x, y]
 }
 
-function stopMove (e: Event) {
-  if (!moving) return
+function stopMove (e: Event): void {
+  if (!moving) {return}
   e.preventDefault()
 
   moving = false
 }
 
-function recalculatePositions () {
-  const newBorders = [
-    window.innerWidth - windowRef.value!.offsetWidth,
-    window.innerHeight - windowRef.value!.offsetHeight,
-  ]
+function recalculatePositions (): void {
+  const newBorderX = window.innerWidth - windowRef.value!.offsetWidth
+  const newBorderY = window.innerHeight - windowRef.value!.offsetHeight
 
   if (windowPos.value[0] === 0 && windowPos.value[1] === 0) {
     const rect = windowRef.value!.getBoundingClientRect()
-    windowDefaultPosition = [rect.x, rect.y]
+    winDefPositionX = rect.x
+    winDefPositionY = rect.y
   } else {
-    windowDefaultPosition[0] += (newBorders[0] - borders[0]) / 2
-    windowDefaultPosition[1] += (newBorders[1] - borders[1]) / 2
+    winDefPositionX += (newBorderX - borderX) / 2
+    winDefPositionY += (newBorderY - borderY) / 2
   }
 
-  borders = newBorders
+  borderX = newBorderX
+  borderY = newBorderY
 }
 
-function minimize () {
+function minimize (): void {
   windowsStore.minimize(props.name)
 }
 
-function close () {
+function close (): void {
   emit('closed')
   windowsStore.close(props.name)
 }

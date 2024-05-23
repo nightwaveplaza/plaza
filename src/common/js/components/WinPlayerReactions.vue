@@ -1,11 +1,12 @@
 <template>
-  <win-btn block @click="like"><i :class="likeIcon" class="i mr-1" :style="{color: likeColor}"/>
+  <win-btn block :disabled="sending" @click="like">
+    <i :class="likeIcon" class="i mr-1" :style="{color: likeColor}" />
     {{ playerPlaybackStore.reactions }}
   </win-btn>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { AxiosError } from 'axios'
 import { useI18n } from 'vue-i18n'
 import { api } from '@common/js/api/api'
@@ -26,14 +27,14 @@ const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 
 const likeColor = computed(() => {
   if (playerPlaybackStore.songId === userReactionStore.songId) {
     return userReactionStore.score === 2 ? CL_FAV : userReactionStore.score === 1 ? CL_LIKE : ''
+  } else {
+    return ''
   }
 })
-
-// Non-reactive
-let sending = false
+const sending = ref(false)
 
 // Methods
-function like () {
+function like (): void {
   if (playerPlaybackStore.songId !== userReactionStore.songId) {
     userReactionStore.score = 0
   }
@@ -47,12 +48,8 @@ function like () {
   }
 }
 
-function send (score: number) {
-  if (sending) {
-    return
-  }
-
-  sending = true
+function send (score: number): void {
+  sending.value = true
 
   api.reactions.react(score).then(res => {
     playerPlaybackStore.reactions = res.data.reactions
@@ -64,13 +61,15 @@ function send (score: number) {
       windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
   }).finally(() => {
-    sending = false
+    sending.value = false
   })
 }
 
-function showTip () {
+function showTip (): void {
   const showed = prefs.get<number>('reactionTip', 0)
-  if (showed > 0) return
+  if (showed > 0) {
+    return
+  }
 
   windowsStore.alert(
       t('messages.reaction_tip', {icon: '<i class="i icon-like"></i>'}),

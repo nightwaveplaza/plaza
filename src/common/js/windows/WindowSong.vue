@@ -89,7 +89,7 @@ const playText = computed(() => isPlaying.value
     : t('win.song.btn_play_preview')
 )
 
-function fetchSongInfo (songId: string) {
+function fetchSongInfo (songId: string): void {
   api.songs.get(songId).then(res => {
     Object.assign(song, res.data)
   }).catch(e => {
@@ -98,7 +98,7 @@ function fetchSongInfo (songId: string) {
   })
 }
 
-async function favoriteSong () {
+async function favoriteSong (): Promise<void> {
   sending.value = true
 
   try {
@@ -118,12 +118,12 @@ async function favoriteSong () {
   }
 }
 
-function getVolume () {
+function getVolume (): number {
   const volume = prefs.get<number>('volume', 100)
   return volume / 100
 }
 
-function play () {
+function play (): void {
   if (isPlaying.value) {
     stop()
   } else {
@@ -132,21 +132,21 @@ function play () {
   }
 }
 
-function stop () {
+function stop (): void {
   isPlaying.value = false
   audio.value!.pause()
   audio.value!.currentTime = 0
 }
 
-function onPlay () {
+function onPlay (): void {
   isPlaying.value = true
 }
 
-function onPause () {
+function onPause (): void {
   isPlaying.value = false
 }
 
-function timeUpdated () {
+function timeUpdated (): void {
   if (isPlaying.value) {
     playTimeLeft.value = 30 - audio.value!.currentTime
   }

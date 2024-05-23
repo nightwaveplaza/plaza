@@ -12,7 +12,7 @@ export default function () {
   let canvas: HTMLCanvasElement | null
   let canvasContext: CanvasRenderingContext2D | null
 
-  function startVisual (audio: HTMLAudioElement, cvs: HTMLCanvasElement) {
+  function startVisual (audio: HTMLAudioElement, cvs: HTMLCanvasElement): void {
     if (!context || !source || !analyser) {
       context = new (window.AudioContext || (window as any).webkitAudioContext)()
       analyser = context.createAnalyser()
@@ -35,7 +35,7 @@ export default function () {
     visualize()
   }
 
-  function calcVisualFreqs () {
+  function calcVisualFreqs (): void {
     const sampleRate = context!.sampleRate
     const freqStep = sampleRate / (analyser!.frequencyBinCount * 2)
     let endFreq = freqStep
@@ -46,7 +46,7 @@ export default function () {
     }
   }
 
-  function visualize () {
+  function visualize (): void {
     if (!visualEnabled) {
       return
     }
@@ -58,14 +58,14 @@ export default function () {
     analyser!.getByteFrequencyData(frequencyData)
 
     for (let i = 0; i < visualBars; i++) {
-      const height = Math.ceil((canvasHeight * frequencyData[i]) / 255)
+      const height = Math.ceil((canvasHeight * frequencyData[i]!) / 255)
       const width = Math.ceil(canvasWidth / visualBars)
       canvasContext!.fillStyle = VISUAL_BARS
       canvasContext!.fillRect(i * width, canvasHeight - height, width, height)
     }
   }
 
-  function stopVisual () {
+  function stopVisual (): void {
     visualEnabled = false
     if (canvasContext) {
       canvasContext.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)

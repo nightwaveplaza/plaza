@@ -1,6 +1,6 @@
 <template>
   <div class="app-desktop theme-win98">
-    <window-support :direct="true"/>
+    <window-support :direct="true" />
   </div>
 </template>
 

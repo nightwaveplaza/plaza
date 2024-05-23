@@ -40,7 +40,7 @@ export const useWindowsStore = defineStore('windowsStore', {
 
     pullUp (name?: string) {
       this.activeZIndex++
-      this.activeWindow = name ?? this.windows[this.windows.length - 1].name
+      this.activeWindow = name ?? this.windows[this.windows.length - 1]!.name
     },
 
     close (name: string) {
@@ -65,7 +65,7 @@ export const useWindowsStore = defineStore('windowsStore', {
     updateTitle (name: string, title: string) {
       if (this.isOpened(name)) {
         const index: number = this.windows.map(e => e.name).indexOf(name)
-        this.windows[index].title = title
+        this.windows[index]!.title = title
       }
     },
 

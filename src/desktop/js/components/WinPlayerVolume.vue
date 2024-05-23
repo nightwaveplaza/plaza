@@ -1,10 +1,10 @@
 <template>
   <div class="player-volume">
-    <div class="player-volume-icon"/>
+    <div class="player-volume-icon" />
     <div class="player-volume-control">
-      <div id="player-volume-range" ref="volumeSlider"></div>
+      <div id="player-volume-range" ref="volumeSlider" />
     </div>
-    <div class="player-volume-line simple-border"></div>
+    <div class="player-volume-line simple-border" />
   </div>
 </template>
 
@@ -20,14 +20,14 @@ const volumeSlider = ref<HTMLDivElement | null>(null)
 // Non-reactive
 let volume = 0
 
-function createSlider() {
+function createSlider(): void {
   noUiSlider.create(volumeSlider.value!, {
     start: [volume],
     range: {
       'min': [0],
       'max': [100],
     },
-  }).on('slide', (values, handle) => {
+  }).on('slide', (values) => {
     volume = Math.round(values[0] as number)
     prefs.save('volume', volume)
     emit('onchange', volume)

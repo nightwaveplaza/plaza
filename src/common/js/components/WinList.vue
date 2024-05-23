@@ -1,7 +1,7 @@
 <template>
   <div ref="list" class="list" :class="{scroll: scroll}">
     <table class="hover">
-      <slot/>
+      <slot />
     </table>
   </div>
 </template>
@@ -24,11 +24,11 @@ const list = ref<HTMLDivElement | null>(null)
 let scrollbar: PerfectScrollbar
 
 // Methods
-function scrollTop () {
+function scrollTop (): void {
   list.value!.scrollTop = 0
 }
 
-function refreshScrollbar () {
+function refreshScrollbar (): void {
   if (props.scroll) {
     nextTick(() => {
       scrollbar.update()

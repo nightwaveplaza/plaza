@@ -85,7 +85,7 @@ function add (amount: number) {
 }
 
 onMounted(() => {
-  intervalId = setInterval(refreshText, 1000)
+  intervalId = window.setInterval(refreshText, 1000)
 })
 
 onBeforeUnmount(() => {

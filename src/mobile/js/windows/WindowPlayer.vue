@@ -24,12 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { Native } from '@mobile/js/bridge/native'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import WinWindow from '@common/js/components/WinWindow.vue'
 import { usePlayerPlaybackStore } from '@common/js/stores/playerPlaybackStore'
-import { MutationType } from 'pinia'
 
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
@@ -37,11 +36,11 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 const win = ref<InstanceType<typeof WinWindow>>()
 
 // Methods
-function minimize () {
+function minimize (): void {
   windowsStore.minimize('player')
 }
 
-function toggleFullscreen () {
+function toggleFullscreen (): void {
   Native.toggleFullscreen()
 }
 </script>

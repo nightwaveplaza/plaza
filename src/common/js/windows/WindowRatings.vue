@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="440" fluidHeight name="ratings" :title="t('win.ratings.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="440" fluid-height name="ratings" :title="t('win.ratings.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
@@ -18,17 +18,23 @@
         <!-- Song list -->
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div style="position: relative" class="w-100">
-            <div v-if="loading" class="content-loading"></div>
-            <win-list scroll ref="list">
-              <tr v-for="(song, i) in data.songs" class="hover">
-                <td class="text-center noselect" style="width: 37px">{{ pad((page - 1) * data.per_page + i + 1) }}
+            <div v-if="loading" class="content-loading" />
+            <win-list ref="list" scroll>
+              <tr v-for="(song, i) in data.songs" :key="i" class="hover">
+                <td class="text-center noselect" style="width: 37px">
+                  {{ pad((page - 1) * data.per_page + i + 1) }}
                 </td>
                 <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
-                  <div class="artist">{{ song.artist }}</div>
-                  <div class="title">{{ song.title }}</div>
+                  <div class="artist">
+                    {{ song.artist }}
+                  </div>
+                  <div class="title">
+                    {{ song.title }}
+                  </div>
                 </td>
                 <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
-                  {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727"/></td>
+                  {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+                </td>
               </tr>
             </win-list>
           </div>
@@ -38,10 +44,12 @@
         <div class="d-flex">
           <div class="row no-gutters mt-2 w-100">
             <div class="col">
-              <win-pagination ref="pagination" :pages="data.pages" @change="changePage"/>
+              <win-pagination ref="pagination" :pages="data.pages" @change="changePage" />
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">
+                {{ t('buttons.close') }}
+              </win-btn>
             </div>
           </div>
         </div>
@@ -49,8 +57,12 @@
     </div>
 
     <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">{{ t('pagination.pages', {n: data.pages}) }}</div>
-      <div class="col cell">{{ t('pagination.songs', {n: data.count}) }}</div>
+      <div class="col-3 cell d">
+        {{ t('pagination.pages', {n: data.pages}) }}
+      </div>
+      <div class="col cell">
+        {{ t('pagination.songs', {n: data.count}) }}
+      </div>
     </div>
   </win-window>
 </template>
@@ -84,7 +96,7 @@ const range = ref('overtime')
 
 let loading = false
 
-function fetchRatings (range: string, page: number) {
+function fetchRatings (range: string, page: number): void {
   list.value!.scrollTop()
 
   api.ratings.get(range, page).then(res => {
@@ -95,19 +107,19 @@ function fetchRatings (range: string, page: number) {
   }).finally(() => loading = false)
 }
 
-function changePage (newPage: number) {
+function changePage (newPage: number): void {
   if (!loading) {
     page.value = newPage
   }
 }
 
-function changeRange (newRange: string) {
+function changeRange (newRange: string): void {
   if (!loading) {
     range.value = newRange
   }
 }
 
-function pad (n: number) {
+function pad (n: number): string {
   return n.toString().padStart(3, '0')
 }
 

@@ -1,13 +1,23 @@
 <template>
-  <win-window :width="220" name="user" :title="t('win.user.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="220" name="user" :title="t('win.user.title')">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-btn block class="mb-2" @click="open('user-favorites')" v-if="!isMobile">{{ t('win.user_favorites.title') }}</win-btn>
-          <win-btn block class="mb-2" @click="open('user-email')">{{ t('win.user_email.title') }}</win-btn>
-          <win-btn block class="mb-2" @click="open('user-password')">{{ t('win.user_password.title') }}</win-btn>
-          <win-btn block class="mb-2" @click="logout">{{ t('win.user.btn_logout') }}</win-btn>
-          <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+          <win-btn v-if="!isMobile" block class="mb-2" @click="open('user-favorites')">
+            {{ t('win.user_favorites.title') }}
+          </win-btn>
+          <win-btn block class="mb-2" @click="open('user-email')">
+            {{ t('win.user_email.title') }}
+          </win-btn>
+          <win-btn block class="mb-2" @click="open('user-password')">
+            {{ t('win.user_password.title') }}
+          </win-btn>
+          <win-btn block class="mb-2" @click="logout">
+            {{ t('win.user.btn_logout') }}
+          </win-btn>
+          <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">
+            {{ t('buttons.close') }}
+          </win-btn>
         </div>
       </div>
     </div>
@@ -26,12 +36,12 @@ const { isMobile } = helperComposable()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 
-function open (window: string) {
+function open (window: string): void {
   windowsStore.open(window)
   windowsStore.close('user')
 }
 
-function logout () {
+function logout (): void {
   api.user.logout().then().finally(() => {
     userAuthStore.logout()
     windowsStore.close('user')

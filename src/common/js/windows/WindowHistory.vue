@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="400" fluidHeight name="history" :title="t('win.history.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="400" fluid-height name="history" :title="t('win.history.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
@@ -7,21 +7,27 @@
             <div v-if="data.songs.length > 0" class="col">
               {{ t('win.history.showing_history', {from: sd(data.from_date), to: sd(data.to_date)}) }}
             </div>
-            <div class="col-auto"><a href="https://plaza.one/lastfm" target="_blank">Last.fm</a></div>
+            <div class="col-auto">
+              <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a>
+            </div>
           </div>
         </div>
 
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div style="position: relative" class="w-100">
-            <div v-if="loading" class="content-loading"></div>
+            <div v-if="loading" class="content-loading" />
             <win-list ref="list" scroll>
-              <tr v-for="song in data.songs">
+              <tr v-for="song in data.songs" :key="song.id">
                 <td class="pl-2 pr-1 py-1 show-info" @click="windowsStore.showSong(song.id)">
-                  <div class="artist">{{ song.artist }}</div>
-                  <div class="title">{{ song.title }}</div>
+                  <div class="artist">
+                    {{ song.artist }}
+                  </div>
+                  <div class="title">
+                    {{ song.title }}
+                  </div>
                 </td>
                 <td class="pr-2 text-right noselect" style="width: 48px">
-                  {{ sd(song.played_at) }}<br/>
+                  {{ sd(song.played_at) }}<br>
                   {{ gt(song.played_at) }}
                 </td>
               </tr>
@@ -32,10 +38,12 @@
         <div class="d-flex">
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
-              <win-pagination v-if="data.songs.length > 0" :pages="data.pages" @change="changePage"/>
+              <win-pagination v-if="data.songs.length > 0" :pages="data.pages" @change="changePage" />
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+              <win-btn class="px-4" @click="winProps.close()">
+                {{ t('buttons.close') }}
+              </win-btn>
             </div>
           </div>
         </div>
@@ -43,8 +51,12 @@
     </div>
 
     <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">{{ t('pagination.pages', {n: data.pages}) }}</div>
-      <div class="col cell">{{ t('pagination.songs', {n: data.count}) }}</div>
+      <div class="col-3 cell d">
+        {{ t('pagination.pages', {n: data.pages}) }}
+      </div>
+      <div class="col cell">
+        {{ t('pagination.songs', {n: data.count}) }}
+      </div>
     </div>
   </win-window>
 </template>
@@ -76,13 +88,13 @@ const loading = ref(true)
 const page = ref(1)
 const list = ref<InstanceType<typeof WinList>>()
 
-function changePage (newPage: number) {
+function changePage (newPage: number): void {
   if (!loading.value) {
     page.value = newPage
   }
 }
 
-async function fetchHistory (page: number) {
+async function fetchHistory (page: number): void {
   list.value!.scrollTop()
   loading.value = true
 

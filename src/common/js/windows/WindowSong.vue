@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="360" :name="name" :title="t('win.song.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="360" :name="name" :title="t('win.song.title')">
     <div class="p-2 song-info">
       <div v-if="song.id !== ''">
         <div class="group-box m-0">
@@ -7,20 +7,26 @@
             <div class="row mt-0">
               <div class="col">
                 <div class="mb-1">
-                  <div class="noselect"><strong>{{ t('win.song.artist') }}:</strong><br/></div>
+                  <div class="noselect">
+                    <strong>{{ t('win.song.artist') }}:</strong><br>
+                  </div>
                   {{ song.artist }}
                 </div>
                 <div class="mb-1">
-                  <div class="noselect"><strong>{{ t('win.song.album') }}:</strong><br/></div>
+                  <div class="noselect">
+                    <strong>{{ t('win.song.album') }}:</strong><br>
+                  </div>
                   {{ song.album }}
                 </div>
                 <div class="mb-2">
-                  <div class="noselect"><strong>{{ t('win.song.song_title') }}:</strong><br/></div>
+                  <div class="noselect">
+                    <strong>{{ t('win.song.song_title') }}:</strong><br>
+                  </div>
                   {{ song.title }}
                 </div>
                 <div>
-                  <i class="i icon-clock"/> {{ songLength }} &nbsp;
-                  <i class="i icon-like" style="color: #c12727"/> {{ song.likes }}
+                  <i class="i icon-clock" /> {{ songLength }} &nbsp;
+                  <i class="i icon-like" style="color: #c12727" /> {{ song.likes }}
                 </div>
               </div>
               <div class="col-5">
@@ -32,22 +38,32 @@
 
         <div class="row mt-2">
           <div class="col-4 pr-1">
-            <audio ref="audio" :src="song.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated"/>
-            <win-btn block :disabled="song.preview_src === null" @click="play">{{ playText }}</win-btn>
+            <audio ref="audio" :src="song.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
+            <win-btn block :disabled="song.preview_src === null" @click="play">
+              {{ playText }}
+            </win-btn>
           </div>
           <div class="col-2 pl-0">
-            <win-btn block @click="favoriteSong" :disabled="sending"><i class="icon-favorite i" :style="{color: favoriteColor }"/></win-btn>
+            <win-btn block :disabled="sending" @click="favoriteSong">
+              <i class="icon-favorite i" :style="{color: favoriteColor }" />
+            </win-btn>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+            <win-btn class="px-4" @click="winProps.close()">
+              {{ t('buttons.close') }}
+            </win-btn>
           </div>
         </div>
       </div>
-      <div v-else class="text-center">{{ t('loading') }}</div>
+      <div v-else class="text-center">
+        {{ t('loading') }}
+      </div>
     </div>
 
     <div v-if="song" class="statusbar row no-gutters noselect">
-      <div v-if="song.first_played_at" class="col cell">{{ t('win.song.first_played') }}: {{ sdy(song.first_played_at) }}</div>
+      <div v-if="song.first_played_at" class="col cell">
+        {{ t('win.song.first_played') }}: {{ sdy(song.first_played_at) }}
+      </div>
     </div>
   </win-window>
 </template>

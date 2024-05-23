@@ -1,5 +1,3 @@
-<template />
-
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
 import { api } from '@common/js/api/api'

@@ -1,7 +1,7 @@
 <template>
   <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': settingsStore.taskbarPosition === 'top'}">
     <div style="flex: 0 0 10px">
-      <div class="divider mx-1"/>
+      <div class="divider mx-1" />
     </div>
     <win-btn
       v-for="window in windowsStore.windows"

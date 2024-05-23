@@ -1,22 +1,30 @@
 <template>
-  <win-window :width="350" name="news" :title="t('win.news.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="350" name="news" :title="t('win.news.title')">
     <div class="p-2">
       <win-memo>
-        <div v-if="article.text === ''" class="content-loading"></div>
-        <div v-if="article.text !== ''" v-html="article.text"/>
+        <div v-if="article.text === ''" class="content-loading" />
+        <div v-if="article.text !== ''">
+          {{ article.text }}
+        </div>
         <div v-if="article.text !== ''" class="row justify-content-between">
-          <div class="col-auto" v-html="article.author"></div>
-          <div class="col-auto" v-html="sdy(article.created_at)"></div>
+          <div class="col-auto">
+            {{ article.author }}
+          </div>
+          <div class="col-auto">
+            {{ sdy(article.created_at) }}
+          </div>
         </div>
       </win-memo>
 
       <!-- Buttons -->
       <div class="row mt-2 no-gutters noselect">
         <div class="col">
-          <win-pagination v-if="length > 0" :pages="pages" @change="changePage"/>
+          <win-pagination v-if="length > 0" :pages="pages" @change="changePage" />
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+          <win-btn block @click="winProps.close()">
+            {{ t('buttons.close') }}
+          </win-btn>
         </div>
       </div>
     </div>
@@ -52,7 +60,7 @@ function getArticle (): void {
   })
 }
 
-function changePage (newPage: number) {
+function changePage (newPage: number): void {
   page.value = newPage
   getArticle()
 }

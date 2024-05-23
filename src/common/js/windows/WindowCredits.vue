@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="420" name="credits" :title="t('win.credits.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="420" name="credits" :title="t('win.credits.title')">
     <div class="pt-2 pl-2 pr-2">
       <win-memo>
         <i18n-t keypath="win.credits.created_by" tag="p" class="mb-2">
@@ -18,7 +18,9 @@
         </i18n-t>
       </win-memo>
       <div class="text-center my-2">
-        <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+        <win-btn class="px-4" @click="winProps.close()">
+          {{ t('buttons.close') }}
+        </win-btn>
       </div>
     </div>
   </win-window>

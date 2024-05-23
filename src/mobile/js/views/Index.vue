@@ -17,8 +17,6 @@ import { useUserAuthStore } from '@common/js/stores/userAuthStore'
 import { useWindowsStore } from '@common/js/stores/windowsStore'
 import { enBackgroundMode, type Background } from '@common/js/types'
 import useEmitter from '@mobile/js/extra/useEmitter'
-import { api } from '@common/js/api/api'
-import { prefs } from '@common/js/extras/prefs'
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()

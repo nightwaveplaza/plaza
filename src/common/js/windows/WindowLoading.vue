@@ -1,16 +1,18 @@
 <template>
   <win-window :width="220" name="loading" title="Nightwave Plaza">
-    <template v-slot:header>
-      <div class="buttons"></div>
+    <template #header>
+      <div class="buttons" />
     </template>
 
     <div class="p-3">
-      <p class="text-center"><strong>{{ t('loading') }}</strong></p>
+      <p class="text-center">
+        <strong>{{ t('loading') }}</strong>
+      </p>
       <div ref="bar" class="text-field progress-bar">
         <div ref="progress" :style="style" class="progress">
-          <div/>
-          <div/>
-          <div/>
+          <div />
+          <div />
+          <div />
         </div>
       </div>
     </div>
@@ -46,7 +48,7 @@ let direction = 3
 let left = 0
 let loading = true
 
-function move () {
+function move (): void {
   if (!loading) {
     return
   }

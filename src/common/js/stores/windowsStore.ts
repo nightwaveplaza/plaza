@@ -18,7 +18,7 @@ export const useWindowsStore = defineStore('windowsStore', {
 
   getters: {
     isOpened: (state) => {
-      return (windowName: string) => state.windows.some(w => w.name === windowName)
+      return (windowName: string): boolean => state.windows.some(w => w.name === windowName)
     },
 
     isMinimized: (state) => {

@@ -9,13 +9,15 @@
           <p><i>{{ t('win.about.welcome') }}</i></p>
         </div>
         <div class="col-auto align-self-center">
-          <img src="/img/pc.png" style="width: 70px" alt="" />
+          <img src="/img/pc.png" style="width: 70px" alt="">
         </div>
       </div>
 
       <div class="group-box mb-3">
         <div class="gb-content p-2">
-          <p><strong>{{ t('win.about.contact_info') }}</strong><br /></p>
+          <p>
+            <strong>{{ t('win.about.contact_info') }}</strong><br>
+          </p>
           <i18n-t keypath="win.about.send_enquires" tag="p">
             <template #link>
               <a href="https://plaza.one/submissions" target="_blank">mail@plaza.one</a>
@@ -28,7 +30,9 @@
             </template>
           </i18n-t>
 
-          <p><strong>{{ t('win.about.submissions') }}</strong><br/></p>
+          <p>
+            <strong>{{ t('win.about.submissions') }}</strong><br>
+          </p>
           <i18n-t keypath="win.about.submission_form" tag="p" class="mb-2">
             <template #link>
               <a href="https://plaza.one/submissions" target="_blank">{{ t('win.about.submission_link') }}</a>
@@ -36,11 +40,13 @@
           </i18n-t>
 
           <p class="mb-2">
-            <strong>{{ t('win.about.mobile') }}</strong><br/>
+            <strong>{{ t('win.about.mobile') }}</strong><br>
             <a role="button" @click="openMobile">{{ t('win.about.show_more') }}</a>
           </p>
 
-          <p><strong>{{ t('win.about.useful_links') }}</strong><br></p>
+          <p>
+            <strong>{{ t('win.about.useful_links') }}</strong><br>
+          </p>
           <p class="mb-2">
             {{ t('win.about.playlists') }}<br>
             <a href="https://plaza.one/plaza.m3u" target="_blank">M3U (Winamp)</a>
@@ -48,7 +54,7 @@
           </p>
           <p>
             {{ t('win.about.streams') }}<br>
-            <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br/>
+            <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br>
             <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus / 96kbps)
           </p>
         </div>

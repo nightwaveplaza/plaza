@@ -1,12 +1,16 @@
 <template>
-  <win-window :width="250" name="settings-language" :title="t('win.settings_language.title')" v-slot="winProps">
+  <win-window v-slot="winProps" :width="250" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
       <div class="group-box">
-        <div class="gb-label noselect"><span>{{ t('win.settings_language.select') }}</span></div>
+        <div class="gb-label noselect">
+          <span>{{ t('win.settings_language.select') }}</span>
+        </div>
         <div class="gb-content p-2">
           <div class="select">
             <select @change="switchLanguage">
-              <option v-for="(lang, name) in _locales" :value="name" v-html="lang.name" :selected="name === settingsStore.language"  />
+              <option v-for="(lang, name) in _locales" :key="lang" :value="name" :selected="name === settingsStore.language">
+                {{ lang.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -19,7 +23,9 @@
       </i18n-t>
 
       <div class="text-center mt-3">
-        <win-btn class="px-4" @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+        <win-btn class="px-4" @click="winProps.close()">
+          {{ t('buttons.close') }}
+        </win-btn>
       </div>
     </div>
   </win-window>
@@ -33,7 +39,7 @@ import _locales from '@locales/_locales'
 const { t } = useI18n()
 const settingsStore = useSettingsStore()
 
-function switchLanguage(e: Event) {
+function switchLanguage(e: Event): void {
   settingsStore.language = (e.target as HTMLSelectElement).value
   settingsStore.saveLanguage()
 }

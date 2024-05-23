@@ -4,13 +4,17 @@
       <template v-if="step === 1">
         <div class="row no-gutters">
           <div class="col-sm-4 d-none d-sm-block">
-            <img alt="register" class="img-register" src="@common/img/register.png"/>
+            <img alt="register" class="img-register" src="@common/img/register.png">
           </div>
 
           <div class="col-12 col-sm-8 d-flex flex-column">
             <div class="d-flex flex-grow-1 flex-column mb-fix">
-              <p class="lead">{{ t('win.user_register.user_information') }}:</p>
-              <p class="mt-2 mb-3">{{ t('win.user_register.please_fill') }}</p>
+              <p class="lead">
+                {{ t('win.user_register.user_information') }}:
+              </p>
+              <p class="mt-2 mb-3">
+                {{ t('win.user_register.please_fill') }}
+              </p>
 
               <!-- Username -->
               <div class="row no-gutters mb-2">
@@ -18,7 +22,7 @@
                   <label for="register-username">{{ t('fields.username') }}:</label>
                 </div>
                 <div class="col-7">
-                  <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text"/>
+                  <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text">
                 </div>
               </div>
 
@@ -28,8 +32,7 @@
                   <label for="register-password">{{ t('fields.password') }}:</label>
                 </div>
                 <div class="col-7">
-                  <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2"
-                         type="password" />
+                  <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2" type="password">
                 </div>
               </div>
 
@@ -39,8 +42,7 @@
                   <label for="register-password-repeat">{{ t('fields.repeat_password') }}:</label>
                 </div>
                 <div class="col-7">
-                  <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3"
-                         type="password"/>
+                  <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3" type="password">
                 </div>
               </div>
 
@@ -50,7 +52,7 @@
                   <label for="register-email">{{ t('fields.email') }}:</label>
                 </div>
                 <div class="col-7">
-                  <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email"/>
+                  <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email">
                 </div>
               </div>
             </div>
@@ -58,10 +60,14 @@
             <div class="d-flex flex-grow-0">
               <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
                 <div class="col-auto">
-                  <win-btn block class="text-bold px-3" @click="register" :disabled="sending">{{ t('win.user_register.btn_register') }}</win-btn>
+                  <win-btn block class="text-bold px-3" :disabled="sending" @click="register">
+                    {{ t('win.user_register.btn_register') }}
+                  </win-btn>
                 </div>
                 <div class="col-auto">
-                  <win-btn block class="px-3" @click="close">{{ t('buttons.cancel') }}</win-btn>
+                  <win-btn block class="px-3" @click="close">
+                    {{ t('buttons.cancel') }}
+                  </win-btn>
                 </div>
               </div>
             </div>
@@ -70,14 +76,20 @@
       </template>
 
 
-      <div class="text-center" v-else-if="step === 2">
-        <p class="lead"><em>{{ t('win.user_register.captcha_title') }}</em></p>
-        <p class="mt-2">{{ t('win.user_register.captcha_desc') }}</p>
+      <div v-else-if="step === 2" class="text-center">
+        <p class="lead">
+          <em>{{ t('win.user_register.captcha_title') }}</em>
+        </p>
+        <p class="mt-2">
+          {{ t('win.user_register.captcha_desc') }}
+        </p>
         <div class="d-inline-block my-3">
-          <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="fields.captcha_response"/>
+          <vue-turnstile v-model="fields.captcha_response" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
         </div>
-        <br/>
-        <win-btn @click="completeCaptcha" class="mx-auto px-4 text-bold">{{ t('buttons.continue') }}</win-btn>
+        <br>
+        <win-btn class="mx-auto px-4 text-bold" @click="completeCaptcha">
+          {{ t('buttons.continue') }}
+        </win-btn>
       </div>
 
       <!--        <template v-else>-->
@@ -124,7 +136,7 @@ const win = ref<InstanceType<typeof WinWindow>>()
 /**
  * User register
  */
-function register () {
+function register (): void {
   try {
     validate()
   } catch (e) {
@@ -134,7 +146,7 @@ function register () {
   step.value = 2
 }
 
-function completeCaptcha () {
+function completeCaptcha (): void {
   if (fields.captcha_response === '') {
     step.value = 1
     return windowsStore.alert(t('win.user_register.captcha_fail'), t('errors.error'))
@@ -157,7 +169,7 @@ function completeCaptcha () {
 /**
  * Fields validation
  */
-function validate () {
+function validate (): void {
   if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
     throw new Error(t('errors.username_incorrect'))
   }
@@ -183,7 +195,7 @@ function validate () {
   }
 }
 
-function close () {
+function close (): void {
   if (props.direct) {
     router.push({ name: 'index' })
   } else {

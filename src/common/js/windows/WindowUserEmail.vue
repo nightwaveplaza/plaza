@@ -1,21 +1,25 @@
 <template>
-  <win-window ref="win" :width="250" name="user-email" :title="t('win.user_email.title')" v-slot="winProps">
+  <win-window ref="win" v-slot="winProps" :width="250" name="user-email" :title="t('win.user_email.title')">
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">{{ t('fields.email') }}:</label>
-      <input id="email" :disabled="disabled" v-model="fields.email" class="d-block mb-2" type="email"/>
+      <input id="email" v-model="fields.email" :disabled="disabled" class="d-block mb-2" type="email">
 
       <!-- Current password -->
       <label for="password">{{ t('fields.current_password') }}:</label>
-      <input id="password" :disabled="disabled" v-model="fields.current_password" class="d-block mb-2" type="password"/>
+      <input id="password" v-model="fields.current_password" :disabled="disabled" class="d-block mb-2" type="password">
 
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-btn block class="text-bold" @click="update" :disabled="sending">{{ t('buttons.change') }}</win-btn>
+          <win-btn block :disabled="sending" class="text-bold" @click="update">
+            {{ t('buttons.change') }}
+          </win-btn>
         </div>
         <div class="col-4">
-          <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+          <win-btn block @click="winProps.close()">
+            {{ t('buttons.close') }}
+          </win-btn>
         </div>
       </div>
     </div>
@@ -41,7 +45,7 @@ const fields: UserEdit = reactive({
 const disabled = ref(true)
 const sending = ref(false)
 
-function fetchUser () {
+function fetchUser (): void {
   api.user.get().then(res => {
     fields.email = res.data.email
     disabled.value = false
@@ -51,7 +55,7 @@ function fetchUser () {
   })
 }
 
-function update () {
+function update (): void {
   if (fields.current_password.length === 0) {
     return windowsStore.alert(t('errors.enter_current_password'), t('errors.error'))
   }

@@ -1,26 +1,33 @@
 <template>
   <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
-
     <!-- Minimize button -->
-    <template v-slot:header>
+    <template #header>
       <div class="buttons">
-        <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
-        <win-btn v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen"><span/></win-btn>
+        <win-btn class="button-minimize" @click="minimize">
+          <span />
+        </win-btn>
+        <win-btn v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
+          <span />
+        </win-btn>
       </div>
     </template>
 
     <!-- Menu -->
-    <win-menu/>
+    <win-menu />
 
     <!-- Player -->
     <div class="content p-1 p-sm-2">
-      <win-player/>
+      <win-player />
     </div>
 
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
-      <div class="col cell">{{ t('win.player.listeners', {listeners: playerPlaybackStore.listeners}) }}</div>
-      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">{{ t('win.player.user', {user: userAuthStore.username}) }}</div>
+      <div class="col cell">
+        {{ t('win.player.listeners', {listeners: playerPlaybackStore.listeners}) }}
+      </div>
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
+        {{ t('win.player.user', {user: userAuthStore.username}) }}
+      </div>
     </div>
   </win-window>
 </template>
@@ -41,11 +48,11 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()
 
-function minimize () {
+function minimize (): void {
   windowsStore.minimize('player')
 }
 
-function requestFullScreen () {
+function requestFullScreen (): void {
   document.getElementById('app')?.requestFullscreen()
 }
 </script>

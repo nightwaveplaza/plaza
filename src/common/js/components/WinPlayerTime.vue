@@ -29,12 +29,12 @@ let position = 0
 let songUpdatedAt = 0
 let intervalId = 0
 
-function showText (newText: string) {
+function showText (newText: string): void {
   text.value = newText
   textTime.value = 2000
 }
 
-function tick () {
+function tick (): void {
   const now = Date.now()
   let correctedPosition = Math.floor((now - songUpdatedAt) / 1000) + position
   if (correctedPosition > length.value) {

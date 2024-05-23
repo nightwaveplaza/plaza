@@ -1,5 +1,5 @@
 export const prefs = {
-  save <T>(name: string, value: T) {
+  save <T>(name: string, value: T): void {
     localStorage.setItem('prefs_' + name, JSON.stringify(value))
   },
 

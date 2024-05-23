@@ -82,7 +82,7 @@
     "vite.config.ts"
   ],
   "exclude": [
-    "src/mobile/*"
+    "src/mobile"
   ],
   // Specifies the files to be included in the compilation.
   "references": [

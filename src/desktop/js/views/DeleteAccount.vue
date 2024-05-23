@@ -38,7 +38,7 @@ onMounted(() => {
   windowsStore.pullUp('delete-account')
 })
 
-function close () {
+function close (): void {
   router.push({ name: 'index' })
 }
 </script>

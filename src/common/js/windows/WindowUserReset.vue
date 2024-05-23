@@ -1,28 +1,33 @@
 <template>
-  <win-window ref="win" :width="320" name="user-reset" :title="t('win.user_reset.title')" v-slot="winProps">
+  <win-window v-slot="winProps" ref="win" :width="320" name="user-reset" :title="t('win.user_reset.title')">
     <div class="p-2">
-
-      <p class="pb-3 px-3 text-center">{{ t('win.user_reset.instruction') }}</p>
+      <p class="pb-3 px-3 text-center">
+        {{ t('win.user_reset.instruction') }}
+      </p>
 
       <!-- Email -->
       <div class="row no-gutters mb-3">
         <div class="col-6 offset-3">
           <label for="email">{{ t('win.user_reset.enter_email') }}:</label>
-          <input id="email" v-model="fields.email" class="d-block" type="email"/>
+          <input id="email" v-model="fields.email" class="d-block" type="email">
         </div>
       </div>
 
-      <vue-turnstile site-key="0x4AAAAAAAJlKRFzqmHHqPtK" v-model="captchaResponse" v-if="showCaptcha"/>
+      <vue-turnstile v-if="showCaptcha" v-model="captchaResponse" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
 
       <!-- Buttons -->
       <div class="row no-gutters">
         <div class="col-sm-8 offset-sm-2">
           <div class="py-2 row no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="reset" :disabled="sending">{{ t('win.user_login.btn_reset') }}</win-btn>
+              <win-btn block class="text-bold" :disabled="sending" @click="reset">
+                {{ t('win.user_login.btn_reset') }}
+              </win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+              <win-btn block @click="winProps.close()">
+                {{ t('buttons.close') }}
+              </win-btn>
             </div>
           </div>
         </div>
@@ -52,7 +57,7 @@ const showCaptcha = ref(false)
 const captchaResponse = ref('')
 const sending = ref(false)
 
-function reset () {
+function reset (): void {
   if (fields.email.length === 0) {
     return windowsStore.alert(t('errors.enter_email'), t('errors.error'))
   }
@@ -60,7 +65,7 @@ function reset () {
   showCaptcha.value = true
 }
 
-function completeCaptcha () {
+function completeCaptcha (): void {
   sending.value = true
 
   api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {

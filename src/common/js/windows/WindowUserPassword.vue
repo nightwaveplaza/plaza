@@ -1,25 +1,29 @@
 <template>
-  <win-window ref="win" :width="250" name="user-password" :title="t('win.user_password.title')" v-slot="winProps">
+  <win-window v-slot="winProps" ref="win" :width="250" name="user-password" :title="t('win.user_password.title')">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
           <!-- Current password -->
           <label for="current_password">{{ t('fields.current_password') }}:</label>
-          <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password"/>
+          <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password">
           <!-- New password password -->
           <label for="password">{{ t('fields.new_password') }}:</label>
-          <input id="password" v-model="fields.password" class="d-block mb-2" type="password"/>
+          <input id="password" v-model="fields.password" class="d-block mb-2" type="password">
           <!-- Repeat password -->
           <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
-          <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password"/>
+          <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="change" :disabled="sending">{{ t('buttons.change') }}</win-btn>
+              <win-btn block class="text-bold" :disabled="sending" @click="change">
+                {{ t('buttons.change') }}
+              </win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="winProps.close()">{{ t('buttons.close') }}</win-btn>
+              <win-btn block @click="winProps.close()">
+                {{ t('buttons.close') }}
+              </win-btn>
             </div>
           </div>
         </div>
@@ -49,7 +53,7 @@ const fields: UserEdit = reactive({
 const passwordRepeat = ref('')
 const sending = ref(false)
 
-function change () {
+function change (): void {
   try {
     validate()
   } catch (e) {
@@ -67,7 +71,7 @@ function change () {
   ).finally(() => sending.value = false)
 }
 
-function validate () {
+function validate (): void {
   if (fields.current_password.length === 0) {
     throw new Error(t('errors.enter_current_password'))
   }

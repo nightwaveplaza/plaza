@@ -5,19 +5,23 @@
         <div class="col-10 offset-1">
           <!-- New password -->
           <label for="password">{{ t('win.user_password.new') }}:</label>
-          <input class="d-block mb-2" id="password" type="password" v-model="password"/>
+          <input id="password" v-model="password" class="d-block mb-2" type="password">
 
           <!-- Repeat password -->
           <label for="password_repeat">{{ t('win.user_password.repeat') }}:</label>
-          <input class="d-block" id="password_repeat" type="password" v-model="passwordRepeat"/>
+          <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
 
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block @click="change" class="text-bold">{{ t('buttons.change') }}</win-btn>
+              <win-btn block class="text-bold" @click="change">
+                {{ t('buttons.change') }}
+              </win-btn>
             </div>
             <div class="col-4">
-              <win-btn block @click="router.push({name: 'index'})">{{ t('buttons.cancel') }}</win-btn>
+              <win-btn block @click="router.push({name: 'index'})">
+                {{ t('buttons.cancel') }}
+              </win-btn>
             </div>
           </div>
         </div>
@@ -51,7 +55,7 @@ const password = ref('')
 const passwordRepeat = ref('')
 const sending = ref(false)
 
-function change () {
+function change (): void {
   try {
     validate()
   } catch (e) {
@@ -68,7 +72,7 @@ function change () {
   }).finally(() => sending.value = false)
 }
 
-function validate () {
+function validate (): void {
   if (password.value.length < 3) {
     throw new Error(t('errors.password_short'))
   }

@@ -1,11 +1,11 @@
 <template>
   <div class="app-desktop" :class="settingsStore.themeName" :style="{backgroundImage, backgroundColor}">
-    <component v-for="window in windowsStore.windows" :is="window.form"/>
+    <component :is="window.form" v-for="window in windowsStore.windows" :key="window.name" />
 
-    <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
-    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
+    <window-song v-for="s in windowsStore.songWindows" :id="s.id" :key="s.id" :name="s.name" />
+    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type" />
 
-    <win-taskbar/>
+    <win-taskbar />
     <win-status-bar />
   </div>
 </template>

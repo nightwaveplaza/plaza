@@ -1,4 +1,7 @@
-export default function () {
+export default function (): {
+  stopVisual: () => void;
+  startVisual: (audio: HTMLAudioElement, cvs: HTMLCanvasElement) => void
+} {
   const VISUAL_BARS = 'rgba(255,255,255,0.6)'
   const MAX_FREQ_VISUAL = 14000
 

@@ -39,19 +39,19 @@
         <div class="row mt-2">
           <div class="col-4 pr-1">
             <audio ref="audio" :src="song.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
-            <win-btn block :disabled="song.preview_src === null" @click="play">
+            <win-button block :disabled="song.preview_src === null" @click="play">
               {{ playText }}
-            </win-btn>
+            </win-button>
           </div>
           <div class="col-2 pl-0">
-            <win-btn block :disabled="sending" @click="favoriteSong">
+            <win-button block :disabled="sending" @click="favoriteSong">
               <i class="icon-favorite i" :style="{color: favoriteColor }" />
-            </win-btn>
+            </win-button>
           </div>
           <div class="col-auto ml-auto">
-            <win-btn class="px-4" @click="winProps.close()">
+            <win-button class="px-4" @click="winProps.close()">
               {{ t('buttons.close') }}
-            </win-btn>
+            </win-button>
           </div>
         </div>
       </div>

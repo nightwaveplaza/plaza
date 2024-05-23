@@ -62,19 +62,19 @@
 
       <div class="row buttons no-gutters w-100">
         <div class="col-auto">
-          <win-btn class="px-4 mr-2" @click="openCredits">
+          <win-button class="px-4 mr-2" @click="openCredits">
             {{ t('win.about.btn_credits') }}
-          </win-btn>
+          </win-button>
         </div>
         <div class="col-auto">
-          <win-btn class="px-4 mr-2" @click="openNews">
+          <win-button class="px-4 mr-2" @click="openNews">
             {{ t('win.about.btn_news') }}
-          </win-btn>
+          </win-button>
         </div>
         <div class="col-auto ml-auto">
-          <win-btn class="px-4" @click="winProps.close()">
+          <win-button class="px-4" @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

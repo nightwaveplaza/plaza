@@ -3,12 +3,12 @@
     <!-- Minimize button -->
     <template #header>
       <div class="buttons">
-        <win-btn class="button-minimize" @click="minimize">
+        <win-button class="button-minimize" @click="minimize">
           <span />
-        </win-btn>
-        <win-btn v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
+        </win-button>
+        <win-button v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
           <span />
-        </win-btn>
+        </win-button>
       </div>
     </template>
 

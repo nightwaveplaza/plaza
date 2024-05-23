@@ -21,9 +21,9 @@
       </div>
 
       <div class="text-center mt-3">
-        <win-btn class="mx-auto px-4" @click="close()">
+        <win-button class="mx-auto px-4" @click="close()">
           {{ t('buttons.close') }}
-        </win-btn>
+        </win-button>
       </div>
     </div>
   </win-window>

@@ -13,9 +13,9 @@
       </div>
 
       <div class="text-center">
-        <win-btn class="mt-2 mx-auto px-4" @click="winProps.close()">
+        <win-button class="mt-2 mx-auto px-4" @click="winProps.close()">
           {{ t('buttons.ok') }}
-        </win-btn>
+        </win-button>
       </div>
     </div>
   </win-window>

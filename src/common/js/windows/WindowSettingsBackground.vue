@@ -36,24 +36,24 @@
 
           <div class="row no-gutters mt-2 noselect">
             <div class="col-2 pr-1">
-              <win-btn block @click="nextBg(-1)">
+              <win-button block @click="nextBg(-1)">
                 &lt;
-              </win-btn>
+              </win-button>
             </div>
             <div class="col-2 pr-1">
-              <win-btn block @click="nextBg(1)">
+              <win-button block @click="nextBg(1)">
                 &gt;
-              </win-btn>
+              </win-button>
             </div>
             <div class="col-4 pr-1">
-              <win-btn block :class="{active: settingsStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">
+              <win-button block :class="{active: settingsStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">
                 {{ t('win.settings.btn_random') }}
-              </win-btn>
+              </win-button>
             </div>
             <div class="col-4">
-              <win-btn block :class="{active: settingsStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">
+              <win-button block :class="{active: settingsStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">
                 {{ t('win.settings.btn_solid') }}
-              </win-btn>
+              </win-button>
             </div>
           </div>
 
@@ -129,12 +129,12 @@
       <!-- /App Settings -->
 
       <div class="d-flex justify-content-between">
-        <win-btn class="px-2" @click="openLanguageSettings">
+        <win-button class="px-2" @click="openLanguageSettings">
           {{ t('win.settings.language') }}
-        </win-btn>
-        <win-btn class="px-4" @click="winProps.close()">
+        </win-button>
+        <win-button class="px-4" @click="winProps.close()">
           {{ t('buttons.close') }}
-        </win-btn>
+        </win-button>
       </div>
     </div>
   </win-window>

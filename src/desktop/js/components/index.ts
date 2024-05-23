@@ -6,9 +6,9 @@ import WinPlayerVolume from '@desktop/js/components/WinPlayerVolume.vue'
 
 export default {
   install: (Vue: App): void => {
-    Vue.component('win-menu', WinMenu)
-    Vue.component('win-player', WinPlayer)
-    Vue.component('win-player-status', WinPlayerStatus)
-    Vue.component('win-player-volume', WinPlayerVolume)
+    Vue.component('WinMenu', WinMenu)
+    Vue.component('WinPlayer', WinPlayer)
+    Vue.component('WinPlayerStatus', WinPlayerStatus)
+    Vue.component('WinPlayerVolume', WinPlayerVolume)
   },
 }

@@ -22,8 +22,6 @@ module.exports = {
   plugins: ['no-relative-import-paths', 'vue', '@typescript-eslint', 'unused-imports'],
   rules: {
     'vue/component-api-style': ['error', ['script-setup']], // Use script setup
-    'vue/component-name-in-template-casing': 'off', // TODO PascalCase component names ['error', 'PascalCase']
-    'vue/component-definition-name-casing': 'off',
     'vue/v-for-delimiter-style': ['error', 'in'], // Use 'in' delimiter for v-for
     'vue/max-attributes-per-line': 'off',
     'vue/first-attribute-linebreak': 'off',

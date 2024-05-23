@@ -15,9 +15,9 @@
         </win-memo>
 
         <div class="text-center mt-3">
-          <win-btn class="mx-auto px-4" @click="winProps.close()">
+          <win-button class="mx-auto px-4" @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </win-window>

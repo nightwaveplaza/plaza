@@ -12,14 +12,14 @@
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-btn block :disabled="sending" class="text-bold" @click="update">
+          <win-button block :disabled="sending" class="text-bold" @click="update">
             {{ t('buttons.change') }}
-          </win-btn>
+          </win-button>
         </div>
         <div class="col-4">
-          <win-btn block @click="winProps.close()">
+          <win-button block @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

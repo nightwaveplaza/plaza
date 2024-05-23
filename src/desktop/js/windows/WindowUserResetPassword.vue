@@ -14,14 +14,14 @@
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" @click="change">
+              <win-button block class="text-bold" @click="change">
                 {{ t('buttons.change') }}
-              </win-btn>
+              </win-button>
             </div>
             <div class="col-4">
-              <win-btn block @click="router.push({name: 'index'})">
+              <win-button block @click="router.push({name: 'index'})">
                 {{ t('buttons.cancel') }}
-              </win-btn>
+              </win-button>
             </div>
           </div>
         </div>

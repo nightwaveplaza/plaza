@@ -3,7 +3,7 @@
     <div style="flex: 0 0 10px">
       <div class="divider mx-1" />
     </div>
-    <win-btn
+    <win-button
       v-for="window in windowsStore.windows"
       :key="window.name"
       class="mr-1" style="flex: 1 1 auto"
@@ -14,7 +14,7 @@
       <div class="title">
         {{ window.title }}
       </div>
-    </win-btn>
+    </win-button>
 
     <div class="local-time ml-auto" style="flex: 0 0 60px">
       {{ time }}

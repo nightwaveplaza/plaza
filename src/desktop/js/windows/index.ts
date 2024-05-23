@@ -6,9 +6,9 @@ import WindowUserResetPassword from '@desktop/js/windows/WindowUserResetPassword
 
 export default {
   install: (Vue: App): void => {
-    Vue.component('window-mobile', WindowMobile)
-    Vue.component('window-player', WindowPlayer)
-    Vue.component('window-support', WindowSupport)
-    Vue.component('window-user-reset-password', WindowUserResetPassword)
+    Vue.component('WindowMobile', WindowMobile)
+    Vue.component('WindowPlayer', WindowPlayer)
+    Vue.component('WindowSupport', WindowSupport)
+    Vue.component('WindowUserResetPassword', WindowUserResetPassword)
   },
 }

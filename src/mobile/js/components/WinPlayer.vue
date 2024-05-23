@@ -21,13 +21,13 @@
 
         <div class="row no-gutters">
           <div :class="{'col-6': !nativeStateStore.playing, 'col-4': nativeStateStore.playing}" class="mb-1 mb-sm-0 pr-2">
-            <win-btn class="player-play" block @click="play">{{ playText }}</win-btn>
+            <win-button class="player-play" block @click="play">{{ playText }}</win-button>
           </div>
 
           <div v-if="nativeStateStore.playing" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-btn block @click="windowsStore.open('player-timer')">
+            <win-button block @click="windowsStore.open('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
-            </win-btn>
+            </win-button>
           </div>
 
           <div class="col-3 pr-2">
@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-3 mb-1 mb-sm-0">
-            <win-btn block class="btn-start" @click="openDrawer">&nbsp;</win-btn>
+            <win-button block class="btn-start" @click="openDrawer">&nbsp;</win-button>
           </div>
         </div>
       </div>

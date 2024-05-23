@@ -14,7 +14,7 @@
       </div>
 
       <div class="text-center mt-2">
-        <win-btn class="mx-auto px-4" @click="winProps.close()">Close</win-btn>
+        <win-button class="mx-auto px-4" @click="winProps.close()">Close</win-button>
       </div>
     </div>
   </win-window>

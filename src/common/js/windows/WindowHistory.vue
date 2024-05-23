@@ -41,9 +41,9 @@
               <win-pagination v-if="data.songs.length > 0" :pages="data.pages" @change="changePage" />
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">
+              <win-button class="px-4" @click="winProps.close()">
                 {{ t('buttons.close') }}
-              </win-btn>
+              </win-button>
             </div>
           </div>
         </div>

@@ -4,8 +4,8 @@
     <!-- Minimize button -->
     <template v-slot:header>
       <div class="buttons">
-        <win-btn class="button-minimize" @click="minimize"><span/></win-btn>
-        <win-btn class="button-maximize" @click="toggleFullscreen"><span/></win-btn>
+        <win-button class="button-minimize" @click="minimize"><span/></win-button>
+        <win-button class="button-maximize" @click="toggleFullscreen"><span/></win-button>
       </div>
     </template>
 

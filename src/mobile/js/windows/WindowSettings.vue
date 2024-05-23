@@ -3,15 +3,15 @@
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-btn block class="mb-2" @click="open('settings-background')">Appearance settings</win-btn>
-          <win-btn block class="mb-2" @click="switchAudioQuality">Audio quality: <strong>{{ quality }}</strong>
-          </win-btn>
+          <win-button block class="mb-2" @click="open('settings-background')">Appearance settings</win-button>
+          <win-button block class="mb-2" @click="switchAudioQuality">Audio quality: <strong>{{ quality }}</strong>
+          </win-button>
         </div>
       </div>
 
       <div class="row no-gutters justify-content-center">
         <div class="col-6">
-          <win-btn block @click="winProps.close()">Close</win-btn>
+          <win-button block @click="winProps.close()">Close</win-button>
         </div>
       </div>
     </div>

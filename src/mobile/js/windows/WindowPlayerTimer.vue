@@ -9,10 +9,10 @@
 
         <div class="row no-gutters mt-3">
           <div class="col-2 pr-1">
-            <win-btn block @click="add(-10)">-10</win-btn>
+            <win-button block @click="add(-10)">-10</win-button>
           </div>
           <div class="col-2 pr-1">
-            <win-btn block @click="add(-5)">-5</win-btn>
+            <win-button block @click="add(-5)">-5</win-button>
           </div>
           <div class="col-4 pr-1">
             <input class="d-block text-center" v-model="minutes"
@@ -20,10 +20,10 @@
                    type="number"/>
           </div>
           <div class="col-2 pr-1">
-            <win-btn block @click="add(5)">+5</win-btn>
+            <win-button block @click="add(5)">+5</win-button>
           </div>
           <div class="col-2">
-            <win-btn block @click="add(10)">+10</win-btn>
+            <win-button block @click="add(10)">+10</win-button>
           </div>
         </div>
       </div>
@@ -32,10 +32,10 @@
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-btn block class="text-bold" @click="start()">{{ btnText }}</win-btn>
+          <win-button block class="text-bold" @click="start()">{{ btnText }}</win-button>
         </div>
         <div class="col-4">
-          <win-btn block @click="winProps.close()">Close</win-btn>
+          <win-button block @click="winProps.close()">Close</win-button>
         </div>
       </div>
     </div>

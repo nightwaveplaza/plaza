@@ -1,8 +1,8 @@
 <template>
-  <win-btn block :disabled="sending" @click="like">
+  <win-button block :disabled="sending" @click="like">
     <i :class="likeIcon" class="i mr-1" :style="{color: likeColor}" />
     {{ playerPlaybackStore.reactions }}
-  </win-btn>
+  </win-button>
 </template>
 
 <script setup lang="ts">

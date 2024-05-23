@@ -8,7 +8,7 @@
               {{ t('win.mobile.description') }}
             </div>
             <div class="col-auto">
-              <img src="/img/mobilen.gif">
+              <img src="/img/mobilen.gif" alt="">
             </div>
           </div>
         </div>
@@ -33,9 +33,9 @@
 
       <div class="row justify-content-end mt-2">
         <div class="col-auto">
-          <win-btn class="px-4" @click="winProps.close()">
+          <win-button class="px-4" @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

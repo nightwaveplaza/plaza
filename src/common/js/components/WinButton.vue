@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['click'])
-
 withDefaults(defineProps<{
   block?: boolean,
   disabled?: boolean
@@ -20,4 +18,6 @@ withDefaults(defineProps<{
   block: false,
   disabled: false
 })
+
+const emit = defineEmits(['click'])
 </script>

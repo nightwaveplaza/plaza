@@ -22,9 +22,9 @@
           <win-pagination v-if="length > 0" :pages="pages" @change="changePage" />
         </div>
         <div class="col-4 ml-auto">
-          <win-btn block @click="winProps.close()">
+          <win-button block @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

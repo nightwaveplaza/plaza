@@ -33,9 +33,9 @@
           <div class="col-7 col-md-7 pr-md-2">
             <div class="row no-gutters">
               <div class="col-7 col-md-8">
-                <win-btn class="player-play" block @click="play()">
+                <win-button class="player-play" block @click="play()">
                   {{ playText }}
-                </win-btn>
+                </win-button>
               </div>
               <div class="col-5 col-md-4">
                 <win-player-reactions />
@@ -45,14 +45,14 @@
           <div class="col-5 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
-                <win-btn block @click="openUserWindow()">
+                <win-button block @click="openUserWindow()">
                   <i class="i icon-user mr-0" />
-                </win-btn>
+                </win-button>
               </div>
               <div class="col-6">
-                <win-btn block @click="windowsStore.open('settings-background')">
+                <win-button block @click="windowsStore.open('settings-background')">
                   <i class="i icon-cog mr-0" />
-                </win-btn>
+                </win-button>
               </div>
             </div>
           </div>

@@ -23,9 +23,9 @@
       </i18n-t>
 
       <div class="text-center mt-3">
-        <win-btn class="px-4" @click="winProps.close()">
+        <win-button class="px-4" @click="winProps.close()">
           {{ t('buttons.close') }}
-        </win-btn>
+        </win-button>
       </div>
     </div>
   </win-window>

@@ -1,17 +1,17 @@
 <template>
   <div class="row no-gutters pagination">
     <div v-if="page > 1" class="col-4 pr-1">
-      <win-btn class="d-block" @click="nextPage(-1)">
+      <win-button class="d-block" @click="nextPage(-1)">
         <i class="i icon-left-hand" />
-      </win-btn>
+      </win-button>
     </div>
     <div class="col-4">
       <input ref="pageInput" type="number" class="d-block" value="1" @change="setPage">
     </div>
     <div v-if="pages > 1 && page < pages" class="col-4 pl-1">
-      <win-btn class="d-block" @click="nextPage(1)">
+      <win-button class="d-block" @click="nextPage(1)">
         <i class="i icon-right-hand" />
-      </win-btn>
+      </win-button>
     </div>
   </div>
 </template>

@@ -53,15 +53,15 @@
 
         <!-- Buttons -->
         <div class="col-auto col-sm-2 p-0 login-buttons">
-          <win-btn :disabled="sending" class="mb-2 text-bold" @click="login">
+          <win-button :disabled="sending" class="mb-2 text-bold" @click="login">
             {{ t('win.user_login.btn_sign_in') }}
-          </win-btn>
-          <win-btn class="mb-2" @click="openRegister">
+          </win-button>
+          <win-button class="mb-2" @click="openRegister">
             {{ t('win.user_login.btn_register') }}
-          </win-btn>
-          <win-btn @click="winProps.close()">
+          </win-button>
+          <win-button @click="winProps.close()">
             {{ t('buttons.cancel') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

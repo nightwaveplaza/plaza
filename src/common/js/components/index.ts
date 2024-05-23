@@ -11,14 +11,14 @@ import WinStatusBar from '@common/js/components/WinStatusBar.vue'
 
 export default {
   install: (Vue: App): void => {
-    Vue.component('win-btn', WinButton)
-    Vue.component('win-list', WinList)
-    Vue.component('win-memo', WinMemo)
-    Vue.component('win-pagination', WinPagination)
-    Vue.component('win-player-reactions', WinPlayerReactions)
-    Vue.component('win-player-time', WinPlayerTime)
-    Vue.component('win-status-bar', WinStatusBar)
-    Vue.component('win-taskbar', WinTaskbar)
-    Vue.component('win-window', WinWindow)
+    Vue.component('WinButton', WinButton)
+    Vue.component('WinList', WinList)
+    Vue.component('WinMemo', WinMemo)
+    Vue.component('WinPagination', WinPagination)
+    Vue.component('WinPlayerReactions', WinPlayerReactions)
+    Vue.component('WinPlayerTime', WinPlayerTime)
+    Vue.component('WinStatusBar', WinStatusBar)
+    Vue.component('WinTaskbar', WinTaskbar)
+    Vue.component('WinWindow', WinWindow)
   },
 }

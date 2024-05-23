@@ -60,14 +60,14 @@
             <div class="d-flex flex-grow-0">
               <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
                 <div class="col-auto">
-                  <win-btn block class="text-bold px-3" :disabled="sending" @click="register">
+                  <win-button block class="text-bold px-3" :disabled="sending" @click="register">
                     {{ t('win.user_register.btn_register') }}
-                  </win-btn>
+                  </win-button>
                 </div>
                 <div class="col-auto">
-                  <win-btn block class="px-3" @click="close">
+                  <win-button block class="px-3" @click="close">
                     {{ t('buttons.cancel') }}
-                  </win-btn>
+                  </win-button>
                 </div>
               </div>
             </div>
@@ -87,9 +87,9 @@
           <vue-turnstile v-model="fields.captcha_response" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
         </div>
         <br>
-        <win-btn class="mx-auto px-4 text-bold" @click="completeCaptcha">
+        <win-button class="mx-auto px-4 text-bold" @click="completeCaptcha">
           {{ t('buttons.continue') }}
-        </win-btn>
+        </win-button>
       </div>
 
       <!--        <template v-else>-->

@@ -20,14 +20,14 @@
         <div class="col-sm-8 offset-sm-2">
           <div class="py-2 row no-gutters justify-content-between">
             <div class="col-6">
-              <win-btn block class="text-bold" :disabled="sending" @click="reset">
+              <win-button block class="text-bold" :disabled="sending" @click="reset">
                 {{ t('win.user_login.btn_reset') }}
-              </win-btn>
+              </win-button>
             </div>
             <div class="col-4">
-              <win-btn block @click="winProps.close()">
+              <win-button block @click="winProps.close()">
                 {{ t('buttons.close') }}
-              </win-btn>
+              </win-button>
             </div>
           </div>
         </div>

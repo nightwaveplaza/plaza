@@ -10,12 +10,12 @@
             {{ title }}
             <slot name="header">
               <div class="buttons">
-                <win-btn class="button-minimize" @click="minimize">
+                <win-button class="button-minimize" @click="minimize">
                   <span />
-                </win-btn>
-                <win-btn class="button-close" @click="close">
+                </win-button>
+                <win-button class="button-close" @click="close">
                   <span />
-                </win-btn>
+                </win-button>
               </div>
             </slot>
           </div>

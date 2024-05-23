@@ -3,21 +3,21 @@
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-btn v-if="!isMobile" block class="mb-2" @click="open('user-favorites')">
+          <win-button v-if="!isMobile" block class="mb-2" @click="open('user-favorites')">
             {{ t('win.user_favorites.title') }}
-          </win-btn>
-          <win-btn block class="mb-2" @click="open('user-email')">
+          </win-button>
+          <win-button block class="mb-2" @click="open('user-email')">
             {{ t('win.user_email.title') }}
-          </win-btn>
-          <win-btn block class="mb-2" @click="open('user-password')">
+          </win-button>
+          <win-button block class="mb-2" @click="open('user-password')">
             {{ t('win.user_password.title') }}
-          </win-btn>
-          <win-btn block class="mb-2" @click="logout">
+          </win-button>
+          <win-button block class="mb-2" @click="logout">
             {{ t('win.user.btn_logout') }}
-          </win-btn>
-          <win-btn block class="close mt-2 mx-auto" @click="winProps.close()">
+          </win-button>
+          <win-button block class="close mt-2 mx-auto" @click="winProps.close()">
             {{ t('buttons.close') }}
-          </win-btn>
+          </win-button>
         </div>
       </div>
     </div>

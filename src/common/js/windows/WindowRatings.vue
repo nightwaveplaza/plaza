@@ -4,15 +4,15 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-btn :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
+          <win-button :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
             {{ t('win.ratings.btn_overtime') }}
-          </win-btn>
-          <win-btn :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
+          </win-button>
+          <win-button :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
             {{ t('win.ratings.btn_monthly') }}
-          </win-btn>
-          <win-btn :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
+          </win-button>
+          <win-button :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
             {{ t('win.ratings.btn_weekly') }}
-          </win-btn>
+          </win-button>
         </div>
 
         <!-- Song list -->
@@ -47,9 +47,9 @@
               <win-pagination ref="pagination" :pages="data.pages" @change="changePage" />
             </div>
             <div class="col-auto">
-              <win-btn class="px-4" @click="winProps.close()">
+              <win-button class="px-4" @click="winProps.close()">
                 {{ t('buttons.close') }}
-              </win-btn>
+              </win-button>
             </div>
           </div>
         </div>

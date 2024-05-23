@@ -18,23 +18,23 @@ import WindowUserRegister from '@common/js/windows/WindowUserRegister.vue'
 import WindowUserReset from '@common/js/windows/WindowUserReset.vue'
 
 export default {
-  install: (app: App) => {
-    app.component('window-about', WindowAbout)
-    app.component('window-alert', WindowAlert)
-    app.component('window-credits', WindowCredits)
-    app.component('window-history', WindowHistory)
-    app.component('window-loading', WindowLoading)
-    app.component('window-news', WindowNews)
-    app.component('window-ratings', WindowRatings)
-    app.component('window-settings-background', WindowSettingsBackground)
-    app.component('window-settings-language', WindowSettingsLanguage)
-    app.component('window-song', WindowSong)
-    app.component('window-user', WindowUser)
-    app.component('window-user-email', WindowUserEmail)
-    app.component('window-user-favorites', WindowUserFavorites)
-    app.component('window-user-login', WindowUserLogin)
-    app.component('window-user-password', WindowUserPassword)
-    app.component('window-user-register', WindowUserRegister)
-    app.component('window-user-reset', WindowUserReset)
+  install: (Vue: App): void => {
+    Vue.component('window-about', WindowAbout)
+    Vue.component('window-alert', WindowAlert)
+    Vue.component('window-credits', WindowCredits)
+    Vue.component('window-history', WindowHistory)
+    Vue.component('window-loading', WindowLoading)
+    Vue.component('window-news', WindowNews)
+    Vue.component('window-ratings', WindowRatings)
+    Vue.component('window-settings-background', WindowSettingsBackground)
+    Vue.component('window-settings-language', WindowSettingsLanguage)
+    Vue.component('window-song', WindowSong)
+    Vue.component('window-user', WindowUser)
+    Vue.component('window-user-email', WindowUserEmail)
+    Vue.component('window-user-favorites', WindowUserFavorites)
+    Vue.component('window-user-login', WindowUserLogin)
+    Vue.component('window-user-password', WindowUserPassword)
+    Vue.component('window-user-register', WindowUserRegister)
+    Vue.component('window-user-reset', WindowUserReset)
   }
 }

@@ -10,15 +10,15 @@ import WinWindow from '@common/js/components/WinWindow.vue'
 import WinStatusBar from '@common/js/components/WinStatusBar.vue'
 
 export default {
-  install: (app: App): void => {
-    app.component('win-btn', WinButton)
-    app.component('win-list', WinList)
-    app.component('win-memo', WinMemo)
-    app.component('win-pagination', WinPagination)
-    app.component('win-player-reactions', WinPlayerReactions)
-    app.component('win-player-time', WinPlayerTime)
-    app.component('win-status-bar', WinStatusBar)
-    app.component('win-taskbar', WinTaskbar)
-    app.component('win-window', WinWindow)
+  install: (Vue: App): void => {
+    Vue.component('win-btn', WinButton)
+    Vue.component('win-list', WinList)
+    Vue.component('win-memo', WinMemo)
+    Vue.component('win-pagination', WinPagination)
+    Vue.component('win-player-reactions', WinPlayerReactions)
+    Vue.component('win-player-time', WinPlayerTime)
+    Vue.component('win-status-bar', WinStatusBar)
+    Vue.component('win-taskbar', WinTaskbar)
+    Vue.component('win-window', WinWindow)
   },
 }

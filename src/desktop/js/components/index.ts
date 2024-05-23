@@ -5,10 +5,10 @@ import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
 import WinPlayerVolume from '@desktop/js/components/WinPlayerVolume.vue'
 
 export default {
-  install: (app: App) => {
-    app.component('win-menu', WinMenu)
-    app.component('win-player', WinPlayer)
-    app.component('win-player-status', WinPlayerStatus)
-    app.component('win-player-volume', WinPlayerVolume)
+  install: (Vue: App): void => {
+    Vue.component('win-menu', WinMenu)
+    Vue.component('win-player', WinPlayer)
+    Vue.component('win-player-status', WinPlayerStatus)
+    Vue.component('win-player-volume', WinPlayerVolume)
   },
 }

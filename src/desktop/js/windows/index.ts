@@ -5,10 +5,10 @@ import WindowSupport from '@desktop/js/windows/WindowSupport.vue'
 import WindowUserResetPassword from '@desktop/js/windows/WindowUserResetPassword.vue'
 
 export default {
-  install: (app: App) => {
-    app.component('window-mobile', WindowMobile)
-    app.component('window-player', WindowPlayer)
-    app.component('window-support', WindowSupport)
-    app.component('window-user-reset-password', WindowUserResetPassword)
+  install: (Vue: App): void => {
+    Vue.component('window-mobile', WindowMobile)
+    Vue.component('window-player', WindowPlayer)
+    Vue.component('window-support', WindowSupport)
+    Vue.component('window-user-reset-password', WindowUserResetPassword)
   },
 }

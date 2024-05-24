@@ -3,9 +3,7 @@
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading" />
-        <div v-if="article.text !== ''">
-          {{ article.text }}
-        </div>
+        <div v-if="article.text !== ''" v-html="article.text" />
         <div v-if="article.text !== ''" class="row justify-content-between">
           <div class="col-auto">
             {{ article.author }}

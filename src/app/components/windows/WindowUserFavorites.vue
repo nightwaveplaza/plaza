@@ -137,7 +137,7 @@ onMounted(() => {
 
 </script>
 
-<style>
+<style lang="scss">
 #window-user-favorites {
   .favorites-empty {
     position: absolute;

@@ -80,8 +80,8 @@ onMounted(() => {
           setTimeout(() => windowsStore.open('news'), 3000)
         }
 
-        windowsStore.open('player')
-        windowsStore.close('loading')
+       windowsStore.open('player')
+       windowsStore.close('loading')
       })
 
     }
@@ -94,7 +94,7 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-loading {
   .progress-bar {
     position: relative;

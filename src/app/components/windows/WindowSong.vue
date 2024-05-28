@@ -181,7 +181,7 @@ onBeforeUnmount(() => {
 
 </script>
 
-<style>
+<style lang="scss">
 .song-info {
   .artwork {
     display: block;

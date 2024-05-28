@@ -113,7 +113,7 @@ function openMobile(): void {
 }
 </script>
 
-<style>
+<style lang="scss">
 #window-about {
   p {
     font-size: 12px;

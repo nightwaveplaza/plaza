@@ -121,7 +121,7 @@ function openReset (): void {
 }
 </script>
 
-<style>
+<style lang="scss">
 #window-user-login {
   .img-key {
     margin-top: 2px;

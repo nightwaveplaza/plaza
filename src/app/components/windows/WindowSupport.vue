@@ -56,7 +56,7 @@ function close (): void {
 }
 </script>
 
-<style>
+<style lang="scss">
 #window-support {
   .content p.lead {
     font-size: 14px !important;

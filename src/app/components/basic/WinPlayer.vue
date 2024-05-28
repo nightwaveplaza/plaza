@@ -243,7 +243,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-player {
   .player-visual {
     padding: 0;

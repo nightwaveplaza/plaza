@@ -34,7 +34,7 @@ defineProps<{
 
 </script>
 
-<style>
+<style lang="scss">
 .win98 {
   &.alert {
     .alert-icon {

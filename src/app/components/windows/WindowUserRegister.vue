@@ -204,7 +204,7 @@ function close (): void {
 }
 </script>
 
-<style>
+<style lang="scss">
 #window-user-register {
   .img-register {
     width: 120px;

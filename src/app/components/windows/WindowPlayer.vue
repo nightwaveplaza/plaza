@@ -57,7 +57,7 @@ function requestFullScreen (): void {
 }
 </script>
 
-<style>
+<style lang="scss">
 #window-player {
   .player-artist {
     margin-top: 2px;

@@ -241,7 +241,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-settings-background {
   .palette {
     .color {

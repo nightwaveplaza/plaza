@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-ratings {
   .list {
     table {

@@ -41,7 +41,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-player {
   .player-volume {
     height: 26px;

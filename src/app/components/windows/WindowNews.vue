@@ -68,7 +68,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 #window-news {
 
   .memo {

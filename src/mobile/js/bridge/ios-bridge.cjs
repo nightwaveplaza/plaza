@@ -5,25 +5,32 @@ const CallbackKey = 'ios-callback'
 /**
  * Для iOS придется использоваться async функции и Promise для получения
  * результата выполнения функции
+ * @deprecated
  */
 export const iOSBridge = {
   requestUiUpdate: () => sendMessage('requestUiUpdate'),
   audioPlay: () => sendMessage('audioPlay'),
   audioStop: () => sendMessage('audioStop'),
-  setSleepTimer: (time: number) => sendMessage('setSleepTimer', [`${time}`]),
+  setSleepTimer: (time) => sendMessage('setSleepTimer', [`${time}`]),
   getAuthToken: () => sendMessage('getAuthToken'),
-  setAuthToken: (token: string) => sendMessage('setAuthToken', [token]),
+  setAuthToken: (token) => sendMessage('setAuthToken', [token]),
   getAudioQuality: () => sendMessage('getAudioQuality'),
-  setAudioQuality: (lowQuality: boolean) => sendMessage('setAudioQuality',
+  setAudioQuality: (lowQuality) => sendMessage('setAudioQuality',
     [`${lowQuality}`]),
   toggleFullscreen: () => sendMessage('toggleFullscreen'),
   openDrawer: () => sendMessage('openDrawer'),
   getUserAgent: () => sendMessage('getUserAgent'),
   getAppVersion: () => sendMessage('getAppVersion'),
-  setBackground: (background: string) => sendMessage('setBackground', [background]),
+  setBackground: (background) => sendMessage('setBackground', [background]),
 }
 
-function sendMessage (name: string, args?: string[]) {
+/**
+ * @deprecated
+ * @param name
+ * @param args
+ * @returns {Promise<unknown>}
+ */
+function sendMessage (name, args) {
 
   if (window.webkit?.messageHandlers && window.webkit?.messageHandlers.plaza) {
     const callbackId = uuid.v4()

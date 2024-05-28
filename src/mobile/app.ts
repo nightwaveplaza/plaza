@@ -6,39 +6,25 @@ import mobileComponents from '@mobile/components'
 import mobileWindows from '@mobile/windows'
 import Index from '@mobile/views/Index.vue'
 import mitt from 'mitt'
+import {i18n} from "@locales/_i18n.ts";
+
+window.emitter = mitt()
 
 const app = createApp({
-  emitter: null,
-
-  created () {
-    (window as any).plaza.vue = this
-  },
-
-  methods: {
-    pushData (name: string, data: string) {
-      this.emitter.emit(name, data)
-    },
-
-    openWindow (name: string) {
-      this.emitter.emit('openWindow', name)
-    },
-
-    closeWindow (name: string) {
-      this.emitter.emit('closeWindow', name)
-    },
-  },
-
   render: () => h(Index),
 })
 
 const pinia = createPinia()
 app.use(pinia)
+app.use(i18n)
 
-const emitter = mitt()
-app.config.globalProperties.emitter = emitter
 
 app.use(commonComponents)
 app.use(commonWindows)
+
+delete app._context.components["WinPlayer"]
+delete app._context.components["WindowPlayer"]
+
 app.use(mobileComponents)
 app.use(mobileWindows)
 

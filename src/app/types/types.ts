@@ -165,3 +165,32 @@ export interface SongResponse {
   favorite_id?: number
   preview_src?: string
 }
+
+export interface ifcAndroidInterface {
+  requestUiUpdate (): void
+
+  audioPlay (): void
+
+  audioStop (): void
+
+  setSleepTimer (time: number): void
+
+  getAuthToken (): string
+
+  setAuthToken (token: string): void
+
+  getAudioQuality (): boolean
+
+  setAudioQuality (quality: boolean): void
+
+  toggleFullscreen (): void
+
+  openDrawer (): void
+
+  getUserAgent (): string
+
+  getVersion (): string
+
+  setBackground (background: string): void
+}
+

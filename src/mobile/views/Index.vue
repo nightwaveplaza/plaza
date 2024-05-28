@@ -2,7 +2,7 @@
   <div :class="settingsStore.themeName" :style="{backgroundColor}" class="app-desktop">
     <component v-for="window in windowsStore.windows" :is="window.form"/>
 
-    <window-song :id="s.id" :name="s.name" v-for="s in windowsStore.songWindows" :key="s.id"/>
+    <window-song v-for="s in windowsStore.songWindows" :id="s.id" :name="s.name" :key="s.id"/>
     <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type"/>
 
     <win-taskbar/>
@@ -17,20 +17,28 @@ import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { enBackgroundMode, type Background } from '@app/types/types'
 import useEmitter from '@mobile/extra/useEmitter'
+import {useI18n} from "vue-i18n";
 
+const i18n = useI18n()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const emitter = useEmitter()
+
+watch(() => settingsStore.language, () => {
+  i18n.locale.value = settingsStore.language
+})
 
 const backgroundColor = computed(() => {
   return settingsStore.background.mode === enBackgroundMode.SOLID ? settingsStore.background.color : 'transparent'
 })
 
 function registerEmitterEvents () {
-  emitter.on('resume', () => updateBackgroundNative(settingsStore.background))
-  emitter.on('closeWindow', (name: string) => windowsStore.close(name))
-  emitter.on('openWindow', (name: string) => {
+  emitter?.on('resume', () => updateBackgroundNative(settingsStore.background))
+  emitter?.on('closeWindow', (name: string) => {
+    windowsStore.close(name)
+  })
+  emitter?.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
       windowsStore.open('user-login')
       return
@@ -56,6 +64,7 @@ watch(() => settingsStore.background, (b) => {
 watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 
 onMounted(() => {
+  settingsStore.loadSettings()
   registerEmitterEvents()
 
   windowsStore.open('loading')

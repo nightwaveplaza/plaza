@@ -1,6 +1,5 @@
-import { getCurrentInstance } from 'vue'
+import type {WindowInterface} from "../../env";
 
 export default function useEmitter() {
-  const internalInstance = getCurrentInstance();
-  return internalInstance!.appContext.config.globalProperties.emitter;
+  return (window as WindowInterface).emitter;
 }

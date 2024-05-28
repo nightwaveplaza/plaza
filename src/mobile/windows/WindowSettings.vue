@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { Native } from '@mobile/js/bridge/native'
+import { Native } from '@mobile/bridge/native'
 import { computed, onMounted, ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindowsStore } from '@app/stores/windowsStore'

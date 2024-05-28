@@ -2,9 +2,9 @@ import { createApp, h } from 'vue'
 import { createPinia } from 'pinia'
 import commonComponents from '@app/components/basic'
 import commonWindows from '@app/components/windows'
-import mobileComponents from '@mobile/js/components'
-import mobileWindows from '@mobile/js/windows'
-import Index from '@mobile/js/views/Index.vue'
+import mobileComponents from '@mobile/components'
+import mobileWindows from '@mobile/windows'
+import Index from '@mobile/views/Index.vue'
 import mitt from 'mitt'
 
 const app = createApp({

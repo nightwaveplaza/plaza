@@ -46,12 +46,12 @@
 </template>
 
 <script setup lang="ts">
-import useEmitter from '@mobile/js/extra/useEmitter'
+import useEmitter from '@mobile/extra/useEmitter'
 import { computed, onMounted, ref } from 'vue'
-import { Native } from '@mobile/js/bridge/native'
+import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
-import { useNativeStateStore } from '@mobile/js/stores/nativeStateStore'
+import { useNativeStateStore } from '@mobile/stores/nativeStateStore'
 
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()

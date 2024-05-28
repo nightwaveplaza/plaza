@@ -43,9 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import { Native } from '@mobile/js/bridge/native'
+import { Native } from '@mobile/bridge/native'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useNativeStateStore } from '@mobile/js/stores/nativeStateStore'
+import { useNativeStateStore } from '@mobile/stores/nativeStateStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 
 const nativeStateStore = useNativeStateStore()

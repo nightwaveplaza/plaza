@@ -1,8 +1,8 @@
 import type { App } from 'vue'
-import WindowDonate from '@mobile/js/windows/WindowDonate.vue'
-import WindowPlayer from '@mobile/js/windows/WindowPlayer.vue'
-import WindowPlayerTimer from '@mobile/js/windows/WindowPlayerTimer.vue'
-import WindowSettings from '@mobile/js/windows/WindowSettings.vue'
+import WindowDonate from '@mobile/windows/WindowDonate.vue'
+import WindowPlayer from '@mobile/windows/WindowPlayer.vue'
+import WindowPlayerTimer from '@mobile/windows/WindowPlayerTimer.vue'
+import WindowSettings from '@mobile/windows/WindowSettings.vue'
 
 export default {
   install: (app: App) => {

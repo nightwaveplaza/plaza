@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Native } from '@mobile/js/bridge/native'
+import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'

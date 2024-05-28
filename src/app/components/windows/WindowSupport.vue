@@ -10,7 +10,7 @@
 
           <p class="my-3">
             <a class="pp-link" href="https://boosty.to/nightwaveplaza" target="_blank">
-              <img alt="boosty" src="/img/boosty.png"><br>{{ t('win.support.boosty') }}
+              <img alt="boosty" src="@app/assets/img/boosty.png"><br>{{ t('win.support.boosty') }}
             </a>
           </p>
 

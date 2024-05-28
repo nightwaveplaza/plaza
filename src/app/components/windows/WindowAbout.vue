@@ -9,7 +9,7 @@
           <p><i>{{ t('win.about.welcome') }}</i></p>
         </div>
         <div class="col-auto align-self-center">
-          <img src="/img/pc.png" style="width: 70px" alt="">
+          <img src="@app/assets/img/pc.png" style="width: 70px" alt="">
         </div>
       </div>
 

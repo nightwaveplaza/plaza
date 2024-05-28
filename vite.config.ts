@@ -54,10 +54,17 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
     return null
   }
   else {
-    return legacy({
-      targets: 'defaults, android >= 4.4.4, ios >= 7',
-      externalSystemJS: true,
-    })
+    if (env.VITE_APP === 'mobile') {
+      return legacy({
+        targets: 'defaults, android >= 5.0, ios >= 12',
+        externalSystemJS: true,
+      })
+    } else {
+      return legacy({
+        targets: 'defaults, android >= 4.4.4, ios >= 7',
+        externalSystemJS: true,
+      })
+    }
   }
 }
 

@@ -240,3 +240,23 @@ onMounted(() => {
   api.backgrounds.get().then(res => backgroundList.value = res.data)
 })
 </script>
+
+<style>
+#window-settings-background {
+  .palette {
+    .color {
+      margin: 2px;
+      width: 20px;
+      height: 20px;
+
+      border: 1px solid;
+    }
+
+    input {
+      margin: 2px;
+      height: 20px;
+      line-height: 100%;
+    }
+  }
+}
+</style>

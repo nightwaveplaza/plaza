@@ -180,3 +180,18 @@ onBeforeUnmount(() => {
 })
 
 </script>
+
+<style>
+.song-info {
+  .artwork {
+    display: block;
+    width: 100%;
+    max-width: 146px;
+    height: auto;
+  }
+
+  .group-box {
+    line-height: 14px;
+  }
+}
+</style>

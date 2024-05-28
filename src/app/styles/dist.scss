@@ -4,4 +4,14 @@
 @import "@app/styles/bootstrap/bootstrap.scss";
 @import "nouislider/dist/nouislider.css";
 
-@import "@app/styles/plaza/desktop.scss";
+@import "plaza/buttons";
+@import "plaza/components";
+@import "plaza/forms";
+@import "plaza/statusbar";
+@import "plaza/taskbar";
+@import "plaza/windows";
+@import "plaza/misc";
+@import "plaza/plugins/scrollbar";
+@import "plaza/plugins/slider";
+
+

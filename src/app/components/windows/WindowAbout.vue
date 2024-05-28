@@ -112,3 +112,18 @@ function openMobile(): void {
   windowsStore.close('about')
 }
 </script>
+
+<style>
+#window-about {
+  p {
+    font-size: 12px;
+    line-height: 150%;
+
+    &.lead {
+      font-size: 14px;
+      font-style: italic;
+      font-weight: 700;
+    }
+  }
+}
+</style>

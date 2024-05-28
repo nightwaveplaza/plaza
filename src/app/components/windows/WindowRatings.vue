@@ -141,3 +141,21 @@ onBeforeUnmount(() => {
   data.songs = []
 })
 </script>
+
+<style>
+#window-ratings {
+  .list {
+    table {
+      .icon-heart {
+        text-shadow: none;
+        opacity: 0.8;
+        color: #B22222;
+
+        &:before {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+</style>

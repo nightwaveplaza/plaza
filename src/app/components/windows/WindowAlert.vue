@@ -33,3 +33,22 @@ defineProps<{
 }>()
 
 </script>
+
+<style>
+.win98 {
+  &.alert {
+    .alert-icon {
+      width: 32px;
+      height: 32px;
+
+      &.info {
+        background-image: url('@app/assets/img/msg_info.png');
+      }
+
+      &.warn {
+        background-image: url('@app/assets/img/msg_warning.png');
+      }
+    }
+  }
+}
+</style>

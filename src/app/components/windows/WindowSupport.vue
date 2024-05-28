@@ -55,3 +55,22 @@ function close (): void {
   }
 }
 </script>
+
+<style>
+#window-support {
+  .content p.lead {
+    font-size: 14px !important;
+    line-height: 14px;
+  }
+
+  .pp-link {
+    display: inline-block;
+
+    img {
+      display: inline-block;
+      height: 32px;
+      width: auto;
+    }
+  }
+}
+</style>

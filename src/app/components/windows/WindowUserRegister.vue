@@ -203,3 +203,34 @@ function close (): void {
   }
 }
 </script>
+
+<style>
+#window-user-register {
+  .img-register {
+    width: 120px;
+    height: auto;
+    max-width: 100%;
+  }
+
+  button {
+    margin-bottom: 2px;
+  }
+
+  p.lead {
+    font-size: 14px !important;
+    font-weight: 700;
+  }
+
+  .img-captcha {
+    width: 100%;
+    height: auto;
+  }
+
+  label[for=register-username]::first-letter,
+  label[for=register-password]::first-letter,
+  label[for=register-password-repeat]::first-letter,
+  label[for=register-email]::first-letter {
+    text-decoration: underline;
+  }
+}
+</style>

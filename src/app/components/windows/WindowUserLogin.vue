@@ -120,3 +120,22 @@ function openReset (): void {
   win.value!.close()
 }
 </script>
+
+<style>
+#window-user-login {
+  .img-key {
+    margin-top: 2px;
+    width: 45px;
+    height: 48px;
+  }
+
+  .login-buttons button {
+    width: 76px;
+    display: block;
+  }
+
+  label[for=username]::first-letter, label[for=password]::first-letter {
+    text-decoration: underline;
+  }
+}
+</style>

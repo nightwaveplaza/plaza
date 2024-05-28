@@ -14,3 +14,7 @@ interface ImportMeta {
 interface Window {
   webkitAudioContext?: typeof AudioContext;
 }
+
+interface AndroidType {
+}
+declare let AndroidInterface: AndroidType | undefined;

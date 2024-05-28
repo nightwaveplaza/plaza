@@ -21,8 +21,8 @@
 <script setup lang="ts">
 import { Native } from '@mobile/js/bridge/native'
 import { computed, onMounted, ref } from 'vue'
-import WinWindow from '@common/js/components/WinWindow.vue'
-import { useWindowsStore } from '@common/js/stores/windowsStore'
+import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useWindowsStore } from '@app/stores/windowsStore'
 
 const windowStore = useWindowsStore()
 

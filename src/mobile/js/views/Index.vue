@@ -12,10 +12,10 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue'
 import { Native } from '@mobile/js/bridge/native'
-import { useSettingsStore } from '@common/js/stores/settingsStore'
-import { useUserAuthStore } from '@common/js/stores/userAuthStore'
-import { useWindowsStore } from '@common/js/stores/windowsStore'
-import { enBackgroundMode, type Background } from '@common/js/types'
+import { useSettingsStore } from '@app/stores/settingsStore'
+import { useUserAuthStore } from '@app/stores/userAuthStore'
+import { useWindowsStore } from '@app/stores/windowsStore'
+import { enBackgroundMode, type Background } from '@app/types/types'
 import useEmitter from '@mobile/js/extra/useEmitter'
 
 const settingsStore = useSettingsStore()

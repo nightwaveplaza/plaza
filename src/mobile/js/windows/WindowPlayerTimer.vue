@@ -46,7 +46,7 @@
 import { Native } from '@mobile/js/bridge/native'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useNativeStateStore } from '@mobile/js/stores/nativeStateStore'
-import WinWindow from '@common/js/components/WinWindow.vue'
+import WinWindow from '@app/components/basic/WinWindow.vue'
 
 const nativeStateStore = useNativeStateStore()
 

@@ -21,7 +21,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
 
     root,
     base,
-    publicDir: 'public',
+    publicDir: 'assets/public',
     envDir: resolve(__dirname),
     build: {
       outDir: resolve(__dirname, process.env.VITE_BUILD_PATH!),
@@ -41,8 +41,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
 
     resolve: {
       alias: {
-        '@common': fileURLToPath(new URL('./src/common', import.meta.url)),
-        '@desktop': fileURLToPath(new URL('./src/desktop', import.meta.url)),
+        '@app': fileURLToPath(new URL('./src/app', import.meta.url)),
         '@mobile': fileURLToPath(new URL('./src/mobile', import.meta.url)),
         '@locales': fileURLToPath(new URL('./src/locales', import.meta.url)),
       },
@@ -55,10 +54,17 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
     return null
   }
   else {
-    return legacy({
-      targets: 'defaults, android >= 4.4.4, ios >= 7',
-      externalSystemJS: true,
-    })
+    if (env.VITE_APP === 'mobile') {
+      return legacy({
+        targets: 'defaults, android >= 5.0, ios >= 12',
+        externalSystemJS: true,
+      })
+    } else {
+      return legacy({
+        targets: 'defaults, android >= 4.4.4, ios >= 7',
+        externalSystemJS: true,
+      })
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import { AndroidBridge } from './android-bridge'
-import { iOSBridge } from './ios-bridge'
+import { iOSBridge } from './ios-bridge.cjs'
 
 /**
  * Общий API для взаимодействия с Android и iOS

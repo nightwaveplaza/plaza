@@ -1,10 +1,10 @@
 import type { App } from 'vue'
 import WinPlayer from '@mobile/js/components/WinPlayer.vue'
-import WinPlayerStatus from '@desktop/js/components/WinPlayerStatus.vue'
+import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 
 export default {
-  install: (app: App) => {
-    app.component('win-player', WinPlayer)
-    app.component('win-player-status', WinPlayerStatus)
+  install: (Vue: App) => {
+    Vue.component('WinPlayer', WinPlayer)
+    Vue.component('WinPlayerStatus', WinPlayerStatus)
   }
 }

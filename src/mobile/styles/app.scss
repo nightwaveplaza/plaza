@@ -1,20 +1,7 @@
-@import "@common/styles/base.scss";
-@import "@common/styles/content.scss";
-@import "@common/styles/pagination.scss";
-@import "@common/styles/utils.scss";
-
-@import "@common/styles/windows/about.scss";
-@import "@common/styles/windows/alert.scss";
-@import "@common/styles/windows/loading.scss";
-@import "@common/styles/windows/news.scss";
-@import "@common/styles/windows/player.scss";
-@import "@common/styles/windows/ratings.scss";
-@import "@common/styles/windows/settings-background.scss";
-@import "@common/styles/windows/song-info.scss";
-@import "@common/styles/windows/support.scss";
-@import "@common/styles/windows/user-favorites.scss";
-@import "@common/styles/windows/user-login.scss";
-@import "@common/styles/windows/user-register.scss";
+@import "@app/styles/base.scss";
+@import "@app/styles/content.scss";
+@import "@app/styles/pagination.scss";
+@import "@app/styles/utils.scss";
 
 body {
   background: transparent;

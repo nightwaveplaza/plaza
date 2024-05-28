@@ -1,0 +1,119 @@
+<template>
+  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
+    <!-- Minimize button -->
+    <template #header>
+      <div class="buttons">
+        <win-button class="button-minimize" @click="minimize">
+          <span />
+        </win-button>
+        <win-button v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
+          <span />
+        </win-button>
+      </div>
+    </template>
+
+    <!-- Menu -->
+    <win-menu />
+
+    <!-- Player -->
+    <div class="content p-1 p-sm-2">
+      <win-player />
+    </div>
+
+    <!-- Statusbar -->
+    <div class="statusbar row no-gutters">
+      <div class="col cell">
+        {{ t('win.player.listeners', {listeners: playerPlaybackStore.listeners}) }}
+      </div>
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
+        {{ t('win.player.user', {user: userAuthStore.username}) }}
+      </div>
+    </div>
+  </win-window>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { useUserAuthStore } from '@app/stores/userAuthStore'
+import { useWindowsStore } from '@app/stores/windowsStore'
+import WinWindow from '@app/components/basic/WinWindow.vue'
+
+const { t } = useI18n()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
+
+const fullScreenEnabled = computed(() => document.fullscreenEnabled)
+const win = ref<InstanceType<typeof WinWindow>>()
+
+function minimize (): void {
+  windowsStore.minimize('player')
+}
+
+function requestFullScreen (): void {
+  document.getElementById('app')?.requestFullscreen()
+}
+</script>
+
+<style>
+#window-player {
+  .player-artist {
+    margin-top: 2px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .player-title {
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .cover {
+    background: #efe6eb;
+    padding: 0;
+    line-height: 0;
+    height: auto;
+    width: 112px;
+  }
+
+  .cover img {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .player-time-container {
+    margin: 6px 0 3px 0;
+    position: relative;
+  }
+
+  .player-time {
+    position: relative;
+    z-index: 2;
+    line-height: 24px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .player-button i, .player-button span {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 500px) {
+  .cover {
+    width: 100% !important;
+  }
+
+  .player-meta {
+    text-align: center;
+  }
+
+  #window-player .win98 .window {
+    width: 90% !important;
+  }
+}
+</style>

@@ -8,6 +8,7 @@
 @import "@app/styles/windows/loading.scss";
 @import "@app/styles/windows/news.scss";
 @import "@app/styles/windows/player.scss";
+@import "windows/player-ext";
 @import "@app/styles/windows/ratings.scss";
 @import "@app/styles/windows/settings-background.scss";
 @import "@app/styles/windows/song-info.scss";
@@ -16,43 +17,3 @@
 @import "@app/styles/windows/user-login.scss";
 @import "@app/styles/windows/user-register.scss";
 
-body {
-  background: transparent;
-}
-
-.btn-start {
-  background-image: url('@mobile/styles/icons/windows-0.png') !important;
-  background-size: 21px 21px !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-}
-
-/**
-Android
- */
-
-* {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.win98 {
-  input {
-    font-size: 12px;
-
-    &:focus {
-      outline: none;
-      border: 1px #000000 dashed;
-    }
-  }
-
-  button {
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-
-.statusbar table {
-  font-size: 12px;
-}

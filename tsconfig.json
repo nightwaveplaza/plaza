@@ -26,14 +26,8 @@
     "useDefineForClassFields": true,
     // Allows initializing class fields directly within the class body without a constructor.
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@common/*": [
-        "./src/common/*"
-      ],
-      "@desktop/*": [
-        "./src/desktop/*"
+      "@app/*": [
+        "./src/app/*"
       ],
       "@mobile/*": [
         "./src/mobile/*"
@@ -81,9 +75,9 @@
     "src/**/*.vue",
     "vite.config.ts"
   ],
-  "exclude": [
-    "src/mobile"
-  ],
+  //"exclude": [
+  //  "src/mobile"
+  //],
   // Specifies the files to be included in the compilation.
   "references": [
     {

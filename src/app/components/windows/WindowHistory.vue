@@ -68,7 +68,7 @@ import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
-import type WinList from '@app/components/WinList.vue'
+import type WinList from '@app/components/basic/WinList.vue'
 import type { HistoryResponse } from '@app/types/types'
 
 const { t } = useI18n()

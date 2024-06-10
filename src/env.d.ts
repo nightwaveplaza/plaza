@@ -1,14 +1,12 @@
 /// <reference types="vite/client" />
-import type {Emitter, EventType} from "mitt";
 import type {ifcAndroidInterface} from "@app/types/types.ts";
-
 
 declare const __APP_VERSION__: string
 
 declare global {
   interface Window {
     webkitAudioContext?: typeof AudioContext;
-    emitter: Emitter<Record<EventType, unknown>>;
+    emitter: Emitter<EventBus>;
   }
 
   let AndroidInterface: ifcAndroidInterface;
@@ -22,8 +20,4 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
-}
-
-interface WindowInterface {
-  emitter?: Emitter<Record<EventType, any>>
 }

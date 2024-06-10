@@ -16,14 +16,13 @@ import { useSettingsStore } from '@app/stores/settingsStore'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { enBackgroundMode, type Background } from '@app/types/types'
-import useEmitter from '@mobile/extra/useEmitter'
 import {useI18n} from "vue-i18n";
+import { eventBus } from '@mobile/events/eventBus.ts'
 
 const i18n = useI18n()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
-const emitter = useEmitter()
 
 watch(() => settingsStore.language, () => {
   i18n.locale.value = settingsStore.language
@@ -34,11 +33,11 @@ const backgroundColor = computed(() => {
 })
 
 function registerEmitterEvents () {
-  emitter?.on('resume', () => updateBackgroundNative(settingsStore.background))
-  emitter?.on('closeWindow', (name: string) => {
+  eventBus.on('resume', () => updateBackgroundNative(settingsStore.background))
+  eventBus.on('closeWindow', (name: string) => {
     windowsStore.close(name)
   })
-  emitter?.on('openWindow', (name: string) => {
+  eventBus.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
       windowsStore.open('user-login')
       return

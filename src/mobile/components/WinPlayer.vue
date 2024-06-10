@@ -46,17 +46,16 @@
 </template>
 
 <script setup lang="ts">
-import useEmitter from '@mobile/extra/useEmitter'
 import { computed, onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
 import { useNativeStateStore } from '@mobile/stores/nativeStateStore'
+import { eventBus } from '@mobile/events/eventBus.ts'
 
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 const nativeStateStore = useNativeStateStore()
-const emitter = useEmitter()
 
 // Reactive data
 const isBuffering = ref(false)
@@ -82,16 +81,16 @@ function openDrawer () {
 }
 
 onMounted(() => {
-  emitter.on('isPlaying', (isPlaying: boolean) => {
+  eventBus.on('isPlaying', (isPlaying: boolean) => {
     isBuffering.value = false
     nativeStateStore.playing = isPlaying
   })
 
-  emitter.on('isBuffering', () => {
+  eventBus.on('isBuffering', () => {
     isBuffering.value = true
   })
 
-  emitter.on('sleepTime', (sleepTime: number) => {
+  eventBus.on('sleepTime', (sleepTime: number) => {
     nativeStateStore.sleepTime = sleepTime
   })
 })

@@ -5,10 +5,10 @@ import commonWindows from '@app/components/windows'
 import mobileComponents from '@mobile/components'
 import mobileWindows from '@mobile/windows'
 import Index from '@mobile/views/Index.vue'
-import mitt from 'mitt'
 import {i18n} from "@locales/_i18n.ts";
+import { eventBus } from '@mobile/events/eventBus.ts'
 
-window.emitter = mitt()
+window.emitter = eventBus
 
 const app = createApp({
   render: () => h(Index),
@@ -17,7 +17,6 @@ const app = createApp({
 const pinia = createPinia()
 app.use(pinia)
 app.use(i18n)
-
 
 app.use(commonComponents)
 app.use(commonWindows)

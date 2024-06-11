@@ -1,16 +1,24 @@
 export const AndroidBridge = {
-  audioPlay: () => AndroidInterface.audioPlay(),
-  audioStop: () => AndroidInterface.audioStop(),
-  setSleepTimer: (time: number) => AndroidInterface.setSleepTimer(time),
-  getAuthToken: () => Promise.resolve(AndroidInterface.getAuthToken()),
-  setAuthToken: (token: string) => AndroidInterface.setAuthToken(token),
-  getAudioQuality: () => Promise.resolve(AndroidInterface.getAudioQuality()),
-  setAudioQuality: (lowQuality: boolean) => AndroidInterface.setAudioQuality(
-    lowQuality),
-  toggleFullscreen: () => AndroidInterface.toggleFullscreen(),
-  openDrawer: () => AndroidInterface.openDrawer(),
-  getUserAgent: () => Promise.resolve(AndroidInterface.getUserAgent()),
-  getAppVersion: () => Promise.resolve(AndroidInterface.getVersion()),
-  setBackground: (background: string) => AndroidInterface.setBackground(
-    background),
+  audioPlay: ()
+    : void => AndroidInterface.audioPlay(),
+  audioStop: ()
+    : void => AndroidInterface.audioStop(),
+  setSleepTimer: (time: number)
+    : void => AndroidInterface.setSleepTimer(time),
+  setAuthToken: (token: string)
+    : void => AndroidInterface.setAuthToken(token),
+  getAuthToken: ()
+    : Promise<string> => Promise.resolve(AndroidInterface.getAuthToken()),
+  setAudioQuality: (lowQuality: boolean)
+    : void => AndroidInterface.setAudioQuality(lowQuality),
+  toggleFullscreen: ()
+    : void => AndroidInterface.toggleFullscreen(),
+  openDrawer: ()
+    : void => AndroidInterface.openDrawer(),
+  getUserAgent: ()
+    : Promise<string> => Promise.resolve(AndroidInterface.getUserAgent()),
+  getAppVersion: ()
+    : Promise<string> => Promise.resolve(AndroidInterface.getVersion()),
+  setBackground: (background: string)
+    : void => AndroidInterface.setBackground(background),
 }

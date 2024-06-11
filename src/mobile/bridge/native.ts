@@ -1,25 +1,32 @@
 import { AndroidBridge } from './android-bridge'
-import { iOSBridge } from './ios-bridge.cjs'
+import { iOSBridge } from './ios-bridge.js'
 
-/**
- * Общий API для взаимодействия с Android и iOS
- */
 export const Native = {
-  audioPlay: () => CurrentBridge().audioPlay(),
-  audioStop: () => CurrentBridge().audioStop(),
-  setSleepTimer: (time: number) => CurrentBridge().setSleepTimer(time),
-  getAuthToken: () => CurrentBridge().getAuthToken(),
-  setAuthToken: (token: string) => CurrentBridge().setAuthToken(token),
-  getAudioQuality: () => CurrentBridge().getAudioQuality(),
-  setAudioQuality: (lowQuality: boolean) => CurrentBridge().setAudioQuality(lowQuality),
-  toggleFullscreen: () => CurrentBridge().toggleFullscreen(),
-  openDrawer: () => CurrentBridge().openDrawer(),
-  getUserAgent: () => CurrentBridge().getUserAgent(),
-  getAppVersion: () => CurrentBridge().getAppVersion(),
-  setBackground: (background: string) => CurrentBridge().setBackground(background),
+  audioPlay: ()
+    : void | Promise<void> => CurrentBridge().audioPlay(),
+  audioStop: ()
+    : void | Promise<void> => CurrentBridge().audioStop(),
+  setSleepTimer: (time: number)
+    : void | Promise<void> => CurrentBridge().setSleepTimer(time),
+  getAuthToken: ()
+    : Promise<string> => CurrentBridge().getAuthToken(),
+  setAuthToken: (token: string)
+    : void | Promise<void> => CurrentBridge().setAuthToken(token),
+  setAudioQuality: (lowQuality: boolean)
+    : void | Promise<void> => CurrentBridge().setAudioQuality(lowQuality),
+  toggleFullscreen: ()
+    : void | Promise<void> => CurrentBridge().toggleFullscreen(),
+  openDrawer: ()
+    : void | Promise<void> => CurrentBridge().openDrawer(),
+  getUserAgent: ()
+    : void | Promise<string> => CurrentBridge().getUserAgent(),
+  getAppVersion: ()
+    : void | Promise<string> => CurrentBridge().getAppVersion(),
+  setBackground: (background: string)
+    : void | Promise<void> => CurrentBridge().setBackground(background),
 }
 
-const CurrentBridge = () => {
+const CurrentBridge = (): typeof AndroidBridge | typeof iOSBridge => {
   const isAndroid = (typeof AndroidInterface !== 'undefined')
   return isAndroid ? AndroidBridge : iOSBridge
 }

@@ -194,11 +194,12 @@ export interface ifcAndroidInterface {
   setBackground (background: string): void
 }
 
-export type EventBus = {
+export interface EventBus {
   closeWindow: string;
   openWindow: string;
   resume: void;
   isBuffering: void;
   isPlaying: boolean;
   sleepTime: number;
+  iosCallback: void | boolean;
 }

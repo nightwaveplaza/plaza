@@ -17,7 +17,7 @@
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        Listeners: {{ playerPlaybackStore.listeners }}
+        {{ t('win.player.listeners', { listeners: playerSongStore.listeners }) }}
       </div>
     </div>
   </win-window>
@@ -27,11 +27,13 @@
 import { ref } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 

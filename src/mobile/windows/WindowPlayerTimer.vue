@@ -45,18 +45,18 @@
 <script setup lang="ts">
 import { Native } from '@mobile/bridge/native'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useNativeStateStore } from '@mobile/stores/nativeStateStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 
-const nativeStateStore = useNativeStateStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
 const minutes = ref(20)
 const timeText = ref('Not set')
 
-const active = computed(() => nativeStateStore.sleepTime !== 0 && nativeStateStore.sleepTime > Date.now())
-const btnText = computed(() => nativeStateStore.sleepTime !== 0 ? 'Stop' : 'Start')
+const active = computed(() => playerPlaybackStore.sleepTime !== 0 && playerPlaybackStore.sleepTime > Date.now())
+const btnText = computed(() => playerPlaybackStore.sleepTime !== 0 ? 'Stop' : 'Start')
 
 // Non-reactive
 let intervalId = 0
@@ -64,9 +64,9 @@ let intervalId = 0
 function start () {
   if (active.value) {
     Native.setSleepTimer(0)
-    nativeStateStore.sleepTime = 0
+    playerPlaybackStore.sleepTime = 0
   } else {
-    nativeStateStore.sleepTime = Date.now() + (minutes.value * 60 * 1000)
+    playerPlaybackStore.sleepTime = Date.now() + (minutes.value * 60 * 1000)
     Native.setSleepTimer(minutes.value)
   }
 
@@ -74,7 +74,7 @@ function start () {
 }
 
 function refreshText () {
-  const t = nativeStateStore.sleepTime - Date.now()
+  const t = playerPlaybackStore.sleepTime - Date.now()
   timeText.value = t < 0 ? 'Not set' : new Date(t).toISOString().substring(11, 19)
 }
 

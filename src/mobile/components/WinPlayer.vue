@@ -8,8 +8,8 @@
 
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
-        <div class="player-artist track-artist mb-2">{{ playerPlaybackStore.artist }}</div>
-        <div class="player-title track-title">{{ playerPlaybackStore.title }}</div>
+        <div class="player-artist track-artist mb-2">{{ playerSongStore.artist }}</div>
+        <div class="player-title track-title">{{ playerSongStore.title }}</div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-6 pr-0">
@@ -20,11 +20,11 @@
         </div>
 
         <div class="row no-gutters">
-          <div :class="{'col-6': !nativeStateStore.playing, 'col-4': nativeStateStore.playing}" class="mb-1 mb-sm-0 pr-2">
+          <div :class="{'col-6': !playerPlaybackStore.playing, 'col-4': playerPlaybackStore.playing}" class="mb-1 mb-sm-0 pr-2">
             <win-button class="player-play" block @click="play">{{ playText }}</win-button>
           </div>
 
-          <div v-if="nativeStateStore.playing" class="col-2 mb-1 mb-sm-0 pr-2">
+          <div v-if="playerPlaybackStore.playing" class="col-2 mb-1 mb-sm-0 pr-2">
             <win-button block @click="windowsStore.open('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-button>
@@ -49,28 +49,28 @@
 import { computed, onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
-import { useNativeStateStore } from '@mobile/stores/nativeStateStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 
 const windowsStore = useWindowsStore()
+const playerSongStore = usePlayerSongStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
-const nativeStateStore = useNativeStateStore()
 
 // Reactive data
 const isBuffering = ref(false)
-const sleepTime = computed(() => nativeStateStore.sleepTime)
+const sleepTime = computed(() => playerPlaybackStore.sleepTime)
 const artwork = computed(() => {
-  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src)
-    return playerPlaybackStore.artwork_src
+  if (playerSongStore.songId && playerSongStore.artwork_src)
+    return playerSongStore.artwork_src
   else
     return 'https://i.plaza.one/artwork_dead.jpg'
 })
-const playText = computed(() => isBuffering.value ? 'Loading...' : nativeStateStore.playing ? 'Stop' : 'Play')
+const playText = computed(() => isBuffering.value ? 'Loading...' : playerPlaybackStore.playing ? 'Stop' : 'Play')
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {
-  if (nativeStateStore.playing) {
+  if (playerPlaybackStore.playing) {
     windowsStore.close('player-timer')
   }
   Native.audioPlay()
@@ -83,7 +83,7 @@ function openDrawer () {
 onMounted(() => {
   eventBus.on('isPlaying', (isPlaying: boolean) => {
     isBuffering.value = false
-    nativeStateStore.playing = isPlaying
+    playerPlaybackStore.playing = isPlaying
   })
 
   eventBus.on('isBuffering', () => {
@@ -91,7 +91,7 @@ onMounted(() => {
   })
 
   eventBus.on('sleepTime', (sleepTime: number) => {
-    nativeStateStore.sleepTime = sleepTime
+    playerPlaybackStore.sleepTime = sleepTime
   })
 })
 </script>

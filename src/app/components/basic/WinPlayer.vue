@@ -10,10 +10,10 @@
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
         <div class="player-artist track-artist mb-2">
-          {{ playerPlaybackStore.artist }}
+          {{ playerSongStore.artist }}
         </div>
         <div class="player-title track-title">
-          {{ playerPlaybackStore.title }}
+          {{ playerSongStore.title }}
         </div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
@@ -69,7 +69,7 @@ import { computed, onMounted, ref } from 'vue'
 import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import useVisual from '@app/composables/useVisual'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
@@ -85,7 +85,7 @@ const { startVisual, stopVisual } = useVisual()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 
 const audio = ref<InstanceType<typeof HTMLAudioElement>>()
 const time = ref<InstanceType<typeof WinPlayerTime>>()
@@ -93,7 +93,7 @@ const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
 const state = ref(STATE_IDLE)
 
 const artwork = computed(() => {
-  if (playerPlaybackStore.songId && playerPlaybackStore.artwork_src) {return playerPlaybackStore.artwork_src}
+  if (playerSongStore.songId && playerSongStore.artwork_src) {return playerSongStore.artwork_src}
   else {return 'https://i.plaza.one/artwork_dead.jpg'}
 })
 const playText = computed(() => {
@@ -113,7 +113,7 @@ function updateSong (): void {
   }
 
   if (state.value === STATE_PLAYING) {
-    document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
+    document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
     updateMediaSession()
   }
 
@@ -141,7 +141,7 @@ function startPlay (): void {
   audio.value!.load()
   audio.value!.volume = volume
 
-  document.title = `${playerPlaybackStore.artist} - ${playerPlaybackStore.title}`
+  document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
 }
 
 function audioCanPlay (): void {
@@ -179,20 +179,20 @@ function updateVolume (newVolume: number): void {
 }
 
 function showSongInfo (): void {
-  if (playerPlaybackStore.songId) {
-    windowsStore.showSong(playerPlaybackStore.songId)
+  if (playerSongStore.songId) {
+    windowsStore.showSong(playerSongStore.songId)
   }
 }
 
 function updateMediaSession (): void {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: playerPlaybackStore.title,
-      artist: playerPlaybackStore.artist,
-      album: playerPlaybackStore.album,
+      title: playerSongStore.title,
+      artist: playerSongStore.artist,
+      album: playerSongStore.album,
       artwork: [
-        { src: playerPlaybackStore.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
-        { src: playerPlaybackStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
+        { src: playerSongStore.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
+        { src: playerSongStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
       ],
     })
   } else {
@@ -233,7 +233,7 @@ function openUserWindow(): void {
 }
 
 onMounted(() => {
-  playerPlaybackStore.$subscribe((mutation) => {
+  playerSongStore.$subscribe((mutation) => {
     if (mutation.type === MutationType.patchObject) {
       updateSong()
     }

@@ -23,7 +23,7 @@
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        {{ t('win.player.listeners', {listeners: playerPlaybackStore.listeners}) }}
+        {{ t('win.player.listeners', {listeners: playerSongStore.listeners}) }}
       </div>
       <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
         {{ t('win.player.user', {user: userAuthStore.username}) }}
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
@@ -43,7 +43,7 @@ import WinWindow from '@app/components/basic/WinWindow.vue'
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 
 const fullScreenEnabled = computed(() => document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()

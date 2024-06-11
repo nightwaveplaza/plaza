@@ -6,7 +6,6 @@ import WindowHistory from '@app/components/windows/WindowHistory.vue'
 import WindowLoading from '@app/components/windows/WindowLoading.vue'
 import WindowNews from '@app/components/windows/WindowNews.vue'
 import WindowRatings from '@app/components/windows/WindowRatings.vue'
-import WindowSettingsBackground from '@app/components/windows/WindowSettingsBackground.vue'
 import WindowSettingsLanguage from '@app/components/windows/WindowSettingsLanguage.vue'
 import WindowSong from '@app/components/windows/WindowSong.vue'
 import WindowUser from '@app/components/windows/WindowUser.vue'
@@ -20,6 +19,7 @@ import WindowMobile from '@app/components/windows/WindowMobile.vue'
 import WindowPlayer from '@app/components/windows/WindowPlayer.vue'
 import WindowSupport from '@app/components/windows/WindowSupport.vue'
 import WindowUserResetPassword from '@app/components/windows/WindowUserResetPassword.vue'
+import WindowSettings from '@app/components/windows/WindowSettings.vue'
 
 export default {
   install: (Vue: App): void => {
@@ -30,7 +30,7 @@ export default {
     Vue.component('WindowLoading', WindowLoading)
     Vue.component('WindowNews', WindowNews)
     Vue.component('WindowRatings', WindowRatings)
-    Vue.component('WindowSettingsBackground', WindowSettingsBackground)
+    Vue.component('WindowSettings', WindowSettings)
     Vue.component('WindowSettingsLanguage', WindowSettingsLanguage)
     Vue.component('WindowSong', WindowSong)
     Vue.component('WindowUser', WindowUser)

@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
 import { api } from '@app/api/api'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 
 const STATUS_UPDATE_INTERVAL = 10000
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 
 let unmounted = false
 let intervalId = 0
 
 function updateStatus (): void {
   api.status.get().then((res) => {
-    playerPlaybackStore.$patch({
+    playerSongStore.$patch({
       songId: res.data.song.id,
       artist: res.data.song.artist,
       title: res.data.song.title,

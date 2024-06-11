@@ -8,13 +8,13 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import helperComposable from '@app/composables/helperComposable'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 const { dur } = helperComposable()
 
 const length = ref(0)
@@ -54,7 +54,7 @@ onMounted(() => {
   showText(t('win.player.welcome'))
   intervalId = window.setInterval(tick, CLOCK_REFRESH)
 
-  playerPlaybackStore.$subscribe((mutation, state) => {
+  playerSongStore.$subscribe((mutation, state) => {
     if (mutation.type === MutationType.patchObject) {
       length.value = state.length
       position = state.position

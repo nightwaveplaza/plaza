@@ -26,14 +26,14 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { MutationType } from 'pinia'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { api } from '@app/api/api'
 import { usePrefs } from '@app/composables/usePrefs'
 import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerSongStore = usePlayerSongStore()
 
 const style = ref({
   transform: `translate(0px, 0px)`,
@@ -71,7 +71,7 @@ onMounted(() => {
   move()
 
   // waiting for the first status response then check news and open up player
-  playerPlaybackStore.$subscribe((mutation) => {
+  playerSongStore.$subscribe((mutation) => {
     if (mutation.type === MutationType.patchObject) {
       api.news.latest().then(res => {
         const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!

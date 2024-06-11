@@ -119,7 +119,7 @@
             </div>
             <div class="col-6">
               <div class="checkbox">
-                <input id="low_quality" type="checkbox" @change="qualityChanged">
+                <input id="low_quality" type="checkbox" @change="qualityChanged" :checked="settingsStore.lowQuality" />
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
             </div>
@@ -230,7 +230,7 @@ function openLanguageSettings(): void {
 }
 
 function qualityChanged(e: Event): void {
-  settingsStore.lowQuality = Number((e.target as HTMLInputElement).checked)
+  settingsStore.lowQuality = (e.target as HTMLInputElement).checked
   settingsStore.saveQuality()
   windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }

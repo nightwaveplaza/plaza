@@ -9,7 +9,7 @@ interface State {
   theme: string,
   taskbarPosition: string,
   language: string,
-  lowQuality: number
+  lowQuality: boolean
 }
 
 function getDefaultLanguage(): string {
@@ -41,7 +41,7 @@ export const useSettingsStore = defineStore('settingsStore', {
     theme: 'win98',
     taskbarPosition: 'bottom',
     language: 'en',
-    lowQuality: 0
+    lowQuality: false
   }),
 
   getters: {
@@ -80,14 +80,14 @@ export const useSettingsStore = defineStore('settingsStore', {
     },
 
     saveQuality() {
-      usePrefs.save<number>('low_quality', this.lowQuality)
+      usePrefs.save<boolean>('low_quality', this.lowQuality)
     },
 
     loadSettings() {
       this.background = usePrefs.get<Background>('background', this.background)
       this.theme = usePrefs.get<string>('theme', 'win98')
       this.language = usePrefs.get<string>('language', getDefaultLanguage())
-      this.lowQuality = usePrefs.get<number>('low_quality', 0)
+      this.lowQuality = usePrefs.get<boolean>('low_quality', false)
       this.taskbarPosition = usePrefs.get<string>('taskbar_position', getDefaultTaskbarPosition())
     },
 

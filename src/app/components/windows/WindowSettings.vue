@@ -242,7 +242,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-#window-settings-background {
+#window-settings {
   .palette {
     .color {
       margin: 2px;

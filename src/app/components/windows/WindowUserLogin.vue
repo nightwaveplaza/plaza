@@ -41,7 +41,7 @@
           </div>
 
           <!-- Remember -->
-          <div v-if="!isMobile" class="row mt-1 no-gutters justify-content-end">
+          <div v-if="!useMobile()" class="row mt-1 no-gutters justify-content-end">
             <div class="col-12 col-sm-8">
               <div class="checkbox">
                 <input id="remember" v-model="remember" type="checkbox">
@@ -72,14 +72,13 @@
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserLogin } from '@app/types/types'
+import { useMobile } from '@app/composables/useMobile.ts'
 
 const { t } = useI18n()
-const { isMobile } = helperComposable()
 
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()

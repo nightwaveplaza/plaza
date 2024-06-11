@@ -1,15 +1,11 @@
-import { computed, type ComputedRef } from 'vue'
 import { i18n } from '@locales/_i18n'
 
 export default function (): {
   dur: (seconds: number) => string;
   sd: (date: number) => string;
   sdy: (date: number) => string;
-  isMobile: ComputedRef<boolean>;
   gt: (date: number) => string
 } {
-  const isMobile = computed(() => import.meta.env.VITE_APP === 'mobile')
-
   function dur (seconds: number): string {
     return new Date(seconds * 1000).toISOString().substring(14, 19)
   }
@@ -35,5 +31,5 @@ export default function (): {
     )
   }
 
-  return { isMobile, dur, sd, sdy, gt }
+  return { dur, sd, sdy, gt }
 }

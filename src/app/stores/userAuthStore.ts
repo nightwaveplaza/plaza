@@ -3,9 +3,7 @@ import { useUserReactionStore } from '@app/stores/userReactionStore'
 import { api } from '@app/api/api'
 import Cookies from 'js-cookie'
 import type { UserProfile } from '@app/types/types'
-import helperComposable from '@app/composables/helperComposable'
-
-const { isMobile } = helperComposable()
+import { useMobile } from '@app/composables/useMobile.ts'
 
 interface State {
   username: string,
@@ -29,7 +27,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
 
   actions: {
     loadUser() {
-      if (!isMobile.value) {
+      if (!useMobile()) {
         this.token = cookieApi.get('token') ?? null
       }
 

@@ -8,10 +8,11 @@ import Index from '@mobile/views/Index.vue'
 import {i18n} from "@locales/_i18n.ts";
 import { eventBus } from '@mobile/events/eventBus.ts'
 
+// Register event bus
 window.emitter = eventBus
 
 const app = createApp({
-  render: () => h(Index),
+  render: () => h(Index)
 })
 
 const pinia = createPinia()

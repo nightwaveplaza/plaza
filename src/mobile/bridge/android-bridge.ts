@@ -1,5 +1,4 @@
 export const AndroidBridge = {
-  requestUiUpdate: () => AndroidInterface.requestUiUpdate(),
   audioPlay: () => AndroidInterface.audioPlay(),
   audioStop: () => AndroidInterface.audioStop(),
   setSleepTimer: (time: number) => AndroidInterface.setSleepTimer(time),

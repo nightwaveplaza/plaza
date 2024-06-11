@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import {useSettingsStore} from "@app/stores/settingsStore.ts";
-import {useUserAuthStore} from "@app/stores/userAuthStore.ts";
-import {onMounted, watch} from "vue";
-import {type Background, enBackgroundMode} from "@app/types/types.ts";
-import {Native} from "@mobile/bridge/native.ts";
-import {eventBus} from "@mobile/events/eventBus.ts"
-import {useWindowsStore} from "@app/stores/windowsStore.ts";
+import { useSettingsStore } from '@app/stores/settingsStore.ts'
+import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
+import { onMounted, watch } from 'vue'
+import { type Background, enBackgroundMode } from '@app/types/types.ts'
+import { Native } from '@mobile/bridge/native.ts'
+import { eventBus } from '@mobile/events/eventBus.ts'
+import { useWindowsStore } from '@app/stores/windowsStore.ts'
+import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
+const iosCallbackStore = useIosCallbackStore()
 
-function updateBackgroundNative(bg: Background) {
+function updateBackgroundNative (bg: Background) {
   Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
 }
 
-function registerEmitterEvents() {
+function registerEmitterEvents () {
   eventBus.on('resume', () => updateBackgroundNative(settingsStore.background))
 
   eventBus.on('closeWindow', (name: string) => {
@@ -35,6 +37,14 @@ function registerEmitterEvents() {
 
     windowsStore.open(name)
   })
+
+  // ios callbacks
+  eventBus.on('*', (type, e) => {
+    if (type.startsWith('iosCallback-')) {
+      const callbackId = type.slice('iosCallback-'.length, type.length)
+      iosCallbackStore.execute(callbackId, e)
+    }
+  })
 }
 
 // Watch background for changes
@@ -42,7 +52,7 @@ watch(() => settingsStore.background, (b) => {
       if (b.image) {
         updateBackgroundNative(b as Background)
       }
-    }, {deep: true},
+    }, { deep: true },
 )
 
 // Watch user token for changes

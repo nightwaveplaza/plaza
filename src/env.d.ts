@@ -7,6 +7,13 @@ declare global {
   interface Window {
     webkitAudioContext?: typeof AudioContext;
     emitter: Emitter<EventBus>;
+    webkit: {
+      messageHandlers: {
+        plaza: {
+          postMessage: {(data: {name: string, args: Array<string>, callbackId: string}): void}
+        }
+      }
+    };
   }
 
   let AndroidInterface: ifcAndroidInterface;

@@ -55,7 +55,8 @@
           <p>
             {{ t('win.about.streams') }}<br>
             <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br>
-            <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus / 96kbps)
+            <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus / 96kbps)<br>
+            <a href="http://radio.plaza.one/hls" target="_blank">http://radio.plaza.one/hls</a> (hls / aac)
           </p>
         </div>
       </div>
@@ -81,7 +82,7 @@
 
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        {{ t('win.about.version') }}: {{ version }}
+        {{ t('win.about.version') }}: {{ appVersion }}{{ version }}
       </div>
     </div>
   </win-window>
@@ -91,23 +92,36 @@
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useMobile } from '@app/composables/useMobile.ts'
+import { onMounted, ref } from 'vue'
+import { Native } from '@mobile/bridge/native.ts'
 
 const { t } = useI18n()
 
 const windowsStore = useWindowsStore()
-const version = __APP_VERSION__ ?? 'n/a'
 
-function openCredits(): void {
+const version = __APP_VERSION__ ?? 'n/a'
+const appVersion = ref('')
+
+onMounted(() => {
+  if (useMobile()) {
+    Native.getAppVersion().then(version => {
+      appVersion.value = version + ' / '
+    })
+  }
+})
+
+function openCredits (): void {
   windowsStore.open('credits')
   windowsStore.close('about')
 }
 
-function openNews(): void {
+function openNews (): void {
   windowsStore.open('news')
   windowsStore.close('about')
 }
 
-function openMobile(): void {
+function openMobile (): void {
   windowsStore.open('mobile')
   windowsStore.close('about')
 }

@@ -1,8 +1,6 @@
 /// <reference types="vite/client" />
 import type {ifcAndroidInterface} from "@app/types/types.ts";
 
-declare const __APP_VERSION__: string
-
 declare global {
   interface Window {
     webkitAudioContext?: typeof AudioContext;

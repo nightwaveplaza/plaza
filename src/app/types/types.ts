@@ -167,39 +167,25 @@ export interface SongResponse {
 }
 
 export interface ifcAndroidInterface {
-  requestUiUpdate (): void
-
   audioPlay (): void
-
   audioStop (): void
-
   setSleepTimer (time: number): void
-
   getAuthToken (): string
-
   setAuthToken (token: string): void
-
-  getAudioQuality (): boolean
-
   setAudioQuality (quality: boolean): void
-
   toggleFullscreen (): void
-
   openDrawer (): void
-
   getUserAgent (): string
-
-  getVersion (): string
-
+  getAppVersion (): string
   setBackground (background: string): void
 }
 
-export interface EventBus {
+export type EventBus = {
   closeWindow: string;
   openWindow: string;
   resume: void;
   isBuffering: void;
   isPlaying: boolean;
   sleepTime: number;
-  iosCallback: void | boolean;
+  iosCallback: string;
 }

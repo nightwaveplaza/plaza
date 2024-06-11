@@ -19,9 +19,9 @@ export const Native = {
   openDrawer: ()
     : void | Promise<void> => CurrentBridge().openDrawer(),
   getUserAgent: ()
-    : void | Promise<string> => CurrentBridge().getUserAgent(),
+    : Promise<string> => CurrentBridge().getUserAgent(),
   getAppVersion: ()
-    : void | Promise<string> => CurrentBridge().getAppVersion(),
+    : Promise<string> => CurrentBridge().getAppVersion(),
   setBackground: (background: string)
     : void | Promise<void> => CurrentBridge().setBackground(background),
 }

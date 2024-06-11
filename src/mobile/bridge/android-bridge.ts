@@ -18,7 +18,7 @@ export const AndroidBridge = {
   getUserAgent: ()
     : Promise<string> => Promise.resolve(AndroidInterface.getUserAgent()),
   getAppVersion: ()
-    : Promise<string> => Promise.resolve(AndroidInterface.getVersion()),
+    : Promise<string> => Promise.resolve(AndroidInterface.getAppVersion()),
   setBackground: (background: string)
     : void => AndroidInterface.setBackground(background),
 }

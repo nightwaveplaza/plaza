@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" name="settings-background" :title="t('win.settings.title')">
+  <win-window v-slot="winProps" :width="280" name="settings" :title="t('win.settings.title')">
     <div class="p-2">
       <!-- Background -->
       <div class="group-box mb-2">

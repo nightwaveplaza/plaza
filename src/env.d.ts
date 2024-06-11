@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import type {ifcAndroidInterface} from "@app/types/types.ts";
+import type { ifcAndroidInterface } from '@app/types/types.ts'
 
 declare global {
   interface Window {
@@ -8,13 +8,13 @@ declare global {
     webkit: {
       messageHandlers: {
         plaza: {
-          postMessage: {(data: {name: string, args: Array<string>, callbackId: string}): void}
+          postMessage: { (data: { name: string, args: Array<string>, callbackId: string }): void }
         }
       }
     };
   }
 
-  let AndroidInterface: ifcAndroidInterface;
+  let AndroidInterface: ifcAndroidInterface
 }
 
 interface ImportMetaEnv {

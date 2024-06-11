@@ -145,7 +145,8 @@
             "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
             "thanks": "Thank you for donations, they will go straight into funding the station.",
             "title": "Support Us",
-            "title2": "Love Nightwave Plaza?"
+            "title2": "Love Nightwave Plaza?",
+            "go_to_site": "Go to Nightwave Plaza website"
         },
         "user": {
             "btn_logout": "Logout",
@@ -179,7 +180,7 @@
             "success": "Registration complete",
             "title": "Registration",
             "user_information": "User Information",
-            "welcome": "Welcome to Nightwave Plaza, {user}!"
+            "welcome": "Welcome to Nightwave Plaza, {user}!"
         },
         "user_reset": {
             "enter_email": "Enter your Email",

@@ -27,8 +27,8 @@
 import { ref } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore'
+import WinWindow from '@app/components/basic/WinWindow.vue'
 
 const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()

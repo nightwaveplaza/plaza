@@ -30,11 +30,6 @@ function registerEmitterEvents () {
       return
     }
 
-    // TODO
-    if ((name === 'settings')) {
-      name = 'settings-background'
-    }
-
     windowsStore.open(name)
   })
 

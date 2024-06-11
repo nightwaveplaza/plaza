@@ -29,6 +29,11 @@ export default ({ mode }: { mode: string }): UserConfig => {
       manifest: false,
       rollupOptions: {
         input: '/index.html',
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('node_modules')) {return 'vendor'}
+          },
+        },
       },
       // target: 'es2015',
       assetsInlineLimit: 4096,

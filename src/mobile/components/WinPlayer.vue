@@ -52,7 +52,9 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
@@ -66,7 +68,10 @@ const artwork = computed(() => {
   else
     return 'https://i.plaza.one/artwork_dead.jpg'
 })
-const playText = computed(() => isBuffering.value ? 'Loading...' : playerPlaybackStore.playing ? 'Stop' : 'Play')
+const playText = computed(() => isBuffering.value
+    ? t('loading') : playerPlaybackStore.playing
+        ? t('win.player.btn_stop') : t('win.player.btn_play'))
+
 const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play () {

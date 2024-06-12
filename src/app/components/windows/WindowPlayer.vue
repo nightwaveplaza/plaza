@@ -16,7 +16,7 @@
     <win-menu />
 
     <!-- Player -->
-    <div class="content p-1 p-sm-2">
+    <div class="content p-2">
       <win-player />
     </div>
 

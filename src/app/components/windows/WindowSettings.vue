@@ -226,7 +226,7 @@ function taskbarPositionSelected (e: Event): void {
 
 function openLanguageSettings(): void {
   windowsStore.open('settings-language')
-  windowsStore.close('settings-background')
+  windowsStore.close('settings')
 }
 
 function qualityChanged(e: Event): void {

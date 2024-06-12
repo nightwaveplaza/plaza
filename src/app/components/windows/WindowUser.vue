@@ -3,7 +3,7 @@
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-button v-if="useMobile()" block class="mb-2" @click="open('user-favorites')">
+          <win-button v-if="!useMobile()" block class="mb-2" @click="open('user-favorites')">
             {{ t('win.user_favorites.title') }}
           </win-button>
           <win-button block class="mb-2" @click="open('user-email')">

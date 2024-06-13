@@ -141,7 +141,7 @@
             "rewards": "¡Puede patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y así obtener recompensas especiales en Discord!",
             "thanks": "Gracias por las donaciones, serán utilizadas para financiar la estación.",
             "title": "Apóyenos",
-            "title2": "¿Te gusta Nightwave Plaza?"
+            "title2": "¿Te gusta Nightwave Plaza?"
         },
         "settings_language": {
             "select": "Seleccione el idioma",
@@ -154,7 +154,7 @@
             "captcha_desc": "Por favor complete este irritante captcha.",
             "captcha_fail": "La validación del captcha falló.",
             "user_information": "Información de usuario",
-            "welcome": "¡Bienvenido a Nightwave Plaza, {user}!",
+            "welcome": "¡Bienvenido a Nightwave Plaza, {user}!",
             "captcha_title": "¿Sigues siendo humano?",
             "please_fill": "Por favor complete el formulario de registro. Todos los campos son obligatorios.",
             "success": "Registro completo"

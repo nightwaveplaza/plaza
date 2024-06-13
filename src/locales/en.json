@@ -100,6 +100,15 @@
             "volume": "Volume: {volume}%",
             "welcome": "Welcome back!"
         },
+        "player_timer": {
+            "title": "Sleep Timer",
+            "is_active": "Sleep timer is active",
+            "info": "Set the time for the sleep timer. The music will stop automatically.",
+            "stop": "Stop",
+            "start": "Start",
+            "timer_set": "Timer set",
+            "alert": "Music will stop after {minutes} minute(s)."
+        },
         "ratings": {
             "btn_monthly": "Monthly",
             "btn_overtime": "Overtime",

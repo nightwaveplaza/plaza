@@ -6,7 +6,7 @@
       </win-button>
     </div>
     <div class="col-4">
-      <input ref="pageInput" type="number" class="d-block" value="1" @change="setPage">
+      <input ref="pageInput" type="number" class="d-block" v-model.number="page" @keydown="useNumberOnly">
     </div>
     <div v-if="pages > 1 && page < pages" class="col-4 pl-1">
       <win-button class="d-block" @click="nextPage(1)">
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
 
 const props = defineProps<{
   pages: number
@@ -25,7 +26,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['change'])
 
-const pageInput = ref<HTMLInputElement | null>(null)
 const page = ref(1)
 
 function nextPage (dir: number): void {
@@ -39,23 +39,18 @@ function nextPage (dir: number): void {
   page.value = newPage
 }
 
-function setPage (e: Event): void {
-  const newPage = parseInt((e.target as HTMLInputElement).value, 10)
-  if (!isNaN(newPage) && newPage > 0 && newPage <= props.pages) {
-    page.value = newPage
-  }
-}
-
 function reset (): void {
   page.value = 1
 }
 
-watch(page, (value) => {
-  pageInput.value!.value = value.toString()
-  emit('change', value)
+watch(page, () => {
+  if (page.value > props.pages!) {
+    page.value = props.pages!
+  }
+  emit('change', page.value)
 })
 
 defineExpose({
-  pageInput, reset,
+  reset,
 })
 </script>

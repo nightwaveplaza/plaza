@@ -24,6 +24,8 @@ export const Native = {
     : Promise<string> => CurrentBridge().getAppVersion(),
   setBackground: (background: string)
     : void | Promise<void> => CurrentBridge().setBackground(background),
+  setLanguage: (lang: string)
+    : void | Promise<void> => CurrentBridge().setLanguage(lang)
 }
 
 const CurrentBridge = (): typeof AndroidBridge | typeof iOSBridge => {

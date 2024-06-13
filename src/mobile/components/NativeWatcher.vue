@@ -8,6 +8,9 @@ import { eventBus } from '@mobile/events/eventBus.ts'
 import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { useI18n } from 'vue-i18n'
+
+const i18n = useI18n()
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
@@ -64,6 +67,18 @@ watch(() => settingsStore.lowQuality, (lowQuality) => {
 watch(() => playerPlaybackStore.sleepTime, (time) => {
   Native.setSleepTimer(time)
 })
+
+// Watch timer changes
+watch(() => playerPlaybackStore.sleepTime, (time) => {
+  Native.setSleepTimer(time)
+})
+
+// Watch language change
+watch(() => settingsStore.language, () => {
+  i18n.locale.value = settingsStore.language
+  Native.setLanguage(settingsStore.language)
+})
+
 
 onMounted(() => {
   registerEmitterEvents()

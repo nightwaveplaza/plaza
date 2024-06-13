@@ -21,4 +21,6 @@ export const AndroidBridge = {
     : Promise<string> => Promise.resolve(AndroidInterface.getAppVersion()),
   setBackground: (background: string)
     : void => AndroidInterface.setBackground(background),
+  setLanguage: (lang: string)
+    : void => AndroidInterface.setLanguage(lang),
 }

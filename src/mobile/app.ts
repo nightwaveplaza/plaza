@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import commonComponents from '@app/components/basic'
 import commonWindows from '@app/components/windows'
 import mobileComponents from '@mobile/components'
-import Index from '@mobile/views/Index.vue'
+import App from '@mobile/App.vue'
 import {i18n} from "@locales/_i18n.ts";
 import { eventBus } from '@mobile/events/eventBus.ts'
 
@@ -11,7 +11,7 @@ import { eventBus } from '@mobile/events/eventBus.ts'
 window.emitter = eventBus
 
 const app = createApp({
-  render: () => h(Index)
+  render: () => h(App)
 })
 
 const pinia = createPinia()
@@ -25,5 +25,5 @@ delete app._context.components["WinPlayer"]
 
 app.use(mobileComponents)
 
-app.component('app', Index)
+app.component('app', App)
 app.mount('#app')

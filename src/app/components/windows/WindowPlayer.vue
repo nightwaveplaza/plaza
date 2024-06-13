@@ -13,7 +13,7 @@
     </template>
 
     <!-- Menu -->
-    <win-menu />
+    <win-menu v-if="!useMobile()" />
 
     <!-- Player -->
     <div class="content p-2">

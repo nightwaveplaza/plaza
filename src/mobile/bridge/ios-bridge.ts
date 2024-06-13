@@ -24,6 +24,8 @@ export const iOSBridge = {
     : Promise<string> => sendMessage<string>('getAppVersion', []),
   setBackground: (background: string)
     : Promise<void> => sendMessage<void>('setBackground', [background]),
+  setLanguage: (lang: string)
+    : Promise<void> => sendMessage<void>('setAudioQuality', [lang]),
 }
 
 /**

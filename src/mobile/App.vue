@@ -37,7 +37,6 @@ onMounted(() => {
 
   windowsStore.open('loading')
 
-  settingsStore.loadSettings()
   if (settingsStore.isBackgroundRandomMode) {
     settingsStore.loadRandomBackground()
   }

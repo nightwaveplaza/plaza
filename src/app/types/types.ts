@@ -178,6 +178,7 @@ export interface ifcAndroidInterface {
   getUserAgent (): string
   getAppVersion (): string
   setBackground (background: string): void
+  setLanguage (lang: string): void
 }
 
 export type EventBus = {

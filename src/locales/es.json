@@ -34,7 +34,7 @@
     "menu": {
         "about": "Acerca de",
         "mobile": "Móvil",
-        "play_history": "Reproducir historial",
+        "play_history": "Reproducir Historial",
         "ratings": "Popularidad",
         "support_us": "Apóyenos"
     },
@@ -141,7 +141,8 @@
             "rewards": "¡Puede patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y así obtener recompensas especiales en Discord!",
             "thanks": "Gracias por las donaciones, serán utilizadas para financiar la estación.",
             "title": "Apóyenos",
-            "title2": "¿Te gusta Nightwave Plaza?"
+            "title2": "¿Te gusta Nightwave Plaza?",
+            "go_to_site": "Ir al sitio web de Nightwave Plaza"
         },
         "settings_language": {
             "select": "Seleccione el idioma",
@@ -169,7 +170,7 @@
         "user_favorites": {
             "list_empty": "Su lista está vacía. Haga clic en el botón {icon} para agregar canciones a su lista.",
             "remove": "Eliminar",
-            "title": "Mis favoritos"
+            "title": "Mis Favoritos"
         },
         "user_login": {
             "btn_register": "Registrarse",
@@ -186,6 +187,15 @@
             "enter_email": "Ingrese su correo electrónico",
             "instruction": "Ingrese su dirección de correo electrónico y haga clic en el botón — se le enviará un correo electrónico con un enlace para restablecer su contraseña.",
             "title": "Restablecer contraseña"
+        },
+        "player_timer": {
+            "title": "Temporizador",
+            "is_active": "El temporizador está activo",
+            "stop": "Detener",
+            "start": "Comenzar",
+            "timer_set": "Temporizador configurado",
+            "alert": "La música se detendrá después de {minutes} minuto(s).",
+            "info": "Configure la hora del temporizador. La música se detendrá automáticamente."
         }
     }
 }

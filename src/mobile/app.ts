@@ -22,7 +22,6 @@ app.use(commonComponents)
 app.use(commonWindows)
 
 delete app._context.components["WinPlayer"]
-delete app._context.components["WindowPlayer"]
 
 app.use(mobileComponents)
 

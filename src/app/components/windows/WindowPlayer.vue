@@ -39,13 +39,15 @@ import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useMobile } from '@app/composables/useMobile.ts'
+import { Native } from '@mobile/bridge/native.ts'
 
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 
-const fullScreenEnabled = computed(() => document.fullscreenEnabled)
+const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()
 
 function minimize (): void {
@@ -53,7 +55,11 @@ function minimize (): void {
 }
 
 function requestFullScreen (): void {
-  document.getElementById('app')?.requestFullscreen()
+  if (useMobile()) {
+    Native.toggleFullscreen()
+  } else {
+    document.getElementById('app')?.requestFullscreen()
+  }
 }
 </script>
 

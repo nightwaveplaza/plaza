@@ -25,8 +25,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Native } from '@mobile/bridge/native'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { Native } from '@mobile/bridge/native.ts'
+import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'

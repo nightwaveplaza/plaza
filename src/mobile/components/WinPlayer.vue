@@ -20,11 +20,11 @@
         </div>
 
         <div class="row no-gutters">
-          <div :class="{'col-6': !playerPlaybackStore.playing, 'col-4': playerPlaybackStore.playing}" class="mb-1 mb-sm-0 pr-2">
+          <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pr-2">
             <win-button class="player-play" block @click="play">{{ playText }}</win-button>
           </div>
 
-          <div v-if="playerPlaybackStore.playing" class="col-2 mb-1 mb-sm-0 pr-2">
+          <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
             <win-button block @click="windowsStore.open('player-timer')">
               <i :style="{ color: timerColor }" class="i icon-clock"/>
             </win-button>
@@ -46,37 +46,41 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
+import { PlayerState } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
-// Reactive data
-const isBuffering = ref(false)
-const sleepTime = computed(() => playerPlaybackStore.sleepTime)
 const artwork = computed(() => {
-  if (playerSongStore.songId && playerSongStore.artwork_src)
-    return playerSongStore.artwork_src
-  else
-    return 'https://i.plaza.one/artwork_dead.jpg'
+  return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
-const playText = computed(() => isBuffering.value
-    ? t('loading') : playerPlaybackStore.playing
-        ? t('win.player.btn_stop') : t('win.player.btn_play'))
 
-const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
+const playText = computed(() => {
+  switch (playerPlaybackStore.state) {
+    case PlayerState.IDLE: return t('win.player.btn_play')
+    case PlayerState.LOADING: return t('loading')
+    case PlayerState.PLAYING: return t('win.player.btn_stop')
+  }
+})
+
+const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
+
+const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
+
 
 function play () {
-  if (playerPlaybackStore.playing) {
+  if (playerPlaybackStore.state === PlayerState.PLAYING) {
     windowsStore.close('player-timer')
+    playerPlaybackStore.sleepTime = 0
   }
   Native.audioPlay()
 }
@@ -86,17 +90,19 @@ function openDrawer () {
 }
 
 onMounted(() => {
-  eventBus.on('isPlaying', (isPlaying: boolean) => {
-    isBuffering.value = false
-    playerPlaybackStore.playing = isPlaying
+  eventBus.on('isPlaying', (playing: boolean) => {
+    playerPlaybackStore.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
   })
 
   eventBus.on('isBuffering', () => {
-    isBuffering.value = true
+    playerPlaybackStore.state = PlayerState.LOADING
   })
 
-  eventBus.on('sleepTime', (sleepTime: number) => {
-    playerPlaybackStore.sleepTime = sleepTime
+  // Event from onResume if sleep timer is still alive
+  eventBus.on('sleepTime', (time: number) => {
+    if (time > Date.now()) {
+      playerPlaybackStore.sleepTime = time
+    }
   })
 })
 </script>

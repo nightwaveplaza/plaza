@@ -20,7 +20,7 @@
           <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
               <canvas ref="canvas" class="player-visual" />
-              <win-player-time ref="time" />
+              <win-player-time ref="time" @stopByTimer="stopPlay" />
             </div>
           </div>
 
@@ -30,19 +30,24 @@
         </div>
 
         <div class="row no-gutters">
-          <div class="col-7 col-md-7 pr-md-2">
+          <div class="col-8 col-md-7 pr-md-2">
             <div class="row no-gutters">
-              <div class="col-7 col-md-8">
+              <div :class="{'col-8': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying}">
                 <win-button class="player-play" block @click="play()">
                   {{ playText }}
                 </win-button>
               </div>
-              <div class="col-5 col-md-4">
+              <div class="col-3" v-if="isPlaying">
+                <win-button block @click="openTimerWindow">
+                  <i :style="{ color: timerColor }" class="i icon-clock"/>
+                </win-button>
+              </div>
+              <div class="col-4">
                 <win-player-reactions />
               </div>
             </div>
           </div>
-          <div class="col-5 col-md-5">
+          <div class="col-4 col-md-5">
             <div class="row no-gutters">
               <div class="col-6">
                 <win-button block @click="openUserWindow()">
@@ -50,7 +55,7 @@
                 </win-button>
               </div>
               <div class="col-6">
-                <win-button block @click="windowsStore.open('settings-background')">
+                <win-button block @click="windowsStore.open('settings')">
                   <i class="i icon-cog mr-0" />
                 </win-button>
               </div>
@@ -74,11 +79,8 @@ import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { useSettingsStore } from '@app/stores/settingsStore'
-
-// const
-const STATE_IDLE = 0
-const STATE_LOADING = 1
-const STATE_PLAYING = 2
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { PlayerState } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const { startVisual, stopVisual } = useVisual()
@@ -86,33 +88,39 @@ const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 
 const audio = ref<InstanceType<typeof HTMLAudioElement>>()
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
-const state = ref(STATE_IDLE)
 
 const artwork = computed(() => {
-  if (playerSongStore.songId && playerSongStore.artwork_src) {return playerSongStore.artwork_src}
-  else {return 'https://i.plaza.one/artwork_dead.jpg'}
+  return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
+
 const playText = computed(() => {
-  if (state.value === STATE_IDLE) {return t('win.player.btn_play')}
-  else if (state.value === STATE_LOADING) {return t('loading')}
-  else {return t('win.player.btn_stop')}
+  switch (playerPlaybackStore.state) {
+    case PlayerState.IDLE: return t('win.player.btn_play')
+    case PlayerState.LOADING: return t('loading')
+    case PlayerState.PLAYING: return t('win.player.btn_stop')
+  }
 })
+
+const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
+
+const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
 
 // Non-reactive
 let offline = false
 let volume = 100
 
 function updateSong (): void {
-  if (offline && state.value === STATE_PLAYING) {
+  if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
     stopPlay()
     setTimeout(play, 2000)
   }
 
-  if (state.value === STATE_PLAYING) {
+  if (playerPlaybackStore.state === PlayerState.PLAYING) {
     document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
     updateMediaSession()
   }
@@ -121,8 +129,8 @@ function updateSong (): void {
 }
 
 function play (): void {
-  if (state.value === STATE_IDLE) {
-    state.value = STATE_LOADING
+  if (playerPlaybackStore.state === PlayerState.IDLE) {
+    playerPlaybackStore.state = PlayerState.LOADING
     startPlay()
   } else {
     stopPlay()
@@ -145,8 +153,8 @@ function startPlay (): void {
 }
 
 function audioCanPlay (): void {
-  if (state.value === STATE_LOADING) {
-    state.value = STATE_PLAYING
+  if (playerPlaybackStore.state === PlayerState.LOADING) {
+    playerPlaybackStore.state = PlayerState.PLAYING
 
     audio.value!.play().then(() => {
       startVisual(audio.value!, canvas.value!)
@@ -157,11 +165,12 @@ function audioCanPlay (): void {
 }
 
 function stopPlay (): void {
+  stopVisual()
   audio.value!.pause()
   audio.value!.currentTime = 0
-  stopVisual()
 
-  state.value = STATE_IDLE
+  playerPlaybackStore.state = PlayerState.IDLE
+  playerPlaybackStore.sleepTime = 0
   setMediaSessionState('paused')
   document.title = 'Nightwave Plaza - Online Vaporwave Radio'
 }
@@ -173,7 +182,7 @@ function setVolume (volume: number): void {
 
 function updateVolume (newVolume: number): void {
   volume = newVolume / 100
-  if (state.value === STATE_PLAYING) {
+  if (playerPlaybackStore.state === PlayerState.PLAYING) {
     audio.value!.volume = volume
   }
 }
@@ -183,6 +192,28 @@ function showSongInfo (): void {
     windowsStore.showSong(playerSongStore.songId)
   }
 }
+
+function openUserWindow(): void {
+  if (userAuthStore.signed) {
+    windowsStore.open('user')
+  } else {
+    windowsStore.open('user-login')
+  }
+}
+
+function openTimerWindow(): void {
+  windowsStore.open('player-timer')
+}
+
+onMounted(() => {
+  playerSongStore.$subscribe((mutation) => {
+    if (mutation.type === MutationType.patchObject) {
+      updateSong()
+    }
+  })
+
+  setMediaSessionActions()
+})
 
 function updateMediaSession (): void {
   if ('mediaSession' in navigator) {
@@ -223,39 +254,4 @@ function setMediaSessionState (state: string): void {
     navigator.mediaSession.playbackState = state as MediaSessionPlaybackState
   }
 }
-
-function openUserWindow(): void {
-  if (userAuthStore.signed) {
-    windowsStore.open('user')
-  } else {
-    windowsStore.open('user-login')
-  }
-}
-
-onMounted(() => {
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      updateSong()
-    }
-  })
-
-  setMediaSessionActions()
-})
 </script>
-
-<style lang="scss">
-#window-player {
-  .player-visual {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    position: absolute;
-  }
-}
-</style>

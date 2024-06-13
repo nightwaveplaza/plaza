@@ -20,6 +20,7 @@ import WindowPlayer from '@app/components/windows/WindowPlayer.vue'
 import WindowSupport from '@app/components/windows/WindowSupport.vue'
 import WindowUserResetPassword from '@app/components/windows/WindowUserResetPassword.vue'
 import WindowSettings from '@app/components/windows/WindowSettings.vue'
+import WindowPlayerTimer from '@app/components/windows/WindowPlayerTimer.vue'
 
 export default {
   install: (Vue: App): void => {
@@ -42,6 +43,7 @@ export default {
     Vue.component('WindowUserReset', WindowUserReset)
     Vue.component('WindowMobile', WindowMobile)
     Vue.component('WindowPlayer', WindowPlayer)
+    Vue.component('WindowPlayerTimer', WindowPlayerTimer)
     Vue.component('WindowSupport', WindowSupport)
     Vue.component('WindowUserResetPassword', WindowUserResetPassword)
   }

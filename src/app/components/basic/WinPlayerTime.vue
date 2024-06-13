@@ -10,12 +10,16 @@ import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import helperComposable from '@app/composables/helperComposable'
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
+const playerPlaybackStore = usePlayerPlaybackStore()
 const playerSongStore = usePlayerSongStore()
 const { dur } = helperComposable()
+
+const emit = defineEmits(['stopByTimer'])
 
 const length = ref(0)
 const actualPosition = ref(0)
@@ -47,6 +51,17 @@ function tick (): void {
 
   if (textTime.value > 0) {
     textTime.value -= CLOCK_REFRESH
+  }
+
+  checkSleepTimer()
+}
+
+function checkSleepTimer(): void {
+  const t = playerPlaybackStore.sleepTime
+
+  if (t > 0 && t < Date.now()) {
+    playerPlaybackStore.sleepTime = 0
+    emit('stopByTimer')
   }
 }
 

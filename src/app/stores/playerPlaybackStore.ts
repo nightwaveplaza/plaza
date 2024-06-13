@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia'
+import { PlayerState } from '@app/types/types.ts'
 
 interface State {
-  playing: boolean,
+  state: PlayerState,
   sleepTime: number
 }
 
 export const usePlayerPlaybackStore = defineStore('playerPlaybackStore', {
   state: (): State => ({
-    playing: false,
+    state: PlayerState.IDLE,
     sleepTime: 0
-  }),
+  })
+
+
 })

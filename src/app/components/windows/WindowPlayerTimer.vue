@@ -1,9 +1,10 @@
 <template>
   <win-window ref="win" :width="250" name="player-timer" title="Sleep Timer" v-slot="winProps">
     <div class="p-3">
-      <p v-if="active" class="text-center">
-        Sleep timer is active <br/> <b>{{ timeText }}</b>
-      </p>
+      <div v-if="active" class="text-center">
+        <p>Sleep timer is active</p>
+        <p class="time-left mt-2">{{ timeText }}</p>
+      </div>
       <div v-else class="text-center">
         <p class="text-center">Set the time for the sleep timer. The music will stop automatically.</p>
 
@@ -15,9 +16,7 @@
             <win-button block @click="add(-5)">-5</win-button>
           </div>
           <div class="col-4 pr-1">
-            <input class="d-block text-center" v-model="minutes"
-                   onkeypress="if(this.value.length > 3){return false;}"
-                   type="number"/>
+            <input class="d-block text-center" v-model.number="minutes" @keydown="useNumberOnly" type="number" />
           </div>
           <div class="col-2 pr-1">
             <win-button block @click="add(5)">+5</win-button>
@@ -28,14 +27,13 @@
         </div>
       </div>
 
-
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
           <win-button block class="text-bold" @click="start()">{{ btnText }}</win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">Close</win-button>
+          <win-button block @click="winProps.close()">{{ t('buttons.close') }}</win-button>
         </div>
       </div>
     </div>
@@ -43,39 +41,35 @@
 </template>
 
 <script setup lang="ts">
-import { Native } from '@mobile/bridge/native'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { useI18n } from 'vue-i18n'
+import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
+import type WinWindow from '@app/components/basic/WinWindow.vue'
 
+const { t } = useI18n()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
 const minutes = ref(20)
-const timeText = ref('Not set')
+const timeLeft = ref(0)
 
 const active = computed(() => playerPlaybackStore.sleepTime !== 0 && playerPlaybackStore.sleepTime > Date.now())
 const btnText = computed(() => playerPlaybackStore.sleepTime !== 0 ? 'Stop' : 'Start')
+const timeText = computed(() => timeLeft.value < 0 ? 'Not set' : new Date(timeLeft.value).toISOString().substring(11, 19))
 
 // Non-reactive
 let intervalId = 0
 
 function start () {
   if (active.value) {
-    Native.setSleepTimer(0)
     playerPlaybackStore.sleepTime = 0
   } else {
     playerPlaybackStore.sleepTime = Date.now() + (minutes.value * 60 * 1000)
-    Native.setSleepTimer(minutes.value)
   }
-
+  updateTimeLeft()
   win.value!.close()
-}
-
-function refreshText () {
-  const t = playerPlaybackStore.sleepTime - Date.now()
-  timeText.value = t < 0 ? 'Not set' : new Date(t).toISOString().substring(11, 19)
 }
 
 function add (amount: number) {
@@ -84,12 +78,25 @@ function add (amount: number) {
   minutes.value = newMinutes <= 0 ? 1 : newMinutes
 }
 
+function updateTimeLeft() {
+  timeLeft.value = playerPlaybackStore.sleepTime - Date.now()
+}
+
 onMounted(() => {
-  intervalId = window.setInterval(refreshText, 1000)
+  updateTimeLeft()
+  intervalId = window.setInterval(updateTimeLeft, 1000)
 })
 
 onBeforeUnmount(() => {
   clearInterval(intervalId)
 })
-
 </script>
+
+<style lang="scss">
+#window-player-timer {
+  .time-left {
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+</style>

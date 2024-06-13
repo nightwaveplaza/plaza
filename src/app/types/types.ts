@@ -189,3 +189,11 @@ export type EventBus = {
   sleepTime: number;
   iosCallback: string;
 }
+
+
+
+export enum PlayerState {
+  IDLE = 0,
+  LOADING = 1,
+  PLAYING = 2,
+}

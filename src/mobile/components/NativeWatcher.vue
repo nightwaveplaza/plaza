@@ -7,10 +7,12 @@ import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
+import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
+const playerPlaybackStore = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 
 function updateBackgroundNative (bg: Background) {
@@ -56,6 +58,11 @@ watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 // Watch audio quality
 watch(() => settingsStore.lowQuality, (lowQuality) => {
   Native.setAudioQuality(lowQuality)
+})
+
+// Watch timer changes
+watch(() => playerPlaybackStore.sleepTime, (time) => {
+  Native.setSleepTimer(time)
 })
 
 onMounted(() => {

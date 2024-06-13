@@ -94,7 +94,7 @@
         "support": {
             "thanks": "Wir freuen uns über jede Spende, diese tragen zur Aufrechterhaltung unseres Projekts bei. Vielen Dank!",
             "title": "Spenden",
-            "title2": "Gefällt Dir Nightwave Plaza?",
+            "title2": "Gefällt Dir Nightwave Plaza?",
             "boosty": "Spenden via Boosty",
             "rewards": "Du kannst unser Projekt mit einer Spende via Boosty unterstützen, inklusive Vorteile bei unserem Discord-Server!"
         },
@@ -133,7 +133,7 @@
             "success": "Registrierung erfolgreich",
             "title": "Registrierung",
             "user_information": "Benutzer-Info",
-            "welcome": "Willkommen bei Nightwave Plaza, {user}!"
+            "welcome": "Willkommen bei Nightwave Plaza, {user}!"
         },
         "user_reset": {
             "enter_email": "Gebe deine E-Mail-Adresse ein",

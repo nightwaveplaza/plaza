@@ -39,11 +39,8 @@ function registerEmitterEvents () {
   })
 
   // ios callbacks
-  eventBus.on('*', (type, e) => {
-    if (type.startsWith('iosCallback-')) {
-      const callbackId = type.slice('iosCallback-'.length, type.length)
-      iosCallbackStore.execute(callbackId, e)
-    }
+  eventBus.on('iosCallback', (data: string) => {
+      iosCallbackStore.execute(data)
   })
 }
 

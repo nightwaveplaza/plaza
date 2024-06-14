@@ -8,7 +8,7 @@ Monorepo for the web app and the mobile app view.
 ## Requirements
 
 ``` 
-nodejs 18
+nodejs lts
 yarn
 ```
 
@@ -16,9 +16,8 @@ yarn
 
 ```
 src/
-  common/  - common code
-  desktop/ - website code
-  mobile/  - code for mobile view
+  app/  - common code
+  mobile/  - code for mobile
 ```
 
 ## Compile
@@ -30,7 +29,7 @@ Example:
 ```
 API_URL=https://api.plaza.one
 
-APP=desktop
+APP=app
 BUILD_PATH="/plaza/build"
 ```
 

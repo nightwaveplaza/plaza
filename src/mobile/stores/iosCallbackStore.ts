@@ -14,15 +14,20 @@ export const useIosCallbackStore = defineStore('iosCallbackStore', {
   }),
 
   actions: {
-    execute (callbackId: string, params: string | number | boolean | void) {
-      if (Object.prototype.hasOwnProperty.call(this.callbacks, callbackId)) {
-        if (typeof params === 'string') {
-          const res = JSON.parse(params)
-          this.callbacks[callbackId]!(res.result, res.error)
+    execute (data: string) {
+      const callback = JSON.parse(data)
+
+      if (Object.prototype.hasOwnProperty.call(this.callbacks, callback.id)) {
+        if (callback.error) {
+          this.callbacks[callback.id]!(null, 'Callback parse error')
         } else {
-          this.callbacks[callbackId]!(null, 'Callback parse error')
+          this.callbacks[callback.id]!(callback.result, undefined)
         }
       }
     },
+
+    clear(callbackId: string) {
+      delete this.callbacks[callbackId]
+    }
   },
 })

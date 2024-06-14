@@ -34,12 +34,11 @@ export const iOSBridge = {
  */
 function sendMessage<T>(name: string, args: Array<string>): Promise<T> {
   const iosCallbackStore = useIosCallbackStore()
+  const callbackId = uuid.v4()
 
   if (!window.webkit?.messageHandlers?.plaza) {
     return Promise.reject(`Unable to send message to iOS. Message handler not found`)
   }
-
-  const callbackId = uuid.v4()
 
   window.webkit.messageHandlers.plaza.postMessage({
     name, args: args || [], callbackId,
@@ -51,6 +50,7 @@ function sendMessage<T>(name: string, args: Array<string>): Promise<T> {
         reject(new Error(errorMessage))
       } else {
         resolve(<T>result)
+        iosCallbackStore.clear(callbackId)
       }
     }
   })

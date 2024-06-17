@@ -13,12 +13,17 @@ interface State {
 }
 
 function getDefaultLanguage(): string {
-  const lang = window.navigator.language.slice(0, 2)
+  const langShort = window.navigator.language.slice(0, 2)
+  const lang = window.navigator.language.replace('-', '_')
+
   if (Object.prototype.hasOwnProperty.call(_locales, lang)) {
     return lang
-  } else {
-    return 'en'
   }
+  if (Object.prototype.hasOwnProperty.call(_locales, langShort)) {
+    return langShort
+  }
+
+  return 'en'
 }
 
 function getDefaultTaskbarPosition (): string {

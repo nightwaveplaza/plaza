@@ -13,8 +13,8 @@ interface State {
 }
 
 function getDefaultLanguage(): string {
+  const lang = window.navigator.language
   const langShort = window.navigator.language.slice(0, 2)
-  const lang = window.navigator.language.replace('-', '_')
 
   if (Object.prototype.hasOwnProperty.call(_locales, lang)) {
     return lang

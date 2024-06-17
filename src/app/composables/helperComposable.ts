@@ -12,21 +12,21 @@ export default function (): {
 
   function sd (date: number): string {
     return new Date(date * 1e3).toLocaleString(
-      i18n.global.locale.value.replace('_', '-') as Intl.LocalesArgument,
+      i18n.global.locale.value as Intl.LocalesArgument,
       { month: 'short', day: 'numeric' }
     )
   }
 
   function sdy (date: number): string {
     return new Date(date * 1e3).toLocaleString(
-      i18n.global.locale.value.replace('_', '-') as Intl.LocalesArgument,
+      i18n.global.locale.value as Intl.LocalesArgument,
       { month: 'short', day: 'numeric', year: 'numeric' }
     )
   }
 
   function gt (date: number): string {
     return new Date(date * 1e3).toLocaleString(
-      i18n.global.locale.value.replace('_', '-') as Intl.LocalesArgument,
+      i18n.global.locale.value as Intl.LocalesArgument,
       { hour: 'numeric', minute: 'numeric', hour12: false }
     )
   }

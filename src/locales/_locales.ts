@@ -13,9 +13,9 @@ interface LocaleArray {
 }
 
 export default {
-  'de': de,
   'en': en,
-  'es': es,
+  'de': de,
+  'pt-BR': pt_BR,
   'ru': ru,
-  'pt_BR': pt_BR
+  'es': es,
 } as LocaleArray

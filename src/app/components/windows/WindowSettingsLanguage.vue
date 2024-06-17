@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="250" name="settings-language" :title="t('win.settings_language.title')">
+  <win-window v-slot="winProps" :width="230" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
       <win-group-box>
         <template #title>{{ t('win.settings_language.select') }}</template>
@@ -14,11 +14,13 @@
         </template>
       </win-group-box>
 
-      <i18n-t keypath="win.settings_language.help" tag="p" class="mt-2 text-center">
-        <template #link>
-          <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
-        </template>
-      </i18n-t>
+      <win-panel class="mt-2 text-center">
+        <i18n-t keypath="win.settings_language.help" tag="p">
+          <template #link>
+            <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
+          </template>
+        </i18n-t>
+      </win-panel>
 
       <div class="text-center mt-3">
         <win-button class="px-4" @click="winProps.close()">

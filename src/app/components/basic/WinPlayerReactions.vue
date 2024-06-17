@@ -71,11 +71,7 @@ function showTip (): void {
     return
   }
 
-  windowsStore.alert(
-      t('messages.reaction_tip', {icon: '<i class="i icon-like"></i>'}),
-      t('messages.nice'),
-      'info'
-  )
+  windowsStore.alert(t('messages.reaction_tip'), t('messages.nice'), 'info')
 
   usePrefs.save('reactionTip', 1)
 }

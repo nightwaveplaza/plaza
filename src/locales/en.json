@@ -203,7 +203,7 @@
     "reset_success": "Instructions have been sent to your email.",
     "success": "Success!",
     "saved": "Saved",
-    "reaction_tip": "You have liked the song. Nice! Clicking the {icon} button twice will add song to your favorites list. Give it a try!"
+    "reaction_tip": "You have liked the song. Nice! Clicking the like button twice will add song to your favorites list. Give it a try!"
   },
   "pagination": {
     "pages": "Pages: {n}",

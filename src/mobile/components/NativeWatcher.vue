@@ -65,11 +65,6 @@ watch(() => playerPlaybackStore.sleepTime, (time) => {
   Native.setSleepTimer(time)
 })
 
-// Watch timer changes
-watch(() => playerPlaybackStore.sleepTime, (time) => {
-  Native.setSleepTimer(time)
-})
-
 // Watch language change
 watch(() => settingsStore.language, () => {
   i18n.locale.value = settingsStore.language

@@ -44,6 +44,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserReset } from '@app/types/types'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -59,7 +60,7 @@ const sending = ref(false)
 
 function reset (): void {
   if (fields.email.length === 0) {
-    return windowsStore.alert(t('errors.enter_email'), t('errors.error'))
+    return windowsStore.alert(t('errors.fields.email_required'), t('errors.error'))
   }
 
   showCaptcha.value = true
@@ -73,7 +74,7 @@ function completeCaptcha (): void {
     win.value!.close()
   }).catch(e => {
     showCaptcha.value = false
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

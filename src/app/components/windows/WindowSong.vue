@@ -78,6 +78,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePrefs } from '@app/composables/usePrefs'
 import type { SongResponse } from '@app/types/types'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -109,7 +110,7 @@ function fetchSongInfo (songId: string): void {
   api.songs.get(songId).then(res => {
     Object.assign(song, res.data)
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
     win.value!.close()
   })
 }

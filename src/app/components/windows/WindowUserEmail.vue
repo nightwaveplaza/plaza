@@ -33,6 +33,7 @@ import type { UserEdit } from '@app/types/types'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -57,7 +58,7 @@ function fetchUser (): void {
 
 function update (): void {
   if (fields.current_password.length === 0) {
-    return windowsStore.alert(t('errors.enter_current_password'), t('errors.error'))
+    return windowsStore.alert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
   sending.value = true
@@ -66,7 +67,7 @@ function update (): void {
     windowsStore.alert(t('messages.email_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => {
     sending.value = false
   })

@@ -70,6 +70,7 @@ import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { HistoryResponse } from '@app/types/types'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -102,7 +103,7 @@ async function fetchHistory (page: number): Promise<void> {
     Object.assign(data, res.data)
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => {
     loading.value = false
   })

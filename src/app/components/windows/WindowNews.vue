@@ -35,6 +35,7 @@ import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { useI18n } from 'vue-i18n'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const { sdy } = helperComposable()
@@ -54,7 +55,7 @@ function getArticle (): void {
     article.value = res.data.articles[0]!
     pages.value = res.data.pages
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   })
 }
 

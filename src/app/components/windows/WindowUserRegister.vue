@@ -110,6 +110,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserRegister } from '@app/types/types'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -161,7 +162,7 @@ function completeCaptcha (): void {
     )
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
     step.value = 1
   }).finally(() => sending.value = false)
 }
@@ -171,27 +172,23 @@ function completeCaptcha (): void {
  */
 function validate (): void {
   if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
-    throw new Error(t('errors.username_incorrect'))
+    throw new Error(t('errors.fields.username_alphadash'))
   }
 
   if (fields.username.length < 4) {
-    throw new Error(t('errors.username_short'))
+    throw new Error(t('errors.fields.username_min'))
   }
 
   if (fields.username.length > 32) {
-    throw new Error(t('errors.username_long'))
+    throw new Error(t('errors.fields.username_max'))
   }
 
   if (fields.password!.length < 3) {
-    throw new Error(t('errors.password_short'))
+    throw new Error(t('errors.fields.password_min'))
   }
 
   if (fields.password !== passwordR.value) {
-    throw new Error(t('errors.passwords_match'))
-  }
-
-  if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(fields.email)) {
-    throw new Error(t('errors.email_incorrect'))
+    throw new Error(t('errors.fields.password_match'))
   }
 }
 

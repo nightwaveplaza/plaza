@@ -14,15 +14,16 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config
 })
 
-instance.interceptors.response.use(
-  resp => resp,
-  rej => {
-    if (rej.isAxiosError) {
-      if (rej.response?.data.error) {
-        rej.message = rej.response.data.error
-      }
-    }
-    return Promise.reject(rej)
-  })
+// instance.interceptors.response.use(
+//   resp => resp,
+//   rej => {
+//     if (rej.isAxiosError) {
+//       if (rej.response?.data.error) {
+//         rej.message = rej.response.data.error
+//         rej.key = rej.response.data.key
+//       }
+//     }
+//     return Promise.reject(rej)
+//   })
 
 export default instance

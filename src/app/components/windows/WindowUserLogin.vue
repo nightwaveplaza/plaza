@@ -77,6 +77,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserLogin } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 
@@ -105,7 +106,7 @@ function login (): void {
     windowsStore.alert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

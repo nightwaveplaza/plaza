@@ -81,6 +81,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { FavoritesResponse } from '@app/types/types'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -108,7 +109,7 @@ function fetchLikes (page: number): void {
     loading.value = false
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => {
     loading.value = false
   })
@@ -127,7 +128,7 @@ function deleteLike (favoriteId: number): void {
   api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   })
 }
 

@@ -40,6 +40,7 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import type { UserEdit } from '@app/types/types'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -67,7 +68,7 @@ function change (): void {
     windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e =>
-      windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+      windowsStore.alert(useApiError(e), t('errors.error'))
   ).finally(() => sending.value = false)
 }
 
@@ -77,11 +78,11 @@ function validate (): void {
   }
 
   if (fields.password!.length < 3) {
-    throw new Error(t('errors.password_short'))
+    throw new Error(t('errors.fields.password_min'))
   }
 
   if (fields.password !== passwordRepeat.value) {
-    throw new Error(t('errors.passwords_match'))
+    throw new Error(t('errors.fields.password_match'))
   }
 }
 </script>

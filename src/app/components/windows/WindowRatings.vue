@@ -77,6 +77,7 @@ import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import type { RatingsResponse } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
+import { useApiError } from '@app/composables/useApiError.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -103,7 +104,7 @@ function fetchRatings (range: string, page: number): void {
     Object.assign(data, res.data)
     list.value!.refreshScrollbar()
   }).catch(e => {
-    windowsStore.alert(t('errors.server', {error: (e as Error).message}), t('errors.error'))
+    windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => loading = false)
 }
 

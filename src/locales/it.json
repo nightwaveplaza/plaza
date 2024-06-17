@@ -1,1 +1,15 @@
-{}
+{
+  "errors": {
+    "server": "",
+    "fields": {
+      "email_email": "",
+      "email_required": "",
+      "username_alphadash": "",
+      "username_min": "",
+      "username_max": "",
+      "password_min": "",
+      "password_match": "",
+      "current_password_required": ""
+    }
+  }
+}

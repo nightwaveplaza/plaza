@@ -26,7 +26,7 @@
                     {{ song.title }}
                   </div>
                 </td>
-                <td class="pr-2 text-right noselect" style="width: 48px">
+                <td class="pr-2 text-right noselect" style="width: 78px">
                   {{ sd(song.played_at) }}<br>
                   {{ gt(song.played_at) }}
                 </td>

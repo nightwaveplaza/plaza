@@ -2,7 +2,7 @@
 @import "themes/elements.scss";
 
 .group-box {
-  .gb-content {
+  .gb-body {
     border: 1px solid;
     @include border-shadow('window-shadow');
     @include border-color-tl('content-border-left');
@@ -21,6 +21,13 @@
       @include background-color('btn-bg-color');
     }
   }
+}
+
+.panel {
+  border: 1px solid;
+  @include border-shadow('window-shadow');
+  @include border-color-tl('content-border-left');
+  @include border-color-rb('content-border-right');
 }
 
 input {

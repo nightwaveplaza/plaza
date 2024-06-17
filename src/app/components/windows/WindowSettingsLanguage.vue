@@ -1,11 +1,9 @@
 <template>
   <win-window v-slot="winProps" :width="250" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
-      <div class="group-box">
-        <div class="gb-label noselect">
-          <span>{{ t('win.settings_language.select') }}</span>
-        </div>
-        <div class="gb-content p-2">
+      <win-group-box>
+        <template #title>{{ t('win.settings_language.select') }}</template>
+        <template #content>
           <div class="select">
             <select @change="switchLanguage">
               <option v-for="(lang, name) in _locales" :key="name" :value="name" :selected="name === settingsStore.language">
@@ -13,8 +11,8 @@
               </option>
             </select>
           </div>
-        </div>
-      </div>
+        </template>
+      </win-group-box>
 
       <i18n-t keypath="win.settings_language.help" tag="p" class="mt-2 text-center">
         <template #link>

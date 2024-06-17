@@ -2,11 +2,11 @@
   <win-window v-slot="winProps" :width="280" name="settings" :title="t('win.settings.title')">
     <div class="p-2">
       <!-- Background -->
-      <div class="group-box mb-2">
-        <div class="gb-label noselect">
-          <span>{{ t('win.settings.background') }}</span>
-        </div>
-        <div class="gb-content p-2">
+      <win-group-box class="mb-2">
+        <template #title>
+          {{ t('win.settings.background') }}
+        </template>
+        <template #content>
           <div v-if="settingsStore.background.mode === enBackgroundMode.SOLID" class="row palette no-gutters">
             <div v-for="color in palette" :key="color" class="col-auto">
               <button class="color" :style="{backgroundColor: color}" @click="solidBg(color)" />
@@ -62,16 +62,17 @@
               <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
             </template>
           </i18n-t>
-        </div>
-      </div>
+        </template>
+      </win-group-box>
       <!-- /Background -->
 
       <!-- Appearance Settings -->
-      <div class="group-box mb-2">
-        <div class="gb-label noselect">
-          <span>{{ t('win.settings.appearance') }}</span>
-        </div>
-        <div class="gb-content p-2">
+
+      <win-group-box class="mb-2">
+        <template #title>
+          {{ t('win.settings.appearance') }}
+        </template>
+        <template #content>
           <div class="row no-gutters">
             <div class="col-7">
               <div class="mb-1">
@@ -103,16 +104,16 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </win-group-box>
       <!-- /Appearance Settings -->
 
       <!-- App Settings -->
-      <div class="group-box mb-3">
-        <div class="gb-label noselect">
-          <span>{{ t('win.settings.application') }}</span>
-        </div>
-        <div class="gb-content p-2">
+      <win-group-box class="mb-2">
+        <template #title>
+          {{ t('win.settings.application') }}
+        </template>
+        <template #content>
           <div class="row">
             <div class="col-6 align-self-center">
               {{ t('win.settings.audio_quality') }}:
@@ -124,8 +125,8 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </win-group-box>
       <!-- /App Settings -->
 
       <div class="d-flex justify-content-between">

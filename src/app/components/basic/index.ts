@@ -12,13 +12,17 @@ import WinMenu from '@app/components/basic/WinMenu.vue'
 import WinPlayer from '@app/components/basic/WinPlayer.vue'
 import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 import WinPlayerVolume from '@app/components/basic/WinPlayerVolume.vue'
+import WinGroupBox from '@app/components/basic/WinGroupBox.vue'
+import WinPanel from '@app/components/basic/WinPanel.vue'
 
 export default {
   install: (Vue: App): void => {
     Vue.component('WinButton', WinButton)
+    Vue.component('WinGroupBox', WinGroupBox)
     Vue.component('WinList', WinList)
     Vue.component('WinMemo', WinMemo)
     Vue.component('WinPagination', WinPagination)
+    Vue.component('WinPanel', WinPanel)
     Vue.component('WinPlayerReactions', WinPlayerReactions)
     Vue.component('WinPlayerTime', WinPlayerTime)
     Vue.component('WinStatusBar', WinStatusBar)

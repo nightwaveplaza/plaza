@@ -109,7 +109,7 @@
         "user_favorites": {
             "remove": "Remover",
             "title": "Favoritas",
-            "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"{icon}\" para adicionar músicas aqui."
+            "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"Favoritar\" para adicionar músicas aqui."
         },
         "user_login": {
             "btn_register": "Cadastrar",
@@ -203,7 +203,7 @@
         "reset_success": "Enviamos as instruções para o seu e-mail.",
         "success": "Sucesso!",
         "saved": "Salvo",
-        "reaction_tip": "Você curtiu essa música. Legal! Experimenta clicar no botão de \"{icon}\" duas vezes, que ela vai pras suas Favoritas."
+        "reaction_tip": "Você curtiu essa música. Legal! Experimenta clicar no botão \"Curtir\" duas vezes, que ela vai pras suas Favoritas."
     },
     "pagination": {
         "pages": "{n} página(s).",

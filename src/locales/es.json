@@ -2,7 +2,7 @@
     "menu": {
         "play_history": "Reproducir Historial",
         "about": "Acerca de",
-        "ratings": "Popularidad",
+        "ratings": "Más Populares",
         "support_us": "Apóyenos",
         "mobile": "Móvil"
     },
@@ -76,7 +76,7 @@
             "btn_monthly": "Mensual",
             "btn_overtime": "A lo largo del tiempo",
             "btn_weekly": "Semanal",
-            "title": "Popularidad"
+            "title": "Más Populares"
         },
         "settings_language": {
             "select": "Seleccione el idioma",
@@ -163,7 +163,7 @@
         "error": "Error",
         "please_sign": "Por favor inicie sesion con su cuenta de Nightwave Plaza para poder usar esta función.",
         "user_fetch": "No es posible obtener los datos del usuario.",
-        "server": "",
+        "server": "Error interno del servidor.",
         "enter_user_pass": "Por favor ingrese nombre de usuario y contraseña.",
         "fields": {
             "email_email": "El correo electrónico es incorrecto.",
@@ -173,8 +173,19 @@
             "username_max": "Nombre de usuario demasiado largo.",
             "password_min": "La contraseña es muy corta.",
             "password_match": "Las contraseñas no coinciden.",
-            "current_password_required": "Ingrese la contraseña actual."
-        }
+            "current_password_required": "Ingrese la contraseña actual.",
+            "email_unique": "Usuario con este correo electrónico ya registrado.",
+            "username_required": "Por favor ingrese el nombre de usuario.",
+            "username_unique": "El nombre de usuario ya ha sido tomado.",
+            "password_required": "Por favor, ingrese la contraseña.",
+            "current_password_invalid": "La contraseña actual es incorrecta.",
+            "captcha_invalid": "La captcha ingresada no es válida."
+        },
+        "network_fail": "Red no disponible.",
+        "invalid_user_password": "El nombre de usuario y la contraseña no coinciden.",
+        "user_not_found": "Usuario no encontrado.",
+        "song_not_found": "Canción no encontrada.",
+        "reset_link_invalid": "El enlace para restablecer la contraseña expiró o no es válido."
     },
     "fields": {
         "current_password": "Contraseña actual",
@@ -193,7 +204,7 @@
         "reset_success": "Las instrucciones han sido enviadas a su correo electrónico.",
         "success": "¡Éxito!",
         "saved": "Guardado",
-        "reaction_tip": "Le ha gustado la canción. ¡Genial! Al hacer clic en el botón {icon} dos veces, se agregará la canción a su lista de favoritos. ¡Pruébelo!"
+        "reaction_tip": "Le ha gustado la canción. ¡Genial! Al hacer clic en el botón Me gusta dos veces, se agregará la canción a su lista de favoritos. ¡Pruébelo!"
     },
     "pagination": {
         "pages": "Páginas: {n}",

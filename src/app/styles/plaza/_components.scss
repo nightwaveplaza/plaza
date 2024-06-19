@@ -38,20 +38,21 @@
 }
 
 .list {
+  width: 100%;
   border: 1px solid;
   @include border-shadow('content-shadow');
   @include border-color-tl('content-border-left');
   @include border-color-rb('content-border-right');
   @include background-color('inputs-bg');
 
-  &.scroll {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 1px 15px 1px 1px;
-  }
+  //&.scroll {
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  bottom: 0;
+  //  right: 0;
+  //  padding: 1px 15px 1px 1px;
+  //}
 
   table {
     width: 100%;

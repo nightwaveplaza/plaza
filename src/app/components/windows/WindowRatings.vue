@@ -17,27 +17,25 @@
 
         <!-- Song list -->
         <div class="d-flex flex-grow-1 align-items-stretch">
-          <div style="position: relative" class="w-100">
-            <div v-if="loading" class="content-loading" />
-            <win-list ref="list" scroll>
-              <tr v-for="(song, i) in data.songs" :key="i" class="hover">
-                <td class="text-center noselect" style="width: 37px">
-                  {{ pad((page - 1) * data.per_page + i + 1) }}
-                </td>
-                <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
-                  <div class="artist">
-                    {{ song.artist }}
-                  </div>
-                  <div class="title">
-                    {{ song.title }}
-                  </div>
-                </td>
-                <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
-                  {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
-                </td>
-              </tr>
-            </win-list>
-          </div>
+          <div v-if="loading" class="content-loading" />
+          <win-list v-else ref="list" scroll>
+            <tr v-for="(song, i) in data.songs" :key="i" class="hover">
+              <td class="text-center noselect" style="width: 37px">
+                {{ pad((page - 1) * data.per_page + i + 1) }}
+              </td>
+              <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
+                <div class="artist">
+                  {{ song.artist }}
+                </div>
+                <div class="title">
+                  {{ song.title }}
+                </div>
+              </td>
+              <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
+                {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+              </td>
+            </tr>
+          </win-list>
         </div>
 
         <!-- List footer buttons -->
@@ -69,7 +67,7 @@
 
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { api } from '@app/api/api'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
@@ -94,28 +92,31 @@ const data: RatingsResponse = reactive({
 
 const page = ref(1)
 const range = ref('overtime')
-
-let loading = false
+const loading = ref(true)
 
 function fetchRatings (range: string, page: number): void {
-  list.value!.scrollTop()
+  loading.value = true
 
   api.ratings.get(range, page).then(res => {
     Object.assign(data, res.data)
-    list.value!.refreshScrollbar()
   }).catch(e => {
     windowsStore.alert(useApiError(e), t('errors.error'))
-  }).finally(() => loading = false)
+  }).finally(() => {
+    loading.value = false
+    nextTick(() => {
+      list.value?.scrollTop()
+    })
+  })
 }
 
 function changePage (newPage: number): void {
-  if (!loading) {
+  if (!loading.value) {
     page.value = newPage
   }
 }
 
 function changeRange (newRange: string): void {
-  if (!loading) {
+  if (!loading.value) {
     range.value = newRange
   }
 }

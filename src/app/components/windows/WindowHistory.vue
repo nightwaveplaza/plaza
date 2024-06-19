@@ -14,25 +14,23 @@
         </div>
 
         <div class="d-flex flex-grow-1 align-items-stretch">
-          <div style="position: relative" class="w-100">
-            <div v-if="loading" class="content-loading" />
-            <win-list ref="list" scroll>
-              <tr v-for="song in data.songs" :key="song.id">
-                <td class="pl-2 pr-1 py-1 show-info" @click="windowsStore.showSong(song.id)">
-                  <div class="artist">
-                    {{ song.artist }}
-                  </div>
-                  <div class="title">
-                    {{ song.title }}
-                  </div>
-                </td>
-                <td class="pr-2 text-right noselect" style="width: 78px">
-                  {{ sd(song.played_at) }}<br>
-                  {{ gt(song.played_at) }}
-                </td>
-              </tr>
-            </win-list>
-          </div>
+          <div v-if="loading" class="content-loading" />
+          <win-list v-else ref="list" scroll>
+            <tr v-for="song in data.songs" :key="song.id">
+              <td class="pl-2 pr-1 py-1 show-info" @click="windowsStore.showSong(song.id)">
+                <div class="artist">
+                  {{ song.artist }}
+                </div>
+                <div class="title">
+                  {{ song.title }}
+                </div>
+              </td>
+              <td class="pr-1 text-right noselect" style="width: 78px">
+                {{ sd(song.played_at) }}<br>
+                {{ gt(song.played_at) }}
+              </td>
+            </tr>
+          </win-list>
         </div>
 
         <div class="d-flex">
@@ -63,7 +61,7 @@
 
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { api } from '@app/api/api'
@@ -96,16 +94,17 @@ function changePage (newPage: number): void {
 }
 
 async function fetchHistory (page: number): Promise<void> {
-  list.value!.scrollTop()
   loading.value = true
 
   api.history.get(page).then(res => {
     Object.assign(data, res.data)
-    list.value!.refreshScrollbar()
   }).catch(e => {
     windowsStore.alert(useApiError(e), t('errors.error'))
   }).finally(() => {
     loading.value = false
+    nextTick(() => {
+      list.value?.scrollTop()
+    })
   })
 }
 

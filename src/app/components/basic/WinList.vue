@@ -1,17 +1,19 @@
 <template>
-  <div ref="list" class="list" :class="{scroll: scroll}">
-    <table class="hover">
-      <slot />
-    </table>
-  </div>
+    <div ref="list" class="list" :class="{scroll}" data-simplebar>
+      <simplebar ref="scrollbar" data-simplebar-auto-hide="false">
+        <table class="hover">
+          <slot />
+        </table>
+      </simplebar>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
-import PerfectScrollbar from 'perfect-scrollbar'
+import { ref } from 'vue'
+import simplebar from 'simplebar-vue';
 
 // Props
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   scroll?: boolean
 }>(), {
   scroll: false,
@@ -19,36 +21,14 @@ const props = withDefaults(defineProps<{
 
 // Elements
 const list = ref<HTMLDivElement | null>(null)
-
-// Scrollbar
-let scrollbar: PerfectScrollbar
+const scrollbar = ref<{ recalculate(): void } | null>(null)
 
 // Methods
 function scrollTop (): void {
-  list.value!.scrollTop = 0
+  scrollbar.value?.recalculate()
 }
-
-function refreshScrollbar (): void {
-  if (props.scroll) {
-    nextTick(() => {
-      scrollbar.update()
-    })
-  }
-}
-
-onMounted(() => {
-  if (props.scroll) {
-    scrollbar = new PerfectScrollbar(list.value!)
-  }
-})
-
-onBeforeUnmount(() => {
-  if (props.scroll) {
-    scrollbar.destroy()
-  }
-})
 
 defineExpose({
-  list, scrollTop, refreshScrollbar,
+  list, scrollTop,
 })
 </script>

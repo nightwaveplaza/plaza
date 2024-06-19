@@ -3,6 +3,8 @@
 
 @import "@app/styles/bootstrap/bootstrap.scss";
 
+@import "simplebar-vue/dist/simplebar.min.css";
+
 @import "@app/styles/plaza/buttons";
 @import "@app/styles/plaza/components";
 @import "@app/styles/plaza/forms";
@@ -10,4 +12,4 @@
 @import "@app/styles/plaza/taskbar";
 @import "@app/styles/plaza/windows";
 @import "@app/styles/plaza/misc";
-@import "@app/styles/plaza/plugins/scrollbar";
+@import "@app/styles/plaza/plugins/simplebar";

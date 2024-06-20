@@ -2,7 +2,7 @@
     "menu": {
         "play_history": "Zuletzt Gespielt",
         "about": "Über Uns",
-        "ratings": "Beste Titel",
+        "ratings": "Charts",
         "support_us": "Spenden"
     },
     "win": {
@@ -12,7 +12,7 @@
             "bottom": "Unten",
             "author": "Autor",
             "appearance": "Erscheinungsbild-Einstellungen",
-            "btn_solid": "Fest",
+            "btn_solid": "Einfarbig",
             "let_us_know": "Lass es uns wissen!",
             "source": "Quelle",
             "taskbar": "Taskleiste",
@@ -23,20 +23,20 @@
             "audio_quality": "Audioqualität",
             "quality_changed": "Audioqualität wurde geändert. Bitte stoppe und starte die Wiedergabe.",
             "low_quality": "Niedrige Qualität",
-            "bg_notice": "Alle Hintergrundbilder wurden im Internet gefunden. Weißt Du, wer der Autor ist? {link}",
+            "bg_notice": "Alle Hintergrundbilder wurden irgendwo im Internet gefunden. Weißt Du, wer die gemacht hat? {link}",
             "background": "Hintergrund-Einstellungen"
         },
         "about": {
-            "btn_credits": "Danksagung",
+            "btn_credits": "Credits",
             "btn_news": "Neuigkeiten",
-            "contact_info": "Kontakt",
+            "contact_info": "Kontaktdaten",
             "discord": "Trete unserem {discord} Server bei!",
-            "playlists": "Wiedergabeliste",
+            "playlists": "Wiedergabelisten",
             "send_enquires": "Bitte sende deine Anliegen an {link}.",
             "submission_link": "Dieses Formular",
             "submissions": "Einsendungen",
             "title": "Über Uns",
-            "useful_links": "Interessante Links",
+            "useful_links": "Nützliche Links",
             "welcome": "Willkommen zur 27/7 Vaporwave- und Future Funk- Radiosender.",
             "mobile": "Apps (iOS / Android)",
             "streams": "Streams",
@@ -45,10 +45,10 @@
             "show_more": "Zeige mehr"
         },
         "credits": {
-            "title": "Danksagung",
+            "title": "Credits",
             "created_by": "{app} Webseite und Apps wurden von {author} bereitgestellt.",
             "content": "Gesamte Musik und Hintergründe",
-            "content_by": "{content} gehört den Urheber. Hier aufgeführte Musikwerke wurde von den jeweiligen Urheber und Herausgeber bereitgestellt. Sollten es Unstimmigkeiten geben, teile uns diese bitte mit."
+            "content_by": "{content} gehört den Urhebern. Hier aufgeführte Musikwerke wurde von den jeweiligen Urheber und Herausgeber bereitgestellt. Sollten es Unstimmigkeiten geben, teile uns diese bitte mit."
         },
         "delete_account": {
             "if_you_want": "Falls Du Deinen Account löschen möchtest, bitte schreibe uns an: {email}",
@@ -73,21 +73,24 @@
         },
         "ratings": {
             "btn_monthly": "Monat",
-            "btn_overtime": "Allzeit",
+            "btn_overtime": "Gesamt",
             "btn_weekly": "Woche",
-            "title": "Beste Titel"
+            "title": "Charts"
         },
         "settings_language": {
             "select": "Wähle die Sprache",
             "title": "Sprach-Auswahl",
-            "help": "Möchtest Du uns bei der Übersetzung von Nightwave Plaza helfen? {link}"
+            "help": "Möchtest Du uns bei der Übersetzung von Nightwave Plaza helfen? {link}",
+            "translation_by": "Diese Seite wurde von {author} übersetzt.",
+            "translation_auth_link": "https://denny.ichi.city",
+            "translation_author_name": "denny"
         },
         "song": {
             "album": "Album",
             "artist": "Künstler",
             "btn_play_preview": "Spiele Vorschau",
             "btn_stop": "Stop: ({time})",
-            "first_played": "Zuerst gespielt",
+            "first_played": "Erstmalig gespielt",
             "song_title": "Titel",
             "title": "Titel-Info"
         },
@@ -96,7 +99,9 @@
             "title": "Spenden",
             "title2": "Gefällt Dir Nightwave Plaza?",
             "boosty": "Spenden via Boosty",
-            "rewards": "Du kannst unser Projekt mit einer Spende via Boosty unterstützen, inklusive Vorteile bei unserem Discord-Server!"
+            "rewards": "Du kannst unser Projekt mit einer Spende via Boosty unterstützen, inklusive Vorteile bei unserem Discord-Server!",
+            "crypto": "Crypto Spenden",
+            "go_to_site": "Besuche die Webseite von Nightwave Plaza"
         },
         "user": {
             "btn_logout": "Ausloggen",
@@ -139,6 +144,15 @@
             "enter_email": "Gebe deine E-Mail-Adresse ein",
             "instruction": "Gebe deine E-Mail-Adresse ein klicke auf den Button — dir wird eine E-Mail mit einem Link gesendet, mit dem Du dein Passwort zurücksetzen kannst.",
             "title": "Passwort Zurücksetzen"
+        },
+        "player_timer": {
+            "title": "Sleep-Timer",
+            "is_active": "Sleep-Timer ist aktiv",
+            "info": "Wähle die Zeit für den Sleep-Timer. Die Wiedergabe wird nach Ablauf gestoppt.",
+            "stop": "Stopp",
+            "start": "Start",
+            "timer_set": "Timer gesetzt",
+            "alert": "Wiedergabe wird nach {minutes} Minute(n) gestoppt."
         }
     },
     "buttons": {
@@ -152,7 +166,7 @@
         "error": "Fehler",
         "please_sign": "Bitte logge dich ein, um diese Funktion zu nutzen.",
         "user_fetch": "Fehler beim Abrufen der Nutzerdaten.",
-        "server": "",
+        "server": "Fehler mit dem Server.",
         "enter_user_pass": "Bitte gebe deinen Nutzernamen und Passwort ein.",
         "fields": {
             "email_email": "Email ist ungültig.",
@@ -162,8 +176,19 @@
             "username_max": "Der eingegebene Benutzername ist zu lang.",
             "password_min": "Passwort ist zu kurz.",
             "password_match": "Passwort stimmt nicht überein.",
-            "current_password_required": "Gebe dein derzeitiges Passwort ein."
-        }
+            "current_password_required": "Gebe dein derzeitiges Passwort ein.",
+            "email_unique": "Diese E-Mail-Adresse wird bereits mit einem Account verwendet.",
+            "username_required": "Bitte gib deinen Nutzernamen ein.",
+            "username_unique": "Dieser Nutzername wurde bereits vergeben.",
+            "password_required": "Bitte gib dein Passwort ein.",
+            "current_password_invalid": "Dieses Passwort ist ungültig.",
+            "captcha_invalid": "Deine Captcha-Eingabe ist ungültig."
+        },
+        "network_fail": "Netzwerk ist nicht verfügbar.",
+        "invalid_user_password": "Nutzername und Passwort stimmen nicht überein.",
+        "user_not_found": "Account nicht gefunden.",
+        "song_not_found": "Titel nicht gefunden.",
+        "reset_link_invalid": "Link für die Wiederherstellung des Passworts ist abgelaufen oder ungültig."
     },
     "fields": {
         "current_password": "Derzeitiges Passwort",
@@ -182,7 +207,7 @@
         "reset_success": "Die Anweisungen wurde Dir per E-Mail gesendet.",
         "success": "Erfolg!",
         "saved": "Gespeichert",
-        "reaction_tip": "Du hast diesen Song ge-liked, schön! Klicke den {icon} Button nochmal, um diesen Song zu deinen Favoriten hinzuzufügen. Versuch's mal!"
+        "reaction_tip": "Du hast diesen Song ge-liked, schön! Klicke den Like-Button nochmal, um diesen Song zu deinen Favoriten hinzuzufügen. Versuch's mal!"
     },
     "pagination": {
         "pages": "Seiten: {n}",

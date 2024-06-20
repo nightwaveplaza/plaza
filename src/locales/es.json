@@ -98,7 +98,8 @@
             "title2": "¿Te gusta Nightwave Plaza?",
             "boosty": "Apóyenos en Boosty",
             "rewards": "¡Puede patrocinar la estación de radio y sus futuras actualizaciones donando a través de Boosty y así obtener recompensas especiales en Discord!",
-            "go_to_site": "Ir al sitio web de Nightwave Plaza"
+            "go_to_site": "Ir al sitio web de Nightwave Plaza",
+            "crypto": "Donar criptomonedas"
         },
         "user": {
             "btn_logout": "Cerrar sesión",

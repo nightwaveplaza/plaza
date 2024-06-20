@@ -81,7 +81,9 @@
         "settings_language": {
             "select": "Seleccione el idioma",
             "title": "Selección de idioma",
-            "help": "¿Quiere ayudar a traducir Nightwave Plaza? {link}"
+            "help": "¿Quiere ayudar a traducir Nightwave Plaza? {link}",
+            "translation_author_name": "daughter",
+            "translation_by": "Esta traducción fue realizada por {author}."
         },
         "song": {
             "album": "Álbum",

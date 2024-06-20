@@ -15,6 +15,13 @@
       </win-group-box>
 
       <win-panel class="mt-2 text-center">
+        <i18n-t keypath="win.settings_language.translation_by" tag="p" class="mb-1" v-if="te('win.settings_language.translation_author_name')">
+          <template #author>
+            <a :href="t('win.settings_language.translation_author_link')" target="_blank">
+              {{ t('win.settings_language.translation_author_name') }}
+            </a>
+          </template>
+        </i18n-t>
         <i18n-t keypath="win.settings_language.help" tag="p">
           <template #link>
             <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
@@ -36,7 +43,7 @@ import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import _locales from '@locales/_locales'
 
-const { t } = useI18n()
+const { t, te } = useI18n()
 const settingsStore = useSettingsStore()
 
 function switchLanguage(e: Event): void {

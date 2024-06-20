@@ -80,7 +80,10 @@
     "settings_language": {
       "select": "Select language",
       "title": "Language Selection",
-      "help": "Do you want to help translate Nightwave Plaza? {link}"
+      "help": "Do you want to help translate Nightwave Plaza? {link}",
+      "translation_by": "This translation made by {author}.",
+      "translation_author_name": "mr. plaza",
+      "translation_auth_link": "https://plaza.one"
     },
     "song": {
       "album": "Album",

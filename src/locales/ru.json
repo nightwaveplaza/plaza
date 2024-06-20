@@ -81,7 +81,10 @@
         "settings_language": {
             "select": "Выберите язык",
             "title": "Выбор языка",
-            "help": "Хотите помочь перевести Nightwave Plaza? {link}"
+            "help": "Хотите помочь перевести Nightwave Plaza? {link}",
+            "translation_by": "Автор перевода {author}.",
+            "translation_author_name": "mr. plaza",
+            "translation_auth_link": "https://plaza.one"
         },
         "song": {
             "album": "Альбом",

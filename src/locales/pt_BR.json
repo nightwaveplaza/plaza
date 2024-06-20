@@ -97,7 +97,8 @@
             "title2": "Apaixonou no Nightwave Plaza?",
             "boosty": "Apoie pelo Boosty",
             "rewards": "Você pode apoiar nosso custeio e ser recompensado no Discord doando pelo Boosty!",
-            "go_to_site": "Ir ao site do Nightwave Plaza"
+            "go_to_site": "Ir ao site do Nightwave Plaza",
+            "crypto": "Doar em criptomoeda"
         },
         "user": {
             "btn_logout": "Sair",
@@ -109,7 +110,7 @@
         "user_favorites": {
             "remove": "Remover",
             "title": "Favoritas",
-            "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"Favoritar\" para adicionar músicas aqui."
+            "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"{icon}\" para adicionar músicas aqui."
         },
         "user_login": {
             "btn_register": "Cadastrar",

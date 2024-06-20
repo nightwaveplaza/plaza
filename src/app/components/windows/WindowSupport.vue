@@ -1,27 +1,54 @@
 <template>
   <win-window ref="win" :width="450" name="support" :title="t('win.support.title')">
     <div class="p-2">
-      <div class="text-center">
-        <win-memo>
-          <p class="lead mb-2">
-            {{ t('win.support.title2') }}
-          </p>
-          <p>{{ t('win.support.rewards') }}</p>
 
-          <p class="my-3" v-if="!useMobile()">
-            <a class="pp-link" href="https://boosty.to/nightwaveplaza" target="_blank">
-              <img alt="boosty" src="@app/assets/img/boosty.png"><br>{{ t('win.support.boosty') }}
-            </a>
-          </p>
-          <p class="my-3" v-else>
-            <a href="https://plaza.one/donate" target="_blank" class="btn p-3">{{ t('win.support.go_to_site') }}</a>
-          </p>
+      <p class="lead mt-2 mb-3 text-center">
+        <b>{{ t('win.support.title2') }}</b>
+      </p>
 
-          <p class="mt-2">
-            {{ t('win.support.thanks') }}
-          </p>
-        </win-memo>
+      <win-panel>
+      <div class="row" v-if="!useMobile()">
+        <div class="col text-center">
+          <p class="mb-1">{{ t('win.support.rewards') }}</p>
+          <a href="https://boosty.to/nightwaveplaza">{{ t('win.support.boosty') }}</a>
+        </div>
+        <div class="col-4 align-content-center">
+          <a href="https://boosty.to/nightwaveplaza" target="_blank">
+            <img class="img-fluid w-100" alt="boosty" src="@app/assets/img/boosty.png">
+          </a>
+        </div>
       </div>
+      <p v-else>
+        <a href="https://plaza.one/donate" target="_blank" class="btn p-3">{{ t('win.support.go_to_site') }}</a>
+      </p>
+
+      </win-panel>
+
+      <win-group-box class="mt-3 mb-2" v-if="!useMobile()">
+        <template #title>
+          {{ t('win.support.crypto') }}
+        </template>
+        <template #content>
+          <p class="mb-1"><b>USDT TRC20</b></p>
+          <p class="mb-2 address">
+            {{ trc }}
+          </p>
+
+          <p class="mb-1"><b>USDT TON, TON, NOT</b></p>
+          <p class="mb-2 address">
+            {{ ton }}
+          </p>
+
+          <p class="mb-1"><b>BTC</b></p>
+          <p class="address">
+            {{ btc }}
+          </p>
+        </template>
+      </win-group-box>
+
+      <p class="mt-3 text-center">
+        <b>{{ t('win.support.thanks') }}</b>
+      </p>
 
       <div class="text-center mt-3">
         <win-button class="mx-auto px-4" @click="close()">
@@ -50,6 +77,9 @@ const props = defineProps({
 })
 
 const win = ref<InstanceType<typeof WinWindow>>()
+const trc = import.meta.env.VITE_CRYPTO_TRC
+const ton = import.meta.env.VITE_CRYPTO_TON
+const btc = import.meta.env.VITE_CRYPTO_BTC
 
 function close (): void {
   if (props.direct) {
@@ -62,18 +92,17 @@ function close (): void {
 
 <style lang="scss">
 #window-support {
-  .content p.lead {
+  p.lead {
     font-size: 14px !important;
     line-height: 14px;
   }
 
-  .pp-link {
-    display: inline-block;
+  .address {
+    font-family: monospace;
+    word-break: break-all;
 
-    img {
-      display: inline-block;
-      height: 32px;
-      width: auto;
+    &:hover {
+      cursor: pointer;
     }
   }
 }

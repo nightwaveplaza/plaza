@@ -97,7 +97,8 @@
       "title2": "Love Nightwave Plaza?",
       "boosty": "Support on Boosty",
       "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
-      "go_to_site": "Go to Nightwave Plaza website"
+      "go_to_site": "Go to Nightwave Plaza website",
+      "crypto": "Donate crypto"
     },
     "user": {
       "btn_logout": "Logout",

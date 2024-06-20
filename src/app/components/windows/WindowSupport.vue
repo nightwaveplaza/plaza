@@ -7,24 +7,20 @@
       </p>
 
       <win-panel>
-      <div class="row" v-if="!useMobile()">
-        <div class="col text-center">
-          <p class="mb-1">{{ t('win.support.rewards') }}</p>
-          <a href="https://boosty.to/nightwaveplaza">{{ t('win.support.boosty') }}</a>
+        <div class="row">
+          <div class="col text-center">
+            <p class="mb-1">{{ t('win.support.rewards') }}</p>
+            <a href="https://boosty.to/nightwaveplaza">{{ t('win.support.boosty') }}</a>
+          </div>
+          <div class="col-4 align-content-center">
+            <a href="https://boosty.to/nightwaveplaza" target="_blank">
+              <img class="img-fluid w-100" alt="boosty" src="@app/assets/img/boosty.png">
+            </a>
+          </div>
         </div>
-        <div class="col-4 align-content-center">
-          <a href="https://boosty.to/nightwaveplaza" target="_blank">
-            <img class="img-fluid w-100" alt="boosty" src="@app/assets/img/boosty.png">
-          </a>
-        </div>
-      </div>
-      <p v-else>
-        <a href="https://plaza.one/donate" target="_blank" class="btn p-3">{{ t('win.support.go_to_site') }}</a>
-      </p>
-
       </win-panel>
 
-      <win-group-box class="mt-3 mb-2" v-if="!useMobile()">
+      <win-group-box class="mt-3 mb-2">
         <template #title>
           {{ t('win.support.crypto') }}
         </template>
@@ -64,7 +60,6 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
-import { useMobile } from '@app/composables/useMobile.ts'
 
 const { t } = useI18n()
 const router = useRouter()

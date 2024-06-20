@@ -57,7 +57,7 @@
             "will_be_deleted": "Sua conta e os dados dela (Favoritas e Curtidas) serão apagados para sempre."
         },
         "mobile": {
-            "description": "Temos aplicativos oficiais para Android e iOS, está convidado a usá-los. Veja o passado no presente e o presente no futuro com o Nightwave Plaza."
+            "description": "Temos aplicativos oficiais para Android e iOS, baixe-os à vontade. Veja o passado no presente e o presente no futuro com o Nightwave Plaza."
         },
         "history": {
             "showing_history": "Histórico em questão: {from} — {to}",
@@ -80,7 +80,10 @@
         "settings_language": {
             "select": "Escolha um Idioma",
             "title": "Alterar Idioma",
-            "help": "Quer ajudar a traduzir o Nightwave Plaza? {link}!"
+            "help": "Quer ajudar a traduzir o Nightwave Plaza? {link}!",
+            "translation_by": "Tradução PT-BR: {author}.",
+            "translation_author_name": "Nathan",
+            "translation_auth_link": "https://github.com/ntn-ss/"
         },
         "song": {
             "album": "Álbum",

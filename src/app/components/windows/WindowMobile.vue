@@ -1,9 +1,9 @@
 <template>
-  <win-window v-slot="winProps" :width="320" name="mobile" title="Nightwave Plaza Mobile">
+  <win-window v-slot="winProps" :width="340" name="mobile" title="Nightwave Plaza Mobile">
     <div class="p-2">
-      <win-panel class="mb-3">
+      <win-panel class="mb-2">
         <div class="row no-gutters">
-          <div class="col text-center mr-4">
+          <div class="col text-center mr-2">
             {{ t('win.mobile.description') }}
           </div>
           <div class="col-auto">
@@ -12,22 +12,24 @@
         </div>
       </win-panel>
 
-      <win-panel class="text-center">
-        <div class="row no-gutters">
-          <div class="col align-self-center">
-            <a href="https://plaza.one/googleplay" target="_blank" class="d-block" style="line-height: 0">
-              <img src="@app/assets/img/gplay.png" style="height: 38px; width: auto" alt="">
+      <win-memo>
+        <div class="row no-gutters my-2">
+          <div class="col text-center">
+            <a href="#" class="app-link">
+              <img src="@app/assets/img/app_ios.png" class="app-icon"><br>
+              Apple iOS.app
             </a>
           </div>
-          <div class="col align-self-center">
-            <a href="https://plaza.one/ios" target="_blank" class="d-block" style="line-height: 0">
-              <img src="@app/assets/img/appstore.png" style="height: 38px; width: auto" alt="">
+          <div class="col text-center">
+            <a href="#" class="app-link">
+            <img src="@app/assets/img/app_android.png" class="app-icon"><br>
+            Android.app
             </a>
           </div>
         </div>
-      </win-panel>
+      </win-memo>
 
-      <div class="row justify-content-end mt-2">
+      <div class="row justify-content-center mt-3">
         <div class="col-auto">
           <win-button class="px-4" @click="winProps.close()">
             {{ t('buttons.close') }}
@@ -43,3 +45,16 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 </script>
+
+<style lang="scss">
+#window-mobile {
+  .app-icon {
+    width: 36px;
+    height: auto;
+  }
+
+  .app-link {
+    text-decoration: underline;
+  }
+}
+</style>

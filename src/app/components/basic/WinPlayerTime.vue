@@ -56,7 +56,7 @@ function tick (): void {
   checkSleepTimer()
 }
 
-function checkSleepTimer(): void {
+function checkSleepTimer (): void {
   const t = playerPlaybackStore.sleepTime
 
   if (t > 0 && t < Date.now()) {
@@ -85,5 +85,4 @@ onUnmounted(() => {
 defineExpose({
   showText
 })
-
 </script>

@@ -2,7 +2,9 @@
   <win-window v-slot="winProps" :width="230" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
       <win-group-box>
-        <template #title>{{ t('win.settings_language.select') }}</template>
+        <template #title>
+          {{ t('win.settings_language.select') }}
+        </template>
         <template #content>
           <div class="select">
             <select @change="switchLanguage">
@@ -15,7 +17,7 @@
       </win-group-box>
 
       <win-panel class="mt-2 text-center">
-        <i18n-t keypath="win.settings_language.translation_by" tag="p" class="mb-1" v-if="te('win.settings_language.translation_author_name')">
+        <i18n-t v-if="te('win.settings_language.translation_author_name')" keypath="win.settings_language.translation_by" tag="p" class="mb-1">
           <template #author>
             <a :href="t('win.settings_language.translation_author_link')" target="_blank">
               {{ t('win.settings_language.translation_author_name') }}
@@ -46,7 +48,7 @@ import _locales from '@locales/_locales'
 const { t, te } = useI18n()
 const settingsStore = useSettingsStore()
 
-function switchLanguage(e: Event): void {
+function switchLanguage (e: Event): void {
   settingsStore.language = (e.target as HTMLSelectElement).value
   settingsStore.saveLanguage()
 }

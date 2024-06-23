@@ -20,7 +20,7 @@
           <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
               <canvas ref="canvas" class="player-visual" />
-              <win-player-time ref="time" @stopByTimer="stopPlay" />
+              <win-player-time ref="time" @stop-by-timer="stopPlay" />
             </div>
           </div>
 
@@ -37,9 +37,9 @@
                   {{ playText }}
                 </win-button>
               </div>
-              <div class="col-3" v-if="isPlaying">
+              <div v-if="isPlaying" class="col-3">
                 <win-button block @click="openTimerWindow">
-                  <i :style="{ color: timerColor }" class="i icon-clock"/>
+                  <i :style="{ color: timerColor }" class="i icon-clock" />
                 </win-button>
               </div>
               <div class="col-4">
@@ -98,11 +98,13 @@ const artwork = computed(() => {
   return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
-const playText = computed(() => {
-  switch (playerPlaybackStore.state) {
-    case PlayerState.IDLE: return t('win.player.btn_play')
-    case PlayerState.LOADING: return t('loading')
-    case PlayerState.PLAYING: return t('win.player.btn_stop')
+const playText = computed((): string => {
+  if (playerPlaybackStore.state === PlayerState.LOADING) {
+    return t('loading')
+  } else if (playerPlaybackStore.state === PlayerState.PLAYING) {
+    return t('win.player.btn_stop')
+  } else {
+    return t('win.player.btn_play')
   }
 })
 
@@ -177,7 +179,7 @@ function stopPlay (): void {
 
 function setVolume (volume: number): void {
   updateVolume(volume)
-  time.value!.showText(t('win.player.volume', {volume}))
+  time.value!.showText(t('win.player.volume', { volume }))
 }
 
 function updateVolume (newVolume: number): void {
@@ -193,7 +195,7 @@ function showSongInfo (): void {
   }
 }
 
-function openUserWindow(): void {
+function openUserWindow (): void {
   if (userAuthStore.signed) {
     windowsStore.open('user')
   } else {
@@ -201,7 +203,7 @@ function openUserWindow(): void {
   }
 }
 
-function openTimerWindow(): void {
+function openTimerWindow (): void {
   windowsStore.open('player-timer')
 }
 
@@ -255,3 +257,4 @@ function setMediaSessionState (state: string): void {
   }
 }
 </script>
+

@@ -1,11 +1,11 @@
 <template>
   <div class="group-box" :class="props.class">
     <div class="gb-label noselect">
-      <span><slot name="title"></slot></span>
+      <span><slot name="title" /></span>
     </div>
     <div class="gb-body p-2">
       <div class="mt-1">
-        <slot name="content"></slot>
+        <slot name="content" />
       </div>
     </div>
   </div>
@@ -15,6 +15,6 @@
 const props = withDefaults(defineProps<{
   class?: string
 }>(), {
-  class: "",
+  class: '',
 })
 </script>

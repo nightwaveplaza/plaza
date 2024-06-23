@@ -12,7 +12,7 @@ interface State {
   lowQuality: boolean
 }
 
-function getDefaultLanguage(): string {
+function getDefaultLanguage (): string {
   const lang = window.navigator.language
   const langShort = window.navigator.language.slice(0, 2)
 
@@ -62,7 +62,7 @@ export const useSettingsStore = defineStore('settingsStore', {
       return 'theme-' + state.theme
     },
 
-    isBackgroundRandomMode(state) {
+    isBackgroundRandomMode (state) {
       return state.background.mode === enBackgroundMode.RANDOM
     }
   },
@@ -76,19 +76,19 @@ export const useSettingsStore = defineStore('settingsStore', {
       usePrefs.save<string>('theme', this.theme)
     },
 
-    saveTaskbarPosition() {
+    saveTaskbarPosition () {
       usePrefs.save<string>('taskbar_position', this.taskbarPosition)
     },
 
-    saveLanguage() {
+    saveLanguage () {
       usePrefs.save<string>('language', this.language)
     },
 
-    saveQuality() {
+    saveQuality () {
       usePrefs.save<boolean>('low_quality', this.lowQuality)
     },
 
-    loadSettings() {
+    loadSettings () {
       this.background = usePrefs.get<Background>('background', this.background)
       this.theme = usePrefs.get<string>('theme', 'win98')
       this.language = usePrefs.get<string>('language', getDefaultLanguage())

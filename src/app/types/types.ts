@@ -166,21 +166,6 @@ export interface SongResponse {
   preview_src?: string
 }
 
-export interface ifcAndroidInterface {
-  audioPlay (): void
-  audioStop (): void
-  setSleepTimer (time: number): void
-  getAuthToken (): string
-  setAuthToken (token: string): void
-  setAudioQuality (quality: boolean): void
-  toggleFullscreen (): void
-  openDrawer (): void
-  getUserAgent (): string
-  getAppVersion (): string
-  setBackground (background: string): void
-  setLanguage (lang: string): void
-}
-
 export type EventBus = {
   closeWindow: string;
   openWindow: string;
@@ -191,10 +176,34 @@ export type EventBus = {
   iosCallback: string;
 }
 
-
-
 export enum PlayerState {
   IDLE = 0,
   LOADING = 1,
   PLAYING = 2,
+}
+
+export interface ifcAndroidInterface {
+  audioPlay (): void
+
+  audioStop (): void
+
+  setSleepTimer (time: number): void
+
+  getAuthToken (): string
+
+  setAuthToken (token: string): void
+
+  setAudioQuality (quality: boolean): void
+
+  toggleFullscreen (): void
+
+  openDrawer (): void
+
+  getUserAgent (): string
+
+  getAppVersion (): string
+
+  setBackground (background: string): void
+
+  setLanguage (lang: string): void
 }

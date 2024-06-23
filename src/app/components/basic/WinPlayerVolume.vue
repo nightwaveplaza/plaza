@@ -20,7 +20,7 @@ const volumeSlider = ref<HTMLDivElement | null>(null)
 // Non-reactive
 let volume = 0
 
-function createSlider(): void {
+function createSlider (): void {
   noUiSlider.create(volumeSlider.value!, {
     start: [volume],
     range: {

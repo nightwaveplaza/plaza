@@ -2,46 +2,54 @@
   <div class="row no-gutters">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
       <div class="cover simple-border noselect">
-        <img :src="artwork" alt="artwork"/>
+        <img :src="artwork" alt="artwork">
       </div>
     </div>
 
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
-        <div class="player-artist track-artist mb-2">{{ playerSongStore.artist }}</div>
-        <div class="player-title track-title">{{ playerSongStore.title }}</div>
+        <div class="player-artist track-artist mb-2">
+          {{ playerSongStore.artist }}
+        </div>
+        <div class="player-title track-title">
+          {{ playerSongStore.title }}
+        </div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
           <div class="col-12 col-md-6 pr-0">
             <div class="text-field p-0 m-0 player-time-container">
-              <win-player-time/>
+              <win-player-time />
             </div>
           </div>
         </div>
 
         <div class="row no-gutters">
           <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pr-2">
-            <win-button class="player-play" block @click="play">{{ playText }}</win-button>
+            <win-button class="player-play" block @click="play">
+              {{ playText }}
+            </win-button>
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
             <win-button block @click="windowsStore.open('player-timer')">
-              <i :style="{ color: timerColor }" class="i icon-clock"/>
+              <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
 
           <div class="col-3 pr-2">
-            <win-player-reactions/>
+            <win-player-reactions />
           </div>
 
           <div class="col-3 mb-1 mb-sm-0">
-            <win-button block class="btn-start" @click="openDrawer">&nbsp;</win-button>
+            <win-button block class="btn-start" @click="openDrawer">
+              &nbsp;
+            </win-button>
           </div>
         </div>
       </div>
     </div>
 
-    <win-player-status ref="status"/>
+    <win-player-status ref="status" />
   </div>
 </template>
 
@@ -64,11 +72,13 @@ const artwork = computed(() => {
   return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
-const playText = computed(() => {
-  switch (playerPlaybackStore.state) {
-    case PlayerState.IDLE: return t('win.player.btn_play')
-    case PlayerState.LOADING: return t('loading')
-    case PlayerState.PLAYING: return t('win.player.btn_stop')
+const playText = computed((): string => {
+  if (playerPlaybackStore.state === PlayerState.LOADING) {
+    return t('loading')
+  } else if (playerPlaybackStore.state === PlayerState.PLAYING) {
+    return t('win.player.btn_stop')
+  } else {
+    return t('win.player.btn_play')
   }
 })
 
@@ -76,8 +86,7 @@ const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYI
 
 const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
 
-
-function play () {
+function play (): void {
   if (playerPlaybackStore.state === PlayerState.PLAYING) {
     windowsStore.close('player-timer')
     playerPlaybackStore.sleepTime = 0
@@ -85,7 +94,7 @@ function play () {
   Native.audioPlay()
 }
 
-function openDrawer () {
+function openDrawer (): void {
   Native.openDrawer()
 }
 

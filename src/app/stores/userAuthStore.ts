@@ -26,7 +26,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
   }),
 
   actions: {
-    loadUser() {
+    loadUser () {
       if (!useMobile()) {
         this.token = cookieApi.get('token') ?? null
       }
@@ -35,11 +35,11 @@ export const useUserAuthStore = defineStore('userAuthStore', {
         api.user.get().then(res => {
           this.signed = true
           this.username = res.data.username
-        })
+        }).catch()
       }
     },
 
-    login(userProfile: UserProfile, remember = false) {
+    login (userProfile: UserProfile, remember = false) {
       if (remember && navigator.cookieEnabled) {
         cookieApi.set('token', userProfile.token, { expires: 180 })
       } else {
@@ -51,7 +51,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       this.signed = true
     },
 
-    logout() {
+    logout () {
       const userReactionStore = useUserReactionStore()
       userReactionStore.$reset()
 

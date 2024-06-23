@@ -130,7 +130,6 @@ function deleteLike (favoriteId: number): void {
 onMounted(() => {
   fetchLikes(page.value)
 })
-
 </script>
 
 <style lang="scss">

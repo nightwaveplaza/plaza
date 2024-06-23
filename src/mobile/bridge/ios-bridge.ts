@@ -32,7 +32,7 @@ export const iOSBridge = {
  * @param name
  * @param args
  */
-function sendMessage<T>(name: string, args: Array<string>): Promise<T> {
+function sendMessage<T> (name: string, args: Array<string>): Promise<T> {
   const iosCallbackStore = useIosCallbackStore()
   const callbackId = uuid.v4()
 

@@ -1,9 +1,9 @@
 export const usePrefs = {
-  save <T>(name: string, value: T): void {
+  save<T> (name: string, value: T): void {
     localStorage.setItem('prefs_' + name, JSON.stringify(value))
   },
 
-  get<T>(name: string, def?: T): T {
+  get<T> (name: string, def?: T): T {
     const str = localStorage.getItem('prefs_' + name)
     if (str == null) {
       return def ?? null as T

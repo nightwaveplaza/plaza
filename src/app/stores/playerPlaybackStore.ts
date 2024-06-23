@@ -11,6 +11,4 @@ export const usePlayerPlaybackStore = defineStore('playerPlaybackStore', {
     state: PlayerState.IDLE,
     sleepTime: 0
   })
-
-
 })

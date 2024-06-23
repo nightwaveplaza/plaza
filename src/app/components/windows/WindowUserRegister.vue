@@ -157,7 +157,7 @@ function completeCaptcha (): void {
 
   api.user.register(fields).then(() => {
     windowsStore.alert(
-        t('win.user_register.welcome', {user:`<strong>${fields.username}</strong>`}),
+        t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
     win.value!.close()

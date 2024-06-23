@@ -1,28 +1,40 @@
 <template>
-  <win-window ref="win" :width="250" name="player-timer" :title="t('win.player_timer.title')" v-slot="winProps">
+  <win-window ref="win" v-slot="winProps" :width="250" name="player-timer" :title="t('win.player_timer.title')">
     <div class="p-3">
       <div v-if="active" class="text-center">
         <p>{{ t('win.player_timer.title') }}</p>
-        <p class="time-left mt-2">{{ timeText }}</p>
+        <p class="time-left mt-2">
+          {{ timeText }}
+        </p>
       </div>
       <div v-else class="text-center">
-        <p class="text-center">{{ t('win.player_timer.info') }}</p>
+        <p class="text-center">
+          {{ t('win.player_timer.info') }}
+        </p>
 
         <div class="row no-gutters mt-3">
           <div class="col-2 pr-1">
-            <win-button block @click="add(-10)">-10</win-button>
+            <win-button block @click="add(-10)">
+              -10
+            </win-button>
           </div>
           <div class="col-2 pr-1">
-            <win-button block @click="add(-5)">-5</win-button>
+            <win-button block @click="add(-5)">
+              -5
+            </win-button>
           </div>
           <div class="col-4 pr-1">
-            <input class="d-block text-center" v-model.number="minutes" @keydown="useNumberOnly" type="number" />
+            <input v-model.number="minutes" class="d-block text-center" type="number" @keydown="useNumberOnly">
           </div>
           <div class="col-2 pr-1">
-            <win-button block @click="add(5)">+5</win-button>
+            <win-button block @click="add(5)">
+              +5
+            </win-button>
           </div>
           <div class="col-2">
-            <win-button block @click="add(10)">+10</win-button>
+            <win-button block @click="add(10)">
+              +10
+            </win-button>
           </div>
         </div>
       </div>
@@ -30,10 +42,14 @@
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-button block class="text-bold" @click="start()">{{ btnText }}</win-button>
+          <win-button block class="text-bold" @click="start()">
+            {{ btnText }}
+          </win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">{{ t('buttons.close') }}</win-button>
+          <win-button block @click="winProps.close()">
+            {{ t('buttons.close') }}
+          </win-button>
         </div>
       </div>
     </div>
@@ -66,7 +82,7 @@ const timeText = computed(() => new Date(timeLeft.value).toISOString().substring
 // Non-reactive
 let intervalId = 0
 
-function start () {
+function start (): void {
   if (active.value) {
     playerPlaybackStore.sleepTime = 0
   } else {
@@ -81,13 +97,13 @@ function start () {
   win.value!.close()
 }
 
-function add (amount: number) {
+function add (amount: number): void {
   let newMinutes = minutes.value
   newMinutes = newMinutes ? minutes.value + amount : 0
   minutes.value = newMinutes <= 0 ? 1 : newMinutes
 }
 
-function updateTimeLeft() {
+function updateTimeLeft (): void {
   timeLeft.value = playerPlaybackStore.sleepTime - Date.now()
 }
 

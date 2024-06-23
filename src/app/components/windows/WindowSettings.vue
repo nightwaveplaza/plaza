@@ -120,7 +120,7 @@
             </div>
             <div class="col-6">
               <div class="checkbox">
-                <input id="low_quality" type="checkbox" @change="qualityChanged" :checked="settingsStore.lowQuality" />
+                <input id="low_quality" type="checkbox" :checked="settingsStore.lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
             </div>
@@ -168,8 +168,8 @@ const themes = [
 ]
 
 const taskbarPositions = computed(() => [
-    ['bottom', t('win.settings.bottom')],
-    ['top', t('win.settings.top')]
+  ['bottom', t('win.settings.bottom')],
+  ['top', t('win.settings.top')]
 ])
 
 function colorSelected (e: Event): void {
@@ -225,12 +225,12 @@ function taskbarPositionSelected (e: Event): void {
   settingsStore.saveTaskbarPosition()
 }
 
-function openLanguageSettings(): void {
+function openLanguageSettings (): void {
   windowsStore.open('settings-language')
   windowsStore.close('settings')
 }
 
-function qualityChanged(e: Event): void {
+function qualityChanged (e: Event): void {
   settingsStore.lowQuality = (e.target as HTMLInputElement).checked
   settingsStore.saveQuality()
   windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')

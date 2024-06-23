@@ -18,11 +18,11 @@ const windowsStore = useWindowsStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 
-function updateBackgroundNative (bg: Background) {
+function updateBackgroundNative (bg: Background): void {
   Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
 }
 
-function registerEmitterEvents () {
+function registerEmitterEvents (): void {
   eventBus.on('resume', () => updateBackgroundNative(settingsStore.background))
 
   eventBus.on('closeWindow', (name: string) => {
@@ -40,7 +40,7 @@ function registerEmitterEvents () {
 
   // ios callbacks
   eventBus.on('iosCallback', (data: string) => {
-      iosCallbackStore.execute(data)
+    iosCallbackStore.execute(data)
   })
 }
 
@@ -71,9 +71,7 @@ watch(() => settingsStore.language, () => {
   Native.setLanguage(settingsStore.language)
 })
 
-
 onMounted(() => {
   registerEmitterEvents()
 })
-
 </script>

@@ -1,7 +1,6 @@
 <template>
   <win-window ref="win" :width="450" name="support" :title="t('win.support.title')">
     <div class="p-2">
-
       <p class="lead mt-2 mb-3 text-center">
         <b>{{ t('win.support.title2') }}</b>
       </p>
@@ -9,7 +8,9 @@
       <win-panel>
         <div class="row">
           <div class="col text-center">
-            <p class="mb-1">{{ t('win.support.rewards') }}</p>
+            <p class="mb-1">
+              {{ t('win.support.rewards') }}
+            </p>
             <a href="https://boosty.to/nightwaveplaza">{{ t('win.support.boosty') }}</a>
           </div>
           <div class="col-4 align-content-center">
@@ -25,17 +26,23 @@
           {{ t('win.support.crypto') }}
         </template>
         <template #content>
-          <p class="mb-1"><b>USDT TRC20</b></p>
+          <p class="mb-1">
+            <b>USDT TRC20</b>
+          </p>
           <p class="mb-2 address">
             {{ trc }}
           </p>
 
-          <p class="mb-1"><b>USDT TON, TON, NOT</b></p>
+          <p class="mb-1">
+            <b>USDT TON, TON, NOT</b>
+          </p>
           <p class="mb-2 address">
             {{ ton }}
           </p>
 
-          <p class="mb-1"><b>BTC</b></p>
+          <p class="mb-1">
+            <b>BTC</b>
+          </p>
           <p class="address">
             {{ btc }}
           </p>

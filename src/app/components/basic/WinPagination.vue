@@ -6,7 +6,7 @@
       </win-button>
     </div>
     <div class="col-4">
-      <input ref="pageInput" type="number" class="d-block" v-model.number="page" @keydown="useNumberOnly">
+      <input ref="pageInput" v-model.number="page" type="number" class="d-block" @keydown="useNumberOnly">
     </div>
     <div v-if="pages > 1 && page < pages" class="col-4 pl-1">
       <win-button class="d-block" @click="nextPage(1)">

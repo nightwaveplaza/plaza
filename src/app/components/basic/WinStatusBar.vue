@@ -16,10 +16,10 @@ const settingsStore = useSettingsStore()
 
 // Safari status bar
 watch(() => settingsStore.theme, () => {
-  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[settingsStore.theme as keyof typeof themeColors])
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute('content', themeColors[settingsStore.theme as keyof typeof themeColors])
 })
 
 onMounted(() => {
-  document!.querySelector('meta[name="theme-color"]')!.setAttribute("content", themeColors[settingsStore.theme as keyof typeof themeColors])
+  document!.querySelector('meta[name="theme-color"]')!.setAttribute('content', themeColors[settingsStore.theme as keyof typeof themeColors])
 })
 </script>

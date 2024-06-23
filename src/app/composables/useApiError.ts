@@ -6,7 +6,7 @@ interface ApiError {
   key: string
 }
 
-export function useApiError(e: Error | AxiosError): string {
+export function useApiError (e: Error | AxiosError): string {
   const { t } = i18n.global
 
   if (e instanceof AxiosError) {

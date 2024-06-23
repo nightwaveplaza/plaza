@@ -100,7 +100,7 @@ const songLength = computed(() => dur(song.length!))
 const artwork = computed(() => song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
 const favoriteColor = computed(() => song.favorite_id ? '#FFD300' : '')
 const playText = computed(() => isPlaying.value
-    ? t('win.song.btn_stop', {time: dur(playTimeLeft.value)})
+    ? t('win.song.btn_stop', { time: dur(playTimeLeft.value) })
     : t('win.song.btn_play_preview')
 )
 
@@ -124,7 +124,7 @@ async function favoriteSong (): Promise<void> {
       const res = await api.user.addFavorite(song.id)
       song.favorite_id = res.data.favorite_id
     }
-  } catch(e) {
+  } catch (e) {
     if (e instanceof AxiosError && e.response!.status === 401) {
       windowsStore.alert(t('errors.please_sign'), t('errors.error'))
     }
@@ -177,7 +177,6 @@ onBeforeUnmount(() => {
     audio.value = undefined
   }
 })
-
 </script>
 
 <style lang="scss">

@@ -80,8 +80,8 @@ onMounted(() => {
           setTimeout(() => windowsStore.open('news'), 3000)
         }
 
-       windowsStore.open('player')
-       windowsStore.close('loading')
+        windowsStore.open('player')
+        windowsStore.close('loading')
       })
 
     }

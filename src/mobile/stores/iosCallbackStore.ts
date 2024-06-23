@@ -26,7 +26,7 @@ export const useIosCallbackStore = defineStore('iosCallbackStore', {
       }
     },
 
-    clear(callbackId: string) {
+    clear (callbackId: string) {
       delete this.callbacks[callbackId]
     }
   },

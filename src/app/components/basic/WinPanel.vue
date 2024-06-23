@@ -1,6 +1,6 @@
 <template>
   <div class="panel p-2" :class="props.class">
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 const props = withDefaults(defineProps<{
   class: string
 }>(), {
-  class: "",
+  class: '',
 })
 </script>

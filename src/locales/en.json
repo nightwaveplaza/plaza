@@ -60,7 +60,7 @@
       "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
     },
     "history": {
-      "showing_history": "Showing history: {from} — {to}.",
+      "showing_history": "Showing history: {from} — {to}",
       "title": "Play History"
     },
     "player": {
@@ -82,8 +82,8 @@
       "title": "Language Selection",
       "help": "Do you want to help translate Nightwave Plaza? {link}",
       "translation_by": "This translation made by {author}.",
-      "translation_author_name": "mr. plaza",
-      "translation_author_link": "https://plaza.one"
+      "translation_author_link": "https://plaza.one",
+      "translation_author_name": "mr. plaza"
     },
     "song": {
       "album": "Album",
@@ -100,8 +100,8 @@
       "title2": "Love Nightwave Plaza?",
       "boosty": "Support on Boosty",
       "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
-      "go_to_site": "Go to Nightwave Plaza website",
-      "crypto": "Donate crypto"
+      "crypto": "Donate crypto",
+      "go_to_site": "Go to Nightwave Plaza website"
     },
     "user": {
       "btn_logout": "Logout",
@@ -168,7 +168,6 @@
     "user_fetch": "Can't fetch user data.",
     "server": "Internal server error.",
     "enter_user_pass": "Please enter user name and password.",
-    "network_fail": "Network is unavailable.",
     "fields": {
       "email_email": "Email is incorrect.",
       "email_required": "Please enter email.",
@@ -185,6 +184,7 @@
       "current_password_invalid": "Current password is incorrect.",
       "captcha_invalid": "The captcha response is invalid."
     },
+    "network_fail": "Network is unavailable.",
     "invalid_user_password": "User name and password do not match.",
     "user_not_found": "User not found.",
     "song_not_found": "Song not found.",

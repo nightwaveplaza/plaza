@@ -7,7 +7,6 @@ import legacy from '@vitejs/plugin-legacy'
 export default ({ mode }: { mode: string }): UserConfig => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  // const base = process.env.VITE_APP === 'mobile' ? '' : '/'
   const root: string = resolve(__dirname, 'src/' + process.env.VITE_APP)
   const minify: boolean = process.env.NODE_ENV !== 'development'
   const base: string = process.env.VITE_APP === 'mobile' ? '' : '/'
@@ -15,7 +14,6 @@ export default ({ mode }: { mode: string }): UserConfig => {
   return defineConfig({
     plugins: [
       vue(),
-      // getSplitVendorChunkPlugin(process.env),
       getLegacyPlugin(process.env),
     ],
 
@@ -70,14 +68,6 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
     }
   }
 }
-
-// function getSplitVendorChunkPlugin (env: NodeJS.ProcessEnv) {
-//   if (env.VITE_APP === 'mobile') {
-//     return null
-//   } else {
-//     return splitVendorChunkPlugin()
-//   }
-// }
 
 function getBuildDate (): string {
   return new Date().toISOString().slice(0, 10).replace(/-/g, '')

@@ -1,0 +1,121 @@
+@import "mixins";
+@import "themes/elements";
+
+.window {
+  @include d3-window;
+  width: 497px;
+  cursor: default;
+  margin: 0 auto;
+  @include font;
+
+  >.inner {
+    position: relative;
+    padding: 2px;
+  }
+
+  .content {
+    padding: 3px;
+    margin: 1px 1px 0 1px;
+    border: 1px solid;
+    @include border-color-tl('content-border-left');
+    @include border-color-rb('content-border-right');
+  }
+
+  .header {
+    margin: 1px;
+    padding: 2px;
+    position: relative;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    @include font-color('header-font-color');
+    @include background('header-gradient');
+
+    &.inactive {
+      @include background('header-gradient-inactive');
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      float: left;
+      margin-right: 2px;
+      background-size: cover;
+    }
+
+    .buttons {
+      position: absolute;
+      right: 3px;
+      top: 2px;
+      height: 16px;
+      line-height: 0;
+
+      button {
+        margin: 0;
+        padding: 2px;
+        height: 16px;
+        width: 16px;
+
+        span {
+          height: 100%;
+          width: 100%;
+          display: block;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          cursor: pointer;
+        }
+
+        @include d3-object
+      }
+
+      .button-maximize span {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='0' y='0' width='1' height='9' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='0' y='0' width='9' height='2' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='8' y='0' width='1' height='9' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='0' y='8' width='9' height='1' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3C/svg%3E");
+        @include background-image('header-button-max');
+      }
+
+      .button-minimize span {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='1' y='7' width='6' height='2' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3C/svg%3E");
+        @include background-image('header-button-min');
+      }
+
+      .button-close span {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' width='9' height='9'%3E%3Cline style='stroke: rgb(0, 0, 0);' x1='1' y1='1' x2='8' y2='8'%3E%3C/line%3E%3Cline style='stroke: rgb(0, 0, 0);' x1='8' y1='1' x2='1' y2='8'%3E%3C/line%3E%3C/svg%3E");
+        @include background-image('header-button-close');
+      }
+    }
+  }
+
+  .menu-bar {
+    margin: 1px 1px;
+    line-height: 1;
+    @include font-color('font-color');
+    font-size: 0;
+
+    .action {
+      cursor: pointer;
+      display: inline-block;
+      font-size: $font-size;
+
+      &::first-letter {
+        text-decoration: underline;
+      }
+
+      a {
+        display: block;
+        padding: 5px 6px;
+        color: inherit !important;
+        text-decoration: none;
+
+        &:hover {
+          border: 0;
+          @include border-shadow('window-shadow');
+        }
+
+        u {
+          cursor: pointer !important;
+        }
+      }
+    }
+  }
+}

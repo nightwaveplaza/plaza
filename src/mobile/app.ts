@@ -1,46 +1,28 @@
 import { createApp, h } from 'vue'
 import { createPinia } from 'pinia'
-import commonComponents from '@common/js/components'
-import commonWindows from '@common/js/windows'
-import mobileComponents from '@mobile/js/components'
-import mobileWindows from '@mobile/js/windows'
-import Index from '@mobile/js/views/Index.vue'
-import mitt from 'mitt'
+import commonComponents from '@app/components/basic'
+import commonWindows from '@app/components/windows'
+import mobileComponents from '@mobile/components'
+import App from '@mobile/App.vue'
+import { i18n } from '@locales/_i18n.ts'
+import { eventBus } from '@mobile/events/eventBus.ts'
+
+// Register event bus
+window.emitter = eventBus
 
 const app = createApp({
-  emitter: null,
-
-  created () {
-    (<any>window).plaza.vue = this
-  },
-
-  methods: {
-    pushData (name: string, data: string) {
-      this.emitter.emit(name, data)
-    },
-
-    openWindow (name: string) {
-      this.emitter.emit('openWindow', name)
-    },
-
-    closeWindow (name: string) {
-      this.emitter.emit('closeWindow', name)
-    },
-  },
-
-  render: () => h(Index),
+  render: () => h(App)
 })
 
 const pinia = createPinia()
 app.use(pinia)
-
-const emitter = mitt()
-app.config.globalProperties.emitter = emitter
+app.use(i18n)
 
 app.use(commonComponents)
 app.use(commonWindows)
-app.use(mobileComponents)
-app.use(mobileWindows)
 
-app.component('app', Index)
+delete app._context.components['WinPlayer']
+app.use(mobileComponents)
+
+app.component('app', App)
 app.mount('#app')

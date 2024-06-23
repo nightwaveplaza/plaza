@@ -1,0 +1,138 @@
+<template>
+  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
+    <!-- Minimize button -->
+    <template #header>
+      <div class="buttons">
+        <win-button class="button-minimize" @click="minimize">
+          <span />
+        </win-button>
+        <win-button v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
+          <span />
+        </win-button>
+      </div>
+    </template>
+
+    <!-- Menu -->
+    <win-menu v-if="!useMobile()" />
+
+    <!-- Player -->
+    <div class="content p-2">
+      <win-player />
+    </div>
+
+    <!-- Statusbar -->
+    <div class="statusbar row no-gutters">
+      <div class="col cell">
+        {{ t('win.player.listeners', {listeners: playerSongStore.listeners}) }}
+      </div>
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
+        {{ t('win.player.user', {user: userAuthStore.username}) }}
+      </div>
+    </div>
+  </win-window>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
+import { useUserAuthStore } from '@app/stores/userAuthStore'
+import { useWindowsStore } from '@app/stores/windowsStore'
+import WinWindow from '@app/components/basic/WinWindow.vue'
+import { useMobile } from '@app/composables/useMobile.ts'
+import { Native } from '@mobile/bridge/native.ts'
+
+const { t } = useI18n()
+const userAuthStore = useUserAuthStore()
+const windowsStore = useWindowsStore()
+const playerSongStore = usePlayerSongStore()
+
+const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
+const win = ref<InstanceType<typeof WinWindow>>()
+
+function minimize (): void {
+  windowsStore.minimize('player')
+}
+
+function requestFullScreen (): void {
+  if (useMobile()) {
+    Native.toggleFullscreen()
+  } else {
+    document.getElementById('app')?.requestFullscreen()
+  }
+}
+</script>
+
+<style lang="scss">
+#window-player {
+  .player-artist {
+    margin-top: 2px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .player-title {
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .cover {
+    background: #efe6eb;
+    padding: 0;
+    line-height: 0;
+    height: auto;
+    width: 112px;
+  }
+
+  .cover img {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .player-time-container {
+    margin: 6px 0 3px 0;
+    position: relative;
+  }
+
+  .player-time {
+    position: relative;
+    z-index: 2;
+    line-height: 24px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .player-button i, .player-button span {
+    cursor: pointer;
+  }
+
+  .player-visual {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    position: absolute;
+  }
+}
+
+@media (max-width: 500px) {
+  .cover {
+    width: 100% !important;
+  }
+
+  .player-meta {
+    text-align: center;
+  }
+
+  #window-player .win98 .window {
+    width: 90% !important;
+  }
+}
+</style>

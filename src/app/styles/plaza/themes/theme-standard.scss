@@ -1,0 +1,50 @@
+$standard: (
+        'name': 'win98',
+        'font-color': #000000,
+        'font-disabled': #8a8a8a,
+        'link-color': #0645AD,
+        'inputs-bg': #ffffff,
+        'header-gradient': linear-gradient(to right, #000080, #1084d0),
+        'header-gradient-inactive': linear-gradient(to right, #808080, #c0c0c0),
+        'header-font-color': #ffffff,
+        'btn-bg-color': #c0c0c0,
+        'btn-border-left': #ffffff,
+        'btn-border-right': #000000,
+        'btn-shadow': (
+                inset -1px 0px 0 0 #808080,
+                inset -1px 1px 0 0 #dfdfdf,
+                inset -1px -1px 0 0 #808080,
+                inset 0px 0px 0 1px #dfdfdf
+        ),
+        'btn-taskbar-shadow': (
+                inset -1px 0px 0 0 #dfdfdf,
+                inset -1px 1px 0 0 #808080,
+                inset -1px -1px 0 0 #dfdfdf,
+                inset 0px 0px 0 1px #808080
+        ),
+        'btn-active-border': #000000,
+        'btn-active-shadow': (
+                inset 0 0 0 1px #808080
+        ),
+        'window-border-left': #dfdfdf,
+        'window-border-right': #000000,
+        'window-shadow': (
+                inset -1px 0px 0 0 #808080,
+                inset -1px 1px 0 0 #ffffff,
+                inset -1px -1px 0 0 #808080,
+                inset 0px 0px 0 1px #ffffff
+        ),
+        'content-border-left': #808080,
+        'content-border-right': #ffffff,
+        'content-shadow': (
+                inset -1px 0px 0 0 #dfdfdf,
+                inset -1px 1px 0 0 #000000,
+                inset -1px -1px 0 0 #dfdfdf,
+                inset 0px 0px 0 1px #000000
+        ),
+        'taskbar-font-color': #000000,
+        'taskbar-shadow': inset 0 1px 0 0 #ffffff,
+        'dots-background': (
+                url('@app/styles/plaza/icons/bg-dots-gray.png')
+        ),
+)

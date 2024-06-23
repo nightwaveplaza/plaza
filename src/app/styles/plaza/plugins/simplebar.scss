@@ -1,0 +1,67 @@
+@import "../themes/elements";
+@import "../mixins";
+
+[data-simplebar] {
+  height: 100%;
+}
+
+.simplebar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.simplebar-content {
+  padding-right: 20px !important;
+}
+
+.simplebar-track {
+  &.simplebar-vertical {
+    margin-top: 1px;
+    display: block;
+    opacity: 100;
+    width: 16px;
+
+    right: 0;
+    background: url('@app/styles/plaza/icons/bg-dots-gray.png');
+    @include background('dots-background');
+
+    image-rendering: pixelated;
+    transition: none;
+    -webkit-transition: none;
+
+    /* please don't change 'position' */
+    position: absolute;
+  }
+}
+
+.simplebar-scrollbar {
+  &.simplebar-visible {
+    &:before {
+      display: none;
+    }
+
+    @include d3-window();
+    //border: 1px solid #c3c7cb;
+    //border-right-color: black;
+    //border-bottom-color: black;
+    //box-shadow: inset 1px 1px 0 0 white, inset -1px -1px 0 0 #868a8e;
+    display: block;
+    width: 16px;
+    height: 16px;
+
+    image-rendering: pixelated;
+    background: #c3c7cb no-repeat center center;
+    border-radius: 0;
+    transition: none;
+    -webkit-transition: none;
+    right: 0;
+
+    /* there must be 'right' for ps__thumb-y */
+    /*right: 2px;*/
+    /* please don't change 'position' */
+    position: absolute;
+  }
+}

@@ -1,0 +1,29 @@
+@import "themes/elements";
+
+.statusbar {
+  margin: 2px 1px;
+
+  background-image: url("@app/styles/plaza/icons/statusbar.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 12px 16px;
+
+  .cell {
+    padding: 3px 4px;
+    line-height: 100%;
+    border: 1px solid;
+    @include border-color-tl('content-border-left');
+    @include border-color-rb('content-border-right');
+
+    &.d {
+      margin-right: 2px;
+    }
+
+    &.login {
+      margin-left: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

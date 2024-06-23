@@ -1,0 +1,65 @@
+@import "plaza/themes/elements.scss";
+
+.content-loading {
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  background-image: url('@app/assets/img/loading.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 36px 36px;
+
+  border: 1px solid;
+  @include border-shadow('content-shadow');
+  @include border-color-tl('content-border-left');
+  @include border-color-rb('content-border-right');
+  @include background-color('inputs-bg');
+}
+
+.win98 {
+  .window {
+    z-index: 100;
+  }
+
+  .window .header .icon {
+    background: url('@app/assets/img/ball.png') no-repeat;
+    background-size: cover;
+  }
+
+  button.close {
+    display: block;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.win98.fluid-height {
+  height: 100% !important;
+  max-height: 600px;
+
+  .window {
+    height: 100% !important;
+  }
+
+  .inner {
+    height: 100% !important;
+  }
+
+  .content-fluid {
+    position: absolute !important;
+    top: 21px;
+    right: 0;
+    left: 0;
+    bottom: 23px;
+  }
+
+  .statusbar {
+    position: absolute !important;
+    bottom: 1px;
+    left: 2px;
+    right: 2px;
+  }
+}
+

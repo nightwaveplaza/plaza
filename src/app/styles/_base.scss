@@ -1,0 +1,80 @@
+@import "plaza/themes/elements.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  //font-smooth: never;
+  cursor: default;
+  -webkit-appearance: none;
+  -webkit-border-radius:0px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+
+  //background: #008080 no-repeat fixed center center;
+  //background-repeat: no-repeat;
+  //background-attachment: fixed;
+  //background-position: center center;
+  //background-size: cover;
+  min-height: 100%;
+  color: #070707;
+  font-family: Tahoma, Verdana, Segoe, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.app-desktop {
+  height: 100%;
+  width: 100%;
+  background-color: teal;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  padding: 2% 3% 30px 3%;
+  margin: 0;
+}
+
+button.d-block, .button.d-block, input.d-block {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-info {
+  font-size: 12px;
+  line-height: 150%;
+  .lead {
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+/* MQ */
+@media (max-width: 500px) {
+  .win98 .window {
+    width: 100% !important;
+  }
+}
+

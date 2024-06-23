@@ -15,14 +15,14 @@
       <win-memo>
         <div class="row no-gutters my-2">
           <div class="col text-center">
-            <a href="#" class="app-link">
-              <img src="@app/assets/img/app_ios.png" class="app-icon"><br>
+            <a href="https://plaza.one/ios" target="_blank" class="app-link">
+              <img src="@app/assets/img/app_ios.png" class="app-icon" alt=""><br>
               Apple iOS.app
             </a>
           </div>
           <div class="col text-center">
-            <a href="#" class="app-link">
-            <img src="@app/assets/img/app_android.png" class="app-icon"><br>
+            <a href="https://plaza.one/googleplay" target="_blank" class="app-link">
+            <img src="@app/assets/img/app_android.png" class="app-icon" alt=""><br>
             Android.app
             </a>
           </div>

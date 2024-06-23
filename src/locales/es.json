@@ -84,7 +84,7 @@
             "help": "¿Quiere ayudar a traducir Nightwave Plaza? {link}",
             "translation_author_name": "daughter",
             "translation_by": "Esta traducción fue realizada por {author}.",
-            "translation_auth_link": "https://weblate.plaza.one/user/brewedscript/"
+            "translation_author_link": "https://weblate.plaza.one/user/brewedscript/"
         },
         "song": {
             "album": "Álbum",

@@ -82,7 +82,7 @@
             "title": "Sprach-Auswahl",
             "help": "Möchtest Du uns bei der Übersetzung von Nightwave Plaza helfen? {link}",
             "translation_by": "Diese Seite wurde von {author} übersetzt.",
-            "translation_auth_link": "https://denny.ichi.city",
+            "translation_author_link": "https://denny.ichi.city",
             "translation_author_name": "denny"
         },
         "song": {

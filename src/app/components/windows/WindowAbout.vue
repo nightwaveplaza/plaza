@@ -19,7 +19,7 @@
         </p>
         <i18n-t keypath="win.about.send_enquires" tag="p">
           <template #link>
-            <a href="https://plaza.one/submissions" target="_blank">mail@plaza.one</a>
+            <a href="mailto:mail@plaza.one" target="_blank">mail@plaza.one</a>
           </template>
         </i18n-t>
 

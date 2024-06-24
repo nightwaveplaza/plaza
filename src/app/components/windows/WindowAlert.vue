@@ -6,9 +6,7 @@
           <div class="alert-icon" :class="type" />
         </div>
         <div class="col align-self-center">
-          <p class="pl-2" style="line-height: 125%">
-            {{ text }}
-          </p>
+          <p class="pl-2" style="line-height: 125%" v-html="text" />
         </div>
       </div>
 

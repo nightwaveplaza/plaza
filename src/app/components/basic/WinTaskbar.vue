@@ -26,6 +26,7 @@
 import { onBeforeMount, onMounted, ref } from 'vue'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { useSettingsStore } from '@app/stores/settingsStore'
+import { i18n } from '@locales/_i18n.ts'
 
 const windowsStore = useWindowsStore()
 const settingsStore = useSettingsStore()
@@ -33,7 +34,10 @@ const settingsStore = useSettingsStore()
 const time = ref('0:00 PM')
 
 function getNow (): void {
-  time.value = (new Date()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  time.value = (new Date()).toLocaleString(
+      i18n.global.locale.value as Intl.LocalesArgument,
+      { hour: 'numeric', minute: 'numeric' }
+  )
 }
 
 function toggleMinimize (name: string): void {

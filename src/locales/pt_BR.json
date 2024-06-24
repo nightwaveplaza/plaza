@@ -37,7 +37,7 @@
             "submissions": "Envios",
             "title": "Sobre",
             "useful_links": "Links Úteis",
-            "welcome": "Bem-vindo à rádio que toca \"vaporwave\" e \"future funk\" 24 horas por dia.",
+            "welcome": "Bem-vindo(a) à rádio que toca \"vaporwave\" e \"future funk\" 24 horas por dia.",
             "mobile": "Aplicativos Móveis (iOS e Android)",
             "streams": "Transmissões",
             "version": "Versão",
@@ -65,7 +65,7 @@
         },
         "player": {
             "btn_stop": "Parar",
-            "listeners": "{listeners} ouvintes.",
+            "listeners": "{listeners} ouvinte(s).",
             "user": "Usuário: {user}.",
             "volume": "Volume: {volume}%.",
             "welcome": "Sentimos sua falta!",
@@ -135,10 +135,10 @@
             "captcha_fail": "Verificação por Captcha malsucedida.",
             "captcha_title": "você ainda é humano?",
             "please_fill": "Por gentileza, preencha o formulário de cadastro. Todos os campos são obrigatórios.",
-            "success": "Cadastro concluído",
+            "success": "Cadastro Concluído",
             "title": "Cadastro",
             "user_information": "Dados Pessoais",
-            "welcome": "Bem-vindo ao Nightwave Plaza, {user}!"
+            "welcome": "Bem-vindo(a) ao Nightwave Plaza, {user}!"
         },
         "user_reset": {
             "enter_email": "Insira seu E-mail",

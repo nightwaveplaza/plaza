@@ -19,7 +19,11 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 
 function updateBackgroundNative (bg: Background): void {
-  Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.video_src)
+  if (typeof AndroidInterface !== 'undefined') {
+    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
+  } else {
+    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.video_src)
+  }
 }
 
 function registerEmitterEvents (): void {

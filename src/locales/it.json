@@ -1,1 +1,36 @@
-{}
+{
+    "menu": {
+        "about": "Chi siamo",
+        "ratings": "Valutazioni",
+        "support_us": "Supportaci",
+        "play_history": "Cronologia"
+    },
+    "win": {
+        "settings": {
+            "btn_random": "Casuale",
+            "bottom": "In basso",
+            "author": "Autore",
+            "btn_solid": "Uniforme",
+            "let_us_know": "Facci sapere!",
+            "source": "Fonte",
+            "taskbar": "Barra delle Applicazioni",
+            "theme": "Tema",
+            "title": "Impostazioni Generali",
+            "top": "In alto",
+            "language": "Seleziona Lingua",
+            "audio_quality": "Qualità audio",
+            "low_quality": "Qualità bassa",
+            "bg_notice": "Tutti gli sfondi sono stati trovati online. Vuoi conoscere gli autori? {link}",
+            "background": "Impostazioni Sfondo",
+            "application": "Impostazioni Generali",
+            "quality_changed": "La qualità audio è stata modificata. Per favore, riavvia la riproduzione."
+        },
+        "about": {
+            "btn_credits": "Crediti",
+            "btn_news": "Novità",
+            "contact_info": "Contatti",
+            "discord": "Entra nel server {discord} della nostra community!",
+            "playlists": "Raccolte"
+        }
+    }
+}

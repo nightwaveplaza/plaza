@@ -4,7 +4,7 @@
       <win-list>
         <tr v-for="(lang, name) in _locales" :key="name" class="hover">
           <td class="p-2 lang-icon noselect" v-html="_flags[name]" />
-          <td class="noselect show-info" :class="{selected: name === settingsStore.language}" @click="switchLanguage(name)">
+          <td class="noselect show-info" :class="{selected: name === settingsStore.language}" @click="switchLanguage(<string>name)">
             {{ lang.name }}
           </td>
         </tr>

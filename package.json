@@ -38,6 +38,7 @@
     "autoprefixer": "^10.4.13",
     "axios": "^1.6.8",
     "bootstrap": "4.6.2",
+    "country-flag-icons": "^1.5.12",
     "js-cookie": "^3.0.1",
     "mitt": "^3.0.1",
     "nouislider": "^15.6.1",

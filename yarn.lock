@@ -2026,6 +2026,11 @@ core-js@^3.36.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.36.1.tgz#c97a7160ebd00b2de19e62f4bbd3406ab720e578"
   integrity sha512-BTvUrwxVBezj5SZ3f10ImnX2oRByMxql3EimVqMysepbC9EeMUOpLwdy6Eoili2x6E4kf+ZUB5k/+Jv55alPfA==
 
+country-flag-icons@^1.5.12:
+  version "1.5.12"
+  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.5.12.tgz#78931a368705f27b4397f9a45692433799722fab"
+  integrity sha512-ksBaQqQEFSvSFg1NV8tlAk4IjgDRNMu5ImjnCac0C409CiN6ObTI0vCFaNfaPusxLrr5O9pueT1R3G4XMMwErg==
+
 cross-env@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"

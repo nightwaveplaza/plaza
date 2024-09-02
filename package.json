@@ -13,7 +13,6 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.2",
-    "@types/howler": "^2.2.11",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.11.30",
     "@types/uuid": "^9.0.8",
@@ -40,7 +39,6 @@
     "axios": "^1.6.8",
     "bootstrap": "4.6.2",
     "country-flag-icons": "^1.5.12",
-    "howler": "^2.2.4",
     "js-cookie": "^3.0.1",
     "mitt": "^3.0.1",
     "nouislider": "^15.6.1",

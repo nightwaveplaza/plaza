@@ -1410,11 +1410,6 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
-"@types/howler@^2.2.11":
-  version "2.2.11"
-  resolved "https://registry.yarnpkg.com/@types/howler/-/howler-2.2.11.tgz#a75c4ab5666aee5fcfbd5de15d35dbaaa3d3f070"
-  integrity sha512-7aBoUL6RbSIrqKnpEgfa1wSNUBK06mn08siP2QI0zYk7MXfEJAaORc4tohamQYqCqVESoDyRWSdQn2BOKWj2Qw==
-
 "@types/js-cookie@^3.0.6":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-3.0.6.tgz#a04ca19e877687bd449f5ad37d33b104b71fdf95"
@@ -2494,11 +2489,6 @@ he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
-
-howler@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.4.tgz#bd3df4a4f68a0118a51e4bd84a2bfc2e93e6e5a1"
-  integrity sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==
 
 ignore@^5.2.0, ignore@^5.3.1:
   version "5.3.1"

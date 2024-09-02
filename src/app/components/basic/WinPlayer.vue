@@ -158,19 +158,13 @@ function startPlay (): void {
     format: ['mp3']
   })
 
-  // @ts-ignore
-  if (sound._sounds && sound._sounds[0]._node) {
-    // @ts-ignore
-    sound._sounds[0]._node.crossOrigin = "anonymous"
-  }
-
   sound.on('play', () => {
     // @ts-ignore
     if (sound._sounds && sound._sounds[0]._node) {
       // @ts-ignore
       const audioNode = sound._sounds[0]._node
-      audioNode.crossOrigin = "anonymous"
       startVisual(audioNode, canvas.value!)
+      //audioNode.crossOrigin = "use-credentials";
       updateMediaSession()
     }
 

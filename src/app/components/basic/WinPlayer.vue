@@ -81,6 +81,7 @@ import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
+import Hls from 'hls.js'
 
 const { t } = useI18n()
 const { startVisual, stopVisual } = useVisual()
@@ -115,6 +116,7 @@ const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB
 // Non-reactive
 let offline = false
 let volume = 100
+let hls = new Hls()
 
 function updateSong (): void {
   if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
@@ -140,12 +142,19 @@ function play (): void {
 }
 
 function startPlay (): void {
-  const noCacheStr = 'nocache=' + Date.now()
-  // audio.value!.type = 'audio/mpeg' TODO: why
-  if (settingsStore.lowQuality) {
-    audio.value!.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
+  if (Hls.isSupported()) {
+    hls.loadSource('https://radio.plaza.one/hls')
+    hls.attachMedia(audio.value!)
+    if (settingsStore.lowQuality) {
+      hls.currentLevel = 0
+    }
   } else {
-    audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+    const noCacheStr = 'nocache=' + Date.now()
+    if (settingsStore.lowQuality) {
+      audio.value!.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
+    } else {
+      audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+    }
   }
 
   audio.value!.load()
@@ -170,6 +179,10 @@ function stopPlay (): void {
   stopVisual()
   audio.value!.pause()
   audio.value!.currentTime = 0
+
+  if (Hls.isSupported()) {
+    hls.detachMedia()
+  }
 
   playerPlaybackStore.state = PlayerState.IDLE
   playerPlaybackStore.sleepTime = 0

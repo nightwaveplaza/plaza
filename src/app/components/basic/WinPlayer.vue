@@ -4,7 +4,6 @@
       <div class="cover simple-border noselect">
         <img :src="artwork" alt="artwork" @click="showSongInfo">
       </div>
-      <audio ref="audio" crossorigin="anonymous" preload="auto" @loadedmetadata="audioCanPlay" />
     </div>
 
     <div class="col-12 col-sm">
@@ -91,7 +90,6 @@ const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
 
-const audio = ref<InstanceType<typeof HTMLAudioElement>>()
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
 
@@ -110,23 +108,24 @@ const playText = computed((): string => {
 })
 
 const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
-
 const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
 
 // Non-reactive
 let offline = false
 let volume = 100
 let hls = new Hls()
+let audio: HTMLAudioElement | null = null
 
 function updateSong (): void {
-  if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
-    stopPlay()
-    setTimeout(play, 2000)
-  }
+  // if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
+  //   stopPlay()
+  //   setTimeout(play, 2000)
+  // }
 
   if (playerPlaybackStore.state === PlayerState.PLAYING) {
     document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
     updateMediaSession()
+    updateMediaSessionPosition()
   }
 
   offline = false
@@ -142,52 +141,69 @@ function play (): void {
 }
 
 function startPlay (): void {
+  audio = document.createElement('audio')
+  audio.crossOrigin = 'anonymous'
+
   if (Hls.isSupported()) {
     hls.loadSource('https://radio.plaza.one/hls')
-    hls.attachMedia(audio.value!)
+    hls.attachMedia(audio)
     if (settingsStore.lowQuality) {
       hls.currentLevel = 0
     }
   } else {
     const noCacheStr = 'nocache=' + Date.now()
     if (settingsStore.lowQuality) {
-      audio.value!.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
+      audio.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
     } else {
-      audio.value!.src = 'https://radio.plaza.one/mp3?' + noCacheStr
+      audio.src = 'https://radio.plaza.one/mp3?' + noCacheStr
     }
   }
 
-  audio.value!.load()
-  audio.value!.volume = volume
+  audio.volume = volume
+
+  audio.addEventListener('play', onAudioPlayEvent)
+  audio.addEventListener('pause', onAudioPauseEvent)
+
+  audio.play().then(() => {
+    playerPlaybackStore.state = PlayerState.PLAYING
+    startVisual(audio!, canvas.value!)
+    updateMediaSession()
+    updateMediaSessionPosition()
+  })
 
   document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
 }
 
-function audioCanPlay (): void {
-  if (playerPlaybackStore.state === PlayerState.LOADING) {
-    playerPlaybackStore.state = PlayerState.PLAYING
-
-    audio.value!.play().then(() => {
-      startVisual(audio.value!, canvas.value!)
-      updateMediaSession()
-      setMediaSessionState('playing')
-    }).catch(e => console.log(e))
-  }
+function pausePlay(): void {
+  stopPlay()
 }
 
 function stopPlay (): void {
+  setMediaSessionState('none')
   stopVisual()
-  audio.value!.pause()
-  audio.value!.currentTime = 0
 
   if (Hls.isSupported()) {
     hls.detachMedia()
   }
 
+  audio?.removeEventListener('play', onAudioPlayEvent)
+  audio?.removeEventListener('pause', onAudioPauseEvent)
+  audio?.pause()
+  audio?.remove()
+  audio = null
+
   playerPlaybackStore.state = PlayerState.IDLE
   playerPlaybackStore.sleepTime = 0
-  setMediaSessionState('paused')
+
   document.title = 'Nightwave Plaza - Online Vaporwave Radio'
+}
+
+function onAudioPlayEvent() {
+  setMediaSessionState('playing')
+}
+
+function onAudioPauseEvent() {
+  setMediaSessionState('paused')
 }
 
 function setVolume (volume: number): void {
@@ -198,7 +214,7 @@ function setVolume (volume: number): void {
 function updateVolume (newVolume: number): void {
   volume = newVolume / 100
   if (playerPlaybackStore.state === PlayerState.PLAYING) {
-    audio.value!.volume = volume
+    audio!.volume = volume
   }
 }
 
@@ -237,7 +253,6 @@ function updateMediaSession (): void {
       artist: playerSongStore.artist,
       album: playerSongStore.album,
       artwork: [
-        { src: playerSongStore.artwork_sm_src, sizes: '300x300', type: 'image/jpg' },
         { src: playerSongStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
       ],
     })
@@ -248,25 +263,27 @@ function updateMediaSession (): void {
 
 function setMediaSessionActions (): void {
   if ('mediaSession' in navigator) {
-    const actionHandlers = [
-      ['play', play],
-      ['pause', play],
-      ['stop', play],
-    ]
-
-    for (const [action, handler] of actionHandlers) {
-      try {
-        navigator.mediaSession.setActionHandler(action as MediaSessionAction, handler as MediaSessionActionHandler)
-      } catch (error) {
-        console.log(`The media session action "${action}" is not supported yet.`)
-      }
+    try {
+      navigator.mediaSession.setActionHandler('play', play)
+      navigator.mediaSession.setActionHandler('pause', pausePlay)
+    } catch (e) {
+      console.log(e)
     }
   }
 }
 
-function setMediaSessionState (state: string): void {
+function setMediaSessionState (state: MediaSessionPlaybackState): void {
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.playbackState = state as MediaSessionPlaybackState
+    navigator.mediaSession.playbackState = state
+  }
+}
+
+function updateMediaSessionPosition () {
+  if ('setPositionState' in navigator.mediaSession) {
+    navigator.mediaSession.setPositionState({
+      duration: playerSongStore.length,
+      position: playerSongStore.position
+    });
   }
 }
 </script>

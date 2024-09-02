@@ -76,12 +76,15 @@ export default function (): {
 
   function stopVisual (): void {
     visualEnabled = false
-    if (canvasContext) {
-      canvasContext.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
-    }
+
+    canvasContext?.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
+    canvasContext = null
+    canvas = null
 
     analyser?.disconnect()
     source?.disconnect()
+    analyser = null
+    source = null
   }
 
   return {

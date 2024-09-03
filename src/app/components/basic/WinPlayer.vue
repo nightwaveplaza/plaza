@@ -113,7 +113,7 @@ const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB
 // Non-reactive
 //let offline = false
 let volume = 100
-let hls = new Hls()
+let hls: Hls | null = null
 let audio: HTMLAudioElement | null = null
 
 function updateSong (): void {
@@ -144,7 +144,8 @@ function startPlay (): void {
   audio = document.createElement('audio')
   audio.crossOrigin = 'anonymous'
 
-  if (Hls.isSupported()) {
+  if (Hls.isSupported() && settingsStore.useHls) {
+    hls = new Hls()
     hls.loadSource('https://radio.plaza.one/hls')
     hls.attachMedia(audio)
     if (settingsStore.lowQuality) {
@@ -183,7 +184,9 @@ function stopPlay (): void {
   stopVisual()
 
   if (Hls.isSupported()) {
-    hls.detachMedia()
+    hls?.detachMedia()
+    hls?.destroy()
+    hls = null
   }
 
   audio?.removeEventListener('play', onAudioPlayEvent)

@@ -111,7 +111,7 @@ const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYI
 const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
 
 // Non-reactive
-let offline = false
+//let offline = false
 let volume = 100
 let hls = new Hls()
 let audio: HTMLAudioElement | null = null
@@ -128,7 +128,7 @@ function updateSong (): void {
     updateMediaSessionPosition()
   }
 
-  offline = false
+  //offline = false
 }
 
 function play (): void {

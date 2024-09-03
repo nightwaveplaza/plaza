@@ -10,7 +10,6 @@
         </tr>
       </win-list>
 
-
       <win-panel class="mt-2 text-center">
         <i18n-t v-if="te('win.settings_language.translation_author_name')" keypath="win.settings_language.translation_by" tag="p" class="mb-1">
           <template #author>

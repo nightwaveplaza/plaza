@@ -1,10 +1,13 @@
 <template>
-  <div ref="list" class="list" :class="{scroll}" data-simplebar>
-    <simplebar ref="scrollbar" data-simplebar-auto-hide="false">
+  <div ref="list" class="list" :class="{scroll}">
+    <simplebar v-if="scroll" ref="scrollbar" data-simplebar-auto-hide="false">
       <table class="hover">
         <slot />
       </table>
     </simplebar>
+    <table class="hover" v-else>
+      <slot />
+    </table>
   </div>
 </template>
 

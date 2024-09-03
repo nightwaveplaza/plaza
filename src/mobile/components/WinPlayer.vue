@@ -54,11 +54,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { eventBus } from '@mobile/events/eventBus.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
@@ -97,23 +96,6 @@ function play (): void {
 function openDrawer (): void {
   Native.openDrawer()
 }
-
-onMounted(() => {
-  eventBus.on('isPlaying', (playing: boolean) => {
-    playerPlaybackStore.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
-  })
-
-  eventBus.on('isBuffering', () => {
-    playerPlaybackStore.state = PlayerState.LOADING
-  })
-
-  // Event from onResume if sleep timer is still alive
-  eventBus.on('sleepTime', (time: number) => {
-    if (time > Date.now()) {
-      playerPlaybackStore.sleepTime = time
-    }
-  })
-})
 </script>
 
 <style lang="scss">

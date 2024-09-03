@@ -179,7 +179,7 @@ export type EventBus = {
 export enum PlayerState {
   IDLE = 0,
   LOADING = 1,
-  PLAYING = 2,
+  PLAYING = 2
 }
 
 export interface ifcAndroidInterface {

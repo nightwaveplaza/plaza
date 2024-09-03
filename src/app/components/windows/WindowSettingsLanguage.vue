@@ -1,20 +1,14 @@
 <template>
-  <win-window v-slot="winProps" :width="230" name="settings-language" :title="t('win.settings_language.title')">
+  <win-window v-slot="winProps" :width="280" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
-      <win-group-box>
-        <template #title>
-          {{ t('win.settings_language.select') }}
-        </template>
-        <template #content>
-          <div class="select">
-            <select @change="switchLanguage">
-              <option v-for="(lang, name) in _locales" :key="name" :value="name" :selected="name === settingsStore.language">
-                {{ lang.name }}
-              </option>
-            </select>
-          </div>
-        </template>
-      </win-group-box>
+      <win-list>
+        <tr v-for="(lang, name) in _locales" :key="name" class="hover">
+          <td class="p-2 lang-icon noselect" v-html="_flags[name]" />
+          <td class="noselect show-info" :class="{selected: name === settingsStore.language}" @click="switchLanguage(<string>name)">
+            {{ lang.name }}
+          </td>
+        </tr>
+      </win-list>
 
       <win-panel class="mt-2 text-center">
         <i18n-t v-if="te('win.settings_language.translation_author_name')" keypath="win.settings_language.translation_by" tag="p" class="mb-1">
@@ -44,12 +38,43 @@
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import _locales from '@locales/_locales'
+import _flags from '@locales/_flags.ts'
+import { nextTick, onMounted, ref } from 'vue'
+import type WinList from '@app/components/basic/WinList.vue'
 
 const { t, te } = useI18n()
 const settingsStore = useSettingsStore()
+const list = ref<InstanceType<typeof WinList>>()
 
-function switchLanguage (e: Event): void {
-  settingsStore.language = (e.target as HTMLSelectElement).value
+function switchLanguage (name: string): void {
+  settingsStore.language = name
   settingsStore.saveLanguage()
 }
+
+onMounted(() => {
+  nextTick(() => {
+    list.value?.scrollTop()
+  })
+})
 </script>
+
+<style lang="scss">
+#window-settings-language {
+  .list {
+    height: 175px;
+
+    svg {
+      width: 100%;
+    }
+
+    .lang-icon {
+      width: 36px;
+      line-height: 0;
+    }
+
+    .selected {
+      font-weight: bold;
+    }
+  }
+}
+</style>

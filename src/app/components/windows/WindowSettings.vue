@@ -119,9 +119,13 @@
               {{ t('win.settings.audio_quality') }}:
             </div>
             <div class="col-6">
-              <div class="checkbox">
+              <div class="checkbox mb-1">
                 <input id="low_quality" type="checkbox" :checked="settingsStore.lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
+              </div>
+              <div class="checkbox">
+                <input id="hls_beta" type="checkbox" :checked="settingsStore.useHls" @change="hlsChanged">
+                <label for="hls_beta">HLS (beta)</label>
               </div>
             </div>
           </div>
@@ -233,6 +237,12 @@ function openLanguageSettings (): void {
 function qualityChanged (e: Event): void {
   settingsStore.lowQuality = (e.target as HTMLInputElement).checked
   settingsStore.saveQuality()
+  windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+}
+
+function hlsChanged (e: Event): void {
+  settingsStore.useHls = (e.target as HTMLInputElement).checked
+  settingsStore.saveHls()
   windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 

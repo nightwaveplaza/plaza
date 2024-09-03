@@ -2,7 +2,7 @@
 import { useSettingsStore } from '@app/stores/settingsStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 import { onMounted, watch } from 'vue'
-import { type Background, enBackgroundMode } from '@app/types/types.ts'
+import { type Background, enBackgroundMode, PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { useWindowsStore } from '@app/stores/windowsStore.ts'
@@ -19,7 +19,11 @@ const playerPlaybackStore = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 
 function updateBackgroundNative (bg: Background): void {
-  Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
+  if (typeof AndroidInterface !== 'undefined') {
+    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
+  } else {
+    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.video_src)
+  }
 }
 
 function registerEmitterEvents (): void {
@@ -41,6 +45,21 @@ function registerEmitterEvents (): void {
   // ios callbacks
   eventBus.on('iosCallback', (data: string) => {
     iosCallbackStore.execute(data)
+  })
+
+  eventBus.on('isPlaying', (playing: boolean) => {
+    playerPlaybackStore.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
+  })
+
+  eventBus.on('isBuffering', () => {
+    playerPlaybackStore.state = PlayerState.LOADING
+  })
+
+  // Event from onResume if sleep timer is still alive
+  eventBus.on('sleepTime', (time: number) => {
+    if (time > Date.now()) {
+      playerPlaybackStore.sleepTime = time
+    }
   })
 }
 

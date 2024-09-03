@@ -16,9 +16,15 @@ export default function (): {
   let canvasContext: CanvasRenderingContext2D | null
 
   function startVisual (audio: HTMLAudioElement, cvs: HTMLCanvasElement): void {
-    if (!context || !source || !analyser) {
+    if (!context) {
       context = new (window.AudioContext || window.webkitAudioContext)()
+    }
+
+    if (!analyser) {
       analyser = context.createAnalyser()
+    }
+
+    if (!source) {
       source = context.createMediaElementSource(audio)
     }
 
@@ -70,13 +76,14 @@ export default function (): {
 
   function stopVisual (): void {
     visualEnabled = false
-    if (canvasContext) {
-      canvasContext.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
-    }
 
-    analyser!.disconnect()
-    source!.disconnect()
-    context = null
+    canvasContext?.clearRect(0, 0, canvas!.clientWidth, canvas!.clientHeight)
+    canvasContext = null
+    canvas = null
+
+    analyser?.disconnect()
+    source?.disconnect()
+    analyser = null
     source = null
   }
 

@@ -26,7 +26,20 @@
             "contact_info": "Information de Contact",
             "discord": "Rejoignez notre serveur communautaire {discord}!",
             "playlists": "Playlists",
-            "send_enquires": "S'il vous plaît envoyez n'importe quel information que vous avez à {link}."
+            "send_enquires": "S'il vous plaît envoyez n'importe quel information que vous avez à {link}.",
+            "title": "À-propos",
+            "welcome": "Bienvenue sur la station radio en ligne de future funk et de vaporwave qui diffuse 24/7.",
+            "version": "Version",
+            "submission_form": "Voulez vous proposer de la musique pour la diffusion? S'il vous plaît utilisez {link}.",
+            "show_more": "Montrez plus",
+            "mobile": "Application mobiles (iOS / Android)",
+            "streams": "Diffusions",
+            "useful_links": "Liens Utiles"
+        },
+        "credits": {
+            "title": "Credits",
+            "created_by": "{app} site et applications est maintenu par {author}.",
+            "content": "Toutes les musiques et les images de fond"
         }
     },
     "menu": {

@@ -53,7 +53,7 @@
           <p class="mb-1">
             <b>BTC</b>
           </p>
-          <p class="address">
+          <p class="mb-2 address">
             {{ btc }}
           </p>
           <p class="mb-1">

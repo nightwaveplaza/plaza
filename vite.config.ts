@@ -29,8 +29,9 @@ export default ({ mode }: { mode: string }): UserConfig => {
         input: '/index.html',
         output: {
           manualChunks: (id) => {
+            if (id.includes('hls.js')) {return 'hls'}
             if (id.includes('node_modules')) {return 'vendor'}
-          },
+          }
         },
       },
       // target: 'es2015',
@@ -63,7 +64,7 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
       })
     } else {
       return legacy({
-        targets: 'defaults, android >= 4.4.4, ios >= 7',
+        targets: 'defaults, android >= 5.0, ios >= 10',
       })
     }
   }

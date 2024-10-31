@@ -125,7 +125,7 @@
               </div>
               <div class="checkbox">
                 <input id="hls_beta" type="checkbox" :checked="settingsStore.useHls" @change="hlsChanged">
-                <label for="hls_beta">HLS (beta)</label>
+                <label for="hls_beta">HLS</label>
               </div>
             </div>
           </div>

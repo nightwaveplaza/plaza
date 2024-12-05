@@ -1,0 +1,217 @@
+{
+    "menu": {
+        "about": "Sobre",
+        "ratings": "Populars",
+        "play_history": "Historial de reproducció",
+        "support_us": "Dona'ns suport"
+    },
+    "win": {
+        "settings": {
+            "btn_random": "Aleatori",
+            "application": "Configuracions de l'aplicació",
+            "bottom": "A baix",
+            "author": "Autor",
+            "appearance": "Configuracions d'aparença",
+            "btn_solid": "Sòlid",
+            "source": "Font",
+            "taskbar": "Barra de tasques",
+            "theme": "Tema",
+            "title": "Configuracions d'aplicació",
+            "top": "A dalt",
+            "language": "Canvi d'idioma",
+            "audio_quality": "Qualitat d'àudio",
+            "low_quality": "Qualitat baixa",
+            "bg_notice": "Totes les imatges de fons han estat trobades a l'Internet. Coneixes l'autor? {link}",
+            "background": "Configuracions de fons",
+            "let_us_know": "Fes-nos-ho saber!",
+            "quality_changed": "La qualitat de l'àudio ha canviat. Si us plau, reiniciï la reproducció."
+        },
+        "about": {
+            "btn_credits": "Crèdits",
+            "btn_news": "Novetats",
+            "discord": "Uneix-te al servidor {discord} de la nostra comunitat!",
+            "playlists": "Llistes de reproducció",
+            "submission_link": "aquest formulari",
+            "title": "Sobre",
+            "useful_links": "Enllaços útils",
+            "mobile": "Aplicacions mòbils (iOS / Android)",
+            "version": "Versió",
+            "show_more": "Mostra més",
+            "contact_info": "Informació de contacte",
+            "submissions": "Els vostres enviaments",
+            "streams": "Transmissions",
+            "send_enquires": "Si us plau, enviï els dubtes que pugui tenir a {link}.",
+            "welcome": "Benvinguts a l'estació de ràdio vaporwave i future funk online 24/7.",
+            "submission_form": "Vols enviar-nos música per a transmetre? Si us plau, utilitzi {link}."
+        },
+        "credits": {
+            "title": "Crèdits",
+            "created_by": "pàgina web{app} i aplicacions creades i mantingudes per {author}.",
+            "content": "Tota la música i imatges de fons",
+            "content_by": "{content} pertany als autors. El contingut musical ha sigut proveït pels autors i segells musicals. Si teniu algun problema de drets d'autor, si us plau, feu-nos-ho saber."
+        },
+        "delete_account": {
+            "if_you_want": "Si vol eliminar el seu compte, si us plau, contacta amb nosaltres a {email}",
+            "title": "Eliminar compte",
+            "title2": "Eliminació de compte",
+            "will_be_deleted": "El seu compte i tota la informació relacionada seran permanentment esborrats (preferits i historial)."
+        },
+        "history": {
+            "showing_history": "Mostrant historial: {from} — {to}",
+            "title": "Historial de reproduccions"
+        },
+        "player": {
+            "btn_stop": "Aturar",
+            "listeners": "Oients: {listeners}",
+            "user": "Registrat com: {user}",
+            "volume": "Volum: {volume}%",
+            "welcome": "Benvingut de nou!",
+            "btn_play": "Reproduir"
+        },
+        "ratings": {
+            "btn_monthly": "Mensual",
+            "btn_overtime": "Des de sempre",
+            "btn_weekly": "Setmanal",
+            "title": "Més populars"
+        },
+        "settings_language": {
+            "select": "Selecciona un idioma",
+            "title": "Selecció d'idioma",
+            "help": "Vol ajudar a traduïr Nightwave Plaza? {link}",
+            "translation_author_name": "Ecco1312",
+            "translation_author_link": "https://plaza.one",
+            "translation_by": "Aquesta traducció ha estat feta per {author}."
+        },
+        "song": {
+            "album": "Àlbum",
+            "artist": "Artista",
+            "btn_play_preview": "Reproduir vista prèvia",
+            "btn_stop": "Aturar ({time})",
+            "song_title": "Títol",
+            "title": "Informació de la cançó",
+            "first_played": "Primera reproducció"
+        },
+        "support": {
+            "title": "Ajudeu-nos",
+            "title2": "T'agrada Nightwave Plaza?",
+            "crypto": "Donar criptomonedes",
+            "go_to_site": "Ves a la pàgina web de Nightwave Plaza",
+            "boosty": "Dona'ns suport a Boosty",
+            "thanks": "Gràcies per les donacions, aniran directament a finançar l'estació.",
+            "rewards": "Pots donar suport a l'estació de ràdio i a les successives actualitzacions donant via Boosty i tenir recompenses especials a Discord!"
+        },
+        "user": {
+            "btn_logout": "Tancar sessió",
+            "title": "El meu perfil"
+        },
+        "user_email": {
+            "title": "Canviar correu electrònic"
+        },
+        "user_favorites": {
+            "remove": "Eliminar",
+            "title": "Els meus preferits",
+            "list_empty": "La teva llista és buida. Fes clic al botó {icon} per afegir cançons a aquesta llista."
+        },
+        "user_login": {
+            "btn_register": "Registrar-se",
+            "btn_reset": "Reiniciar",
+            "btn_sign_in": "Iniciar sessió",
+            "remember_me": "Recordar usuari",
+            "title": "Iniciar sessió",
+            "type_username": "Escriu un nom d'usuari i passaport per iniciar sessió a Nightwave Plaza."
+        },
+        "news": {
+            "title": "Novetats"
+        },
+        "user_password": {
+            "title": "Canviar contrasenya"
+        },
+        "user_register": {
+            "btn_register": "Registri's",
+            "captcha_desc": "Si us plau, completi aquest molest captcha.",
+            "captcha_fail": "La validació del captcha és errònia.",
+            "captcha_title": "Segueixes éssent humà?",
+            "please_fill": "Si us plau, empleni aquest formulari de registre. Tots els camps són obligatoris.",
+            "success": "Registre complert",
+            "title": "Registre",
+            "welcome": "Benvingut a Nightwave Plaza, {user}!",
+            "user_information": "Informació d'usuari"
+        },
+        "user_reset": {
+            "enter_email": "Introdueixi el seu correu electrònic",
+            "title": "Restablir contrasenya",
+            "instruction": "Introdueixi la seva adreça de correu electrònic i polsi el botó - li enviarem un correu electrònic amb un enllaç per a reiniciar la seva contrasenya."
+        },
+        "player_timer": {
+            "title": "Temporitzador",
+            "is_active": "El temporitzador és actiu",
+            "start": "Començar",
+            "timer_set": "Temporitzador activat",
+            "info": "Configuri el temps pel temporitzador. La música pararà automàticament.",
+            "alert": "La música pararà d'aquí {minutes} minut(s).",
+            "stop": "Aturar"
+        },
+        "mobile": {
+            "description": "Disposem de les aplicacions oficials d'Android i iOS. Si us plau, descarregui i deixi que Nightwave Plaza li mostri el passat amb la música del futur."
+        }
+    },
+    "buttons": {
+        "cancel": "Cancel·lar",
+        "continue": "Continuar",
+        "ok": "Acceptar",
+        "change": "Canviar",
+        "close": "Tancar"
+    },
+    "errors": {
+        "error": "Error",
+        "user_fetch": "No és possible obtenir informació d'usuari.",
+        "server": "Error intern del servidor.",
+        "enter_user_pass": "Si us plau, introdueixi nom d'usuari i contrasenya.",
+        "fields": {
+            "email_email": "L'adreça de correu electrònic és incorrecta.",
+            "email_required": "Si us plau, introdueixi el correu electrònic.",
+            "username_min": "El nom d'usuari és massa curt.",
+            "username_max": "El nom d'usuari és massa llarg.",
+            "password_match": "Les contrasenyes no coincideixen.",
+            "email_unique": "Ja existeix un usuari amb aquest correu electrònic.",
+            "username_required": "Si us plau, introdueixi nom d'usuari.",
+            "password_required": "Si us plau, introdueixi contrasenya.",
+            "current_password_invalid": "La contrasenya actual és incorrecta.",
+            "captcha_invalid": "La resposta al captcha és invàlida.",
+            "password_min": "La contrasenya és massa curta.",
+            "current_password_required": "Introdueixi la contrasenya actual.",
+            "username_unique": "Aquest nom d'usuari ja existeix.",
+            "username_alphadash": "Nom d'usuari incorrecte. Només admet lletres, xifres i guió baix."
+        },
+        "network_fail": "Xarxa no disponible.",
+        "invalid_user_password": "El nom d'usuari i la contrasenya no coincideixen.",
+        "user_not_found": "Usuari no trobat.",
+        "song_not_found": "Cançó no trobada.",
+        "please_sign": "Si us plau, iniciï sessió al seu compte de Nightwave Plaza per fer ús d'aquesta funció.",
+        "reset_link_invalid": "L'enllaç per a restablir la contrasenya ha expirat o no és vàlid."
+    },
+    "fields": {
+        "current_password": "Contrasenya actual",
+        "new_password": "Nova contrasenya",
+        "password": "Contrasenya",
+        "repeat_password": "Repeteixi la contrasenya",
+        "username": "Nom d'usuari",
+        "email": "Correu electrònic"
+    },
+    "loading": "Carregant…",
+    "messages": {
+        "auth_success": "Autentificació amb èxit!",
+        "email_changed": "L'adreça de correu electrònic ha canviat!",
+        "nice": "G U A I",
+        "password_changed": "La contrasenya ha canviat!",
+        "reset_success": "Les instruccions han sigut enviades al seu correu electrònic.",
+        "success": "Èxit!",
+        "saved": "Guardat",
+        "reaction_tip": "T'ha agradat la cançó. Molt bé! Pitjant el botó \"M'agrada\" dos cops afegirà la cançó a la llista dels teus preferits. Prova-ho!"
+    },
+    "pagination": {
+        "pages": "Pàgines: {n}",
+        "songs": "Cançons: {n}"
+    },
+    "name": "Català"
+}

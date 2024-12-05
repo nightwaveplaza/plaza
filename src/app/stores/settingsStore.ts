@@ -100,7 +100,7 @@ export const useSettingsStore = defineStore('settingsStore', {
       this.language = usePrefs.get<string>('language', getDefaultLanguage())
       this.lowQuality = usePrefs.get<boolean>('low_quality', false)
       this.taskbarPosition = usePrefs.get<string>('taskbar_position', getDefaultTaskbarPosition())
-      this.useHls = usePrefs.get<boolean>('use_hls', false)
+      this.useHls = usePrefs.get<boolean>('use_hls', true)
     },
 
     loadRandomBackground () {

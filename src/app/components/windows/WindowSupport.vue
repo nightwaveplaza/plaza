@@ -27,24 +27,40 @@
         </template>
         <template #content>
           <p class="mb-1">
-            <b>USDT TRC20</b>
+            <b>USDT Tron</b>
           </p>
           <p class="mb-2 address">
-            {{ trc }}
+            {{ usdtTron }}
           </p>
-
           <p class="mb-1">
-            <b>USDT TON, TON, NOT</b>
+            <b>USDT Ethereum</b>
           </p>
           <p class="mb-2 address">
-            {{ ton }}
+            {{ usdtEth }}
           </p>
-
+          <p class="mb-1">
+            <b>USDT TON</b>
+          </p>
+          <p class="mb-2 address">
+            {{ usdtTon }}
+          </p>
+          <p class="mb-1">
+            <b>Ethereum</b>
+          </p>
+          <p class="mb-2 address">
+            {{ eth }}
+          </p>
           <p class="mb-1">
             <b>BTC</b>
           </p>
-          <p class="address">
+          <p class="mb-2 address">
             {{ btc }}
+          </p>
+          <p class="mb-1">
+            <b>TON</b>
+          </p>
+          <p class="address">
+            {{ ton }}
           </p>
         </template>
       </win-group-box>
@@ -79,9 +95,12 @@ const props = defineProps({
 })
 
 const win = ref<InstanceType<typeof WinWindow>>()
-const trc = import.meta.env.VITE_CRYPTO_TRC
-const ton = import.meta.env.VITE_CRYPTO_TON
+const usdtTron = import.meta.env.VITE_CRYPTO_USDT_TRON
+const usdtEth = import.meta.env.VITE_CRYPTO_USDT_ETH
+const usdtTon = import.meta.env.VITE_CRYPTO_USDT_TON
+const eth = import.meta.env.VITE_CRYPTO_ETH
 const btc = import.meta.env.VITE_CRYPTO_BTC
+const ton = import.meta.env.VITE_CRYPTO_TON
 
 function close (): void {
   if (props.direct) {

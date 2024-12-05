@@ -25,7 +25,7 @@
       <div class="col cell">
         {{ t('win.player.listeners', {listeners: playerSongStore.listeners}) }}
       </div>
-      <div v-if="userAuthStore.signed" class="col-5 col-sm-3 cell login">
+      <div v-if="userAuthStore.signed" class="col-5 col-sm-4 cell login">
         {{ t('win.player.user', {user: userAuthStore.username}) }}
       </div>
     </div>

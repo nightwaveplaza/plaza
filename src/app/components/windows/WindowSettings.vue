@@ -74,7 +74,7 @@
         </template>
         <template #content>
           <div class="row no-gutters">
-            <div class="col-7">
+            <div class="col-7 align-content-end">
               <div class="mb-1">
                 {{ t('win.settings.theme') }}
               </div>
@@ -86,7 +86,7 @@
                 </select>
               </div>
             </div>
-            <div class="col ml-2">
+            <div class="col ml-2 align-content-end">
               <div class="mb-1">
                 {{ t('win.settings.taskbar') }}
               </div>

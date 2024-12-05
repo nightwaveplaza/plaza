@@ -123,7 +123,7 @@
                 <input id="low_quality" type="checkbox" :checked="settingsStore.lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
-              <div class="checkbox">
+              <div class="checkbox" v-if="!useMobile()">
                 <input id="hls_beta" type="checkbox" :checked="settingsStore.useHls" @change="hlsChanged">
                 <label for="hls_beta">HLS</label>
               </div>
@@ -157,6 +157,7 @@ const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const settingsStore = useSettingsStore()
 const backgroundList = ref<BackgroundImage[]>([])
+import { useMobile } from '@app/composables/useMobile.ts'
 
 const palette = [
   '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',

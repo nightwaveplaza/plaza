@@ -2,6 +2,7 @@ import en from '@locales/en.json'
 import es from '@locales/es.json'
 import ru from '@locales/ru.json'
 import de from '@locales/de.json'
+import it from '@locales/it.json'
 import pt_BR from '@locales/pt_BR.json'
 
 interface JSONValue {
@@ -18,4 +19,5 @@ export default {
   'pt-BR': pt_BR,
   'ru': ru,
   'es': es,
+  'it': it,
 } as LocaleArray

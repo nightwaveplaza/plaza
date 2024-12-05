@@ -3,6 +3,8 @@ import es from '@locales/es.json'
 import ru from '@locales/ru.json'
 import de from '@locales/de.json'
 import it from '@locales/it.json'
+import ca from '@locales/ca.json'
+import ja from '@locales/ja.json'
 import pt_BR from '@locales/pt_BR.json'
 
 interface JSONValue {
@@ -14,10 +16,12 @@ interface LocaleArray {
 }
 
 export default {
-  'en': en,
+  'ca': ca,
   'de': de,
-  'pt-BR': pt_BR,
-  'ru': ru,
+  'en': en,
   'es': es,
   'it': it,
+  'ja': ja,
+  'pt-BR': pt_BR,
+  'ru': ru,
 } as LocaleArray

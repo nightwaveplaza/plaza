@@ -1,7 +1,7 @@
 <template>
   <win-window v-slot="winProps" :width="280" name="settings-language" :title="t('win.settings_language.title')">
     <div class="p-2">
-      <win-list>
+      <win-list scroll>
         <tr v-for="(lang, name) in _locales" :key="name" class="hover">
           <td class="p-2 lang-icon noselect" v-html="_flags[name]" />
           <td class="noselect show-info" :class="{selected: name === settingsStore.language}" @click="switchLanguage(<string>name)">

@@ -15,7 +15,7 @@
             "btn_credits": "クレジット",
             "btn_news": "ニュース",
             "contact_info": "連絡先情報",
-            "discord": "に参加しましょう コミュニティ{discord} サーバー",
+            "discord": "に参加しましょう コミュニティ{discord}サーバー",
             "welcome": "24 / 7オンラインVaporwaveと将来のファンクラジオ局へようこそ。"
         },
         "ratings": {
@@ -173,16 +173,16 @@
             "username_min": "ユーザー名が短すぎる。",
             "username_max": "ユーザー名が長すぎます。",
             "password_min": "パスワードが短すぎる。",
-            "password_match": "パスワードは一致しません",
-            "current_password_required": "現在のパスワードを入力してください",
-            "email_unique": "このメールを使っているユーザーはすでにいます",
+            "password_match": "パスワードは一致しません。",
+            "current_password_required": "現在のパスワードを入力してください。",
+            "email_unique": "このメールを使っているユーザーはすでにいます。",
             "username_required": "ご入力くださいユーザー名を入力します。",
-            "password_required": "パスワードを入力してください",
+            "password_required": "パスワードを入力してください。",
             "current_password_invalid": "現在のパスワードが間違っています。",
             "captcha_invalid": "の画像認証応答情報を取り出すことができます。",
             "email_required": "メールを入力してください。",
             "username_alphadash": "誤ったユーザー名を入力しました。文字、数字、アンダースコアしか使えません。",
-            "username_unique": "ユーザー名はすでに使われています"
+            "username_unique": "ユーザー名はすでに使われています。"
         },
         "network_fail": "ネットワークをご利用になれません。",
         "user_not_found": "ユーザーが見つかりません。",

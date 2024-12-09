@@ -140,13 +140,13 @@
             "instruction": "電子メール アドレスを入力してボタンをクリックすると、パスワードをリセットするためのリンクが記載された電子メールが送信されます。"
         },
         "player_timer": {
-            "title": "目覚まし時計",
+            "title": "スリープタイマー",
             "is_active": "スリープタイマーが有効になっています",
             "stop": "停止",
             "start": "始める",
             "timer_set": "タイマーセット",
             "info": "スリープタイマーの時間を設定します。 音楽は自動的に停止します。",
-            "alert": "音楽の停止の後に {minutes} 分。"
+            "alert": "{minutes} 分が過ぎた後、音楽は停止します。"
         }
     },
     "menu": {
@@ -160,29 +160,29 @@
         "change": "変化",
         "continue": "続き",
         "ok": "良い",
-        "close": "近い"
+        "close": "閉じる"
     },
     "errors": {
         "error": "エラー",
-        "please_sign": "ログインしてくださいおNightwave プラザ口座の使用をおすすめします。",
+        "please_sign": "この機能を使うにはNightwave Plazaのアカウントにサインインしてください。",
         "user_fetch": "できないユーザを取得す。",
-        "server": "内部サーバエラーになります。",
-        "enter_user_pass": "ご入力くださいユーザー名とパスワードを発行いたします。",
+        "server": "内部サーバエラーが発生しました。",
+        "enter_user_pass": "ユーザー名とパスワードを入力してください。",
         "fields": {
             "email_email": "メールが間違っています。",
             "username_min": "ユーザー名が短すぎる。",
-            "username_max": "ユーザ名が長すぎます。",
+            "username_max": "ユーザー名が長すぎます。",
             "password_min": "パスワードが短すぎる。",
-            "password_match": "パスワードのなかった。",
-            "current_password_required": "入力パスワードになります。",
-            "email_unique": "ユーザーがこのメールは既に使用されています。",
+            "password_match": "パスワードは一致しません",
+            "current_password_required": "現在のパスワードを入力してください",
+            "email_unique": "このメールを使っているユーザーはすでにいます",
             "username_required": "ご入力くださいユーザー名を入力します。",
-            "password_required": "ご入力くださいパスワードになります。",
+            "password_required": "パスワードを入力してください",
             "current_password_invalid": "現在のパスワードが間違っています。",
             "captcha_invalid": "の画像認証応答情報を取り出すことができます。",
-            "email_required": "ご入力ください。",
-            "username_alphadash": "誤ったユーザー名を入力します。 文字、数字ルアドレスを入力してください。許可されます。",
-            "username_unique": "ユーザ名はすでにする体制を整えています。"
+            "email_required": "メールを入力してください。",
+            "username_alphadash": "誤ったユーザー名を入力しました。文字、数字、アンダースコアしか使えません。",
+            "username_unique": "ユーザー名はすでに使われています"
         },
         "network_fail": "ネットワークをご利用になれません。",
         "user_not_found": "ユーザーが見つかりません。",
@@ -202,12 +202,12 @@
     "messages": {
         "auth_success": "認証に成功！",
         "email_changed": "メールは変わりました！",
-        "nice": "ニース",
+        "nice": "ナ・イ・ス",
         "password_changed": "パスワードは変わりました！",
         "success": "成功！",
         "saved": "保存されました",
         "reset_success": "手順があなたの電子メールに送信されました。",
-        "reaction_tip": "あなたはその曲が気に入ってくれました。 ニース！ 「いいね！」ボタンを 2 回クリックすると、曲がお気に入りリストに追加されます。 試してみる！"
+        "reaction_tip": "この曲が気に入ってくれました。 ナイス！ 「いいね！」ボタンを 2 回押すと、曲がお気に入りリストに追加されます。 試してみる！"
     },
     "pagination": {
         "pages": "ページ: {n}",

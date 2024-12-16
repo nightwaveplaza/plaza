@@ -15,7 +15,7 @@
             "btn_credits": "クレジット",
             "btn_news": "ニュース",
             "contact_info": "連絡先情報",
-            "discord": "{discord}サーバーに参加",
+            "discord": "{discord}サーバーに参加！",
             "welcome": "24時間利用可能なオンラインVaporwave・Future funkラジオへようこそ。"
         },
         "ratings": {
@@ -57,7 +57,7 @@
             "author": "作者",
             "appearance": "外観の設定",
             "btn_solid": "単色",
-            "let_us_know": "連絡する",
+            "let_us_know": "連絡する！",
             "source": "画像元",
             "taskbar": "タスクバー",
             "theme": "テーマ",
@@ -72,7 +72,7 @@
             "bg_notice": "すべての背景画像はインターネットで見つけました。作者をご存知ですか? {link}"
         },
         "settings_language": {
-            "translation_by": "翻訳: {author}",
+            "translation_by": "翻訳: {author}。",
             "translation_author_link": "https://plaza.one",
             "translation_author_name": "saikooo,Harve(はーべ)",
             "select": "言語の選択",

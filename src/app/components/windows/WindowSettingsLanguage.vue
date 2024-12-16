@@ -20,7 +20,7 @@
         </i18n-t>
         <i18n-t keypath="win.settings_language.help" tag="p">
           <template #link>
-            <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
+            <br><a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
           </template>
         </i18n-t>
       </win-panel>

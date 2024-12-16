@@ -2,120 +2,120 @@
     "win": {
         "about": {
             "playlists": "プレイリスト",
-            "send_enquires": "までお送りください お問い合わせは{link} 。",
+            "send_enquires": "お問い合わせは{link} までお送りください。",
             "submission_link": "このフォーム",
             "submissions": "提出",
-            "title": "に関しては",
+            "title": "概要",
             "useful_links": "お役立ちリンク",
             "mobile": "モバイルアプリケーション(iOS / Android)",
             "streams": "ストリーム",
             "version": "バージョン",
             "show_more": "さらに表示",
-            "submission_form": "した提出のための音楽放送? ご利用ください {link} .",
+            "submission_form": "放送してほしい音楽がある場合、 {link} をご利用ください。",
             "btn_credits": "クレジット",
             "btn_news": "ニュース",
             "contact_info": "連絡先情報",
-            "discord": "に参加しましょう コミュニティ{discord}サーバー",
-            "welcome": "24 / 7オンラインVaporwaveと将来のファンクラジオ局へようこそ。"
+            "discord": "{discord}サーバーに参加",
+            "welcome": "24時間利用可能なオンラインVaporwave・Future funkラジオへようこそ。"
         },
         "ratings": {
-            "title": "視聴率",
-            "btn_monthly": "マンスリー",
-            "btn_overtime": "残業",
-            "btn_weekly": "ウィークリー"
+            "title": "評価",
+            "btn_monthly": "月毎",
+            "btn_overtime": "全体",
+            "btn_weekly": "週毎"
         },
         "credits": {
             "title": "クレジット",
             "content": "すべての音楽や背景画像",
-            "created_by": "{app} の によって作成および管理されます ウェブサイトとアプリは、 {author} 。",
-            "content_by": "{content} に所属する著作者にあります。 音楽コンテンツ提供して著者や研究者による音楽を表します。 場合は、著作権上の問題で、弊社までお問い合わせ下さい。"
+            "created_by": "{app} ウェブサイトとアプリは、 {author} が作成、管理しています。",
+            "content_by": "{content} は著作者が権利を有しています。楽曲は、制作者やレーベルが提供しています。 著作権上の問題がある場合は、お問い合わせ下さい。"
         },
         "delete_account": {
-            "if_you_want": "を削除したい場合には、お客様の口座にご連絡ください {email}",
+            "if_you_want": "アカウントを削除したい場合には、ご連絡ください。 {email}",
             "title": "アカウントを削除する",
-            "title2": "口座削除",
+            "title2": "アカウント削除",
             "will_be_deleted": "アカウントとすべての関連データ(お気に入りといいね履歴)は完全に削除されます。"
         },
         "mobile": {
-            "description": "公式のAndroidおよびiOSアプリケーションがあります。ぜひダウンロードして、Nightwave Plazaが未来の音楽で過去を見せてください。"
+            "description": "公式のAndroidおよびiOSアプリケーションがあります。ぜひダウンロードして、Nightwave Plazaで未来の音楽で過去を見させてください。"
         },
         "history": {
             "showing_history": "履歴を表示しています: {from} — {to}",
             "title": "プレイ履歴"
         },
         "player": {
-            "btn_stop": "止める",
-            "listeners": "リスナー: {listeners}",
-            "user": "ログイン者: {user}",
+            "btn_stop": "停止",
+            "listeners": "同時視聴者: {listeners}",
+            "user": "ログイン名: {user}",
             "volume": "ボリューム: {volume} %",
-            "welcome": "再びようこそ！",
-            "btn_play": "遊ぶ"
+            "welcome": "おかえりなさい！",
+            "btn_play": "再生"
         },
         "settings": {
             "btn_random": "ランダム",
-            "bottom": "底",
-            "author": "著者",
+            "bottom": "下部",
+            "author": "作者",
             "appearance": "外観の設定",
-            "btn_solid": "固体",
-            "let_us_know": "う お 知っとこ！",
-            "source": "源",
+            "btn_solid": "単色",
+            "let_us_know": "連絡する",
+            "source": "画像元",
             "taskbar": "タスクバー",
             "theme": "テーマ",
             "title": "アプリケーションの設定",
-            "top": "トップ",
-            "audio_quality": "オーディオ品質",
-            "low_quality": "低品質",
+            "top": "上部",
+            "audio_quality": "音質",
+            "low_quality": "低音質",
             "background": "バックグラウンド設定",
-            "application": "アプリケーションの設定",
+            "application": "設定",
             "language": "言語の変更",
             "quality_changed": "オーディオ品質が変更されました。再生を再開してください。",
             "bg_notice": "すべての背景画像はインターネットで見つけました。作者をご存知ですか? {link}"
         },
         "settings_language": {
-            "translation_by": "この翻訳は {author} によって行われました。",
+            "translation_by": "翻訳: {author}",
             "translation_author_link": "https://plaza.one",
-            "translation_author_name": "saikooo",
+            "translation_author_name": "saikooo,Harve(はーべ)",
             "select": "言語の選択",
             "title": "言語選択",
-            "help": "いまのお手伝いをしたいと考えてお訳Nightwave プラザ? {link}"
+            "help": "Nightwave Plaza 翻訳のお手伝いをしていただけますか?{link}"
         },
         "song": {
             "album": "アルバム",
-            "artist": "作家",
-            "btn_play_preview": "再プレビュー",
+            "artist": "アーティスト",
+            "btn_play_preview": "プレビュー",
             "btn_stop": "停止 ( {time} )",
-            "first_played": "最初にプレイした",
+            "first_played": "初回再生日",
             "song_title": "タイトル",
             "title": "曲情報"
         },
         "support": {
-            "title": "私たちを応援してください",
-            "title2": "愛Nightwave プラザ?",
-            "boosty": "Boostyのサポート",
+            "title": "支援",
+            "title2": "Nightwave Plazaが気に入りましたか?",
+            "boosty": "Boostyで支援する",
             "crypto": "暗号通貨を寄付する",
-            "go_to_site": "へ ナイトウェーブプラザのウェブサイト",
-            "thanks": "寄付に感謝します。寄付はそのままステーションの資金として活用されます。",
-            "rewards": "Boostyを通じて寄付することで、ラジオ局やさらなる更新をサポートし、特別なDiscord報酬を獲得できます!"
+            "go_to_site": "Nightwave Plazaのウェブサイトへ移動する",
+            "thanks": "寄付に感謝します。寄付はそのままNightwave Plaza運営の資金として活用されます。",
+            "rewards": "BoostyでNightwave Plazaを支援すると、Discordでの特別報酬を獲得できます!"
         },
         "user": {
             "btn_logout": "ログアウト",
-            "title": "私のプロフィール"
+            "title": "プロフィール"
         },
         "user_email": {
             "title": "メールアドレスを変更"
         },
         "user_favorites": {
-            "remove": "取り除く",
-            "title": "私のお気に入り",
-            "list_empty": "リストは空になります。 をクリック {icon} ボタンを追加がこの一覧です。"
+            "remove": "削除",
+            "title": "お気に入り",
+            "list_empty": "リストは空です。 {icon} ボタンを押すと曲がこの一覧に追加されます。"
         },
         "user_login": {
             "btn_register": "登録",
             "btn_reset": "リセット",
             "btn_sign_in": "サインイン",
-            "remember_me": "グイン情報を記憶させ",
+            "remember_me": "ログイン情報を記憶",
             "title": "サインイン",
-            "type_username": "ユーザ名とパスワードにサインをNightwave プラザがあります。"
+            "type_username": "ユーザー名とパスワードを入力してください。"
         },
         "news": {
             "title": "ニュース"
@@ -125,74 +125,74 @@
         },
         "user_register": {
             "btn_register": "登録",
-            "captcha_desc": "ご記入くださいこんぷ.",
-            "captcha_fail": "画像認証の検証に失敗しました。",
-            "captcha_title": "あなたはまだ人間か？",
+            "captcha_desc": "captchaを操作してください。",
+            "captcha_fail": "画像認証に失敗しました。",
+            "captcha_title": "あなたは人間ですか？",
             "success": "登録完了",
             "title": "登録",
             "user_information": "ユーザー情報",
-            "welcome": "ナイトウェーブ プラザへようこそ 、 {user} さん !",
-            "please_fill": "登録フォームに記入してください。 全て必須項目です。"
+            "welcome": "Nightwave Plazaへようこそ 、 {user} さん !",
+            "please_fill": "登録フォームを記入してください。 全て必須項目です。"
         },
         "user_reset": {
-            "enter_email": "メールアドレスを入力",
+            "enter_email": "メールアドレス",
             "title": "パスワードを再設定する",
-            "instruction": "電子メール アドレスを入力してボタンをクリックすると、パスワードをリセットするためのリンクが記載された電子メールが送信されます。"
+            "instruction": "メールアドレスを入力してボタンを押すと、パスワードをリセットするためのリンクが記載されたメールが送信されます。"
         },
         "player_timer": {
             "title": "スリープタイマー",
             "is_active": "スリープタイマーが有効になっています",
             "stop": "停止",
-            "start": "始める",
+            "start": "開始",
             "timer_set": "タイマーセット",
-            "info": "スリープタイマーの時間を設定します。 音楽は自動的に停止します。",
-            "alert": "{minutes} 分が過ぎた後、音楽は停止します。"
+            "info": "スリープタイマーの時間を設定します。 入力した時間が経過すると音楽は自動的に停止します。",
+            "alert": "{minutes} 分後、音楽は自動停止します。"
         }
     },
     "menu": {
-        "support_us": "ご支援",
-        "about": "報",
-        "ratings": "格付",
+        "support_us": "支援",
+        "about": "概要",
+        "ratings": "評価",
         "play_history": "再生履歴"
     },
     "buttons": {
-        "cancel": "消",
-        "change": "変化",
-        "continue": "続き",
-        "ok": "良い",
+        "cancel": "キャンセル",
+        "change": "変更",
+        "continue": "続ける",
+        "ok": "OK",
         "close": "閉じる"
     },
     "errors": {
         "error": "エラー",
         "please_sign": "この機能を使うにはNightwave Plazaのアカウントにサインインしてください。",
-        "user_fetch": "できないユーザを取得す。",
-        "server": "内部サーバエラーが発生しました。",
+        "user_fetch": "ユーザを取得できません。",
+        "server": "内部サーバーエラーが発生しました。",
         "enter_user_pass": "ユーザー名とパスワードを入力してください。",
         "fields": {
-            "email_email": "メールが間違っています。",
-            "username_min": "ユーザー名が短すぎる。",
+            "email_email": "メールアドレスが間違っています。",
+            "username_min": "ユーザー名が短すぎます。",
             "username_max": "ユーザー名が長すぎます。",
-            "password_min": "パスワードが短すぎる。",
-            "password_match": "パスワードは一致しません。",
+            "password_min": "パスワードが短すぎます。",
+            "password_match": "パスワードが一致しません。",
             "current_password_required": "現在のパスワードを入力してください。",
-            "email_unique": "このメールを使っているユーザーはすでにいます。",
-            "username_required": "ご入力くださいユーザー名を入力します。",
+            "email_unique": "このメールアドレスはすでに使用されています。",
+            "username_required": "ユーザー名を入力してください。",
             "password_required": "パスワードを入力してください。",
-            "current_password_invalid": "現在のパスワードが間違っています。",
-            "captcha_invalid": "の画像認証応答情報を取り出すことができます。",
-            "email_required": "メールを入力してください。",
-            "username_alphadash": "誤ったユーザー名を入力しました。文字、数字、アンダースコアしか使えません。",
-            "username_unique": "ユーザー名はすでに使われています。"
+            "current_password_invalid": "パスワードが間違っています。",
+            "captcha_invalid": "captcha認証に失敗しました。",
+            "email_required": "メールアドレスを入力してください。",
+            "username_alphadash": "ユーザー名が不適切です。文字、数字、アンダースコアのみ有効です。",
+            "username_unique": "このユーザー名はすでに使われています。"
         },
-        "network_fail": "ネットワークをご利用になれません。",
+        "network_fail": "ネットワークをご利用できません。",
         "user_not_found": "ユーザーが見つかりません。",
         "song_not_found": "曲が見つかりません。",
         "invalid_user_password": "ユーザー名とパスワードが一致しません。",
-        "reset_link_invalid": "パスワードのリセットリンク期間の満了日または無効になります。"
+        "reset_link_invalid": "パスワードのリセット期限を過ぎているか、無効なアドレスです。"
     },
     "fields": {
         "current_password": "現在のパスワード",
-        "email": "メール",
+        "email": "メールアドレス",
         "new_password": "新しいパスワード",
         "password": "パスワード",
         "repeat_password": "パスワードを繰り返し",
@@ -200,14 +200,14 @@
     },
     "loading": "読み込み中…",
     "messages": {
-        "auth_success": "認証に成功！",
-        "email_changed": "メールは変わりました！",
+        "auth_success": "認証成功！",
+        "email_changed": "メールアドレスが変更されました！",
         "nice": "ナ・イ・ス",
-        "password_changed": "パスワードは変わりました！",
+        "password_changed": "パスワードが変更されました！",
         "success": "成功！",
         "saved": "保存されました",
-        "reset_success": "手順があなたの電子メールに送信されました。",
-        "reaction_tip": "この曲が気に入ってくれました。 ナイス！ 「いいね！」ボタンを 2 回押すと、曲がお気に入りリストに追加されます。 試してみる！"
+        "reset_success": "パスワード変更用のメールが入力した電子メールに送信されました。",
+        "reaction_tip": "この曲を気に入りましたね。「いいね！」ボタンを 2 回押すと、曲がお気に入りリストに追加されます。"
     },
     "pagination": {
         "pages": "ページ: {n}",

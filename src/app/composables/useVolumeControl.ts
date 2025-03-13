@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { usePrefs } from '@/composables/usePrefs';
+import { usePrefs } from '@app/composables/usePrefs';
 
 
 /**

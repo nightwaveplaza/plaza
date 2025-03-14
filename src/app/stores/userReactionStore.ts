@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { type Ref, ref } from 'vue'
+import { computed, type Ref, ref } from 'vue'
 import { usePrefs } from '@app/composables/usePrefs.ts'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 
@@ -19,6 +19,8 @@ export const useUserReactionStore = defineStore('userReactionStore', () => {
     songId.value = reaction.songId
   }
 
+  const isCurrent = computed(() => songId.value === playerSongStore.songId)
+
   const setUserReaction = (newReaction: number): void => {
     score.value = newReaction
     songId.value = playerSongStore.songId
@@ -35,5 +37,5 @@ export const useUserReactionStore = defineStore('userReactionStore', () => {
     usePrefs.save('user_reaction', <UserReaction>{ score: score.value, songId: songId.value })
   }
 
-  return { userReaction: { score, songId }, reset, setUserReaction }
+  return { score, songId, reset, setUserReaction, isCurrent }
 })

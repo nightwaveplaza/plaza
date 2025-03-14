@@ -19,7 +19,7 @@
           <div class="col-12 col-md-7 pr-0 pr-md-2">
             <div class="text-field p-0 m-0 player-time-container">
               <canvas ref="canvas" class="player-visual" />
-              <win-player-time ref="time" @stop-by-timer="stopPlay" />
+              <win-player-time ref="time" @stop-by-timer="stopAudio" />
             </div>
           </div>
 
@@ -70,24 +70,20 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import useVisual from '@app/composables/useVisual'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
-import { useSettingsStore } from '@app/stores/settingsStore'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
-import Hls from 'hls.js'
+import { useAudioPlayer } from '@app/composables/useAudioPlayer.ts'
 
 const { volume, setVolume } = useVolumeControl()
+const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
 
 const { t } = useI18n()
-const { startVisual, stopVisual } = useVisual()
-const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
@@ -114,109 +110,17 @@ const playText = computed((): string => {
 const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
 const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
 
-// Non-reactive
-//let offline = false
-let hls: Hls | null = null
-let audio: HTMLAudioElement | null = null
-
 watch(volume, (newVolume) => {
-  if (audio) {
-    audio.volume = newVolume / 100
-    time.value!.showText(t('win.player.volume', { volume: newVolume }))
-  }
+  time.value!.showText(t('win.player.volume', { volume: newVolume }))
 })
-
-function updateSong (): void {
-  // if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
-  //   stopPlay()
-  //   setTimeout(play, 2000)
-  // }
-
-  if (playerPlaybackStore.state === PlayerState.PLAYING) {
-    document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
-    updateMediaSession()
-    updateMediaSessionPosition()
-  }
-
-  //offline = false
-}
 
 function play (): void {
   if (playerPlaybackStore.state === PlayerState.IDLE) {
     playerPlaybackStore.state = PlayerState.LOADING
-    startPlay()
+    playAudio()
   } else {
-    stopPlay()
+    stopAudio()
   }
-}
-
-function startPlay (): void {
-  audio = document.createElement('audio')
-  audio.crossOrigin = 'anonymous'
-
-  if (Hls.isSupported() && settingsStore.useHls) {
-    hls = new Hls()
-    hls.loadSource('https://radio.plaza.one/hls')
-    hls.attachMedia(audio)
-    if (settingsStore.lowQuality) {
-      hls.currentLevel = 0
-    }
-  } else {
-    const noCacheStr = 'nocache=' + Date.now()
-    if (settingsStore.lowQuality) {
-      audio.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
-    } else {
-      audio.src = 'https://radio.plaza.one/mp3?' + noCacheStr
-    }
-  }
-
-  audio.volume = volume.value / 100
-
-  audio.addEventListener('play', onAudioPlayEvent)
-  audio.addEventListener('pause', onAudioPauseEvent)
-
-  audio.play().then(() => {
-    playerPlaybackStore.state = PlayerState.PLAYING
-    startVisual(audio!, canvas.value!)
-    updateMediaSession()
-    updateMediaSessionPosition()
-  })
-
-  document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
-}
-
-function pausePlay(): void {
-  stopPlay()
-}
-
-function stopPlay (): void {
-  setMediaSessionState('none')
-  stopVisual()
-
-  if (Hls.isSupported()) {
-    hls?.detachMedia()
-    hls?.destroy()
-    hls = null
-  }
-
-  audio?.removeEventListener('play', onAudioPlayEvent)
-  audio?.removeEventListener('pause', onAudioPauseEvent)
-  audio?.pause()
-  audio?.remove()
-  audio = null
-
-  playerPlaybackStore.state = PlayerState.IDLE
-  playerPlaybackStore.sleepTime = 0
-
-  document.title = 'Nightwave Plaza - Online Vaporwave Radio'
-}
-
-function onAudioPlayEvent() {
-  setMediaSessionState('playing')
-}
-
-function onAudioPauseEvent() {
-  setMediaSessionState('paused')
 }
 
 function showSongInfo (): void {
@@ -238,54 +142,7 @@ function openTimerWindow (): void {
 }
 
 onMounted(() => {
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      updateSong()
-    }
-  })
-
-  setMediaSessionActions()
+  setVisualCanvas(canvas.value!)
 })
-
-function updateMediaSession (): void {
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: playerSongStore.title,
-      artist: playerSongStore.artist,
-      album: playerSongStore.album,
-      artwork: [
-        { src: playerSongStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
-      ],
-    })
-  } else {
-    console.log('No media session')
-  }
-}
-
-function setMediaSessionActions (): void {
-  if ('mediaSession' in navigator) {
-    try {
-      navigator.mediaSession.setActionHandler('play', play)
-      navigator.mediaSession.setActionHandler('pause', pausePlay)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-}
-
-function setMediaSessionState (state: MediaSessionPlaybackState): void {
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.playbackState = state
-  }
-}
-
-function updateMediaSessionPosition () {
-  if ('setPositionState' in navigator.mediaSession) {
-    navigator.mediaSession.setPositionState({
-      duration: playerSongStore.length,
-      position: playerSongStore.position
-    });
-  }
-}
 </script>
 

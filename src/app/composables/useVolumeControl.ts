@@ -1,7 +1,6 @@
 import { ref } from 'vue';
 import { usePrefs } from '@app/composables/usePrefs';
 
-
 /**
  * useVolumeControl composable
  * 
@@ -11,10 +10,12 @@ import { usePrefs } from '@app/composables/usePrefs';
  *
  * The volume is expected to be in the range 0–100, and the audio components will convert this percentage to a normalized value (0–1) as needed.
  */
-export function useVolumeControl() {
-    // Initialize volume from local storage with default value of 100 (100% volume)
-    const volume = ref(usePrefs.get<number>('volume', 100)); // default to 100
 
+// Initialize volume from local storage with default value of 100 (100% volume)
+// Keep ref outside of export function to not initialize it every time we use this composable
+const volume = ref(usePrefs.get<number>('volume', 100)); // default to 100
+
+export function useVolumeControl() {
     // Updates volume value and immediately persists it to localStorage
     const setVolume = (newVolume: number): void => {
         volume.value = newVolume;

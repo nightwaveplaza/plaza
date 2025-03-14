@@ -122,6 +122,7 @@ let audio: HTMLAudioElement | null = null
 watch(volume, (newVolume) => {
   if (audio) {
     audio.volume = newVolume / 100
+    time.value!.showText(t('win.player.volume', { volume: newVolume }))
   }
 })
 

@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import noUiSlider from 'nouislider'
+import type { API as noUiSliderAPI } from 'nouislider'
 
 /**
  * This component renders a volume slider using noUiSlider.
@@ -30,7 +31,7 @@ const emit = defineEmits<{ (e: 'update-volume', newVolume: number): void }>()
 const volumeSlider = ref<HTMLDivElement | null>(null)
 
 // Store slider instance so we can update it when the parent's volume changes.
-let sliderInstance: noUiSlider.API | null = null
+let sliderInstance: noUiSliderAPI | null = null
 
 /**
  * createSlider
@@ -61,14 +62,15 @@ onMounted(() => {
 })
 
 // If the parent's volume prop changes, update the slider value.
-watch(
-  () => props.volume,
-  (newVolume) => {
-    if (sliderInstance) {
-      sliderInstance.set(newVolume)
-    }
-  }
-)
+// TODO this makes slider move laggy
+// watch(
+//   () => props.volume,
+//   (newVolume) => {
+//     if (sliderInstance) {
+//       sliderInstance.set(newVolume)
+//     }
+//   }
+// )
 </script>
 
 <style lang="scss">

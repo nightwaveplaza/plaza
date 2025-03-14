@@ -24,7 +24,7 @@
           </div>
 
           <div class="col col-md-5 d-none d-md-block">
-            <win-player-volume @onchange="setVolume" @onload="updateVolume" />
+            <win-player-volume :volume="volume" @update-volume="setVolume" />
           </div>
         </div>
 
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import useVisual from '@app/composables/useVisual'
@@ -80,7 +80,10 @@ import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
+import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import Hls from 'hls.js'
+
+const { volume, setVolume } = useVolumeControl()
 
 const { t } = useI18n()
 const { startVisual, stopVisual } = useVisual()
@@ -89,6 +92,7 @@ const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlaybackStore = usePlayerPlaybackStore()
+
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -112,9 +116,14 @@ const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB
 
 // Non-reactive
 //let offline = false
-let volume = 100
 let hls: Hls | null = null
 let audio: HTMLAudioElement | null = null
+
+watch(volume, (newVolume) => {
+  if (audio) {
+    audio.volume = newVolume / 100
+  }
+})
 
 function updateSong (): void {
   // if (offline && playerPlaybackStore.state === PlayerState.PLAYING) {
@@ -160,7 +169,7 @@ function startPlay (): void {
     }
   }
 
-  audio.volume = volume
+  audio.volume = volume.value / 100
 
   audio.addEventListener('play', onAudioPlayEvent)
   audio.addEventListener('pause', onAudioPauseEvent)
@@ -207,18 +216,6 @@ function onAudioPlayEvent() {
 
 function onAudioPauseEvent() {
   setMediaSessionState('paused')
-}
-
-function setVolume (volume: number): void {
-  updateVolume(volume)
-  time.value!.showText(t('win.player.volume', { volume }))
-}
-
-function updateVolume (newVolume: number): void {
-  volume = newVolume / 100
-  if (playerPlaybackStore.state === PlayerState.PLAYING) {
-    audio!.volume = volume
-  }
 }
 
 function showSongInfo (): void {

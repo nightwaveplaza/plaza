@@ -17,7 +17,7 @@
 
     <!-- Player -->
     <div class="content p-2">
-      <win-player />
+      <win-player :volume="volume" @update-volume="setVolume"/>
     </div>
 
     <!-- Statusbar -->
@@ -41,8 +41,10 @@ import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { Native } from '@mobile/bridge/native.ts'
+import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 
 const { t } = useI18n()
+const { volume, setVolume } = useVolumeControl()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()

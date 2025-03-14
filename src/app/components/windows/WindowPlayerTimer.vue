@@ -66,7 +66,7 @@ import { useWindowsStore } from '@app/stores/windowsStore.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
@@ -74,9 +74,9 @@ const minutes = ref(20)
 const timeLeft = ref(0)
 
 const active = computed(() =>
-    playerPlaybackStore.sleepTime !== 0 && playerPlaybackStore.sleepTime > Date.now())
+    playerPlayback.sleepTime !== 0 && playerPlayback.sleepTime > Date.now())
 const btnText = computed(() =>
-    playerPlaybackStore.sleepTime !== 0 ? t('win.player_timer.stop') : t('win.player_timer.start'))
+    playerPlayback.sleepTime !== 0 ? t('win.player_timer.stop') : t('win.player_timer.start'))
 const timeText = computed(() => new Date(timeLeft.value).toISOString().substring(11, 19))
 
 // Non-reactive
@@ -84,9 +84,9 @@ let intervalId = 0
 
 function start (): void {
   if (active.value) {
-    playerPlaybackStore.sleepTime = 0
+    playerPlayback.sleepTime = 0
   } else {
-    playerPlaybackStore.sleepTime = Date.now() + (minutes.value * 60 * 1000)
+    playerPlayback.sleepTime = Date.now() + (minutes.value * 60 * 1000)
     windowsStore.alert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'), 'info'
@@ -104,7 +104,7 @@ function add (amount: number): void {
 }
 
 function updateTimeLeft (): void {
-  timeLeft.value = playerPlaybackStore.sleepTime - Date.now()
+  timeLeft.value = playerPlayback.sleepTime - Date.now()
 }
 
 onMounted(() => {

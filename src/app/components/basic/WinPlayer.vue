@@ -87,8 +87,7 @@ const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
-
+const playerPlayback = usePlayerPlaybackStore()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -98,25 +97,23 @@ const artwork = computed(() => {
 })
 
 const playText = computed((): string => {
-  if (playerPlaybackStore.state === PlayerState.LOADING) {
-    return t('loading')
-  } else if (playerPlaybackStore.state === PlayerState.PLAYING) {
-    return t('win.player.btn_stop')
-  } else {
-    return t('win.player.btn_play')
+  switch (playerPlayback.state) {
+    case PlayerState.LOADING: return t('loading')
+    case PlayerState.PLAYING: return t('win.player.btn_stop')
+    default: return t('win.player.btn_play')
   }
 })
 
-const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
-const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
+const isPlaying = computed(() => playerPlayback.state === PlayerState.PLAYING)
+const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '')
 
 watch(volume, (newVolume) => {
   time.value!.showText(t('win.player.volume', { volume: newVolume }))
 })
 
 function play (): void {
-  if (playerPlaybackStore.state === PlayerState.IDLE) {
-    playerPlaybackStore.state = PlayerState.LOADING
+  if (playerPlayback.state === PlayerState.IDLE) {
+    playerPlayback.state = PlayerState.LOADING
     playAudio()
   } else {
     stopAudio()

@@ -65,30 +65,29 @@ import { PlayerState } from '@app/types/types.ts'
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
 
 const artwork = computed(() => {
   return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
 const playText = computed((): string => {
-  if (playerPlaybackStore.state === PlayerState.LOADING) {
+  if (playerPlayback.state === PlayerState.LOADING) {
     return t('loading')
-  } else if (playerPlaybackStore.state === PlayerState.PLAYING) {
+  } else if (playerPlayback.state === PlayerState.PLAYING) {
     return t('win.player.btn_stop')
   } else {
     return t('win.player.btn_play')
   }
 })
 
-const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
-
-const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
+const isPlaying = computed(() => playerPlayback.state === PlayerState.PLAYING)
+const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '')
 
 function play (): void {
-  if (playerPlaybackStore.state === PlayerState.PLAYING) {
+  if (playerPlayback.state === PlayerState.PLAYING) {
     windowsStore.close('player-timer')
-    playerPlaybackStore.sleepTime = 0
+    playerPlayback.sleepTime = 0
   }
   Native.audioPlay()
 }

@@ -15,7 +15,7 @@ const i18n = useI18n()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 
 function updateBackgroundNative (bg: Background): void {
@@ -48,17 +48,17 @@ function registerEmitterEvents (): void {
   })
 
   eventBus.on('isPlaying', (playing: boolean) => {
-    playerPlaybackStore.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
+    playerPlayback.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
   })
 
   eventBus.on('isBuffering', () => {
-    playerPlaybackStore.state = PlayerState.LOADING
+    playerPlayback.state = PlayerState.LOADING
   })
 
   // Event from onResume if sleep timer is still alive
   eventBus.on('sleepTime', (time: number) => {
     if (time > Date.now()) {
-      playerPlaybackStore.sleepTime = time
+      playerPlayback.sleepTime = time
     }
   })
 }
@@ -80,7 +80,7 @@ watch(() => settingsStore.lowQuality, (lowQuality) => {
 })
 
 // Watch timer changes
-watch(() => playerPlaybackStore.sleepTime, (time) => {
+watch(() => playerPlayback.sleepTime, (time) => {
   Native.setSleepTimer(time)
 })
 

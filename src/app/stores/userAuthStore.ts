@@ -53,7 +53,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
 
     logout () {
       const userReactionStore = useUserReactionStore()
-      userReactionStore.$reset()
+      userReactionStore.reset()
 
       this.signed = false
       this.username = 'Guest'

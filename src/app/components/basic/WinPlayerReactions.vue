@@ -20,13 +20,13 @@ const CL_LIKE = '#c12727'
 
 const { t } = useI18n()
 const playerSongStore = usePlayerSongStore()
-const userReactionStore = useUserReactionStore()
+const { userReaction, setUserReaction } = useUserReactionStore()
 const windowsStore = useWindowsStore()
 
-const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
+const likeIcon = computed(() => userReaction.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => {
-  if (playerSongStore.songId === userReactionStore.songId) {
-    return userReactionStore.score === 2 ? CL_FAV : userReactionStore.score === 1 ? CL_LIKE : ''
+  if (playerSongStore.songId === userReaction.songId) {
+    return userReaction.score === 2 ? CL_FAV : userReaction.score === 1 ? CL_LIKE : ''
   } else {
     return ''
   }
@@ -35,17 +35,12 @@ const sending = ref(false)
 
 // Methods
 function like (): void {
-  if (playerSongStore.songId !== userReactionStore.songId) {
-    userReactionStore.score = 0
+  if (playerSongStore.songId !== userReaction.songId) {
+    setUserReaction(0)
   }
 
-  if (userReactionStore.score === 1) {
-    send(2)
-  } else if (userReactionStore.score === 2) {
-    send(0)
-  } else {
-    send(1)
-  }
+  // score map if we hit like when score == 1 then favorite, else remove. If no score, then like
+  send({1: 2, 2: 0}[userReaction.score] ?? 1)
 }
 
 function send (score: number): void {
@@ -53,8 +48,7 @@ function send (score: number): void {
 
   api.reactions.react(score).then(res => {
     playerSongStore.reactions = res.data.reactions
-    userReactionStore.score = score
-    userReactionStore.songId = playerSongStore.songId
+    setUserReaction(score)
     showTip()
   }).catch(e => {
     if (e instanceof AxiosError && e.response!.status === 401) {

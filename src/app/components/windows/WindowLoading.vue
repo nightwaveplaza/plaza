@@ -73,28 +73,22 @@ function move (): void {
   requestAnimationFrame(move)
 }
 
-watch(() => playerSongStore.songId, (songId) => {
-  console.log(songId)
+// waiting for the first status response then check news and open up player
+watch(() => playerSongStore.songId, () => {
+  api.news.latest().then(res => {
+    const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
+    if (latestNewsRead < res.data.id) {
+      usePrefs.save('latestNewsRead', res.data.id)
+      setTimeout(() => openWindow(WinType.NEWS), 3000)
+    }
+
+    openWindow(WinType.PLAYER)
+    closeWindow(WinType.LOADING)
+  })
 })
 
 onMounted(() => {
   move()
-
-  // waiting for the first status response then check news and open up player
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      api.news.latest().then(res => {
-        const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
-        if (latestNewsRead < res.data.id) {
-          usePrefs.save('latestNewsRead', res.data.id)
-          setTimeout(() => openWindow(WinType.NEWS), 3000)
-        }
-
-        openWindow(WinType.PLAYER)
-        closeWindow(WinType.LOADING)
-      })
-    }
-  })
 })
 
 onBeforeUnmount(() => {

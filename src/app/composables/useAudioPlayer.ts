@@ -6,7 +6,6 @@ import { PlayerState } from '@app/types/types.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import useVisual from '@app/composables/useVisual.ts'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { MutationType } from 'pinia'
 
 /**
  * useAudioPlayer composable
@@ -31,11 +30,9 @@ export function useAudioPlayer() {
     }
   })
 
-  // Subscribe to song update and change MediaSession and document title
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      updateAudioMetadata()
-    }
+  // Watch for song update and change MediaSession and document title
+  watch(() => playerSongStore.songId, () => {
+    updateAudioMetadata()
   })
 
   // Set reference to <canvas> element to use with useVisual

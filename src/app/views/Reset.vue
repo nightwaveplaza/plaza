@@ -1,35 +1,41 @@
 <template>
-  <div class="app-desktop theme-win98">
-    <window-user-reset-password v-if="windowsStore.isOpened('user-reset-password')" :token="token" />
-    <window-user-reset v-if="windowsStore.isOpened('user-reset')" />
+  <div class="app-desktop" :class="settingsStore.themeName" :style="{backgroundImage, backgroundColor}">
+    <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
 
+    <win-taskbar />
+    <win-status-bar />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
+import { useSettingsStore } from '@app/stores/settingsStore.ts'
 
 const router = useRouter()
 const route = useRoute()
-const windowsStore = useWindowsStore()
+const userAuthStore = useUserAuthStore()
+const { openedWindows, openWindow, WinType } = useWindows()
+const settingsStore = useSettingsStore()
 
-// Reactive data
-const token = ref('')
+const backgroundImage = computed(() => settingsStore.backgroundSrc)
+const backgroundColor = computed(() => settingsStore.background.color)
 
-watch(windowsStore.alerts, (n) => {
-  if (n.length === 0 && !windowsStore.isOpened('user-reset-password') && !windowsStore.isOpened('user-reset')) {
-    router.push({ name: 'index' })
+// Redirect to index if all windows are closed
+watch(() => openedWindows.value, (n) => {
+  if (Object.keys(n).length === 0) {
+     router.push({ name: 'index' })
   }
-})
+}, {deep: true})
 
 onMounted(() => {
   if (route.params.token) {
-    token.value = route.params.token as string
-    windowsStore.open('user-reset-password')
+    userAuthStore.resetToken = route.params.token as string
+    openWindow(WinType.USER_RESET_PASSWORD)
   } else {
-    windowsStore.open('user-reset')
+    openWindow(WinType.USER_RESET)
   }
 })
 </script>

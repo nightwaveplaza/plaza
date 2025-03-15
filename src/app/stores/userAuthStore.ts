@@ -9,7 +9,8 @@ interface State {
   username: string,
   signed: boolean,
   agent: string,
-  token: string | null
+  token: string | null,
+  resetToken: string | null
 }
 
 const cookieApi = Cookies.withAttributes({
@@ -22,7 +23,8 @@ export const useUserAuthStore = defineStore('userAuthStore', {
     username: 'Guest',
     signed: false,
     agent: 'Nightwave Plaza Axios',
-    token: null
+    token: null,
+    resetToken: null
   }),
 
   actions: {

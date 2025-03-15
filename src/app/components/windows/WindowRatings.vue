@@ -69,7 +69,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
@@ -79,7 +78,6 @@ import { useApiError } from '@app/composables/useApiError.ts'
 import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const { winAlert, winSongInfo } = useAlerts()
 
 const list = ref<InstanceType<typeof WinList>>()

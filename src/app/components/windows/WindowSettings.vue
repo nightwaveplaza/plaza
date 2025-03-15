@@ -149,17 +149,17 @@
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useSettingsStore } from '@app/stores/settingsStore'
-import { enBackgroundMode, type BackgroundImage } from '@app/types/types'
-
-const { t } = useI18n()
-const windowsStore = useWindowsStore()
-const settingsStore = useSettingsStore()
-const backgroundList = ref<BackgroundImage[]>([])
+import { type BackgroundImage, enBackgroundMode, WinType } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+
+const { t } = useI18n()
+const settingsStore = useSettingsStore()
+const backgroundList = ref<BackgroundImage[]>([])
 const { winAlert } = useAlerts()
+const { openWindow, closeWindow } = useWindows()
 
 defineProps<{
   name: string
@@ -237,8 +237,8 @@ function taskbarPositionSelected (e: Event): void {
 }
 
 function openLanguageSettings (): void {
-  windowsStore.open('settings-language')
-  windowsStore.close('settings')
+  openWindow(WinType.SETTINGS_LANGUAGE)
+  closeWindow(WinType.SETTINGS)
 }
 
 function qualityChanged (e: Event): void {

@@ -106,7 +106,6 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserRegister } from '@app/types/types'
@@ -115,7 +114,6 @@ import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
 const router = useRouter()
-const windowsStore = useWindowsStore()
 const { winAlert } = useAlerts()
 
 const props = withDefaults(defineProps<{

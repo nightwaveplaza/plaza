@@ -34,14 +34,16 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const router = useRouter()
-const windowsStore = useWindowsStore()
+const { winAlert } = useAlerts()
+const { closeWindow } = useWindows()
 
 // Props
 const props = defineProps({
@@ -55,7 +57,6 @@ const props = defineProps({
   },
 })
 
-const win = ref<InstanceType<typeof WinWindow>>()
 const password = ref('')
 const passwordRepeat = ref('')
 const sending = ref(false)
@@ -64,16 +65,16 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert((e as Error).message, t('errors.error'))
+    return winAlert((e as Error).message, t('errors.error'))
   }
 
   sending.value = true
 
   api.user.confirmReset({ token: props.token, password: password.value }).then(() => {
-    windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
-    win.value!.close()
+    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    closeWindow(WinType.USER_RESET_PASSWORD)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

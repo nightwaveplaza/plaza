@@ -87,7 +87,6 @@
 </template>
 
 <script setup lang="ts">
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useMobile } from '@app/composables/useMobile.ts'
@@ -98,8 +97,6 @@ import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow } = useWindows()
-const windowsStore = useWindowsStore()
-
 
 defineProps<{
   name: string

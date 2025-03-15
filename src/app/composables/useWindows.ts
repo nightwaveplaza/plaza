@@ -5,6 +5,8 @@ import { computed } from 'vue'
 export function useWindows() {
   const windowsStore = useWindowsStore()
 
+  const openedWindows = computed(() => windowsStore.windows)
+
   const openWindow = (name: WinType) => {
     windowsStore.open(name)
   }
@@ -13,7 +15,9 @@ export function useWindows() {
     windowsStore.close(name)
   }
 
-  const openedWindows = computed(() => windowsStore.windows)
+  const minimizeWindow = (name: WinType) => {
+    windowsStore.minimize(name)
+  }
 
-  return { openWindow, closeWindow, openedWindows }
+  return { openWindow, closeWindow, openedWindows, minimizeWindow }
 }

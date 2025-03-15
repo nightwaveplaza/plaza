@@ -73,17 +73,17 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import type { UserLogin } from '@app/types/types'
+import { type UserLogin, WinType } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
+const { openWindow, closeWindow } = useWindows()
 
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
 const { winAlert } = useAlerts()
 
 defineProps<{
@@ -117,13 +117,13 @@ function login (): void {
 }
 
 function openRegister (): void {
-  windowsStore.open('user-register')
-  win.value!.close()
+  openWindow(WinType.USER_REGISTER)
+  closeWindow(WinType.USER_LOGIN)
 }
 
 function openReset (): void {
-  windowsStore.open('user-reset')
-  win.value!.close()
+  openWindow(WinType.USER_RESET)
+  closeWindow(WinType.USER_LOGIN)
 }
 </script>
 

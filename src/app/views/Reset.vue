@@ -3,7 +3,6 @@
     <window-user-reset-password v-if="windowsStore.isOpened('user-reset-password')" :token="token" />
     <window-user-reset v-if="windowsStore.isOpened('user-reset')" />
 
-    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type" />
   </div>
 </template>
 

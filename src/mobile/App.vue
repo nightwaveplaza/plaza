@@ -1,9 +1,6 @@
 <template>
   <div :class="settingsStore.themeName" :style="{backgroundColor}" class="app-desktop">
-    <component :is="window.form" v-for="window in windowsStore.windows" :key="window.name" />
-
-    <window-song v-for="s in windowsStore.songWindows" :id="s.id" :key="s.id" :name="s.name" />
-    <window-alert v-for="a in windowsStore.alerts" :key="a.id" :name="a.name" :text="a.text" :title="a.title" :type="a.type" />
+    <component :is="window.component" v-for="window in windowsStore.windows" :key="window.name" :name="window.name" />
 
     <win-taskbar />
     <native-watcher />

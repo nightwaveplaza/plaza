@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="340" name="mobile" title="Nightwave Plaza Mobile">
+  <win-window v-slot="winProps" :width="340" :name="name" title="Nightwave Plaza Mobile">
     <div class="p-2">
       <win-panel class="mb-2">
         <div class="row no-gutters">
@@ -44,6 +44,10 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+defineProps<{
+  name: string
+}>()
 </script>
 
 <style lang="scss">

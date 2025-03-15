@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="430" name="user-register" :title="t('win.user_register.title')">
+  <win-window ref="win" :width="430" :name="name" :title="t('win.user_register.title')">
     <div class="p-2 noselect">
       <template v-if="step === 1">
         <div class="row no-gutters">
@@ -111,14 +111,18 @@ import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserRegister } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
 const router = useRouter()
 const windowsStore = useWindowsStore()
+const { winAlert } = useAlerts()
 
 const props = withDefaults(defineProps<{
+  name: string
   direct: boolean
 }>(), {
+  name: 'window-user-register',
   direct: false
 })
 
@@ -141,7 +145,7 @@ function register (): void {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert((e as Error).message, t('errors.error'))
+    return winAlert((e as Error).message, t('errors.error'))
   }
 
   step.value = 2
@@ -150,19 +154,19 @@ function register (): void {
 function completeCaptcha (): void {
   if (fields.captcha_response === '') {
     step.value = 1
-    return windowsStore.alert(t('win.user_register.captcha_fail'), t('errors.error'))
+    return winAlert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
   sending.value = true
 
   api.user.register(fields).then(() => {
-    windowsStore.alert(
+    winAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
     step.value = 1
   }).finally(() => sending.value = false)
 }

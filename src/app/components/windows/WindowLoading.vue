@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="220" name="loading" title="Nightwave Plaza">
+  <win-window :width="220" :name="name" title="Nightwave Plaza">
     <template #header>
       <div class="buttons" />
     </template>
@@ -34,6 +34,10 @@ import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
+
+defineProps<{
+  name: string
+}>()
 
 const style = ref({
   transform: `translate(0px, 0px)`,

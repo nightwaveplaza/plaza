@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="250" name="player-timer" :title="t('win.player_timer.title')">
+  <win-window ref="win" v-slot="winProps" :width="250" :name="name" :title="t('win.player_timer.title')">
     <div class="p-3">
       <div v-if="active" class="text-center">
         <p>{{ t('win.player_timer.title') }}</p>
@@ -62,11 +62,15 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
 import type WinWindow from '@app/components/basic/WinWindow.vue'
-import { useWindowsStore } from '@app/stores/windowsStore.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const playerPlayback = usePlayerPlaybackStore()
+const { winAlert } = useAlerts()
+
+defineProps<{
+  name: string
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
@@ -87,7 +91,7 @@ function start (): void {
     playerPlayback.sleepTime = 0
   } else {
     playerPlayback.sleepTime = Date.now() + (minutes.value * 60 * 1000)
-    windowsStore.alert(
+    winAlert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'), 'info'
     )

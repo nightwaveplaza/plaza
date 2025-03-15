@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="user-reset-password" title="Reset password" :width="280">
+  <win-window ref="win" :name="name" title="Reset password" :width="280">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -45,6 +45,10 @@ const windowsStore = useWindowsStore()
 
 // Props
 const props = defineProps({
+  name: {
+    type: String,
+    default: 'user-reset-password'
+  },
   token: {
     type: String,
     default: '',

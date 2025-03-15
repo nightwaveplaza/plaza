@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="320" name="user-reset" :title="t('win.user_reset.title')">
+  <win-window v-slot="winProps" ref="win" :width="320" :name="name" :title="t('win.user_reset.title')">
     <div class="p-2">
       <p class="pb-3 px-3 text-center">
         {{ t('win.user_reset.instruction') }}
@@ -40,14 +40,18 @@
 import { reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserReset } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
+const { winAlert } = useAlerts()
+
+defineProps<{
+  name: string,
+}>()
 
 const fields: UserReset = reactive({
   email: '',
@@ -60,7 +64,7 @@ const sending = ref(false)
 
 function reset (): void {
   if (fields.email.length === 0) {
-    return windowsStore.alert(t('errors.fields.email_required'), t('errors.error'))
+    return winAlert(t('errors.fields.email_required'), t('errors.error'))
   }
 
   showCaptcha.value = true
@@ -70,11 +74,11 @@ function completeCaptcha (): void {
   sending.value = true
 
   api.user.reset({ ...fields, captcha_response: captchaResponse.value }).then(() => {
-    windowsStore.alert(t('messages.reset_success'), t('messages.success'), 'info')
+    winAlert(t('messages.reset_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
     showCaptcha.value = false
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 

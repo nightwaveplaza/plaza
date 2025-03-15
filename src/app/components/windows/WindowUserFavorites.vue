@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="450" fluid-height name="user-favorites" :title="t('win.user_favorites.title')">
+  <win-window v-slot="winProps" :width="450" fluid-height :name="name" :title="t('win.user_favorites.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
@@ -10,7 +10,7 @@
                 <td class="p-1 noselect" style="width: 62px">
                   <img :src="fav.song.artwork_src ? fav.song.artwork_src : 'https://i.plaza.one/dead.jpg'" alt="artwork">
                 </td>
-                <td class="pl-1 show-info" @click="windowsStore.showSong(fav.song.id)">
+                <td class="pl-1 show-info" @click="winSongInfo(fav.song.id)">
                   <div class="artist">
                     {{ fav.song.artist }}
                   </div>
@@ -72,15 +72,19 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { FavoritesResponse } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const { sdy } = helperComposable()
+const { winAlert, winSongInfo } = useAlerts()
+
+defineProps<{
+  name: string,
+}>()
 
 const data: FavoritesResponse = reactive({
   per_page: 25,
@@ -101,7 +105,7 @@ function fetchLikes (page: number): void {
     Object.assign(data, res.data)
     loading.value = false
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => {
     loading.value = false
     nextTick(() => {
@@ -123,7 +127,7 @@ function deleteLike (favoriteId: number): void {
   api.user.deleteFavorite(favoriteId).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   })
 }
 

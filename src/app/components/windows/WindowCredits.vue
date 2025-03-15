@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="420" name="credits" :title="t('win.credits.title')">
+  <win-window v-slot="winProps" :width="420" :name="name" :title="t('win.credits.title')">
     <div class="pt-2 pl-2 pr-2">
       <win-memo>
         <i18n-t keypath="win.credits.created_by" tag="p" class="mb-2">
@@ -30,4 +30,8 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+defineProps<{
+  name: string
+}>()
 </script>

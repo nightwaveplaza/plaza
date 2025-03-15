@@ -79,6 +79,7 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useAudioPlayer } from '@app/composables/useAudioPlayer.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
@@ -88,6 +89,7 @@ const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
+const { winSongInfo } = useAlerts()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -122,7 +124,7 @@ function play (): void {
 
 function showSongInfo (): void {
   if (playerSongStore.songId) {
-    windowsStore.showSong(playerSongStore.songId)
+    winSongInfo(playerSongStore.songId)
   }
 }
 

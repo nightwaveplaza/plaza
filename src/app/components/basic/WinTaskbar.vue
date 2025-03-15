@@ -7,7 +7,7 @@
       v-for="window in windowsStore.windows"
       :key="window.name"
       class="mr-1" style="flex: 1 1 auto"
-      :class="{active: windowsStore.activeWindow === window.name && !windowsStore.isMinimized(window.name)}"
+      :class="{active: windowsStore.activeWindow === window.name && !window.isMinimized }"
       @click="toggleMinimize(window.name)"
     >
       <img src="@app/assets/img/ball.png" alt="">
@@ -41,13 +41,15 @@ function getNow (): void {
 }
 
 function toggleMinimize (name: string): void {
-  if (windowsStore.isMinimized(name)) {
-    windowsStore.restore(name)
-  } else {
-    if (windowsStore.activeWindow === name) {
-      windowsStore.minimize(name)
+  if (windowsStore.windows.hasOwnProperty(name)) {
+    if (windowsStore.windows[name]!!.isMinimized) {
+      windowsStore.restore(name)
     } else {
-      windowsStore.pullUp(name)
+      if (windowsStore.activeWindow === name) {
+        windowsStore.minimize(name)
+      } else {
+        windowsStore.pullUp(name)
+      }
     }
   }
 }

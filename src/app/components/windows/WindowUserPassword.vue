@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="250" name="user-password" :title="t('win.user_password.title')">
+  <win-window v-slot="winProps" ref="win" :width="250" :name="name" :title="t('win.user_password.title')">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -36,15 +36,19 @@
 import { reactive, ref } from 'vue'
 import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import type { UserEdit } from '@app/types/types'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const userAuthStore = useUserAuthStore()
+const { winAlert } = useAlerts()
+
+defineProps<{
+  name: string,
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 const fields: UserEdit = reactive({
@@ -58,17 +62,17 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert((e as Error).message, t('errors.error'))
+    return winAlert((e as Error).message, t('errors.error'))
   }
 
   sending.value = true
 
   api.user.edit(fields).then(() => {
     userAuthStore.logout()
-    windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
+    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e =>
-      windowsStore.alert(useApiError(e), t('errors.error'))
+      winAlert(useApiError(e), t('errors.error'))
   ).finally(() => sending.value = false)
 }
 

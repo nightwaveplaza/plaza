@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
+  <win-window ref="win" :name="name" title="Nightwave Plaza" :width="450">
     <!-- Minimize button -->
     <template #header>
       <div class="buttons">
@@ -48,6 +48,10 @@ const { volume, setVolume } = useVolumeControl()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
+
+defineProps<{
+  name: string
+}>()
 
 const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()

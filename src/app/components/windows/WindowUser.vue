@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="220" name="user" :title="t('win.user.title')">
+  <win-window v-slot="winProps" :width="220" :name="name" :title="t('win.user.title')">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
@@ -34,6 +34,10 @@ import { useMobile } from '@app/composables/useMobile.ts'
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
+
+defineProps<{
+  name: string,
+}>()
 
 function open (window: string): void {
   windowsStore.open(window)

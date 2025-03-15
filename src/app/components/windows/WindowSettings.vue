@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" name="settings" :title="t('win.settings.title')">
+  <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings.title')">
     <div class="p-2">
       <!-- Background -->
       <win-group-box class="mb-2">
@@ -158,6 +158,12 @@ const windowsStore = useWindowsStore()
 const settingsStore = useSettingsStore()
 const backgroundList = ref<BackgroundImage[]>([])
 import { useMobile } from '@app/composables/useMobile.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
+const { winAlert } = useAlerts()
+
+defineProps<{
+  name: string
+}>()
 
 const palette = [
   '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
@@ -238,13 +244,13 @@ function openLanguageSettings (): void {
 function qualityChanged (e: Event): void {
   settingsStore.lowQuality = (e.target as HTMLInputElement).checked
   settingsStore.saveQuality()
-  windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 function hlsChanged (e: Event): void {
   settingsStore.useHls = (e.target as HTMLInputElement).checked
   settingsStore.saveHls()
-  windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 onMounted(() => {

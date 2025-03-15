@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { AxiosError } from 'axios'
 import { api } from '@app/api/api'
@@ -75,17 +75,29 @@ import helperComposable from '@app/composables/helperComposable'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePrefs } from '@app/composables/usePrefs'
-import type { SongResponse } from '@app/types/types'
+import type { SongResponse, SongWindowParams } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useAlerts } from '@app/composables/useAlerts.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const { dur, sdy } = helperComposable()
+const { winAlert } = useAlerts()
 
 const props = defineProps<{
-  id: string,
   name: string,
 }>()
+
+const songWindowParams: SongWindowParams = reactive({
+  id: ''
+})
+
+onBeforeMount(() => {
+  const currentProps = windowsStore.windows[props.name]?.params as SongWindowParams
+  if (currentProps) {
+    songWindowParams.id = currentProps.id
+  }
+})
 
 const audio = ref<HTMLAudioElement>()
 const win = ref<InstanceType<typeof WinWindow>>()
@@ -108,7 +120,7 @@ function fetchSongInfo (songId: string): void {
   api.songs.get(songId).then(res => {
     Object.assign(song, res.data)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
     win.value!.close()
   })
 }
@@ -126,7 +138,7 @@ async function favoriteSong (): Promise<void> {
     }
   } catch (e) {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
+      winAlert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {
     sending.value = false
@@ -168,7 +180,7 @@ function timeUpdated (): void {
 }
 
 onMounted(() => {
-  fetchSongInfo(props.id)
+  fetchSongInfo(songWindowParams.id)
 })
 
 onBeforeUnmount(() => {

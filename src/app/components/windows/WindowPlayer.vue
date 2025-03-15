@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
+  <win-window ref="win" :name="name" title="Nightwave Plaza" :width="450">
     <!-- Minimize button -->
     <template #header>
       <div class="buttons">
@@ -37,23 +37,27 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
+const { minimizeWindow, WinType } = useWindows()
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
+
+defineProps<{
+  name: string
+}>()
 
 const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()
 
 function minimize (): void {
-  windowsStore.minimize('player')
+  minimizeWindow(WinType.PLAYER)
 }
 
 function requestFullScreen (): void {

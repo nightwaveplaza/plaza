@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="480" name="user-login" :title="t('win.user_login.title')">
+  <win-window v-slot="winProps" ref="win" :width="480" :name="name" :title="t('win.user_login.title')">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
@@ -73,16 +73,20 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import type { UserLogin } from '@app/types/types'
+import { type UserLogin } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
+const { openWindow, closeWindow, WinType, winAlert } = useWindows()
 
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
+
+defineProps<{
+  name: string,
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
@@ -96,28 +100,28 @@ const sending = ref<boolean>(false)
 
 function login (): void {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    return windowsStore.alert(t('errors.enter_user_pass'), t('errors.error'))
+    return winAlert(t('errors.enter_user_pass'), t('errors.error'))
   }
 
   sending.value = true
 
   api.user.login(fields).then(res => {
     userAuthStore.login(res.data, remember.value)
-    windowsStore.alert(t('messages.auth_success'), t('messages.success'), 'info')
+    winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => sending.value = false)
 }
 
 function openRegister (): void {
-  windowsStore.open('user-register')
-  win.value!.close()
+  openWindow(WinType.USER_REGISTER)
+  closeWindow(WinType.USER_LOGIN)
 }
 
 function openReset (): void {
-  windowsStore.open('user-reset')
-  win.value!.close()
+  openWindow(WinType.USER_RESET)
+  closeWindow(WinType.USER_LOGIN)
 }
 </script>
 

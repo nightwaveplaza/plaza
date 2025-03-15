@@ -15,7 +15,7 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
 const playerSongStore = usePlayerSongStore()
 const { dur } = helperComposable()
 
@@ -57,10 +57,10 @@ function tick (): void {
 }
 
 function checkSleepTimer (): void {
-  const t = playerPlaybackStore.sleepTime
+  const t = playerPlayback.sleepTime
 
   if (t > 0 && t < Date.now()) {
-    playerPlaybackStore.sleepTime = 0
+    playerPlayback.sleepTime = 0
     emit('stopByTimer')
   }
 }

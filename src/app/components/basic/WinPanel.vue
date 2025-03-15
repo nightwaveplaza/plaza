@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  class: string
+  class?: string
 }>(), {
   class: '',
 })

@@ -6,7 +6,6 @@ import { PlayerState } from '@app/types/types.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import useVisual from '@app/composables/useVisual.ts'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { MutationType } from 'pinia'
 
 /**
  * useAudioPlayer composable
@@ -15,7 +14,7 @@ import { MutationType } from 'pinia'
  */
 export function useAudioPlayer() {
   const settingsStore = useSettingsStore()
-  const playerPlaybackStore = usePlayerPlaybackStore()
+  const playerPlayback = usePlayerPlaybackStore()
   const playerSongStore = usePlayerSongStore()
   const { volume } = useVolumeControl()
   const { startVisual, stopVisual } = useVisual()
@@ -31,11 +30,9 @@ export function useAudioPlayer() {
     }
   })
 
-  // Subscribe to song update and change MediaSession and document title
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      updateAudioMetadata()
-    }
+  // Watch for song update and change MediaSession and document title
+  watch(() => playerSongStore.songId, () => {
+    updateAudioMetadata()
   })
 
   // Set reference to <canvas> element to use with useVisual
@@ -73,7 +70,7 @@ export function useAudioPlayer() {
 
     // Start playing
     audio.play().then(() => {
-      playerPlaybackStore.state = PlayerState.PLAYING
+      playerPlayback.state = PlayerState.PLAYING
       setMediaSessionActions()
       updateAudioMetadata()
 
@@ -101,15 +98,15 @@ export function useAudioPlayer() {
     audio = null
 
     // Set current state
-    playerPlaybackStore.state = PlayerState.IDLE
-    playerPlaybackStore.sleepTime = 0
+    playerPlayback.state = PlayerState.IDLE
+    playerPlayback.sleepTime = 0
 
     document.title = 'Nightwave Plaza - Online Vaporwave Radio'
   }
 
   // Update media session and document title
   const updateAudioMetadata = (): void => {
-    if (playerPlaybackStore.state === PlayerState.PLAYING) {
+    if (playerPlayback.state === PlayerState.PLAYING) {
       document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
       updateMediaSession()
       updateMediaSessionPosition()

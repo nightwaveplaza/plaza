@@ -31,7 +31,7 @@
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-button block @click="windowsStore.open('player-timer')">
+            <win-button block @click="openWindow(WinType.PLAYER_TIMER)">
               <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
@@ -61,34 +61,35 @@ import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
+import { useWindows, WinType } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
+const { openWindow, closeWindow, WinType } = useWindows()
 
 const artwork = computed(() => {
   return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
 const playText = computed((): string => {
-  if (playerPlaybackStore.state === PlayerState.LOADING) {
+  if (playerPlayback.state === PlayerState.LOADING) {
     return t('loading')
-  } else if (playerPlaybackStore.state === PlayerState.PLAYING) {
+  } else if (playerPlayback.state === PlayerState.PLAYING) {
     return t('win.player.btn_stop')
   } else {
     return t('win.player.btn_play')
   }
 })
 
-const isPlaying = computed(() => playerPlaybackStore.state === PlayerState.PLAYING)
-
-const timerColor = computed(() => playerPlaybackStore.sleepTime !== 0 ? '#3455DB' : '')
+const isPlaying = computed(() => playerPlayback.state === PlayerState.PLAYING)
+const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '')
 
 function play (): void {
-  if (playerPlaybackStore.state === PlayerState.PLAYING) {
-    windowsStore.close('player-timer')
-    playerPlaybackStore.sleepTime = 0
+  if (playerPlayback.state === PlayerState.PLAYING) {
+    closeWindow(WinType.PLAYER_TIMER)
+    playerPlayback.sleepTime = 0
   }
   Native.audioPlay()
 }

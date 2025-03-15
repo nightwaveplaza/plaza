@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="440" fluid-height name="ratings" :title="t('win.ratings.title')">
+  <win-window v-slot="winProps" :width="440" fluid-height :name="name" :title="t('win.ratings.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
@@ -23,7 +23,7 @@
               <td class="text-center noselect" style="width: 37px">
                 {{ pad((page - 1) * data.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
+              <td class="py-1 show-info" @click="winSongInfo(song.id)">
                 <div class="artist">
                   {{ song.artist }}
                 </div>
@@ -69,19 +69,23 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import type { RatingsResponse } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
+const { winAlert, winSongInfo } = useWindows()
 
 const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()
+
+defineProps<{
+  name: string
+}>()
 
 const data: RatingsResponse = reactive({
   per_page: 25,
@@ -100,7 +104,7 @@ function fetchRatings (range: string, page: number): void {
   api.ratings.get(range, page).then(res => {
     Object.assign(data, res.data)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => {
     loading.value = false
     nextTick(() => {

@@ -1,15 +1,15 @@
 <template>
-  <win-window v-slot="winProps" :width="220" name="user" :title="t('win.user.title')">
+  <win-window v-slot="winProps" :width="220" :name="name" :title="t('win.user.title')">
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-button v-if="!useMobile()" block class="mb-2" @click="open('user-favorites')">
+          <win-button v-if="!useMobile()" block class="mb-2" @click="open(WinType.USER_FAVORITES)">
             {{ t('win.user_favorites.title') }}
           </win-button>
-          <win-button block class="mb-2" @click="open('user-email')">
+          <win-button block class="mb-2" @click="open(WinType.USER_EMAIL)">
             {{ t('win.user_email.title') }}
           </win-button>
-          <win-button block class="mb-2" @click="open('user-password')">
+          <win-button block class="mb-2" @click="open(WinType.USER_PASSWORD)">
             {{ t('win.user_password.title') }}
           </win-button>
           <win-button block class="mb-2" @click="logout">
@@ -30,20 +30,26 @@ import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { useMobile } from '@app/composables/useMobile.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
+const { openWindow, WinType } = useWindows()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 
-function open (window: string): void {
-  windowsStore.open(window)
-  windowsStore.close('user')
+defineProps<{
+  name: string,
+}>()
+
+function open (window: WinType): void {
+  openWindow(window)
+  windowsStore.close(WinType.USER)
 }
 
 function logout (): void {
   api.user.logout().then().finally(() => {
     userAuthStore.logout()
-    windowsStore.close('user')
+    windowsStore.close(WinType.USER)
   })
 }
 </script>

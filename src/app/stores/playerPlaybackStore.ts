@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia'
 import { PlayerState } from '@app/types/types.ts'
+import { ref } from 'vue'
 
-interface State {
-  state: PlayerState,
-  sleepTime: number
-}
+export const usePlayerPlaybackStore = defineStore('playerPlaybackStore', () =>{
+  const state = ref(PlayerState.IDLE)
+  const sleepTime = ref(0)
 
-export const usePlayerPlaybackStore = defineStore('playerPlaybackStore', {
-  state: (): State => ({
-    state: PlayerState.IDLE,
-    sleepTime: 0
-  })
+  return { state, sleepTime }
 })

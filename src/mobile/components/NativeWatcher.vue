@@ -9,14 +9,16 @@ import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const i18n = useI18n()
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
-const playerPlaybackStore = usePlayerPlaybackStore()
+const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
+const { openWindow, closeWindow, WinType } = useWindows()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -30,16 +32,16 @@ function registerEmitterEvents (): void {
   eventBus.on('resume', () => updateBackgroundNative(settingsStore.background))
 
   eventBus.on('closeWindow', (name: string) => {
-    windowsStore.close(name)
+    closeWindow(name)
   })
 
   eventBus.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
-      windowsStore.open('user-login')
+      openWindow(WinType.USER_LOGIN)
       return
     }
 
-    windowsStore.open(name)
+    openWindow(name)
   })
 
   // ios callbacks
@@ -48,17 +50,17 @@ function registerEmitterEvents (): void {
   })
 
   eventBus.on('isPlaying', (playing: boolean) => {
-    playerPlaybackStore.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
+    playerPlayback.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
   })
 
   eventBus.on('isBuffering', () => {
-    playerPlaybackStore.state = PlayerState.LOADING
+    playerPlayback.state = PlayerState.LOADING
   })
 
   // Event from onResume if sleep timer is still alive
   eventBus.on('sleepTime', (time: number) => {
     if (time > Date.now()) {
-      playerPlaybackStore.sleepTime = time
+      playerPlayback.sleepTime = time
     }
   })
 }
@@ -80,7 +82,7 @@ watch(() => settingsStore.lowQuality, (lowQuality) => {
 })
 
 // Watch timer changes
-watch(() => playerPlaybackStore.sleepTime, (time) => {
+watch(() => playerPlayback.sleepTime, (time) => {
   Native.setSleepTimer(time)
 })
 

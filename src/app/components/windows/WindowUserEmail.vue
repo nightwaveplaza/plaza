@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="250" name="user-email" :title="t('win.user_email.title')">
+  <win-window ref="win" v-slot="winProps" :width="250" :name="name" :title="t('win.user_email.title')">
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">{{ t('fields.email') }}:</label>
@@ -30,13 +30,17 @@
 import { api } from '@app/api/api'
 import { onMounted, reactive, ref } from 'vue'
 import type { UserEdit } from '@app/types/types'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
+const { winAlert } = useWindows()
+
+defineProps<{
+  name: string,
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 const fields: UserEdit = reactive({
@@ -51,23 +55,23 @@ function fetchUser (): void {
     fields.email = res.data.email
     disabled.value = false
   }).catch(() => {
-    windowsStore.alert(t('errors.user_fetch'), t('errors.error'))
+    winAlert(t('errors.user_fetch'), t('errors.error'))
     win.value!.close()
   })
 }
 
 function update (): void {
   if (fields.current_password.length === 0) {
-    return windowsStore.alert(t('errors.fields.current_password_required'), t('errors.error'))
+    return winAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
   sending.value = true
 
   api.user.edit(fields).then(() => {
-    windowsStore.alert(t('messages.email_changed'), t('messages.success'), 'info')
+    winAlert(t('messages.email_changed'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   }).finally(() => {
     sending.value = false
   })

@@ -3,7 +3,7 @@
     <div :class="{alert: props.isAlert, 'fluid-height': props.fluidHeight}" class="win98 col pl-0 pr-0">
       <div ref="windowRef" class="window" :style="style" @mousedown="pullUp">
         <div class="inner">
-          <div class="header header-draggable noselect" :class="{inactive: isWindowInactive}"
+          <div class="header header-draggable noselect" :class="{inactive: !isActive}"
                @dblclick="resetPosition" @mousedown="startMove"
           >
             <div class="icon" />
@@ -56,9 +56,10 @@ const style: CSSProperties = reactive({
   transform: '',
   width: '',
 })
+
+const isMinimized = computed(() => windowsStore.windows[props.name]?.isMinimized)
+const isActive = computed(() => windowsStore.activeWindow === props.name)
 const windowPos = ref([0, 0])
-const isWindowInactive = computed(() => windowsStore.activeWindow !== props.name)
-const isMinimized = computed(() => windowsStore.isMinimized(props.name))
 const windowRef = ref<HTMLDivElement | null>(null)
 
 // Non-reactive
@@ -189,6 +190,6 @@ onBeforeUnmount(() => {
 })
 
 defineExpose({
-  close, pullUp,
+  close, pullUp
 })
 </script>

@@ -12,8 +12,8 @@ import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePrefs } from '@app/composables/usePrefs'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -21,7 +21,7 @@ const CL_LIKE = '#c12727'
 const { t } = useI18n()
 const playerSongStore = usePlayerSongStore()
 const userReactionStore = useUserReactionStore()
-const windowsStore = useWindowsStore()
+const { winAlert } = useWindows()
 
 const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => userReactionStore.isCurrent ? {2: CL_FAV, 1: CL_LIKE}[userReactionStore.score] ?? '' : '')
@@ -45,7 +45,7 @@ function send (score: number): void {
     showTip()
   }).catch(e => {
     if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
+      winAlert(t('errors.please_sign'), t('errors.error'))
     }
   }).finally(() => {
     sending.value = false
@@ -58,7 +58,7 @@ function showTip (): void {
     return
   }
 
-  windowsStore.alert(t('messages.reaction_tip'), t('messages.nice'), 'info')
+  winAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
 
   usePrefs.save('reactionTip', 1)
 }

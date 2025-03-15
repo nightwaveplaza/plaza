@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="350" name="news" :title="t('win.news.title')">
+  <win-window v-slot="winProps" :width="350" :name="name" :title="t('win.news.title')">
     <div class="p-2">
       <win-memo>
         <div v-if="article.text === ''" class="content-loading" />
@@ -33,13 +33,17 @@
 import { onMounted, ref } from 'vue'
 import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const { sdy } = helperComposable()
-const windowsStore = useWindowsStore()
+const { winAlert } = useWindows()
+
+defineProps<{
+  name: string
+}>()
 
 const article = ref({
   text: '',
@@ -55,7 +59,7 @@ function getArticle (): void {
     article.value = res.data.articles[0]!
     pages.value = res.data.pages
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(useApiError(e), t('errors.error'))
   })
 }
 

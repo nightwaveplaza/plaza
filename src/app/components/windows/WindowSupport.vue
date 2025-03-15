@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="450" name="support" :title="t('win.support.title')">
+  <win-window ref="win" :width="450" :name="name" :title="t('win.support.title')">
     <div class="p-2">
       <p class="lead mt-2 mb-3 text-center">
         <b>{{ t('win.support.title2') }}</b>
@@ -88,6 +88,10 @@ const { t } = useI18n()
 const router = useRouter()
 
 const props = defineProps({
+  name: {
+    type: String,
+    default: 'window-support'
+  },
   direct: {
     type: Boolean,
     default: false,

@@ -1,10 +1,19 @@
 export interface Window {
   name: string,
-  form: string,
-  text?: string,
-  type?: string,
-  id?: string,
-  title?: string
+  component: string,
+  isMinimized: boolean,
+  title?: string,
+  params?: AlertWindowParams | SongWindowParams
+}
+
+export interface AlertWindowParams {
+  type: string,
+  title: string,
+  text: string
+}
+
+export interface SongWindowParams {
+  songId: string
 }
 
 export interface Background {

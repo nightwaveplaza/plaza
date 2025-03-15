@@ -1,5 +1,5 @@
 <template>
-  <win-window :width="220" name="loading" title="Nightwave Plaza">
+  <win-window :width="220" :name="name" title="Nightwave Plaza">
     <template #header>
       <div class="buttons" />
     </template>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { MutationType } from 'pinia'
@@ -30,10 +30,16 @@ import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { api } from '@app/api/api'
 import { usePrefs } from '@app/composables/usePrefs'
 import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
+const { openWindow, closeWindow, WinType } = useWindows()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
+
+defineProps<{
+  name: string
+}>()
 
 const style = ref({
   transform: `translate(0px, 0px)`,
@@ -67,30 +73,26 @@ function move (): void {
   requestAnimationFrame(move)
 }
 
+// waiting for the first status response then check news and open up player
+watch(() => playerSongStore.songId, () => {
+  api.news.latest().then(res => {
+    const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
+    if (latestNewsRead < res.data.id) {
+      usePrefs.save('latestNewsRead', res.data.id)
+      setTimeout(() => openWindow(WinType.NEWS), 3000)
+    }
+
+    openWindow(WinType.PLAYER)
+    closeWindow(WinType.LOADING)
+  })
+})
+
 onMounted(() => {
   move()
-
-  // waiting for the first status response then check news and open up player
-  playerSongStore.$subscribe((mutation) => {
-    if (mutation.type === MutationType.patchObject) {
-      api.news.latest().then(res => {
-        const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
-        if (latestNewsRead < res.data.id) {
-          usePrefs.save('latestNewsRead', res.data.id)
-          setTimeout(() => windowsStore.open('news'), 3000)
-        }
-
-        windowsStore.open('player')
-        windowsStore.close('loading')
-      })
-
-    }
-  })
 })
 
 onBeforeUnmount(() => {
   loading = false
-  // windowsStore.pullUp('player')
 })
 </script>
 

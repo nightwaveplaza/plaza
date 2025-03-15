@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" name="settings-language" :title="t('win.settings_language.title')">
+  <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings_language.title')">
     <div class="p-2">
       <win-list scroll>
         <tr v-for="(lang, name) in _locales" :key="name" class="hover">
@@ -45,6 +45,10 @@ import type WinList from '@app/components/basic/WinList.vue'
 const { t, te } = useI18n()
 const settingsStore = useSettingsStore()
 const list = ref<InstanceType<typeof WinList>>()
+
+defineProps<{
+  name: string
+}>()
 
 function switchLanguage (name: string): void {
   settingsStore.language = name

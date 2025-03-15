@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" name="settings" :title="t('win.settings.title')">
+  <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings.title')">
     <div class="p-2">
       <!-- Background -->
       <win-group-box class="mb-2">
@@ -149,15 +149,19 @@
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useSettingsStore } from '@app/stores/settingsStore'
-import { enBackgroundMode, type BackgroundImage } from '@app/types/types'
+import { type BackgroundImage, enBackgroundMode } from '@app/types/types'
+import { useMobile } from '@app/composables/useMobile.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const settingsStore = useSettingsStore()
 const backgroundList = ref<BackgroundImage[]>([])
-import { useMobile } from '@app/composables/useMobile.ts'
+const { openWindow, closeWindow, WinType, winAlert } = useWindows()
+
+defineProps<{
+  name: string
+}>()
 
 const palette = [
   '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
@@ -231,20 +235,20 @@ function taskbarPositionSelected (e: Event): void {
 }
 
 function openLanguageSettings (): void {
-  windowsStore.open('settings-language')
-  windowsStore.close('settings')
+  openWindow(WinType.SETTINGS_LANGUAGE)
+  closeWindow(WinType.SETTINGS)
 }
 
 function qualityChanged (e: Event): void {
   settingsStore.lowQuality = (e.target as HTMLInputElement).checked
   settingsStore.saveQuality()
-  windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 function hlsChanged (e: Event): void {
   settingsStore.useHls = (e.target as HTMLInputElement).checked
   settingsStore.saveHls()
-  windowsStore.alert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 onMounted(() => {

@@ -75,10 +75,10 @@ import type WinPagination from '@app/components/basic/WinPagination.vue'
 import type { RatingsResponse } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo } = useAlerts()
+const { winAlert, winSongInfo } = useWindows()
 
 const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()

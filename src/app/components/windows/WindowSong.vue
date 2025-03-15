@@ -77,25 +77,25 @@ import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePrefs } from '@app/composables/usePrefs'
 import type { SongResponse, SongWindowParams } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const { dur, sdy } = helperComposable()
-const { winAlert } = useAlerts()
+const { winAlert } = useWindows()
 
 const props = defineProps<{
   name: string,
 }>()
 
 const songWindowParams: SongWindowParams = reactive({
-  id: ''
+  songId: ''
 })
 
 onBeforeMount(() => {
   const currentProps = windowsStore.windows[props.name]?.params as SongWindowParams
   if (currentProps) {
-    songWindowParams.id = currentProps.id
+    songWindowParams.songId = currentProps.songId
   }
 })
 
@@ -180,7 +180,7 @@ function timeUpdated (): void {
 }
 
 onMounted(() => {
-  fetchSongInfo(songWindowParams.id)
+  fetchSongInfo(songWindowParams.songId)
 })
 
 onBeforeUnmount(() => {

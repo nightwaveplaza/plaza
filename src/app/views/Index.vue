@@ -12,11 +12,10 @@ import { computed, onMounted } from 'vue'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
-const { openWindow, openedWindows } = useWindows()
+const { openWindow, openedWindows, WinType } = useWindows()
 
 // Appearance
 const backgroundImage = computed(() => settingsStore.backgroundSrc)

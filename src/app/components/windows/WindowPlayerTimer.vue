@@ -62,17 +62,15 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
 import type WinWindow from '@app/components/basic/WinWindow.vue'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
-const { winAlert } = useAlerts()
+const { closeWindow, WinType, winAlert } = useWindows()
 
 defineProps<{
   name: string
 }>()
-
-const win = ref<InstanceType<typeof WinWindow>>()
 
 const minutes = ref(20)
 const timeLeft = ref(0)
@@ -98,7 +96,7 @@ function start (): void {
   }
 
   updateTimeLeft()
-  win.value!.close()
+  closeWindow(WinType.PLAYER_TIMER)
 }
 
 function add (amount: number): void {

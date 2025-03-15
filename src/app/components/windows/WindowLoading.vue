@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { MutationType } from 'pinia'
@@ -31,10 +31,9 @@ import { api } from '@app/api/api'
 import { usePrefs } from '@app/composables/usePrefs'
 import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
+const { openWindow, closeWindow, WinType } = useWindows()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 
@@ -74,6 +73,10 @@ function move (): void {
   requestAnimationFrame(move)
 }
 
+watch(() => playerSongStore.songId, (songId) => {
+  console.log(songId)
+})
+
 onMounted(() => {
   move()
 
@@ -84,7 +87,7 @@ onMounted(() => {
         const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
         if (latestNewsRead < res.data.id) {
           usePrefs.save('latestNewsRead', res.data.id)
-          setTimeout(() => windowsStore.open('news'), 3000)
+          setTimeout(() => openWindow(WinType.NEWS), 3000)
         }
 
         openWindow(WinType.PLAYER)

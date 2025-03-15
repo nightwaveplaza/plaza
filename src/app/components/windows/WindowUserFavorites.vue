@@ -75,11 +75,11 @@ import helperComposable from '@app/composables/helperComposable'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { FavoritesResponse } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const { sdy } = helperComposable()
-const { winAlert, winSongInfo } = useAlerts()
+const { winAlert, winSongInfo } = useWindows()
 
 defineProps<{
   name: string,

@@ -36,14 +36,11 @@ import { useRouter } from 'vue-router'
 import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const router = useRouter()
-const { winAlert } = useAlerts()
-const { closeWindow } = useWindows()
+const { closeWindow, WinType, winAlert } = useWindows()
 
 // Props
 const props = defineProps({

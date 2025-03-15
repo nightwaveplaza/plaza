@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { AlertWindowParams, SongWindowParams, Window } from '@app/types/types'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 interface WindowList {
   [key: string]: Window
@@ -18,20 +18,13 @@ export const useWindowsStore = defineStore('windowsStore', () => {
   const activeWindow = ref('')
   const activeZIndex = ref(100)
 
-  // Returns all Alerts windows (name starts with alert-)
-  const alerts = computed(() => Object.entries(windows.value).filter(([k]) => k.includes('alert-')))
-
-  // Returns all song info windows (name starts with song-)
-  const songWindows = computed(() => Object.entries(windows.value).filter(([k]) => k.includes('song-')))
-  const isOpened = computed(() => (name: string) => windows.value.hasOwnProperty(name))
-
   /**
    * Open window and pass properties to it
    * @param name window name
    * @param params
    * @param winComponent
    */
-  function open (name: string, params: AlertWindowParams | SongWindowParams | undefined = undefined, winComponent?: string) {
+  function open (name: string, params?: AlertWindowParams | SongWindowParams, winComponent?: string) {
     // If not already open
     if (!windows.value.hasOwnProperty(name)) {
       let component = winComponent ?? 'window-' + name
@@ -82,7 +75,6 @@ export const useWindowsStore = defineStore('windowsStore', () => {
   }
 
   return {
-    windows, activeWindow, activeZIndex, open, close, pullUp,
-    alerts, songWindows, minimize, restore, isOpened, updateTitle
+    windows, activeWindow, activeZIndex, open, close, pullUp, minimize, restore, updateTitle
   }
 })

@@ -13,7 +13,7 @@ import { api } from '@app/api/api'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
 import { usePrefs } from '@app/composables/usePrefs'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -21,7 +21,7 @@ const CL_LIKE = '#c12727'
 const { t } = useI18n()
 const playerSongStore = usePlayerSongStore()
 const userReactionStore = useUserReactionStore()
-const { winAlert } = useAlerts()
+const { winAlert } = useWindows()
 
 const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => userReactionStore.isCurrent ? {2: CL_FAV, 1: CL_LIKE}[userReactionStore.score] ?? '' : '')

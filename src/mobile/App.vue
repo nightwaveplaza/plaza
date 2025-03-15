@@ -1,6 +1,6 @@
 <template>
   <div :class="settingsStore.themeName" :style="{backgroundColor}" class="app-desktop">
-    <component :is="window.component" v-for="window in windowsStore.windows" :key="window.name" :name="window.name" />
+    <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
 
     <win-taskbar />
     <native-watcher />
@@ -12,14 +12,14 @@ import { computed, onMounted, watch } from 'vue'
 import { Native } from '@mobile/bridge/native'
 import { useSettingsStore } from '@app/stores/settingsStore'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { enBackgroundMode } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const i18n = useI18n()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
+const { openWindow, WinType, openedWindows } = useWindows()
 
 watch(() => settingsStore.language, () => {
   i18n.locale.value = settingsStore.language
@@ -32,7 +32,7 @@ const backgroundColor = computed(() => {
 onMounted(() => {
   settingsStore.loadSettings()
 
-  windowsStore.open('loading')
+  openWindow(WinType.LOADING)
 
   if (settingsStore.isBackgroundRandomMode) {
     settingsStore.loadRandomBackground()

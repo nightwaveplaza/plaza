@@ -31,7 +31,7 @@
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-button block @click="windowsStore.open('player-timer')">
+            <win-button block @click="openWindow(WinType.PLAYER_TIMER)">
               <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
@@ -61,11 +61,13 @@ import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
+import { useWindows, WinType } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
+const { openWindow, closeWindow, WinType } = useWindows()
 
 const artwork = computed(() => {
   return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
@@ -86,7 +88,7 @@ const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '
 
 function play (): void {
   if (playerPlayback.state === PlayerState.PLAYING) {
-    windowsStore.close('player-timer')
+    closeWindow(WinType.PLAYER_TIMER)
     playerPlayback.sleepTime = 0
   }
   Native.audioPlay()

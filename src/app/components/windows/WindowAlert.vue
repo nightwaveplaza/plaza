@@ -33,7 +33,6 @@ const props = defineProps<{
 }>()
 
 const alertParams: AlertWindowParams = reactive({
-  id: '',
   type: 'warn',
   title: '',
   text: ''
@@ -42,7 +41,6 @@ const alertParams: AlertWindowParams = reactive({
 onBeforeMount(() => {
   const params = windowsStore.windows[props.name]?.params as AlertWindowParams
   if (params) {
-    alertParams.id = params.id
     alertParams.type = params.type
     alertParams.title = params.title
     alertParams.text = params.text

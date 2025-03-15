@@ -93,10 +93,9 @@ import { useMobile } from '@app/composables/useMobile.ts'
 import { onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
+const { openWindow, closeWindow, WinType } = useWindows()
 
 defineProps<{
   name: string

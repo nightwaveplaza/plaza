@@ -35,11 +35,11 @@ import { api } from '@app/api/api'
 import helperComposable from '@app/composables/helperComposable'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const { sdy } = helperComposable()
-const { winAlert } = useAlerts()
+const { winAlert } = useWindows()
 
 defineProps<{
   name: string

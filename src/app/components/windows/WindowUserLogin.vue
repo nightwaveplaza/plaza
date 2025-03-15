@@ -74,17 +74,15 @@ import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { type UserLogin, WinType } from '@app/types/types'
+import { type UserLogin } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
+const { openWindow, closeWindow, WinType, winAlert } = useWindows()
 
 const userAuthStore = useUserAuthStore()
-const { winAlert } = useAlerts()
 
 defineProps<{
   name: string,

@@ -150,16 +150,14 @@ import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useSettingsStore } from '@app/stores/settingsStore'
-import { type BackgroundImage, enBackgroundMode, WinType } from '@app/types/types'
+import { type BackgroundImage, enBackgroundMode } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const backgroundList = ref<BackgroundImage[]>([])
-const { winAlert } = useAlerts()
-const { openWindow, closeWindow } = useWindows()
+const { openWindow, closeWindow, WinType, winAlert } = useWindows()
 
 defineProps<{
   name: string

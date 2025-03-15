@@ -54,7 +54,7 @@
                 </win-button>
               </div>
               <div class="col-6">
-                <win-button block @click="windowsStore.open('settings')">
+                <win-button block @click="openWindow(WinType.SETTINGS)">
                   <i class="i icon-cog mr-0" />
                 </win-button>
               </div>
@@ -73,23 +73,21 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useAudioPlayer } from '@app/composables/useAudioPlayer.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
 
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
-const { winSongInfo } = useAlerts()
+const { openWindow, WinType, winSongInfo } = useWindows()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -130,14 +128,14 @@ function showSongInfo (): void {
 
 function openUserWindow (): void {
   if (userAuthStore.signed) {
-    windowsStore.open('user')
+    openWindow(WinType.USER)
   } else {
-    windowsStore.open('user-login')
+    openWindow(WinType.USER_LOGIN)
   }
 }
 
 function openTimerWindow (): void {
-  windowsStore.open('player-timer')
+  openWindow(WinType.PLAYER_TIMER)
 }
 
 onMounted(() => {

@@ -33,10 +33,10 @@ import type { UserEdit } from '@app/types/types'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const { winAlert } = useAlerts()
+const { winAlert } = useWindows()
 
 defineProps<{
   name: string,

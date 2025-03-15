@@ -31,10 +31,9 @@ import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
-const { openWindow } = useWindows()
+const { openWindow, WinType } = useWindows()
 const userAuthStore = useUserAuthStore()
 const windowsStore = useWindowsStore()
 

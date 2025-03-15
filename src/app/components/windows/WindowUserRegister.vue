@@ -110,11 +110,11 @@ import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserRegister } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useAlerts } from '@app/composables/useAlerts.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const router = useRouter()
-const { winAlert } = useAlerts()
+const { winAlert } = useWindows()
 
 const props = withDefaults(defineProps<{
   name: string

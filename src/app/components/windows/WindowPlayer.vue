@@ -42,11 +42,10 @@ import { useMobile } from '@app/composables/useMobile.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { WinType } from '@app/types/types.ts'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
-const { minimizeWindow } = useWindows()
+const { minimizeWindow, WinType } = useWindows()
 const userAuthStore = useUserAuthStore()
 const playerSongStore = usePlayerSongStore()
 

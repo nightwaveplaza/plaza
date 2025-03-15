@@ -7,14 +7,13 @@ export interface Window {
 }
 
 export interface AlertWindowParams {
-  id: string,
   type: string,
   title: string,
   text: string
 }
 
 export interface SongWindowParams {
-  id: string
+  songId: string
 }
 
 export interface Background {
@@ -190,31 +189,6 @@ export enum PlayerState {
   IDLE = 0,
   LOADING = 1,
   PLAYING = 2
-}
-
-export enum WinType {
-  ABOUT = 'about',
-  ALERT = 'alert',
-  CREDITS = 'credits',
-  HISTORY = 'history',
-  LOADING = 'loading',
-  MOBILE = 'mobile',
-  NEWS = 'new',
-  PLAYER = 'player',
-  PLAYER_TIMER = 'player-timer',
-  RATINGS = 'ratings',
-  SETTINGS = 'settings',
-  SETTINGS_LANGUAGE = 'settings-language',
-  SONG = 'song',
-  SUPPORT = 'support',
-  USER = 'user',
-  USER_EMAIL = 'user-email',
-  USER_FAVORITES = 'user-favorites',
-  USER_LOGIN = 'user-login',
-  USER_PASSWORD = 'user-password',
-  USER_REGISTER = 'user-register',
-  USER_RESET = 'user-reset',
-  USER_RESET_PASSWORD = 'user-reset-password'
 }
 
 export interface ifcAndroidInterface {

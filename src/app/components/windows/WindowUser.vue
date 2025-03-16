@@ -28,28 +28,26 @@
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const { openWindow, WinType } = useWindows()
+const { openWindow, closeWindow, WinType } = useWindows()
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
 
 defineProps<{
   name: string,
 }>()
 
-function open (window: WinType): void {
+function open (window: string): void {
   openWindow(window)
-  windowsStore.close(WinType.USER)
+  closeWindow(WinType.USER)
 }
 
 function logout (): void {
   api.user.logout().then().finally(() => {
     userAuthStore.logout()
-    windowsStore.close(WinType.USER)
+    closeWindow(WinType.USER)
   })
 }
 </script>

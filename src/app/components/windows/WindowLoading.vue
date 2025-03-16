@@ -24,8 +24,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindowsStore } from '@app/stores/windowsStore'
-import { MutationType } from 'pinia'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { api } from '@app/api/api'
 import { usePrefs } from '@app/composables/usePrefs'
@@ -34,7 +32,6 @@ import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, WinType } = useWindows()
-const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 
 defineProps<{

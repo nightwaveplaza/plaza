@@ -5,7 +5,6 @@ import { onMounted, watch } from 'vue'
 import { type Background, enBackgroundMode, PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
-import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
@@ -15,7 +14,6 @@ const i18n = useI18n()
 
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
 const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow, WinType } = useWindows()

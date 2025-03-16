@@ -56,15 +56,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Native } from '@mobile/bridge/native'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, closeWindow, WinType } = useWindows()
@@ -74,12 +72,10 @@ const artwork = computed(() => {
 })
 
 const playText = computed((): string => {
-  if (playerPlayback.state === PlayerState.LOADING) {
-    return t('loading')
-  } else if (playerPlayback.state === PlayerState.PLAYING) {
-    return t('win.player.btn_stop')
-  } else {
-    return t('win.player.btn_play')
+  switch (playerPlayback.state) {
+    case PlayerState.LOADING: return t('loading')
+    case PlayerState.PLAYING: return t('win.player.btn_stop')
+    default: return t('win.player.btn_play')
   }
 })
 

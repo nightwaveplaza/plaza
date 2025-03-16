@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
@@ -40,7 +39,6 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 
 const { t } = useI18n()
-const router = useRouter()
 const { closeWindow, WinType, winAlert } = useWindows()
 const userAuthStore = useUserAuthStore()
 

@@ -9,7 +9,7 @@
             {{ article.author }}
           </div>
           <div class="col-auto">
-            {{ sdy(article.created_at) }}
+            {{ fmtDate(article.created_at) }}
           </div>
         </div>
       </win-memo>
@@ -32,13 +32,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import { useI18n } from 'vue-i18n'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 
 const { t } = useI18n()
-const { sdy } = helperComposable()
+const { fmtDate } = useTimeFormats()
 const { winAlert } = useWindows()
 
 defineProps<{

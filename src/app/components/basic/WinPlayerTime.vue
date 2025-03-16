@@ -9,15 +9,15 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import helperComposable from '@app/composables/helperComposable'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
 const playerSongStore = usePlayerSongStore()
-const { dur } = helperComposable()
+const { fmtDuration } = useTimeFormats()
 
 const emit = defineEmits(['stopByTimer'])
 
@@ -26,7 +26,7 @@ const actualPosition = ref(0)
 const textTime = ref(0)
 const text = ref('')
 const display = computed(() => textTime.value > 0 ? text.value : clock.value)
-const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / ' + dur(length.value) : '...')
+const clock = computed(() => length.value > 0 ? fmtDuration(actualPosition.value) + ' / ' + fmtDuration(length.value) : '...')
 
 // Non-reactive
 let position = 0

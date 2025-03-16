@@ -5,7 +5,7 @@
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
             <div v-if="data.songs.length > 0" class="col">
-              {{ t('win.history.showing_history', {from: sd(data.from_date), to: sd(data.to_date)}) }}
+              {{ t('win.history.showing_history', {from: fmtDay(data.from_date), to: fmtDay(data.to_date)}) }}
             </div>
             <div class="col-auto">
               <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a>
@@ -26,8 +26,8 @@
                 </div>
               </td>
               <td class="pr-1 text-right noselect" style="width: 78px">
-                {{ sd(song.played_at) }}<br>
-                {{ gt(song.played_at) }}
+                {{ fmtDay(song.played_at) }}<br>
+                {{ fmtTime(song.played_at) }}
               </td>
             </tr>
           </win-list>
@@ -64,14 +64,14 @@
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { HistoryResponse } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 
 const { t } = useI18n()
-const { sd, gt } = helperComposable()
+const { fmtDay, fmtTime } = useTimeFormats()
 const { winAlert, winSongInfo } = useWindows()
 
 defineProps<{

@@ -60,7 +60,7 @@
 
     <div v-if="song" class="statusbar row no-gutters noselect">
       <div v-if="song.first_played_at" class="col cell">
-        {{ t('win.song.first_played') }}: {{ sdy(song.first_played_at) }}
+        {{ t('win.song.first_played') }}: {{ fmtDate(song.first_played_at) }}
       </div>
     </div>
   </win-window>
@@ -71,17 +71,17 @@ import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } fr
 import { useI18n } from 'vue-i18n'
 import { AxiosError } from 'axios'
 import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { usePrefs } from '@app/composables/usePrefs'
 import type { SongResponse, SongWindowParams } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
-const { dur, sdy } = helperComposable()
+const { fmtDuration, fmtDate } = useTimeFormats()
 const { winAlert } = useWindows()
 
 const props = defineProps<{
@@ -108,11 +108,11 @@ const song: SongResponse = reactive({
 const isPlaying = ref(false)
 const sending = ref(false)
 const playTimeLeft = ref(0)
-const songLength = computed(() => dur(song.length!))
+const songLength = computed(() => fmtDuration(song.length!))
 const artwork = computed(() => song.artwork_sm_src ?? 'https://i.plaza.one/dead.jpg')
 const favoriteColor = computed(() => song.favorite_id ? '#FFD300' : '')
 const playText = computed(() => isPlaying.value
-    ? t('win.song.btn_stop', { time: dur(playTimeLeft.value) })
+    ? t('win.song.btn_stop', { time: fmtDuration(playTimeLeft.value) })
     : t('win.song.btn_play_preview')
 )
 

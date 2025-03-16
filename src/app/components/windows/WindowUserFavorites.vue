@@ -18,7 +18,7 @@
                     {{ fav.song.title }}
                   </div>
                   <div class="date">
-                    <i>{{ sdy(fav.created_at) }}</i>
+                    <i>{{ fmtDate(fav.created_at) }}</i>
                   </div>
                 </td>
                 <td class="text-center noselect" style="width: 70px">
@@ -71,14 +71,14 @@
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import type WinList from '@app/components/basic/WinList.vue'
 import type { FavoritesResponse } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 
 const { t } = useI18n()
-const { sdy } = helperComposable()
+const { fmtDate } = useTimeFormats()
 const { winAlert, winSongInfo } = useWindows()
 
 defineProps<{

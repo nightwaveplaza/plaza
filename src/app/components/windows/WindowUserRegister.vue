@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="430" :name="name" :title="t('win.user_register.title')">
+  <win-window v-slot="winProps" :width="430" :name="name" :title="t('win.user_register.title')">
     <div class="p-2 noselect">
       <template v-if="step === 1">
         <div class="row no-gutters">
@@ -65,7 +65,7 @@
                   </win-button>
                 </div>
                 <div class="col-auto">
-                  <win-button block class="px-3" @click="close">
+                  <win-button block class="px-3" @click="winProps.close()">
                     {{ t('buttons.cancel') }}
                   </win-button>
                 </div>
@@ -103,26 +103,20 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type { UserRegister } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
+import { useWindows, WinType } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
-const router = useRouter()
-const { winAlert } = useWindows()
+const { winAlert, closeWindow } = useWindows()
 
-const props = withDefaults(defineProps<{
+defineProps<{
   name: string
-  direct: boolean
-}>(), {
-  name: 'window-user-register',
-  direct: false
-})
+}>()
 
 const fields: UserRegister = reactive({
   username: '',
@@ -133,8 +127,6 @@ const fields: UserRegister = reactive({
 const step = ref(1)
 const passwordR = ref('')
 const sending = ref(false)
-
-const win = ref<InstanceType<typeof WinWindow>>()
 
 /**
  * User register
@@ -162,7 +154,7 @@ function completeCaptcha (): void {
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
-    win.value!.close()
+    closeWindow(WinType.USER_REGISTER)
   }).catch(e => {
     winAlert(useApiError(e), t('errors.error'))
     step.value = 1
@@ -191,14 +183,6 @@ function validate (): void {
 
   if (fields.password !== passwordR.value) {
     throw new Error(t('errors.fields.password_match'))
-  }
-}
-
-function close (): void {
-  if (props.direct) {
-    router.push({ name: 'index' })
-  } else {
-    win.value!.close()
   }
 }
 </script>

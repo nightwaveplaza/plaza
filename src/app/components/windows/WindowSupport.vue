@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="450" :name="name" :title="t('win.support.title')">
+  <win-window v-slot="winProps" ref="win" :width="450" :name="name" :title="t('win.support.title')">
     <div class="p-2">
       <p class="lead mt-2 mb-3 text-center">
         <b>{{ t('win.support.title2') }}</b>
@@ -70,7 +70,7 @@
       </p>
 
       <div class="text-center mt-3">
-        <win-button class="mx-auto px-4" @click="close()">
+        <win-button class="mx-auto px-4" @click="winProps.close()">
           {{ t('buttons.close') }}
         </win-button>
       </div>
@@ -79,24 +79,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const router = useRouter()
 
-const props = defineProps({
-  name: {
-    type: String,
-    default: 'window-support'
-  },
-  direct: {
-    type: Boolean,
-    default: false,
-  },
-})
+defineProps<{
+  name: string
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 const usdtTron = import.meta.env.VITE_CRYPTO_USDT_TRON
@@ -105,14 +96,6 @@ const usdtTon = import.meta.env.VITE_CRYPTO_USDT_TON
 const eth = import.meta.env.VITE_CRYPTO_ETH
 const btc = import.meta.env.VITE_CRYPTO_BTC
 const ton = import.meta.env.VITE_CRYPTO_TON
-
-function close (): void {
-  if (props.direct) {
-    router.push({ name: 'index' })
-  } else {
-    win.value!.close()
-  }
-}
 </script>
 
 <style lang="scss">

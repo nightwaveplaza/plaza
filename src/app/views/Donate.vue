@@ -1,16 +1,10 @@
-<template>
-  <div class="app-desktop theme-win98">
-    <window-support :direct="true" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { useWindows } from '@app/composables/useWindows.ts'
 
-const windowsStore = useWindowsStore()
+const { openWindow, WinType } = useWindows()
 
 onMounted(() => {
-  windowsStore.pullUp('support')
+  openWindow(WinType.SUPPORT)
 })
 </script>

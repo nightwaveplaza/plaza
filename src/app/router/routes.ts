@@ -33,7 +33,12 @@ export default [
     component: DeleteAccount,
   },
   {
-    path: '/:pathMatch(.*)*',
-    component: PageNotFound,
+    path: '/404',
+    name: '404',
+    component: PageNotFound
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  }
 ]

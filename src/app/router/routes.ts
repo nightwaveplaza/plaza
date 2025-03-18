@@ -5,10 +5,6 @@ import Donate from '@app/views/Donate.vue'
 import DeleteAccount from '@app/views/DeleteAccount.vue'
 import PageNotFound from '@app/views/PageNotFound.vue'
 
-function redirect404 () {
-  window.location.href = '/404'
-}
-
 export default [
   {
     path: '/',
@@ -43,7 +39,6 @@ export default [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: PageNotFound,
-    beforeEnter: [redirect404]
+    redirect: '/404'
   }
 ]

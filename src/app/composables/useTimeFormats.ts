@@ -2,9 +2,9 @@ import { i18n } from '@locales/_i18n.ts'
 
 export function useTimeFormats () {
   const fmtDuration = (seconds: number): string => {
-    const minutes = String(Math.floor(seconds / 60))
-    const remainingSeconds = String(seconds % 60)
-    return `${minutes.padStart(2, '0')}:${remainingSeconds.padStart(2, '0')}`
+    const min = String(Math.floor(seconds / 60))
+    const sec = String(Math.floor(seconds % 60))
+    return `${min.padStart(2, '0')}:${sec.padStart(2, '0')}`
   }
 
   const fmtDay = (timestamp: number): string => {

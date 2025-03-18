@@ -8,7 +8,7 @@ export enum WinType {
   HISTORY = 'history',
   LOADING = 'loading',
   MOBILE = 'mobile',
-  NEWS = 'new',
+  NEWS = 'news',
   PLAYER = 'player',
   PLAYER_TIMER = 'player-timer',
   RATINGS = 'ratings',

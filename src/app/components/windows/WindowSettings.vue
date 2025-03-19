@@ -80,7 +80,7 @@
               </div>
               <div class="select">
                 <select @change="themeSelected">
-                  <option v-for="item in themes" :key="item[0]" :value="item[0]" :selected="settingsStore.theme === item[0]">
+                  <option v-for="item in themes" :key="item[0]" :value="item[0]" :selected="theme === item[0]">
                     {{ item[1] }}
                   </option>
                 </select>
@@ -96,7 +96,7 @@
                   <option v-for="item in taskbarPositions"
                           :key="item[0]"
                           :value="item[0]"
-                          :selected="settingsStore.taskbarPosition === item[0]"
+                          :selected="taskbarPosition === item[0]"
                   >
                     {{ item[1] }}
                   </option>
@@ -120,11 +120,11 @@
             </div>
             <div class="col-6">
               <div class="checkbox mb-1">
-                <input id="low_quality" type="checkbox" :checked="settingsStore.lowQuality" @change="qualityChanged">
+                <input id="low_quality" type="checkbox" :checked="lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
               <div class="checkbox" v-if="!useMobile()">
-                <input id="hls_beta" type="checkbox" :checked="settingsStore.useHls" @change="hlsChanged">
+                <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged">
                 <label for="hls_beta">HLS</label>
               </div>
             </div>
@@ -153,11 +153,13 @@ import { useSettingsStore } from '@app/stores/settingsStore'
 import { type BackgroundImage, enBackgroundMode } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useAppSettings } from '@app/composables/useAppSettings.ts'
 
 const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const backgroundList = ref<BackgroundImage[]>([])
 const { openWindow, closeWindow, WinType, winAlert } = useWindows()
+const { theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls, lowQuality, setLowQuality } = useAppSettings()
 
 defineProps<{
   name: string
@@ -225,13 +227,11 @@ function findIndex (background: BackgroundImage): number {
 }
 
 function themeSelected (e: Event): void {
-  settingsStore.theme = (e.target as HTMLSelectElement).value
-  settingsStore.saveTheme()
+  setTheme((e.target as HTMLSelectElement).value)
 }
 
 function taskbarPositionSelected (e: Event): void {
-  settingsStore.taskbarPosition = (e.target as HTMLSelectElement).value
-  settingsStore.saveTaskbarPosition()
+  setTaskbarPosition((e.target as HTMLSelectElement).value)
 }
 
 function openLanguageSettings (): void {
@@ -240,14 +240,12 @@ function openLanguageSettings (): void {
 }
 
 function qualityChanged (e: Event): void {
-  settingsStore.lowQuality = (e.target as HTMLInputElement).checked
-  settingsStore.saveQuality()
+  setLowQuality((e.target as HTMLInputElement).checked)
   winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 function hlsChanged (e: Event): void {
-  settingsStore.useHls = (e.target as HTMLInputElement).checked
-  settingsStore.saveHls()
+  setUseHls((e.target as HTMLInputElement).checked)
   winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': settingsStore.taskbarPosition === 'top'}">
+  <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': taskbarPosition === 'top'}">
     <div style="flex: 0 0 10px">
       <div class="divider mx-1" />
     </div>
@@ -24,12 +24,12 @@
 
 <script setup lang="ts">
 import { onBeforeMount, onMounted, ref } from 'vue'
-import { useSettingsStore } from '@app/stores/settingsStore'
 import { i18n } from '@locales/_i18n.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useAppSettings } from '@app/composables/useAppSettings.ts'
 
-const settingsStore = useSettingsStore()
 const { toggleMinimize, openedWindows, activeWindow } = useWindows()
+const { taskbarPosition } = useAppSettings()
 
 const time = ref('0:00 PM')
 

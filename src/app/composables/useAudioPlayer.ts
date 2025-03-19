@@ -1,11 +1,11 @@
 import Hls from 'hls.js'
-import { useSettingsStore } from '@app/stores/settingsStore.ts'
 import { watch } from 'vue'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import useVisual from '@app/composables/useVisual.ts'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
+import { useAppSettings } from '@app/composables/useAppSettings.ts'
 
 /**
  * useAudioPlayer composable
@@ -13,11 +13,11 @@ import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
  * Controls HTML5 audio playback and handle MediaSession API actions
  */
 export function useAudioPlayer() {
-  const settingsStore = useSettingsStore()
   const playerPlayback = usePlayerPlaybackStore()
   const playerSongStore = usePlayerSongStore()
   const { volume } = useVolumeControl()
   const { startVisual, stopVisual } = useVisual()
+  const { useHls, lowQuality } = useAppSettings()
 
   let hls: Hls | null = null
   let audio: HTMLAudioElement | null = null
@@ -46,16 +46,16 @@ export function useAudioPlayer() {
     audio.crossOrigin = 'anonymous'
 
     // Use HLS if supported
-    if (Hls.isSupported() && settingsStore.useHls) {
+    if (Hls.isSupported() && useHls.value) {
       hls = new Hls()
       hls.loadSource('https://radio.plaza.one/hls')
       hls.attachMedia(audio)
-      if (settingsStore.lowQuality) {
+      if (lowQuality.value) {
         hls.currentLevel = 0
       }
     } else {
       const noCacheStr = 'nocache=' + Date.now()
-      if (settingsStore.lowQuality) {
+      if (lowQuality.value) {
         audio.src = 'https://radio.plaza.one/mp3_low?' + noCacheStr
       } else {
         audio.src = 'https://radio.plaza.one/mp3?' + noCacheStr

@@ -1,5 +1,5 @@
 <template>
-  <div :class="settingsStore.themeName" :style="{backgroundColor}" class="app-desktop">
+  <div :class="themeName" :style="{backgroundColor}" class="app-desktop">
     <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
 
     <win-taskbar />
@@ -15,14 +15,16 @@ import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { enBackgroundMode } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useAppSettings } from '@app/composables/useAppSettings.ts'
 
 const i18n = useI18n()
 const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const { openWindow, WinType, openedWindows } = useWindows()
+const { themeName, language } = useAppSettings()
 
-watch(() => settingsStore.language, () => {
-  i18n.locale.value = settingsStore.language
+watch(() => language.value, () => {
+  i18n.locale.value = language.value
 })
 
 const backgroundColor = computed(() => {
@@ -30,6 +32,9 @@ const backgroundColor = computed(() => {
 })
 
 onMounted(() => {
+  // todo
+  i18n.locale.value = language.value
+
   settingsStore.loadSettings()
 
   openWindow(WinType.LOADING)

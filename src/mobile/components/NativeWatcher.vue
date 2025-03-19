@@ -9,6 +9,7 @@ import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useAppSettings } from '@app/composables/useAppSettings.ts'
 
 const i18n = useI18n()
 
@@ -17,6 +18,7 @@ const userAuthStore = useUserAuthStore()
 const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow, WinType } = useWindows()
+const { lowQuality, language } = useAppSettings()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -75,8 +77,8 @@ watch(() => settingsStore.background, (b) => {
 watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 
 // Watch audio quality
-watch(() => settingsStore.lowQuality, (lowQuality) => {
-  Native.setAudioQuality(lowQuality)
+watch(() => lowQuality.value, () => {
+  Native.setAudioQuality(lowQuality.value)
 })
 
 // Watch timer changes
@@ -85,9 +87,9 @@ watch(() => playerPlayback.sleepTime, (time) => {
 })
 
 // Watch language change
-watch(() => settingsStore.language, () => {
-  i18n.locale.value = settingsStore.language
-  Native.setLanguage(settingsStore.language)
+watch(() => language.value, () => {
+  i18n.locale.value = language.value
+  Native.setLanguage(language.value)
 })
 
 onMounted(() => {

@@ -59,7 +59,7 @@ function change (): void {
 
   sending.value = true
 
-  api.user.confirmReset({ token: userAuthStore.token!!, password: password.value }).then(() => {
+  api.user.confirmReset({ token: userAuthStore.resetToken!!, password: password.value }).then(() => {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_RESET_PASSWORD)
   }).catch(e => {

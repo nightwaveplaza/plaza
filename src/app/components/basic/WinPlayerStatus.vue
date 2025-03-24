@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, watch } from 'vue'
 import { api } from '@app/api/api'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
+import { useUserReactionStore } from '@app/stores/userReactionStore.ts'
 
 const STATUS_UPDATE_INTERVAL = 10000
 const playerSongStore = usePlayerSongStore()
+const userReaction = useUserReactionStore()
 
 let unmounted = false
 let intervalId = 0
+
+watch(() => playerSongStore.songId, () => {
+    userReaction.reset()
+});
 
 function updateStatus (): void {
   api.status.get().then((res) => {

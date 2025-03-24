@@ -1,9 +1,9 @@
 <template>
   <win-window v-slot="winProps" :width="350" :name="name" :title="t('win.news.title')">
     <div class="p-2">
+      <div v-if="isLoading" class="content-loading" style="min-height:250px" />
       <win-memo>
-        <div v-if="isNewsLoading" class="content-loading" />
-        <template v-if="!isNewsLoading && news" v-for="article in news.data">
+        <template v-if="!isLoading && news" v-for="article in news.data">
           <div v-if="article.text !== ''" v-html="article.text" />
           <div v-if="article.text !== ''" class="row justify-content-between">
             <div class="col-auto">
@@ -19,7 +19,7 @@
       <!-- Buttons -->
       <div class="row mt-2 no-gutters noselect">
         <div class="col">
-          <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isNewsLoading" @change="changePage" />
+          <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isLoading" @change="changePage" />
         </div>
         <div class="col-4 ml-auto">
           <win-button block @click="winProps.close()">
@@ -49,20 +49,20 @@ defineProps<{
 }>()
 
 const page = ref(1)
-const { isLoading: isNewsLoading, data: news, fetch: fetchNews, error: newsError } = getNews(page)
+const { isLoading, data: news, fetch, error } = getNews(page)
 
 function changePage (newPage: number): void {
   page.value = newPage
-  fetchNews()
+  fetch()
 }
 
-watch(() => newsError.value, (error) => {
+watch(() => error.value, (error) => {
   if (error) winAlert(error.message, t('errors.error'))
   if (!news.value) closeWindow(WinType.NEWS)
 })
 
 onMounted(() => {
-  fetchNews()
+  fetch()
 })
 </script>
 

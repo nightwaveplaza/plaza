@@ -9,24 +9,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 
-import { useSettingsStore } from '@app/stores/settingsStore'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useRouter } from 'vue-router'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
+import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 
-const settingsStore = useSettingsStore()
 const i18n = useI18n()
 const router = useRouter()
 const { openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
+const { fetch: fetchBackgrounds, backgroundImage, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 
 // Appearance
-const backgroundImage = computed(() => settingsStore.backgroundSrc)
-const backgroundColor = computed(() => settingsStore.background.color)
-
 watch(() => language.value, () => {
   i18n.locale.value = language.value
 })
@@ -42,10 +39,8 @@ onMounted(() => {
   // todo
   i18n.locale.value = language.value
 
-  settingsStore.loadSettings()
-
-  if (settingsStore.isBackgroundRandomMode) {
-    settingsStore.loadRandomBackground()
+  if (isRandomMode.value) {
+    fetchBackgrounds().then(() => setRandomBackground())
   }
 })
 </script>

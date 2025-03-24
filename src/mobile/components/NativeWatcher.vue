@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useSettingsStore } from '@app/stores/settingsStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 import { onMounted, watch } from 'vue'
-import { type Background, enBackgroundMode, PlayerState } from '@app/types/types.ts'
+import { PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
@@ -10,26 +9,27 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
+import { type Background, useBackgrounds  } from '@app/composables/useBackgrounds.ts'
 
 const i18n = useI18n()
 
-const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow, WinType } = useWindows()
 const { lowQuality, language } = useAppSettings()
+const { background, isColorMode } = useBackgrounds()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
-    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.src)
+    Native.setBackground(isColorMode.value ? 'solid' : bg.image!.src)
   } else {
-    Native.setBackground(bg.mode === enBackgroundMode.SOLID ? 'solid' : bg.image!.video_src)
+    Native.setBackground(isColorMode.value ? 'solid' : bg.image!.video_src)
   }
 }
 
 function registerEmitterEvents (): void {
-  eventBus.on('resume', () => updateBackgroundNative(settingsStore.background))
+  eventBus.on('resume', () => updateBackgroundNative(background))
 
   eventBus.on('closeWindow', (name: string) => {
     closeWindow(name)
@@ -66,7 +66,7 @@ function registerEmitterEvents (): void {
 }
 
 // Watch background for changes
-watch(() => settingsStore.background, (b) => {
+watch(() => background, (b) => {
       if (b.image) {
         updateBackgroundNative(b as Background)
       }

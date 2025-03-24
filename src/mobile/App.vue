@@ -8,39 +8,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { Native } from '@mobile/bridge/native'
-import { useSettingsStore } from '@app/stores/settingsStore'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { enBackgroundMode } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
+import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 
 const i18n = useI18n()
-const settingsStore = useSettingsStore()
 const userAuthStore = useUserAuthStore()
 const { openWindow, WinType, openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
+const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
-})
-
-const backgroundColor = computed(() => {
-  return settingsStore.background.mode === enBackgroundMode.SOLID ? settingsStore.background.color : 'transparent'
 })
 
 onMounted(() => {
   // todo
   i18n.locale.value = language.value
 
-  settingsStore.loadSettings()
-
   openWindow(WinType.LOADING)
 
-  if (settingsStore.isBackgroundRandomMode) {
-    settingsStore.loadRandomBackground()
+  if (isRandomMode.value) {
+    fetchBackgrounds().then(() => setRandomBackground())
   }
 
   Native.getAuthToken()!.then(t => {

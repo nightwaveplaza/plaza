@@ -7,9 +7,7 @@ import type {
   UserResetConfirm,
   ReactResponse,
   UserResponse,
-  RatingsResponse,
   FavoritesResponse,
-  BackgroundImage,
   StatusResponse,
   SongResponse,
 } from '@app/types/types'
@@ -28,25 +26,10 @@ export const api = {
       Repository.post<ReactResponse>('reactions', { reaction }),
   },
 
-  ratings: {
-    get: (range: string, page: number):
-      Promise<AxiosResponse<RatingsResponse>> =>
-      Repository.get<RatingsResponse>(`ratings/${range}/${page}`),
-  },
-
   songs: {
     get: (id: string):
       Promise<AxiosResponse<SongResponse>> =>
       Repository.get<SongResponse>(`songs/${id}`),
-  },
-
-  backgrounds: {
-    get: ():
-      Promise<AxiosResponse<BackgroundImage[]>> =>
-      Repository.get<BackgroundImage[]>('backgrounds'),
-    random: ():
-      Promise<AxiosResponse<BackgroundImage>> =>
-      Repository.get<BackgroundImage>('backgrounds/random'),
   },
 
   user: {

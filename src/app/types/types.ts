@@ -16,31 +16,6 @@ export interface SongWindowParams {
   songId: string
 }
 
-export interface Background {
-  image?: BackgroundImage,
-  color: string,
-  index: number,
-  mode: enBackgroundMode
-}
-
-export enum enBackgroundMode {
-  RANDOM,
-  SINGLE,
-  SOLID
-}
-
-export interface BackgroundImage {
-  id: number,
-  filename: string
-  author: string
-  author_link: string
-  source: string
-  source_link: string
-  num: string
-  src: string
-  video_src: string
-}
-
 export interface UserProfile {
   username: string,
   token: string,

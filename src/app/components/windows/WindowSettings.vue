@@ -7,51 +7,51 @@
           {{ t('win.settings.background') }}
         </template>
         <template #content>
-          <div v-if="settingsStore.background.mode === enBackgroundMode.SOLID" class="row palette no-gutters">
+          <div v-if="isColorMode" class="row palette no-gutters">
             <div v-for="color in palette" :key="color" class="col-auto">
-              <button class="color" :style="{backgroundColor: color}" @click="solidBg(color)" />
+              <button class="color" :style="{backgroundColor: color}" @click="setColorBackground(color)" />
             </div>
             <div class="col-3">
-              <input class="d-block" :value="settingsStore.background.color" @input="colorSelected">
+              <input class="d-block" :value="background.color" @input="colorSelected">
             </div>
           </div>
 
           <win-memo v-else>
             <p>
-              <b>{{ t('win.settings.background') }}:</b> {{ settingsStore.background.image?.num }}
+              <b>#{{ background.image?.id }}</b>
             </p>
             <p>
               <b>{{ t('win.settings.source') }}: </b>
-              <a v-if="settingsStore.background.image?.source_link !== ''" :href="settingsStore.background.image?.source_link">
-                {{ settingsStore.background.image?.source }}
+              <a v-if="background.image?.source_link !== ''" :href="background.image?.source_link">
+                {{ background.image?.source }}
               </a>
             </p>
             <p>
               <b>{{ t('win.settings.author') }}: </b>
-              <a v-if="settingsStore.background.image?.author_link !== ''" :href="settingsStore.background.image?.author_link">
-                {{ settingsStore.background.image?.author }}
+              <a v-if="background.image?.author_link !== ''" :href="background.image?.author_link">
+                {{ background.image?.author }}
               </a>
             </p>
           </win-memo>
 
           <div class="row no-gutters mt-2 noselect">
             <div class="col-2 pr-1">
-              <win-button block @click="nextBg(-1)">
+              <win-button block @click="nextBackground(-1)">
                 &lt;
               </win-button>
             </div>
             <div class="col-2 pr-1">
-              <win-button block @click="nextBg(1)">
+              <win-button block @click="nextBackground(1)">
                 &gt;
               </win-button>
             </div>
             <div class="col-4 pr-1">
-              <win-button block :class="{active: settingsStore.background.mode === enBackgroundMode.RANDOM}" @click="randomBg">
+              <win-button block :class="{active: isRandomMode}" @click="setRandomBackground">
                 {{ t('win.settings.btn_random') }}
               </win-button>
             </div>
             <div class="col-4">
-              <win-button block :class="{active: settingsStore.background.mode === enBackgroundMode.SOLID}" @click="solidBg">
+              <win-button block :class="{active: isColorMode}" @click="setColorBackground">
                 {{ t('win.settings.btn_solid') }}
               </win-button>
             </div>
@@ -146,20 +146,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
-import { useSettingsStore } from '@app/stores/settingsStore'
-import { type BackgroundImage, enBackgroundMode } from '@app/types/types'
 import { useMobile } from '@app/composables/useMobile.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
+import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 
 const { t } = useI18n()
-const settingsStore = useSettingsStore()
-const backgroundList = ref<BackgroundImage[]>([])
 const { openWindow, closeWindow, WinType, winAlert } = useWindows()
-const { theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls, lowQuality, setLowQuality } = useAppSettings()
+const {
+  theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls,
+  lowQuality, setLowQuality
+} = useAppSettings()
+const {
+  background, fetch: fetchBackgrounds, setColorBackground, setRandomBackground, nextBackground,
+  isRandomMode, isColorMode
+} = useBackgrounds()
 
 defineProps<{
   name: string
@@ -184,46 +187,7 @@ const taskbarPositions = computed(() => [
 ])
 
 function colorSelected (e: Event): void {
-  solidBg((e.target as HTMLInputElement).value)
-}
-
-function nextBg (dir: number): void {
-  let index = findIndex(settingsStore.background.image!) + dir
-
-  if (index < 0) {
-    index = backgroundList.value.length - 1
-  } else if (index >= backgroundList.value.length) {
-    index = 0
-  }
-
-  settingsStore.background.mode = enBackgroundMode.SINGLE
-  settingsStore.background.image = backgroundList.value[index]
-  settingsStore.saveBackground()
-}
-
-function randomBg (): void {
-  const image = backgroundList.value[Math.floor(Math.random() * backgroundList.value.length)]
-
-  settingsStore.background.mode = enBackgroundMode.RANDOM
-  settingsStore.background.image = image
-  settingsStore.saveBackground()
-}
-
-function solidBg (color?: string): void {
-  if (typeof color !== 'undefined') {
-    settingsStore.background.color = color
-  }
-
-  settingsStore.background.mode = enBackgroundMode.SOLID
-  settingsStore.saveBackground()
-}
-
-function findIndex (background: BackgroundImage): number {
-  const index = backgroundList.value.findIndex((b: BackgroundImage) => {
-    return b.id === background.id
-  })
-
-  return index < 0 ? 0 : index
+  setColorBackground((e.target as HTMLInputElement).value)
 }
 
 function themeSelected (e: Event): void {
@@ -251,7 +215,7 @@ function hlsChanged (e: Event): void {
 
 onMounted(() => {
   // Load background list from server
-  api.backgrounds.get().then(res => backgroundList.value = res.data)
+  fetchBackgrounds()
 })
 </script>
 

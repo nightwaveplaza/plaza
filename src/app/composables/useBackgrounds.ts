@@ -1,5 +1,5 @@
 import { computed, reactive } from 'vue'
-import { usePrefs } from '@app/composables/usePrefs.ts'
+import { prefs } from '@app/utils/prefs.ts'
 import { useBackgroundsApi } from '@app/composables/api/useBackgroundsApi.ts'
 
 export interface Background {
@@ -27,7 +27,7 @@ export interface BackgroundImage {
   video_src: string
 }
 
-const background = reactive(usePrefs.get<Background>('background', {
+const background = reactive(prefs.get<Background>('background', {
   image: null,
   color: '#008080',
   index: 0,
@@ -86,7 +86,7 @@ export function useBackgrounds() {
   }
 
   const saveBackground = () => {
-    usePrefs.save<Background>('background', background)
+    prefs.save<Background>('background', background)
   }
 
   const loadRandomBackground = () => {

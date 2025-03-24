@@ -35,11 +35,10 @@
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows, WinType } from '@app/composables/useWindows'
-import { useTimeFormats } from '@app/composables/useTimeFormats'
 import { useNewsApi } from '@app/composables/api/useNewsApi'
+import { fmtDate } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
-const { fmtDate } = useTimeFormats()
 const { winAlert } = useWindows()
 const { getNews } = useNewsApi()
 const { closeWindow } = useWindows()

@@ -123,7 +123,7 @@
                 <input id="low_quality" type="checkbox" :checked="lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
-              <div class="checkbox" v-if="!useMobile()">
+              <div class="checkbox" v-if="!isMobile()">
                 <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged">
                 <label for="hls_beta">HLS</label>
               </div>
@@ -148,7 +148,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'

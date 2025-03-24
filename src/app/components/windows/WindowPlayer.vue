@@ -13,7 +13,7 @@
     </template>
 
     <!-- Menu -->
-    <win-menu v-if="!useMobile()" />
+    <win-menu v-if="!isMobile()" />
 
     <!-- Player -->
     <div class="content p-2">
@@ -37,7 +37,7 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -53,7 +53,7 @@ defineProps<{
   name: string
 }>()
 
-const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
+const fullScreenEnabled = computed(() => isMobile() || document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()
 
 function minimize (): void {
@@ -61,7 +61,7 @@ function minimize (): void {
 }
 
 function requestFullScreen (): void {
-  if (useMobile()) {
+  if (isMobile()) {
     Native.toggleFullscreen()
   } else {
     document.getElementById('app')?.requestFullscreen()

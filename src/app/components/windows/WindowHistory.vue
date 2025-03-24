@@ -69,11 +69,10 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type WinList from '@app/components/basic/WinList.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 import { useHistoryApi } from '@app/composables/api/useHistoryApi.ts'
+import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
-const { fmtDay, fmtTime } = useTimeFormats()
 const { winAlert, winSongInfo } = useWindows()
 const { getHistory } = useHistoryApi()
 

@@ -11,7 +11,7 @@ import { AxiosError } from 'axios'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
-import { usePrefs } from '@app/composables/usePrefs'
+import { prefs } from '@app/utils/prefs.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
@@ -53,13 +53,13 @@ function send (score: number): void {
 }
 
 function showTip (): void {
-  const showed = usePrefs.get<number>('reactionTip', 0)
+  const showed = prefs.get<number>('reactionTip', 0)
   if (showed > 0) {
     return
   }
 
   winAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
 
-  usePrefs.save('reactionTip', 1)
+  prefs.save('reactionTip', 1)
 }
 </script>

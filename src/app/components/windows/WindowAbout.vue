@@ -89,7 +89,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -105,7 +105,7 @@ const version = __APP_VERSION__ ?? 'n/a'
 const appVersion = ref('')
 
 onMounted(() => {
-  if (useMobile()) {
+  if (isMobile()) {
     Native.getAppVersion().then(version => {
       appVersion.value = version + ' / '
     })

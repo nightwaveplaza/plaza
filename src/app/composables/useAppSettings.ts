@@ -1,6 +1,6 @@
 import _locales from '@locales/_locales.ts'
 import { computed, ref } from 'vue'
-import { usePrefs } from '@app/composables/usePrefs.ts'
+import { prefs } from '@app/utils/prefs.ts'
 
 enum PrefKeys {
   THEME = 'theme',
@@ -10,36 +10,36 @@ enum PrefKeys {
   USE_HLS = 'use_hls'
 }
 
-const theme = ref(usePrefs.get<string>(PrefKeys.THEME, 'win98'))
-const language = ref(usePrefs.get<string>(PrefKeys.LANGUAGE, getDefaultLanguage()))
-const lowQuality = ref(usePrefs.get<boolean>(PrefKeys.LOW_QUALITY, false))
-const taskbarPosition = ref(usePrefs.get<string>(PrefKeys.TASKBAR_POSITION, getDefaultTaskbarPosition()))
-const useHls = ref(usePrefs.get<boolean>(PrefKeys.USE_HLS, true))
+const theme = ref(prefs.get<string>(PrefKeys.THEME, 'win98'))
+const language = ref(prefs.get<string>(PrefKeys.LANGUAGE, getDefaultLanguage()))
+const lowQuality = ref(prefs.get<boolean>(PrefKeys.LOW_QUALITY, false))
+const taskbarPosition = ref(prefs.get<string>(PrefKeys.TASKBAR_POSITION, getDefaultTaskbarPosition()))
+const useHls = ref(prefs.get<boolean>(PrefKeys.USE_HLS, true))
 
 export function useAppSettings () {
   const setTheme = (t: string): void => {
     theme.value = t
-    usePrefs.save<string>(PrefKeys.THEME, theme.value)
+    prefs.save<string>(PrefKeys.THEME, theme.value)
   }
 
   const setLanguage = (l: string): void => {
     language.value = l
-    usePrefs.save<string>(PrefKeys.LANGUAGE, language.value)
+    prefs.save<string>(PrefKeys.LANGUAGE, language.value)
   }
 
   const setLowQuality = (v: boolean): void => {
     lowQuality.value = v
-    usePrefs.save<boolean>(PrefKeys.LOW_QUALITY, lowQuality.value)
+    prefs.save<boolean>(PrefKeys.LOW_QUALITY, lowQuality.value)
   }
 
   const setTaskbarPosition = (p: string): void => {
     taskbarPosition.value = p
-    usePrefs.save<string>(PrefKeys.TASKBAR_POSITION, taskbarPosition.value)
+    prefs.save<string>(PrefKeys.TASKBAR_POSITION, taskbarPosition.value)
   }
 
   const setUseHls = (v: boolean): void => {
     useHls.value = v
-    usePrefs.save<boolean>(PrefKeys.USE_HLS, useHls.value)
+    prefs.save<boolean>(PrefKeys.USE_HLS, useHls.value)
   }
 
   const themeName = computed(() => `theme-${theme.value}`)

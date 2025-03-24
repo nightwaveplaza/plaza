@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
+import { useNumberOnly } from '@app/utils/helpers.ts'
 
 const props =withDefaults(defineProps<{
   pages: number,

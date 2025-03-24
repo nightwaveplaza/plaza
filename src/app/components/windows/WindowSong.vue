@@ -73,15 +73,14 @@ import { AxiosError } from 'axios'
 import { api } from '@app/api/api'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { usePrefs } from '@app/composables/usePrefs'
+import { prefs } from '@app/utils/prefs.ts'
 import type { SongResponse, SongWindowParams } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
+import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
-const { fmtDuration, fmtDate } = useTimeFormats()
 const { winAlert } = useWindows()
 
 const props = defineProps<{
@@ -146,7 +145,7 @@ async function favoriteSong (): Promise<void> {
 }
 
 function getVolume (): number {
-  const volume = usePrefs.get<number>('volume', 100)
+  const volume = prefs.get<number>('volume', 100)
   return volume / 100
 }
 

@@ -60,8 +60,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
-import { useNumberOnly } from '@app/composables/useNumberOnly.ts'
-import type WinWindow from '@app/components/basic/WinWindow.vue'
+import { useNumberOnly } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()

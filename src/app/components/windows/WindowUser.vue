@@ -3,7 +3,7 @@
     <div class="p-2 noselect">
       <div class="row">
         <div class="col-10 offset-1">
-          <win-button v-if="!useMobile()" block class="mb-2" @click="open(WinType.USER_FAVORITES)">
+          <win-button v-if="!isMobile()" block class="mb-2" @click="open(WinType.USER_FAVORITES)">
             {{ t('win.user_favorites.title') }}
           </win-button>
           <win-button block class="mb-2" @click="open(WinType.USER_EMAIL)">
@@ -28,7 +28,7 @@
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()

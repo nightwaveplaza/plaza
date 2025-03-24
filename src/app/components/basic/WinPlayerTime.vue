@@ -8,14 +8,13 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
-import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { fmtDuration } from '@app/utils/timeFormats.ts'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
-const { fmtDuration } = useTimeFormats()
 const { song, updatedAt, position } = useNowPlayingStatus()
 
 const emit = defineEmits(['stopByTimer'])

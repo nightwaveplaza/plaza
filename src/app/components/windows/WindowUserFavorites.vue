@@ -75,10 +75,9 @@ import type WinList from '@app/components/basic/WinList.vue'
 import type { FavoritesResponse } from '@app/types/types'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
+import { fmtDate } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
-const { fmtDate } = useTimeFormats()
 const { winAlert, winSongInfo } = useWindows()
 
 defineProps<{

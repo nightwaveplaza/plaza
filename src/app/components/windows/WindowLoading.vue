@@ -17,20 +17,17 @@
       </div>
     </div>
   </win-window>
-
-  <win-player-status />
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, WinType } = useWindows()
-const playerSongStore = usePlayerSongStore()
+const { song } = useNowPlayingStatus()
 
 defineProps<{
   name: string
@@ -69,7 +66,7 @@ function move (): void {
 }
 
 // waiting for the first status response then check news and open up player
-watch(() => playerSongStore.songId, async () => {
+watch(() => song.id, async () => {
   openWindow(WinType.PLAYER)
   closeWindow(WinType.LOADING)
 })

@@ -16,12 +16,15 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useRouter } from 'vue-router'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
+import { useStatusUpdater } from '@app/composables/player/useStatusUpdater.ts'
 
 const i18n = useI18n()
 const router = useRouter()
 const { openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundImage, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
+
+useStatusUpdater()
 
 // Appearance
 watch(() => language.value, () => {

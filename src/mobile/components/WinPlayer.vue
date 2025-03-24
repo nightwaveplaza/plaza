@@ -9,10 +9,10 @@
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
         <div class="player-artist track-artist mb-2">
-          {{ playerSongStore.artist }}
+          {{ song.artist }}
         </div>
         <div class="player-title track-title">
-          {{ playerSongStore.title }}
+          {{ song.title }}
         </div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
@@ -48,27 +48,25 @@
         </div>
       </div>
     </div>
-
-    <win-player-status ref="status" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Native } from '@mobile/bridge/native'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 const { t } = useI18n()
-const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, closeWindow, WinType } = useWindows()
+const { song } = useNowPlayingStatus()
 
 const artwork = computed(() => {
-  return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
+  return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
 const playText = computed((): string => {

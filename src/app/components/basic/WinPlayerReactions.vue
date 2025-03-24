@@ -1,7 +1,7 @@
 <template>
   <win-button block :disabled="sending" @click="like">
     <i :class="likeIcon" class="i mr-1" :style="{color: likeColor}" />
-    {{ playerSongStore.reactions }}
+    {{ reactions }}
   </win-button>
 </template>
 
@@ -10,16 +10,16 @@ import { computed, ref } from 'vue'
 import { AxiosError } from 'axios'
 import { useI18n } from 'vue-i18n'
 import { api } from '@app/api/api'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
 import { usePrefs } from '@app/composables/usePrefs'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
 
 const { t } = useI18n()
-const playerSongStore = usePlayerSongStore()
+const { setReactions, reactions } = useNowPlayingStatus()
 const userReactionStore = useUserReactionStore()
 const { winAlert } = useWindows()
 
@@ -40,7 +40,7 @@ function send (score: number): void {
   sending.value = true
 
   api.reactions.react(score).then(res => {
-    playerSongStore.reactions = res.data.reactions
+    setReactions(res.data.reactions)
     userReactionStore.setUserReaction(score)
     showTip()
   }).catch(e => {

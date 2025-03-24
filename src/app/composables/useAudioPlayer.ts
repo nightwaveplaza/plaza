@@ -4,8 +4,8 @@ import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import useVisual from '@app/composables/useVisual.ts'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 /**
  * useAudioPlayer composable
@@ -14,10 +14,10 @@ import { useAppSettings } from '@app/composables/useAppSettings.ts'
  */
 export function useAudioPlayer() {
   const playerPlayback = usePlayerPlaybackStore()
-  const playerSongStore = usePlayerSongStore()
   const { volume } = useVolumeControl()
   const { startVisual, stopVisual } = useVisual()
   const { useHls, lowQuality } = useAppSettings()
+  const { song, position } = useNowPlayingStatus()
 
   let hls: Hls | null = null
   let audio: HTMLAudioElement | null = null
@@ -31,7 +31,7 @@ export function useAudioPlayer() {
   })
 
   // Watch for song update and change MediaSession and document title
-  watch(() => playerSongStore.songId, () => {
+  watch(() => song.id, () => {
     updateAudioMetadata()
   })
 
@@ -107,7 +107,7 @@ export function useAudioPlayer() {
   // Update media session and document title
   const updateAudioMetadata = (): void => {
     if (playerPlayback.state === PlayerState.PLAYING) {
-      document.title = `${playerSongStore.artist} - ${playerSongStore.title}`
+      document.title = `${song.artist} - ${song.title}`
       updateMediaSession()
       updateMediaSessionPosition()
     }
@@ -117,11 +117,11 @@ export function useAudioPlayer() {
   function updateMediaSession (): void {
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: playerSongStore.title,
-        artist: playerSongStore.artist,
-        album: playerSongStore.album,
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
         artwork: [
-          { src: playerSongStore.artwork_src, sizes: '500x500', type: 'image/jpg' },
+          { src: song.artwork_src, sizes: '500x500', type: 'image/jpg' },
         ],
       })
     } else {
@@ -157,8 +157,8 @@ export function useAudioPlayer() {
   function updateMediaSessionPosition () {
     if ('setPositionState' in navigator.mediaSession) {
       navigator.mediaSession.setPositionState({
-        duration: playerSongStore.length,
-        position: playerSongStore.position
+        duration: song.length,
+        position: position.value
       });
     }
   }

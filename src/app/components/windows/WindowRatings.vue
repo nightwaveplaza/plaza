@@ -100,7 +100,6 @@ function changePage (newPage: number): void {
 }
 
 function changeRange (newRange: ReactionsRange): void {
-  page.value = 1
   pagination.value?.reset()
   range.value = newRange
   fetchRatings()

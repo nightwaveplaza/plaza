@@ -4,13 +4,13 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-button :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange(ReactionsRange.OVERTIME)">
+          <win-button :class="{ active: range === ReactionsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(ReactionsRange.OVERTIME)">
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
-          <win-button :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange(ReactionsRange.MONTHLY)">
+          <win-button :class="{ active: range === ReactionsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(ReactionsRange.MONTHLY)">
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
-          <win-button :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange(ReactionsRange.WEEKLY)">
+          <win-button :class="{ active: range === ReactionsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(ReactionsRange.WEEKLY)">
             {{ t('win.ratings.btn_weekly') }}
           </win-button>
         </div>
@@ -31,7 +31,7 @@
                   {{ song.title }}
                 </div>
               </td>
-              <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
+              <td class="text-right noselect pr-2 nowrap" style="width: 57px">
                 {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
               </td>
             </tr>

@@ -88,18 +88,6 @@ export interface PaginatedResponse {
   "data": {}[]
 }
 
-export interface RatingsResponse {
-  per_page: number
-  pages: number
-  count: number
-  songs: {
-    id: string
-    artist: string
-    title: string
-    likes: number
-  }[]
-}
-
 export interface FavoritesResponse {
   per_page: number
   pages: number

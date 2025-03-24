@@ -55,7 +55,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
 
 function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
   // todo do we really need polyfill?
-  if (env.NODE_ENV === 'development' || env.VITE_APP === 'mobile') {
+  if (env.VITE_APP === 'mobile') {
     return legacy({
       targets: 'defaults, android >= 5.0, ios >= 12',
     })

@@ -2,22 +2,24 @@
   <win-window v-slot="winProps" :width="350" :name="name" :title="t('win.news.title')">
     <div class="p-2">
       <win-memo>
-        <div v-if="article.text === ''" class="content-loading" />
-        <div v-if="article.text !== ''" v-html="article.text" />
-        <div v-if="article.text !== ''" class="row justify-content-between">
-          <div class="col-auto">
-            {{ article.author }}
+        <div v-if="isNewsLoading" class="content-loading" />
+        <template v-if="!isNewsLoading && news" v-for="article in news.data">
+          <div v-if="article.text !== ''" v-html="article.text" />
+          <div v-if="article.text !== ''" class="row justify-content-between">
+            <div class="col-auto">
+              {{ article.author }}
+            </div>
+            <div class="col-auto">
+              {{ fmtDate(article.created_at) }}
+            </div>
           </div>
-          <div class="col-auto">
-            {{ fmtDate(article.created_at) }}
-          </div>
-        </div>
+        </template>
       </win-memo>
 
       <!-- Buttons -->
       <div class="row mt-2 no-gutters noselect">
         <div class="col">
-          <win-pagination v-if="length > 0" :pages="pages" @change="changePage" />
+          <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isNewsLoading" @change="changePage" />
         </div>
         <div class="col-4 ml-auto">
           <win-button block @click="winProps.close()">
@@ -30,46 +32,37 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { api } from '@app/api/api'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useApiError } from '@app/composables/useApiError.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useTimeFormats } from '@app/composables/useTimeFormats.ts'
+import { useWindows, WinType } from '@app/composables/useWindows'
+import { useTimeFormats } from '@app/composables/useTimeFormats'
+import { useNewsApi } from '@app/composables/api/useNewsApi'
 
 const { t } = useI18n()
 const { fmtDate } = useTimeFormats()
 const { winAlert } = useWindows()
+const { getNews } = useNewsApi()
+const { closeWindow } = useWindows()
 
 defineProps<{
   name: string
 }>()
 
-const article = ref({
-  text: '',
-  author: '',
-  created_at: 0,
-})
 const page = ref(1)
-const length = ref(1)
-const pages = ref(1)
-
-function getArticle (): void {
-  api.news.get(page.value).then(res => {
-    article.value = res.data.articles[0]!
-    pages.value = res.data.pages
-  }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
-  })
-}
+const { isLoading: isNewsLoading, data: news, fetch: fetchNews, error: newsError } = getNews(page)
 
 function changePage (newPage: number): void {
   page.value = newPage
-  getArticle()
+  fetchNews()
 }
 
+watch(() => newsError.value, (error) => {
+  if (error) winAlert(error.message, t('errors.error'))
+  if (!news.value) closeWindow(WinType.NEWS)
+})
+
 onMounted(() => {
-  getArticle()
+  fetchNews()
 })
 </script>
 

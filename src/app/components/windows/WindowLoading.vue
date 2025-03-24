@@ -25,8 +25,6 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { api } from '@app/api/api'
-import { usePrefs } from '@app/composables/usePrefs'
 import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 
@@ -71,17 +69,9 @@ function move (): void {
 }
 
 // waiting for the first status response then check news and open up player
-watch(() => playerSongStore.songId, () => {
-  api.news.latest().then(res => {
-    const latestNewsRead = usePrefs.get<number>('latestNewsRead', 0)!
-    if (latestNewsRead < res.data.id) {
-      usePrefs.save('latestNewsRead', res.data.id)
-      setTimeout(() => openWindow(WinType.NEWS), 3000)
-    }
-
-    openWindow(WinType.PLAYER)
-    closeWindow(WinType.LOADING)
-  })
+watch(() => playerSongStore.songId, async () => {
+  openWindow(WinType.PLAYER)
+  closeWindow(WinType.LOADING)
 })
 
 onMounted(() => {

@@ -6,14 +6,11 @@ import type {
   UserReset,
   UserResetConfirm,
   ReactResponse,
-  HistoryResponse,
   UserResponse,
   RatingsResponse,
   FavoritesResponse,
   BackgroundImage,
-  NewsLatestResponse,
   StatusResponse,
-  NewsResponse,
   SongResponse,
 } from '@app/types/types'
 import type { AxiosResponse } from 'axios'
@@ -23,21 +20,6 @@ export const api = {
     get: ():
       Promise<AxiosResponse<StatusResponse>> =>
       Repository.get<StatusResponse>('status'),
-  },
-
-  news: {
-    latest: ():
-      Promise<AxiosResponse<NewsLatestResponse>> =>
-      Repository.get<NewsLatestResponse>(`news/latest`),
-    get: (page: number):
-      Promise<AxiosResponse<NewsResponse>> =>
-      Repository.get<NewsResponse>(`news/${page}`),
-  },
-
-  history: {
-    get: (page: number):
-      Promise<AxiosResponse<HistoryResponse>> =>
-      Repository.get<HistoryResponse>(`history/${page}`),
   },
 
   reactions: {

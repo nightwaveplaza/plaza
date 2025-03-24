@@ -10,17 +10,15 @@ export function useApiError (e: Error | AxiosError): string {
   const { t } = i18n.global
 
   if (e instanceof AxiosError) {
-    if (e.code === 'ERR_NETWORK') {
-      return t('errors.network_fail')
-    }
-
     if (e.response?.status === 500) {
       return t('errors.server')
     }
 
-    if (e.response?.data) {
+    if (e.response?.data?.key) {
       return t((<ApiError>e.response.data).key)
     }
+
+    return t('errors.network_fail') + ' ' + e.message
   }
 
   return e.message

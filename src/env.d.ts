@@ -27,7 +27,6 @@ interface ImportMetaEnv {
   readonly VITE_CRYPTO_ETH: string
   readonly VITE_CRYPTO_BTC: string
   readonly VITE_CRYPTO_TON: string
-
 }
 
 interface ImportMeta {

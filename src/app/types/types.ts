@@ -75,18 +75,17 @@ export interface UserResetConfirm {
   password: string
 }
 
-export interface HistoryResponse {
-  per_page: number
-  pages: number
-  count: number
-  from_date: number
-  to_date: number
-  songs: {
-    played_at: number
-    id: string
-    artist: string
-    title: string
-  }[]
+export interface PaginatedResponse {
+  "meta": {
+    "current_page": number,
+    "from": number,
+    "last_page": number,
+    "path": string,
+    "per_page": number,
+    "to": number,
+    "total": number
+  },
+  "data": {}[]
 }
 
 export interface RatingsResponse {
@@ -142,22 +141,6 @@ export interface StatusResponse {
   }
   listeners: number
   updated_at: number
-}
-
-export interface NewsLatestResponse {
-  id: number
-  updated_at: number
-}
-
-export interface NewsResponse {
-  per_page: number
-  pages: number
-  count: number
-  articles: {
-    text: string
-    author: string
-    created_at: number
-  }[]
 }
 
 export interface SongResponse {

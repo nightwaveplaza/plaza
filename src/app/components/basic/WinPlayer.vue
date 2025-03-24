@@ -9,10 +9,10 @@
     <div class="col-12 col-sm">
       <div class="player-meta pl-sm-2">
         <div class="player-artist track-artist mb-2">
-          {{ playerSongStore.artist }}
+          {{ song.artist }}
         </div>
         <div class="player-title track-title">
-          {{ playerSongStore.title }}
+          {{ song.title }}
         </div>
 
         <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
@@ -63,15 +63,12 @@
         </div>
       </div>
     </div>
-
-    <win-player-status ref="status" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
@@ -79,13 +76,14 @@ import { PlayerState } from '@app/types/types.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useAudioPlayer } from '@app/composables/useAudioPlayer.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
+const { song } = useNowPlayingStatus()
 
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
-const playerSongStore = usePlayerSongStore()
 const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, WinType, winSongInfo } = useWindows()
 
@@ -93,7 +91,7 @@ const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
 
 const artwork = computed(() => {
-  return playerSongStore.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
+  return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
 const playText = computed((): string => {
@@ -121,8 +119,8 @@ function play (): void {
 }
 
 function showSongInfo (): void {
-  if (playerSongStore.songId) {
-    winSongInfo(playerSongStore.songId)
+  if (song.id) {
+    winSongInfo(song.id)
   }
 }
 

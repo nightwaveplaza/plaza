@@ -49,11 +49,15 @@ defineProps<{
 }>()
 
 const page = ref(1)
-const { isLoading, data: news, fetch, error } = getNews(page)
+const { isLoading, data: news, fetch, error } = getNews()
 
 function changePage (newPage: number): void {
   page.value = newPage
-  fetch()
+  fetchNews()
+}
+
+function fetchNews () {
+  fetch(page.value)
 }
 
 watch(() => error.value, (error) => {
@@ -62,7 +66,7 @@ watch(() => error.value, (error) => {
 })
 
 onMounted(() => {
-  fetch()
+  fetchNews()
 })
 </script>
 

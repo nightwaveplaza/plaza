@@ -82,12 +82,16 @@ defineProps<{
 }>()
 
 const page = ref(1)
-const { isLoading, fetch, data: history, error } = getHistory(page.value)
+const { isLoading, fetch, data: history, error } = getHistory()
 const list = ref<InstanceType<typeof WinList>>()
 
 function changePage (newPage: number): void {
   page.value = newPage
-  fetch()
+  fetchHistory()
+}
+
+function fetchHistory() {
+  fetch(page.value)
 }
 
 watch(() => error.value, (error) => {
@@ -95,6 +99,6 @@ watch(() => error.value, (error) => {
 })
 
 onMounted(() => {
-  fetch()
+  fetchHistory()
 })
 </script>

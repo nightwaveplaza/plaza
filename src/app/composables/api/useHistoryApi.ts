@@ -1,7 +1,7 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
 import type { PaginatedResponse } from '@app/types/types.ts'
 
-export interface HistoryResponse extends PaginatedResponse {
+interface HistoryResponse extends PaginatedResponse {
   data: {
     played_at: number
     id: string
@@ -15,9 +15,9 @@ export interface HistoryResponse extends PaginatedResponse {
 }
 
 export function useHistoryApi () {
-  const getHistory = (page: number) => {
+  const getHistory = () => {
     const instance = useAxios<HistoryResponse>()
-    const fetch = () => instance.call({
+    const fetch = (page: number) => instance.call({
       url: `v2/history/?page=${page}`
     })
     return { ...instance, fetch }

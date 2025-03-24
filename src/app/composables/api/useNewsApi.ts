@@ -1,8 +1,7 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
-import type { Ref } from 'vue'
 import type { PaginatedResponse } from '@app/types/types.ts'
 
-export interface NewsResponse extends PaginatedResponse {
+interface NewsResponse extends PaginatedResponse {
   data: {
     text: string
     author: string
@@ -10,16 +9,16 @@ export interface NewsResponse extends PaginatedResponse {
   }[]
 }
 
-export interface NewsLatestResponse {
+interface NewsLatestResponse {
   id: number
   updated_at: number
 }
 
 export function useNewsApi () {
-  const getNews = (page: Ref<number>) => {
+  const getNews = () => {
     const instance = useAxios<NewsResponse>()
-    const fetch = () => instance.call({
-      url: `v2/news/?page=${page.value}`
+    const fetch = (page: number) => instance.call({
+      url: `v2/news/?page=${page}`
     })
     return { ...instance, fetch }
   }

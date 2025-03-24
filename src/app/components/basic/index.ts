@@ -10,7 +10,6 @@ import WinWindow from '@app/components/basic/WinWindow.vue'
 import WinStatusBar from '@app/components/basic/WinStatusBar.vue'
 import WinMenu from '@app/components/basic/WinMenu.vue'
 import WinPlayer from '@app/components/basic/WinPlayer.vue'
-import WinPlayerStatus from '@app/components/basic/WinPlayerStatus.vue'
 import WinPlayerVolume from '@app/components/basic/WinPlayerVolume.vue'
 import WinGroupBox from '@app/components/basic/WinGroupBox.vue'
 import WinPanel from '@app/components/basic/WinPanel.vue'
@@ -30,7 +29,6 @@ export default {
     Vue.component('WinWindow', WinWindow)
     Vue.component('WinMenu', WinMenu)
     Vue.component('WinPlayer', WinPlayer)
-    Vue.component('WinPlayerStatus', WinPlayerStatus)
     Vue.component('WinPlayerVolume', WinPlayerVolume)
   },
 }

@@ -1,18 +1,5 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
-import type { PaginatedResponse } from '@app/types/types.ts'
-
-interface NewsResponse extends PaginatedResponse {
-  data: {
-    text: string
-    author: string
-    created_at: number
-  }[]
-}
-
-interface NewsLatestResponse {
-  id: number
-  updated_at: number
-}
+import type { NewsLatestResponse, NewsResponse } from '@app/types'
 
 export function useNewsApi () {
   const getNews = () => {

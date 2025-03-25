@@ -1,13 +1,5 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
-import type { BackgroundImage } from '@app/composables/useBackgrounds.ts'
-
-interface BackgroundsResponse {
-  data: BackgroundImage[]
-}
-
-interface BackgroundResponse {
-  data: BackgroundImage
-}
+import type { BackgroundResponse, BackgroundsResponse } from '@app/types'
 
 export function useBackgroundsApi () {
   const getBackgrounds = () => {

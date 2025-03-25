@@ -9,8 +9,8 @@ export function useNewsPopup () {
   const openNewsIfUpdated = () => {
     getLastUpdated().fetch().then(res => {
       const latestNewsRead = prefs.get<number>('latestNewsRead', 0)!
-      if (latestNewsRead < res.id) {
-        prefs.save('latestNewsRead', res.id)
+      if (latestNewsRead < res.data.id) {
+        prefs.save('latestNewsRead', res.data.id)
         setTimeout(() => openWindow(WinType.NEWS), 3000)
       }
     })

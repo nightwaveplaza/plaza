@@ -1,30 +1,13 @@
 import { computed, reactive } from 'vue'
 import { prefs } from '@app/utils/prefs.ts'
 import { useBackgroundsApi } from '@app/composables/api/useBackgroundsApi.ts'
+import { type BackgroundImage, BackgroundMode } from '@app/types'
 
 export interface Background {
   image: BackgroundImage | null,
   color: string,
   index: number,
   mode: BackgroundMode
-}
-
-export enum BackgroundMode {
-  RANDOM,
-  SINGLE,
-  COLOR
-}
-
-export interface BackgroundImage {
-  id: number,
-  filename: string
-  author: string
-  author_link: string
-  source: string
-  source_link: string
-  num: string
-  src: string
-  video_src: string
 }
 
 const background = reactive(prefs.get<Background>('background', {

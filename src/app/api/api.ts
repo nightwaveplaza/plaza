@@ -9,7 +9,6 @@ import type {
   UserResponse,
   FavoritesResponse,
   StatusResponse,
-  SongResponse,
 } from '@app/types/types'
 import type { AxiosResponse } from 'axios'
 
@@ -24,12 +23,6 @@ export const api = {
     react: (reaction: number):
       Promise<AxiosResponse<ReactResponse>> =>
       Repository.post<ReactResponse>('reactions', { reaction }),
-  },
-
-  songs: {
-    get: (id: string):
-      Promise<AxiosResponse<SongResponse>> =>
-      Repository.get<SongResponse>(`songs/${id}`),
   },
 
   user: {

@@ -19,20 +19,20 @@
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading" />
           <win-list v-if="!isLoading && songs" ref="list" scroll>
-            <tr v-for="(song, i) in songs.data" :key="i" class="hover">
+            <tr v-for="(s, i) in songs.data" :key="i" class="hover">
               <td class="text-center noselect" style="width: 37px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="winSongInfo(song.id)">
+              <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
                 <div class="artist">
-                  {{ song.artist }}
+                  {{ s.song.artist }}
                 </div>
                 <div class="title">
-                  {{ song.title }}
+                  {{ s.song.title }}
                 </div>
               </td>
               <td class="text-right noselect pr-2 nowrap" style="width: 57px">
-                {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+                {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
               </td>
             </tr>
           </win-list>
@@ -77,11 +77,12 @@ import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { ReactionsRange, useReactionsApi } from '@app/composables/api/useReactionsApi.ts'
+import { useRatingsApi } from '@app/composables/api/useRatingsApi.ts'
+import { ReactionsRange } from '@app/types'
 
 const { t } = useI18n()
 const { winAlert, winSongInfo } = useWindows()
-const { getReactions } = useReactionsApi()
+const { getReactions } = useRatingsApi()
 
 const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()

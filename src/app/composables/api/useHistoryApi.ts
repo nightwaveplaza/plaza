@@ -4,15 +4,25 @@ import type { PaginatedResponse } from '@app/types/types.ts'
 interface HistoryResponse extends PaginatedResponse {
   data: {
     played_at: number
-    id: string
-    artist: string
-    title: string
+    song: Song
   }[],
   meta_extra: {
     from_date: number,
     to_date: number
   }
 }
+
+export interface Song {
+  'id': string,
+  'artist': string,
+  'album': string,
+  'title': string,
+  'length': string,
+  'artwork_src': string,
+  'artwork_sm_src': string,
+  'preview_src': string
+}
+
 
 export function useHistoryApi () {
   const getHistory = () => {

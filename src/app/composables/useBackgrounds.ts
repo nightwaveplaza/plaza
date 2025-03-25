@@ -91,7 +91,7 @@ export function useBackgrounds() {
 
   const loadRandomBackground = () => {
     fetchRandomBackground().then(res => {
-      background.image = res
+      background.image = res.data
     })
   }
 

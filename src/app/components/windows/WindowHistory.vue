@@ -16,18 +16,18 @@
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
-            <tr v-for="song in history?.data" :key="song.id">
-              <td class="pl-2 pr-1 py-1 show-info" @click="winSongInfo(song.id)">
+            <tr v-for="h in history?.data" :key="h.song.id">
+              <td class="pl-2 pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
                 <div class="artist">
-                  {{ song.artist }}
+                  {{ h.song.artist }}
                 </div>
                 <div class="title">
-                  {{ song.title }}
+                  {{ h.song.title }}
                 </div>
               </td>
               <td class="pr-1 text-right noselect" style="width: 78px">
-                {{ fmtDay(song.played_at) }}<br>
-                {{ fmtTime(song.played_at) }}
+                {{ fmtDay(h.played_at) }}<br>
+                {{ fmtTime(h.played_at) }}
               </td>
             </tr>
           </win-list>

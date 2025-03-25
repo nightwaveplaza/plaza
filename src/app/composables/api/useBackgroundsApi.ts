@@ -1,13 +1,17 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
 import type { BackgroundImage } from '@app/composables/useBackgrounds.ts'
 
-interface BackgroundResponse {
+interface BackgroundsResponse {
   data: BackgroundImage[]
+}
+
+interface BackgroundResponse {
+  data: BackgroundImage
 }
 
 export function useBackgroundsApi () {
   const getBackgrounds = () => {
-    const instance = useAxios<BackgroundResponse>()
+    const instance = useAxios<BackgroundsResponse>()
     const fetch = () => instance.call({
       url: `v2/backgrounds`
     })
@@ -15,7 +19,7 @@ export function useBackgroundsApi () {
   }
 
   const getRandomBackground = () => {
-    const instance = useAxios<BackgroundImage>()
+    const instance = useAxios<BackgroundResponse>()
     const fetch = () => instance.call({
       url: `v2/backgrounds/random`
     })

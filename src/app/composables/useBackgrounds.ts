@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue'
 import { prefs } from '@app/utils/prefs.ts'
-import { useBackgroundsApi } from '@app/composables/api/useBackgroundsApi.ts'
+import { useBackgroundsApi } from '@app/composables/api'
 import { type BackgroundImage, BackgroundMode } from '@app/types'
 
 export interface Background {

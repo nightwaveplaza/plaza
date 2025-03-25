@@ -1,5 +1,5 @@
 import { prefs } from '@app/utils/prefs.ts'
-import { useNewsApi } from '@app/composables/api/useNewsApi.ts'
+import { useNewsApi } from '@app/composables/api'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 export function useNewsPopup () {

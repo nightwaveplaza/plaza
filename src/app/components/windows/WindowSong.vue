@@ -77,7 +77,7 @@ import { prefs } from '@app/utils/prefs.ts'
 import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
-import { useSongsApi } from '@app/composables/api/useSongsApi.ts'
+import { useSongsApi } from '@app/composables/api'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()

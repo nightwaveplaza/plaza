@@ -77,7 +77,7 @@ import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useRatingsApi } from '@app/composables/api/useRatingsApi.ts'
+import { useRatingsApi } from '@app/composables/api'
 import { ReactionsRange } from '@app/types'
 
 const { t } = useI18n()

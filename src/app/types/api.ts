@@ -1,3 +1,20 @@
+interface PaginatedResponse<T> {
+  meta: {
+    current_page: number
+    from: number
+    last_page: number
+    path: string
+    per_page: number
+    to: number
+    total: number
+  },
+  data: T[]
+}
+
+interface ResourceResponse<T> {
+  data: T
+}
+
 export interface BackgroundImage {
   id: number,
   filename: string
@@ -13,15 +30,14 @@ export interface BackgroundsResponse {
   data: BackgroundImage[]
 }
 
-export interface BackgroundResponse {
-  data: BackgroundImage
+export interface BackgroundResponse extends ResourceResponse<BackgroundImage> {}
+
+export interface History {
+  played_at: number
+  song: Song
 }
 
-export interface HistoryResponse extends PaginatedResponse {
-  data: {
-    played_at: number
-    song: Song
-  }[],
+export interface HistoryResponse extends PaginatedResponse<History> {
   meta_extra: {
     from_date: number
     to_date: number
@@ -35,20 +51,15 @@ export interface News {
   created_at: number
 }
 
-export interface NewsResponse extends PaginatedResponse {
-  data: News[]
+export interface NewsResponse extends PaginatedResponse<News> {}
+export interface NewsLatestResponse extends ResourceResponse<News> {}
+
+export interface Rating {
+  song: Song,
+  likes: number
 }
 
-export interface NewsLatestResponse {
-  data: News
-}
-
-export interface RatingsResponse extends PaginatedResponse {
-  data: {
-    song: Song
-    likes: number
-  }[],
-}
+export interface RatingsResponse extends PaginatedResponse<Rating> {}
 
 export interface Song {
   id: string
@@ -61,8 +72,7 @@ export interface Song {
   preview_src: string
 }
 
-export interface SongResponse {
-  data: Song,
+export interface SongResponse extends ResourceResponse<Song> {
   stats: {
     likes: string,
     first_played_at: number | null
@@ -72,15 +82,3 @@ export interface SongResponse {
   }
 }
 
-interface PaginatedResponse {
-  'meta': {
-    'current_page': number
-    'from': number
-    'last_page': number
-    'path': string
-    'per_page': number
-    'to': number
-    'total': number
-  },
-  'data': {}[]
-}

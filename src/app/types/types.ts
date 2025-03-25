@@ -93,21 +93,6 @@ export interface StatusResponse {
   updated_at: number
 }
 
-export interface SongResponse {
-  id: string
-  artist?: string
-  title?: string
-  album?: string
-  position?: number
-  length?: number
-  artwork_src?: string
-  artwork_sm_src?: string
-  likes?: number
-  first_played_at?: number
-  favorite_id?: number
-  preview_src?: string
-}
-
 export type EventBus = {
   closeWindow: string;
   openWindow: string;

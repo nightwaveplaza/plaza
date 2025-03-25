@@ -23,7 +23,7 @@ export interface HistoryResponse extends PaginatedResponse {
     song: Song
   }[],
   meta_extra: {
-    from_date: number,
+    from_date: number
     to_date: number
   }
 }
@@ -51,24 +51,35 @@ export interface RatingsResponse extends PaginatedResponse {
 }
 
 export interface Song {
-  'id': string,
-  'artist': string,
-  'album': string,
-  'title': string,
-  'length': string,
-  'artwork_src': string,
-  'artwork_sm_src': string,
-  'preview_src': string
+  id: string
+  artist: string
+  album: string
+  title: string
+  length: number
+  artwork_src: string
+  artwork_sm_src: string
+  preview_src: string
+}
+
+export interface SongResponse {
+  data: Song,
+  stats: {
+    likes: string,
+    first_played_at: number | null
+  },
+  current_user?: {
+    favorite_id: number | null
+  }
 }
 
 interface PaginatedResponse {
   'meta': {
-    'current_page': number,
-    'from': number,
-    'last_page': number,
-    'path': string,
-    'per_page': number,
-    'to': number,
+    'current_page': number
+    'from': number
+    'last_page': number
+    'path': string
+    'per_page': number
+    'to': number
     'total': number
   },
   'data': {}[]

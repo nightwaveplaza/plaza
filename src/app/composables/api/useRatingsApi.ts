@@ -1,16 +1,16 @@
 import { useAxios } from '@app/composables/api/useAxios.ts'
-import { type RatingsResponse, ReactionsRange } from '@app/types'
+import { type RatingsResponse, RatingsRange } from '@app/types'
 
 export function useRatingsApi () {
-  const getReactions = () => {
+  const getRatings = () => {
     const instance = useAxios<RatingsResponse>()
-    const fetch = (range: ReactionsRange, page: number) => instance.call({
-      url: `v2/reactions/${range}/?page=${page}`
+    const fetch = (range: RatingsRange, page: number) => instance.call({
+      url: `v2/ratings/${range}/?page=${page}`
     })
     return { ...instance, fetch }
   }
 
   return {
-    getReactions
+    getRatings
   }
 }

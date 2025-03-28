@@ -13,8 +13,12 @@ interface ApiError {
   code: number
 }
 
-function handleError (e: Error | AxiosError): ApiError {
+function handleError (e: Error | AxiosError | unknown): ApiError {
   const { t } = i18n.global
+
+  if (axios.isCancel(e)) {
+    return { message: 'Request has been canceled', code: 0 }
+  }
 
   if (e instanceof AxiosError) {
     const code: number = e.response?.status ?? 0
@@ -30,7 +34,11 @@ function handleError (e: Error | AxiosError): ApiError {
     return { message: t('errors.network_fail') + ' ' + e.message, code }
   }
 
-  return { message: e.message, code: 0 }
+  if (e instanceof Error) {
+    return { message: e.message, code: 0 }
+  } else {
+    return { message: 'Unknown error', code: 0}
+  }
 }
 
 export function useAxios<T> () {
@@ -50,10 +58,8 @@ export function useAxios<T> () {
       data.value = response.data
       return response.data as T // For direct request usage
     } catch (err) {
-      if (!axios.isCancel(err) && err instanceof Error) {
-        error.value = handleError(err)
-      }
-      throw err // Throw to component
+      error.value = handleError(err)
+      throw error.value
     } finally {
       isLoading.value = false
     }

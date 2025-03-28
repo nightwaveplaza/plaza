@@ -1,5 +1,6 @@
 export * from './useBackgroundsApi'
 export * from './useHistoryApi'
 export * from './useNewsApi'
+export * from './useReactionsApi'
 export * from './useRatingsApi'
 export * from './useSongsApi'

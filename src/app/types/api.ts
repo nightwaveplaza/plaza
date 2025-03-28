@@ -38,7 +38,7 @@ export interface History {
 }
 
 export interface HistoryResponse extends PaginatedResponse<History> {
-  meta_extra: {
+  date_range: {
     from_date: number
     to_date: number
   }

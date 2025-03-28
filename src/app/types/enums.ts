@@ -1,4 +1,4 @@
-export enum ReactionsRange {
+export enum RatingsRange {
   OVERTIME = 'overtime',
   WEEKLY = 'weekly',
   MONTHLY = 'monthly'

@@ -6,14 +6,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { AxiosError } from 'axios'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
 import { prefs } from '@app/utils/prefs.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useReactionsApi } from '@app/composables/api'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -25,7 +24,8 @@ const { winAlert } = useWindows()
 
 const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => userReactionStore.isCurrent ? {2: CL_FAV, 1: CL_LIKE}[userReactionStore.score] ?? '' : '')
-const sending = ref(false)
+const { sendReaction } = useReactionsApi()
+const { isLoading: sending, send: react } = sendReaction()
 
 function like (): void {
   if (!userReactionStore.isCurrent) {
@@ -37,18 +37,16 @@ function like (): void {
 }
 
 function send (score: number): void {
-  sending.value = true
-
-  api.reactions.react(score).then(res => {
-    setReactions(res.data.reactions)
+  react(score).then(res => {
+    setReactions(res.reactions)
     userReactionStore.setUserReaction(score)
     showTip()
-  }).catch(e => {
-    if (e instanceof AxiosError && e.response!.status === 401) {
+  }).catch(err => {
+    if (err.code === 401) {
       winAlert(t('errors.please_sign'), t('errors.error'))
+    } else {
+      winAlert(err.message, t('errors.error'))
     }
-  }).finally(() => {
-    sending.value = false
   })
 }
 
@@ -57,9 +55,8 @@ function showTip (): void {
   if (showed > 0) {
     return
   }
-
   winAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
-
   prefs.save('reactionTip', 1)
 }
+
 </script>

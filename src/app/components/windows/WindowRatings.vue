@@ -4,13 +4,13 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-button :class="{ active: range === ReactionsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(ReactionsRange.OVERTIME)">
+          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(RatingsRange.OVERTIME)">
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
-          <win-button :class="{ active: range === ReactionsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(ReactionsRange.MONTHLY)">
+          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(RatingsRange.MONTHLY)">
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
-          <win-button :class="{ active: range === ReactionsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(ReactionsRange.WEEKLY)">
+          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(RatingsRange.WEEKLY)">
             {{ t('win.ratings.btn_weekly') }}
           </win-button>
         </div>
@@ -46,6 +46,7 @@
                   v-if="songs && songs?.meta.total > 0"
                   :pages="songs.meta.last_page"
                   @change="changePage"
+                  ref="pagination"
                   :disabled="isLoading" />
             </div>
             <div class="col-auto">
@@ -78,32 +79,31 @@ import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useRatingsApi } from '@app/composables/api'
-import { ReactionsRange } from '@app/types'
+import { RatingsRange } from '@app/types'
 
 const { t } = useI18n()
 const { winAlert, winSongInfo } = useWindows()
-const { getReactions } = useRatingsApi()
-
-const list = ref<InstanceType<typeof WinList>>()
-const pagination = ref<InstanceType<typeof WinPagination>>()
+const { getRatings } = useRatingsApi()
 
 defineProps<{
   name: string
 }>()
 
 const page = ref(1)
-const range = ref<ReactionsRange>(ReactionsRange.OVERTIME)
-const { isLoading, data: songs, fetch, error } = getReactions()
+const range = ref<RatingsRange>(RatingsRange.OVERTIME)
+const { isLoading, data: songs, fetch, error } = getRatings()
+
+const list = ref<InstanceType<typeof WinList>>()
+const pagination = ref<InstanceType<typeof WinPagination>>()
 
 function changePage (newPage: number): void {
   page.value = newPage
   fetchRatings()
 }
 
-function changeRange (newRange: ReactionsRange): void {
-  pagination.value?.reset()
+function changeRange (newRange: RatingsRange): void {
   range.value = newRange
-  fetchRatings()
+  pagination.value?.reset()
 }
 
 function fetchRatings () {

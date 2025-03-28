@@ -13,6 +13,8 @@ export function useNewsPopup () {
         prefs.save('latestNewsRead', res.data.id)
         setTimeout(() => openWindow(WinType.NEWS), 3000)
       }
+    }).catch(() => {
+      console.error('Failed to get news.');
     })
   }
 

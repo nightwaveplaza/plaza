@@ -5,7 +5,7 @@
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
             <div v-if="history?.data" class="col">
-              {{ t('win.history.showing_history', {from: fmtDay(history.meta_extra.from_date), to: fmtDay(history.meta_extra.to_date)}) }}
+              {{ t('win.history.showing_history', {from: fmtDay(history.date_range.from_date), to: fmtDay(history.date_range.to_date)}) }}
             </div>
             <div class="col-auto">
               <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a>

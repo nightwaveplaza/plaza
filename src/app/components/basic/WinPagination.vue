@@ -20,7 +20,7 @@
 import { ref, watch } from 'vue'
 import { useNumberOnly } from '@app/utils/helpers.ts'
 
-const props =withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   pages: number,
   disabled: boolean
 }>(), {
@@ -37,22 +37,17 @@ function nextPage (dir: number): void {
   if (newPage < 1) {
     newPage = 1
   }
-  if (newPage > props.pages!) {
-    newPage = props.pages!
+  if (newPage > props.pages) {
+    newPage = props.pages
   }
   page.value = newPage
+  emit('change', newPage)
 }
 
 function reset (): void {
   page.value = 1
-}
-
-watch(page, () => {
-  if (page.value > props.pages!) {
-    page.value = props.pages!
-  }
   emit('change', page.value)
-})
+}
 
 defineExpose({
   reset,

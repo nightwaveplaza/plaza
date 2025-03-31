@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useNumberOnly } from '@app/utils/helpers.ts'
 
 const props = withDefaults(defineProps<{

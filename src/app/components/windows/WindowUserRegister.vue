@@ -60,7 +60,7 @@
             <div class="d-flex flex-grow-0">
               <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
                 <div class="col-auto">
-                  <win-button block class="text-bold px-3" :disabled="sending" @click="register">
+                  <win-button block class="text-bold px-3" :disabled="isLoading" @click="register">
                     {{ t('win.user_register.btn_register') }}
                   </win-button>
                 </div>
@@ -104,29 +104,31 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import type { UserRegister } from '@app/types/types'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import type { UserRegisterForm } from '@app/types'
+import { useUserApi } from '@app/composables/api/useUserApi.ts'
+
 
 const { t } = useI18n()
 const { winAlert, closeWindow } = useWindows()
+const { registerUser } = useUserApi()
+const { isLoading, fetch } = registerUser()
 
 defineProps<{
   name: string
 }>()
 
-const fields: UserRegister = reactive({
+const fields: UserRegisterForm = reactive({
   username: '',
   email: '',
   password: '',
   captcha_response: '',
 })
+
 const step = ref(1)
 const passwordR = ref('')
-const sending = ref(false)
 
 /**
  * User register
@@ -147,18 +149,16 @@ function completeCaptcha (): void {
     return winAlert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.register(fields).then(() => {
+  fetch(fields).then(() => {
     winAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
     closeWindow(WinType.USER_REGISTER)
   }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
+    winAlert(e, t('errors.error'))
     step.value = 1
-  }).finally(() => sending.value = false)
+  })
 }
 
 /**

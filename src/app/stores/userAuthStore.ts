@@ -38,7 +38,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       if (this.token !== null) {
         getUser().fetch().then(res => {
           this.signed = true
-          this.username = res.username
+          this.username = res.data.username
         }).catch(() => {
           console.error('Failed to get user.');
         })

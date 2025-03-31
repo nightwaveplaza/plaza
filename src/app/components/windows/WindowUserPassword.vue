@@ -37,7 +37,6 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api/useUserApi.ts'
 import type { UserPasswordForm } from '@app/types'
@@ -71,7 +70,7 @@ function change (): void {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_PASSWORD)
   }).catch(e =>
-      winAlert(useApiError(e), t('errors.error'))
+      winAlert(e, t('errors.error'))
   )
 }
 

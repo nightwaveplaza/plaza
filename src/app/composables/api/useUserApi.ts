@@ -4,12 +4,12 @@ import {
   type User,
   type UserEmailForm,
   type UserPasswordForm,
-  type UserRegisterForm
+  type UserRegisterForm, type UserResponse
 } from '@app/types'
 
 export function useUserApi () {
-  const get = () => {
-    const instance = useApi<User>()
+  const getUser = () => {
+    const instance = useApi<UserResponse>()
     const fetch = () => instance.call({
       url: `v2/users/me`
     })
@@ -30,7 +30,7 @@ export function useUserApi () {
     const instance = useApi<ResultResponse>()
     const fetch = (data: UserPasswordForm) => instance.call({
       data,
-      method: 'POST',
+      method: 'PUT',
       url: `v2/users/me/password`
     })
     return { ...instance, fetch }
@@ -40,13 +40,13 @@ export function useUserApi () {
     const instance = useApi<ResultResponse>()
     const fetch = (data: UserEmailForm) => instance.call({
       data,
-      method: 'POST',
+      method: 'PUT',
       url: `v2/users/me/email`
     })
     return { ...instance, fetch }
   }
 
   return {
-    get, registerUser, updatePassword, updateEmail
+    getUser, registerUser, updatePassword, updateEmail
   }
 }

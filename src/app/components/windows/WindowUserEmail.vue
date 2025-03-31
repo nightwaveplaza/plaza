@@ -30,14 +30,13 @@
 import { onMounted, reactive, ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api/useUserApi.ts'
 import type { UserEmailForm } from '@app/types'
 
 const { t } = useI18n()
 const { winAlert, closeWindow } = useWindows()
-const { get: getUser, updateEmail } = useUserApi()
+const { getUser, updateEmail } = useUserApi()
 const { isLoading, fetch: update } = updateEmail()
 
 defineProps<{
@@ -52,7 +51,7 @@ const disabled = ref(true)
 
 function fetchUser (): void {
   getUser().fetch().then(res => {
-    fields.email = res.email
+    fields.email = res.data.email
     disabled.value = false
   }).catch(() => {
     winAlert(t('errors.user_fetch'), t('errors.error'))
@@ -69,7 +68,7 @@ function changeEmail (): void {
     winAlert(t('messages.email_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_EMAIL)
   }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
+    winAlert(e.message, t('errors.error'))
   })
 }
 

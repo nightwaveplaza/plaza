@@ -16,23 +16,6 @@ export interface SongWindowParams {
   songId: string
 }
 
-
-export interface UserEdit {
-  current_password: string,
-  password?: string,
-  email?: string
-}
-
-export interface UserReset {
-  email: string,
-  captcha_response?: string
-}
-
-export interface UserResetConfirm {
-  token: string,
-  password: string
-}
-
 export type EventBus = {
   closeWindow: string;
   openWindow: string;

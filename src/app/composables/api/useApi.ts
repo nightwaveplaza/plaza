@@ -1,6 +1,6 @@
 import { onUnmounted, readonly, ref } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
-import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig, type InternalAxiosRequestConfig } from 'axios'
+import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 
 const instance = ref<null | AxiosInstance>(null)
@@ -19,22 +19,17 @@ function createAxios () {
   const baseURL: string = import.meta.env.VITE_API_URL
   if (!instance.value) {
     instance.value = axios.create({ baseURL })
-    instance.value.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-      const userAuthStore = useUserAuthStore()
-      config.headers.Authorization = 'Bearer ' + userAuthStore.token
-      config.headers['NP-User-Agent'] = userAuthStore.agent
-      return config
-    })
   }
 }
 
 export function useApi<T> () {
-  createAxios()
-
+  const userAuthStore = useUserAuthStore()
   const data = ref<T | null>(null)
   const error = ref<ApiError | null>(null)
   const isLoading = ref(false)
   let controller: AbortController | null = null
+
+  createAxios()
 
   const call = async (config: AxiosRequestConfig) => {
     isLoading.value = true
@@ -46,6 +41,10 @@ export function useApi<T> () {
     try {
       const response = await instance.value!.request({
         ...config,
+        headers: {
+          'Authorization': 'Bearer ' + userAuthStore.token,
+          'NP-User-Agent': userAuthStore.agent
+        },
         signal: controller.signal
       })
       data.value = response.data
@@ -93,6 +92,6 @@ function handleError (e: Error | AxiosError | unknown): ApiError {
   if (e instanceof Error) {
     return { message: e.message, code: 0 }
   } else {
-    return { message: 'Unknown error', code: 0}
+    return { message: 'Unknown error', code: 0 }
   }
 }

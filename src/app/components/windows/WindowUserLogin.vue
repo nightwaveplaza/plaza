@@ -74,7 +74,6 @@ import { useI18n } from 'vue-i18n'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import type { UserLoginForm } from '@app/types'
 import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
@@ -107,7 +106,7 @@ function login (): void {
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
+    winAlert(e, t('errors.error'))
   })
 }
 

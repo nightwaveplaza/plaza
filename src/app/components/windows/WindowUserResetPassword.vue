@@ -14,7 +14,7 @@
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-button block class="text-bold" @click="change">
+              <win-button block class="text-bold" :disabled="isLoading" @click="change">
                 {{ t('buttons.change') }}
               </win-button>
             </div>
@@ -32,15 +32,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
+import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
 
 const { t } = useI18n()
 const { closeWindow, WinType, winAlert } = useWindows()
 const userAuthStore = useUserAuthStore()
+const { resetPasswordConfirm } = useAuthApi()
+const { isLoading, fetch } = resetPasswordConfirm()
 
 defineProps<{
   name: string,
@@ -48,7 +49,6 @@ defineProps<{
 
 const password = ref('')
 const passwordRepeat = ref('')
-const sending = ref(false)
 
 function change (): void {
   try {
@@ -57,14 +57,12 @@ function change (): void {
     return winAlert((e as Error).message, t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.confirmReset({ token: userAuthStore.resetToken!!, password: password.value }).then(() => {
+  fetch({ token: userAuthStore.resetToken!!, password: password.value }).then(() => {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_RESET_PASSWORD)
   }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
-  }).finally(() => sending.value = false)
+    winAlert(e.message, t('errors.error'))
+  })
 }
 
 function validate (): void {

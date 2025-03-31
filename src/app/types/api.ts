@@ -88,6 +88,11 @@ export interface UserLoginForm {
   password: string
 }
 
+export interface UserResponse {
+  data: User,
+  current_reaction: null|number
+}
+
 export interface User {
   id: number
   username: string
@@ -134,4 +139,14 @@ export interface StatusResponse {
   updated_at: number
   reactions: number
   position: number
+}
+
+export interface UserResetForm {
+  email: string,
+  captcha_response: string
+}
+
+export interface UserResetConfirmForm {
+  password: string
+  token: string
 }

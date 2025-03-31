@@ -72,7 +72,6 @@
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type WinList from '@app/components/basic/WinList.vue'
-import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate } from '@app/utils/timeFormats.ts'
 import { useUserFavoritesApi } from '@app/composables/api/useUserFavoritesApi.ts'
@@ -102,7 +101,7 @@ function deleteLike (favoriteId: number): void {
   deleteFavorite().fetch(favoriteId).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    winAlert(useApiError(e), t('errors.error'))
+    winAlert(e.message, t('errors.error'))
   })
 }
 

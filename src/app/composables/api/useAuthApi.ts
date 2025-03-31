@@ -11,6 +11,7 @@ export function useAuthApi () {
   const login = () => {
     const instance = useApi<UserLoginResponse>()
     const fetch = (data: UserLoginForm) => instance.call({
+      method: 'POST',
       data,
       url: `v2/auth/login`
     })

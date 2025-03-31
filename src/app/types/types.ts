@@ -50,22 +50,6 @@ export interface UserResetConfirm {
   password: string
 }
 
-export interface FavoritesResponse {
-  per_page: number
-  pages: number
-  count: number
-  favorites: {
-    id: number
-    created_at: number
-    song: {
-      id: string
-      artist: string
-      title: string
-      artwork_src: string
-    }
-  }[]
-}
-
 export interface ReactResponse {
   score: number
   songId: string

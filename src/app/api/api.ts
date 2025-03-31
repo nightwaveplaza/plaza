@@ -7,7 +7,6 @@ import type {
   UserResetConfirm,
   ReactResponse,
   UserResponse,
-  FavoritesResponse,
   StatusResponse,
 } from '@app/types/types'
 import type { AxiosResponse } from 'axios'
@@ -38,15 +37,6 @@ export const api = {
     edit: (data: UserEdit):
       Promise<AxiosResponse> =>
       Repository.put('user', data),
-    favorites: (page: number):
-      Promise<AxiosResponse<FavoritesResponse>> =>
-      Repository.get<FavoritesResponse>(`user/favorites/${page}`),
-    addFavorite: (song_id: string):
-      Promise<AxiosResponse> =>
-      Repository.post('user/favorites', { song_id }),
-    deleteFavorite: (favoriteId: number):
-      Promise<AxiosResponse> =>
-      Repository.delete(`user/favorites/${favoriteId}`),
     reset: (data: UserReset):
       Promise<AxiosResponse> =>
       Repository.post('user/reset', data),

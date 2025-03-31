@@ -52,6 +52,7 @@ export interface News {
 }
 
 export interface NewsResponse extends PaginatedResponse<News> {}
+
 export interface NewsLatestResponse extends ResourceResponse<News> {}
 
 export interface Rating {
@@ -80,5 +81,13 @@ export interface SongResponse extends ResourceResponse<Song> {
   current_user?: {
     favorite_id: number | null
   }
+}
+
+export interface UserFavoritesResponse extends PaginatedResponse<{
+  id: number
+  song: Song,
+  created_at: number
+}> {
+
 }
 

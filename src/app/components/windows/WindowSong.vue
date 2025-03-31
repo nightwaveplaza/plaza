@@ -70,7 +70,6 @@
 import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { AxiosError } from 'axios'
-import { api } from '@app/api/api'
 import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { prefs } from '@app/utils/prefs.ts'
@@ -78,10 +77,13 @@ import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
 import { useSongsApi } from '@app/composables/api'
+import { useUserFavoritesApi } from '@app/composables/api/useUserFavoritesApi.ts'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
 const { winAlert } = useWindows()
+const { addFavorite, deleteFavorite } = useUserFavoritesApi()
+
 
 const props = defineProps<{
   name: string,
@@ -123,9 +125,9 @@ async function favoriteSong (): Promise<void> {
 
   try {
     if (song.value?.current_user?.favorite_id) {
-      await api.user.deleteFavorite(song.value.current_user.favorite_id)
+      await deleteFavorite().fetch(song.value.current_user.favorite_id)
     } else {
-      await api.user.addFavorite(song.value?.data.id!)
+      await addFavorite().fetch(song.value!.data.id)
     }
     await fetchSong()
   } catch (e) {

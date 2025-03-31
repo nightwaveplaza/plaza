@@ -1,9 +1,9 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import { type SongResponse } from '@app/types'
 
 export function useSongsApi () {
   const getSong = () => {
-    const instance = useAxios<SongResponse>()
+    const instance = useApi<SongResponse>()
     const fetch = (songId: string) => instance.call({
       url: `v2/songs/${songId}`
     })

@@ -1,10 +1,10 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import { type UserFavoritesResponse } from '@app/types'
 import type { AxiosResponse } from 'axios'
 
 export function useUserFavoritesApi () {
   const getFavorites = () => {
-    const instance = useAxios<UserFavoritesResponse>()
+    const instance = useApi<UserFavoritesResponse>()
     const fetch = (page: number) => instance.call({
       url: `v2/users/me/favorites/?page=${page}`
     })
@@ -12,7 +12,7 @@ export function useUserFavoritesApi () {
   }
 
   const addFavorite = () => {
-    const instance = useAxios<AxiosResponse>()
+    const instance = useApi<AxiosResponse>()
     const fetch = (songId: string) => instance.call({
       data: { song_id: songId },
       method: 'POST',
@@ -22,7 +22,7 @@ export function useUserFavoritesApi () {
   }
 
   const deleteFavorite = () => {
-    const instance = useAxios<AxiosResponse>()
+    const instance = useApi<AxiosResponse>()
     const fetch = (favoriteId: number) => instance.call({
       method: 'DELETE',
       url: `v2/users/me/favorites/${favoriteId}`

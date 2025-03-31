@@ -1,9 +1,9 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import type { HistoryResponse } from '@app/types'
 
 export function useHistoryApi () {
   const getHistory = () => {
-    const instance = useAxios<HistoryResponse>()
+    const instance = useApi<HistoryResponse>()
     const fetch = (page: number) => instance.call({
       url: `v2/history/?page=${page}`
     })

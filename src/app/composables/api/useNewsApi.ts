@@ -1,9 +1,9 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import type { NewsLatestResponse, NewsResponse } from '@app/types'
 
 export function useNewsApi () {
   const getNews = () => {
-    const instance = useAxios<NewsResponse>()
+    const instance = useApi<NewsResponse>()
     const fetch = (page: number) => instance.call({
       url: `v2/news/?page=${page}`
     })
@@ -11,7 +11,7 @@ export function useNewsApi () {
   }
 
   const getLastUpdated = () => {
-    const instance = useAxios<NewsLatestResponse>()
+    const instance = useApi<NewsLatestResponse>()
     const fetch = () => instance.call({
       url: `v2/news/latest`
     })

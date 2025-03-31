@@ -1,4 +1,4 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import {
   type ResultResponse,
   type User,
@@ -9,15 +9,15 @@ import {
 
 export function useUserApi () {
   const get = () => {
-    const instance = useAxios<User>()
+    const instance = useApi<User>()
     const fetch = () => instance.call({
       url: `v2/users/me`
     })
     return { ...instance, fetch }
   }
 
-  const register = () => {
-    const instance = useAxios<User>()
+  const registerUser = () => {
+    const instance = useApi<User>()
     const fetch = (data: UserRegisterForm) => instance.call({
       data,
       method: 'POST',
@@ -27,7 +27,7 @@ export function useUserApi () {
   }
 
   const updatePassword = () => {
-    const instance = useAxios<ResultResponse>()
+    const instance = useApi<ResultResponse>()
     const fetch = (data: UserPasswordForm) => instance.call({
       data,
       method: 'POST',
@@ -37,7 +37,7 @@ export function useUserApi () {
   }
 
   const updateEmail = () => {
-    const instance = useAxios<ResultResponse>()
+    const instance = useApi<ResultResponse>()
     const fetch = (data: UserEmailForm) => instance.call({
       data,
       method: 'POST',
@@ -47,6 +47,6 @@ export function useUserApi () {
   }
 
   return {
-    get, register, updatePassword, updateEmail
+    get, registerUser, updatePassword, updateEmail
   }
 }

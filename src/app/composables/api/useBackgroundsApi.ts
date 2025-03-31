@@ -1,9 +1,9 @@
-import { useAxios } from '@app/composables/api/useAxios.ts'
+import { useApi } from '@app/composables/api/useApi.ts'
 import type { BackgroundResponse, BackgroundsResponse } from '@app/types'
 
 export function useBackgroundsApi () {
   const getBackgrounds = () => {
-    const instance = useAxios<BackgroundsResponse>()
+    const instance = useApi<BackgroundsResponse>()
     const fetch = () => instance.call({
       url: `v2/backgrounds`
     })
@@ -11,7 +11,7 @@ export function useBackgroundsApi () {
   }
 
   const getRandomBackground = () => {
-    const instance = useAxios<BackgroundResponse>()
+    const instance = useApi<BackgroundResponse>()
     const fetch = () => instance.call({
       url: `v2/backgrounds/random`
     })

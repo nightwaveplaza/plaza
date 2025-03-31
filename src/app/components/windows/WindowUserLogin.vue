@@ -106,7 +106,7 @@ function login (): void {
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    winAlert(e, t('errors.error'))
+    winAlert(e.message, t('errors.error'))
   })
 }
 

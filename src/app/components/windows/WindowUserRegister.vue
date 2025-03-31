@@ -156,7 +156,7 @@ function completeCaptcha (): void {
     )
     closeWindow(WinType.USER_REGISTER)
   }).catch(e => {
-    winAlert(e, t('errors.error'))
+    winAlert(e.message, t('errors.error'))
     step.value = 1
   })
 }

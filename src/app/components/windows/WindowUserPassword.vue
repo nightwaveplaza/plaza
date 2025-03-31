@@ -70,7 +70,7 @@ function change (): void {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_PASSWORD)
   }).catch(e =>
-      winAlert(e, t('errors.error'))
+      winAlert(e.message, t('errors.error'))
   )
 }
 

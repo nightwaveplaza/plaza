@@ -5,7 +5,6 @@ import type {
   UserRegister,
   UserReset,
   UserResetConfirm,
-  ReactResponse,
   UserResponse,
   StatusResponse,
 } from '@app/types/types'

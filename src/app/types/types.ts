@@ -50,12 +50,6 @@ export interface UserResetConfirm {
   password: string
 }
 
-export interface ReactResponse {
-  score: number
-  songId: string
-  reactions: number
-}
-
 export interface UserResponse {
   username: string
   email: string

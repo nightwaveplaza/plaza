@@ -18,12 +18,6 @@ export const api = {
       Repository.get<StatusResponse>('status'),
   },
 
-  reactions: {
-    react: (reaction: number):
-      Promise<AxiosResponse<ReactResponse>> =>
-      Repository.post<ReactResponse>('reactions', { reaction }),
-  },
-
   user: {
     login: (data: UserLogin):
       Promise<AxiosResponse> =>

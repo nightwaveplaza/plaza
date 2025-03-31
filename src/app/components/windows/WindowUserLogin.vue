@@ -53,7 +53,7 @@
 
         <!-- Buttons -->
         <div class="col-auto col-sm-2 p-0 login-buttons">
-          <win-button :disabled="sending" class="mb-2 text-bold" @click="login">
+          <win-button :disabled="isLoading" class="mb-2 text-bold" @click="login">
             {{ t('win.user_login.btn_sign_in') }}
           </win-button>
           <win-button class="mb-2" @click="openRegister">
@@ -71,17 +71,18 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { type UserLogin } from '@app/types/types'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useApiError } from '@app/composables/useApiError.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import type { UserLoginForm } from '@app/types'
+import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, WinType, winAlert } = useWindows()
-
+const { login: loginApi } = useAuthApi()
+const { fetch, isLoading } = loginApi()
 const userAuthStore = useUserAuthStore()
 
 defineProps<{
@@ -90,28 +91,24 @@ defineProps<{
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
-const fields: UserLogin = reactive({
+const fields: UserLoginForm = reactive({
   username: '',
   password: '',
 })
 const remember = ref(false)
-
-const sending = ref<boolean>(false)
 
 function login (): void {
   if (fields.username.length === 0 || fields.password.length === 0) {
     return winAlert(t('errors.enter_user_pass'), t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.login(fields).then(res => {
-    userAuthStore.login(res.data, remember.value)
+  fetch(fields).then(res => {
+    userAuthStore.login(res, remember.value)
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
     winAlert(useApiError(e), t('errors.error'))
-  }).finally(() => sending.value = false)
+  })
 }
 
 function openRegister (): void {

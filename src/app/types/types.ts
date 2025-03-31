@@ -16,23 +16,6 @@ export interface SongWindowParams {
   songId: string
 }
 
-export interface UserProfile {
-  username: string,
-  token: string,
-  email?: string
-}
-
-export interface UserLogin {
-  username: string,
-  password: string
-}
-
-export interface UserRegister {
-  username: string,
-  email: string,
-  password: string,
-  captcha_response: string
-}
 
 export interface UserEdit {
   current_password: string,
@@ -48,27 +31,6 @@ export interface UserReset {
 export interface UserResetConfirm {
   token: string,
   password: string
-}
-
-export interface UserResponse {
-  username: string
-  email: string
-}
-
-export interface StatusResponse {
-  song: {
-    id: string
-    artist: string
-    title: string
-    album: string
-    position: number
-    length: number
-    artwork_src: string
-    artwork_sm_src: string
-    reactions: number
-  }
-  listeners: number
-  updated_at: number
 }
 
 export type EventBus = {

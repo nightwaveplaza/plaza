@@ -1,4 +1,4 @@
-import { onUnmounted, ref } from 'vue'
+import { onUnmounted, readonly, ref } from 'vue'
 import Repository from '@app/api/axios.ts'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import { i18n } from '@locales/_i18n.ts'
@@ -45,11 +45,16 @@ export function useAxios<T> () {
   const data = ref<T | null>(null)
   const error = ref<ApiError | null>(null)
   const isLoading = ref(false)
-  const controller = new AbortController()
+  let controller: AbortController | null = null
 
   const call = async (config: AxiosRequestConfig) => {
     isLoading.value = true
     error.value = null
+    data.value = null
+    controller?.abort()
+
+    controller = new AbortController()
+
     try {
       const response = await Repository.request({
         ...config,
@@ -62,15 +67,16 @@ export function useAxios<T> () {
       throw error.value
     } finally {
       isLoading.value = false
+      controller = null
     }
   }
 
-  onUnmounted(() => controller.abort())
+  onUnmounted(() => controller?.abort())
 
   return {
-    data,
-    error,
-    isLoading,
+    data: readonly(data),
+    error: readonly(error),
+    isLoading: readonly(isLoading),
     call
   }
 }

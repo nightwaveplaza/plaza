@@ -13,7 +13,7 @@ export function useNewsApi () {
   const getLastUpdated = () => {
     const instance = useAxios<NewsLatestResponse>()
     const fetch = () => instance.call({
-      url: `v2/news/last-updated`
+      url: `v2/news/latest`
     })
     return { ...instance, fetch }
   }

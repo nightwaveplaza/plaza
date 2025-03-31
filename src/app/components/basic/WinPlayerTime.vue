@@ -34,7 +34,11 @@ function showText (newText: string): void {
 
 function tick (): void {
   const now = Date.now()
-  let correctedPosition = Math.floor((now - updatedAt.value) / 1000) + position.value
+  let correctedPosition = Math.floor((now / 1000) - updatedAt.value) + position.value
+
+  if (correctedPosition < 0) {
+    actualPosition.value = 0
+  }
 
   if (correctedPosition > song.length) {
     correctedPosition = song.length

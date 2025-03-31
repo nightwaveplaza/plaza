@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { useUserReactionStore } from '@app/stores/userReactionStore'
-import { api } from '@app/api/api'
 import Cookies from 'js-cookie'
-import type { UserProfile } from '@app/types/types'
 import { isMobile } from '@app/utils/helpers.ts'
+import type { UserLoginResponse } from '@app/types'
+import { useUserApi } from '@app/composables/api/useUserApi.ts'
+
+const { getUser } = useUserApi()
 
 interface State {
   username: string,
@@ -34,16 +36,16 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       }
 
       if (this.token !== null) {
-        api.user.get().then(res => {
+        getUser().fetch().then(res => {
           this.signed = true
-          this.username = res.data.username
+          this.username = res.username
         }).catch(() => {
           console.error('Failed to get user.');
         })
       }
     },
 
-    login (userProfile: UserProfile, remember = false) {
+    login (userProfile: UserLoginResponse, remember = false) {
       if (remember && navigator.cookieEnabled) {
         cookieApi.set('token', userProfile.token, { expires: 180 })
       } else {
@@ -51,7 +53,7 @@ export const useUserAuthStore = defineStore('userAuthStore', {
       }
 
       this.token = userProfile.token
-      this.username = userProfile.username
+      this.username = userProfile.data.username
       this.signed = true
     },
 

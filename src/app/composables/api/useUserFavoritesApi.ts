@@ -15,7 +15,7 @@ export function useUserFavoritesApi () {
     const instance = useAxios<AxiosResponse>()
     const fetch = (songId: string) => instance.call({
       data: { song_id: songId },
-      method: "POST",
+      method: 'POST',
       url: `v2/users/me/favorites`
     })
     return { ...instance, fetch }
@@ -24,7 +24,7 @@ export function useUserFavoritesApi () {
   const deleteFavorite = () => {
     const instance = useAxios<AxiosResponse>()
     const fetch = (favoriteId: number) => instance.call({
-      method: "DELETE",
+      method: 'DELETE',
       url: `v2/users/me/favorites/${favoriteId}`
     })
     return { ...instance, fetch }

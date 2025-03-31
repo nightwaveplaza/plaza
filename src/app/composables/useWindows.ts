@@ -5,6 +5,7 @@ export enum WinType {
   ABOUT = 'about',
   ALERT = 'alert',
   CREDITS = 'credits',
+  DISCONNECTED = 'disconnected',
   HISTORY = 'history',
   LOADING = 'loading',
   MOBILE = 'mobile',

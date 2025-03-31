@@ -1,5 +1,6 @@
 import { reactive, ref, watch } from 'vue'
 import { useUserReactionStore } from '@app/stores/userReactionStore.ts'
+import type { StatusResponse } from '@app/types'
 
 const song = reactive({
   id: <string|null>null,
@@ -30,8 +31,14 @@ export function useNowPlayingStatus() {
     song.length = updatedSong.length
     song.artwork_src = updatedSong.artwork_src
     song.artwork_src_sm = updatedSong.artwork_sm_src
-    position.value = updatedSong.position
-    updatedAt.value = Date.now()
+  }
+
+  const setStatus = (status: StatusResponse) => {
+    setSong(status.song)
+    setPosition(status.position)
+    setReactions(status.reactions)
+    setListeners(status.listeners)
+    updatedAt.value = status.updated_at
   }
 
   const setReactions = (r: number) => {
@@ -47,6 +54,6 @@ export function useNowPlayingStatus() {
   }
 
   return {
-    setSong, song, setReactions, reactions, listeners, setListeners, position, setPosition, updatedAt
+    setSong, song, setReactions, reactions, listeners, setListeners, position, setPosition, updatedAt, setStatus
   }
 }

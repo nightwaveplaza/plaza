@@ -83,6 +83,22 @@ export interface SongResponse extends ResourceResponse<Song> {
   }
 }
 
+export interface UserLoginForm {
+  username: string,
+  password: string
+}
+
+export interface User {
+  id: number
+  username: string
+  email: string
+}
+
+export interface UserLoginResponse {
+  data: User,
+  token: string
+}
+
 export interface UserFavoritesResponse extends PaginatedResponse<{
   id: number
   song: Song,
@@ -91,3 +107,31 @@ export interface UserFavoritesResponse extends PaginatedResponse<{
 
 }
 
+export interface UserPasswordForm {
+  current_password: string,
+  password: string
+}
+
+export interface UserEmailForm {
+  current_password: string,
+  email: string
+}
+
+export interface UserRegisterForm {
+  username: string,
+  email: string,
+  password: string,
+  captcha_response: string
+}
+
+export interface ResultResponse {
+  result: string // success
+}
+
+export interface StatusResponse {
+  song: Song
+  listeners: number
+  updated_at: number
+  reactions: number
+  position: number
+}

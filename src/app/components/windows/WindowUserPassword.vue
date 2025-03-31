@@ -16,7 +16,7 @@
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-button block class="text-bold" :disabled="sending" @click="change">
+              <win-button block class="text-bold" :disabled="isLoading" @click="change">
                 {{ t('buttons.change') }}
               </win-button>
             </div>
@@ -34,29 +34,30 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
-import type { UserEdit } from '@app/types/types'
 import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useApiError } from '@app/composables/useApiError.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
+import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import type { UserPasswordForm } from '@app/types'
 
 const { t } = useI18n()
 const userAuthStore = useUserAuthStore()
-const { winAlert } = useWindows()
+const { winAlert, closeWindow } = useWindows()
+const { updatePassword } = useUserApi()
+const { isLoading, fetch: update } = updatePassword()
 
 defineProps<{
   name: string,
 }>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
-const fields: UserEdit = reactive({
+const fields: UserPasswordForm = reactive({
   current_password: '',
   password: '',
 })
 const passwordRepeat = ref('')
-const sending = ref(false)
 
 function change (): void {
   try {
@@ -65,15 +66,13 @@ function change (): void {
     return winAlert((e as Error).message, t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.edit(fields).then(() => {
+  update(fields).then(() => {
     userAuthStore.logout()
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
-    win.value!.close()
+    closeWindow(WinType.USER_PASSWORD)
   }).catch(e =>
       winAlert(useApiError(e), t('errors.error'))
-  ).finally(() => sending.value = false)
+  )
 }
 
 function validate (): void {

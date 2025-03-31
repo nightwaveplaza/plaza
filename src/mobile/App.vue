@@ -15,7 +15,7 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
-import { useStatusUpdater } from '@app/composables/player/useStatusUpdater.ts'
+import { useStatusUpdater } from '@app/composables/useStatusUpdater.ts'
 
 const i18n = useI18n()
 const userAuthStore = useUserAuthStore()

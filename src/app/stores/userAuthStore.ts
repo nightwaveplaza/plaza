@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import { useUserReactionStore } from '@app/stores/userReactionStore'
 import Cookies from 'js-cookie'
 import { isMobile } from '@app/utils/helpers.ts'
 import type { UserLoginResponse } from '@app/types'
 import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import { useReactions } from '@app/composables/useReactions.ts'
 
 const { getUser } = useUserApi()
 
@@ -58,8 +58,8 @@ export const useUserAuthStore = defineStore('userAuthStore', {
     },
 
     logout () {
-      const userReactionStore = useUserReactionStore()
-      userReactionStore.reset()
+      const userReaction = useReactions()
+      userReaction.resetReaction()
 
       this.signed = false
       this.username = 'Guest'

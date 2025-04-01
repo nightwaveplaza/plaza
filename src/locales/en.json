@@ -50,6 +50,13 @@
       "content": "All music and background images",
       "content_by": "{content} belong to the authors. Musical content has been provided by authors and music labels. If you have any copyright issue, please let us know."
     },
+    "disconnected": {
+      "title": "Connection lost",
+      "connection_lost": "We have lost connection to our servers...",
+      "click_button": "Please click the button below to reconnect.",
+      "trying": "Trying to reconnect...",
+      "btn_reconnect": "Reconnect"
+    },
     "delete_account": {
       "if_you_want": "If you want to delete your account please contact us on {email}",
       "title": "Delete Account",

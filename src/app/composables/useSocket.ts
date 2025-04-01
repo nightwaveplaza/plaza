@@ -1,7 +1,7 @@
 import { computed, onUnmounted, ref } from 'vue'
 import io, { Socket } from 'socket.io-client'
 
-const maxReconnectAttempts = 12
+const maxReconnectAttempts = 24
 
 const socket = ref<Socket | null>(null)
 const isConnected = ref(false)

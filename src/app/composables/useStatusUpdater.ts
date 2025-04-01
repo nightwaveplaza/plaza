@@ -8,7 +8,6 @@ export function useStatusUpdater () {
   const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
   const { openWindow, closeWindow } = useWindows()
 
-
   watch(() => reconnectAttempts.value, (attempts) => {
     if (!isConnected.value && attempts >= 3) openWindow(WinType.DISCONNECTED)
   })

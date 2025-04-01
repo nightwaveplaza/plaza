@@ -1,6 +1,5 @@
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import type { StatusResponse } from '@app/types'
-import { useReactions } from '@app/composables/useReactions.ts'
 
 const song = reactive({
   id: <string|null>null,
@@ -17,12 +16,6 @@ const listeners = ref(0)
 const updatedAt = ref(0)
 
 export function useNowPlayingStatus() {
-  const userReaction = useReactions()
-
-  watch(() => song.id, () => {
-    userReaction.resetReaction()
-  })
-
   const setSong = (updatedSong: any) => {
     song.id = updatedSong.id
     song.artist = updatedSong.artist

@@ -28,6 +28,7 @@ const { sendReaction } = useReactionsApi()
 const { isLoading: sending, send: react } = sendReaction()
 
 function like (): void {
+  // Reset reaction if not current song
   if (!isCurrentReaction.value) {
     setReaction(0)
   }

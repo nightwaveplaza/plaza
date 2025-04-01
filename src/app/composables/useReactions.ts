@@ -20,6 +20,7 @@ export function useReactions() {
   const setReaction = (newReaction: number) => {
     reaction.rate = newReaction
     reaction.songId = song.id
+    save()
   }
 
   const resetReaction = (): void => {

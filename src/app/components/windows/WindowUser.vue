@@ -26,15 +26,15 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, WinType } = useWindows()
 const { logout: logoutApi } = useAuthApi()
-const userAuthStore = useUserAuthStore()
+const { unsetUser } = useAuth()
 
 defineProps<{
   name: string,
@@ -47,7 +47,7 @@ function open (window: string): void {
 
 function logout (): void {
   logoutApi().fetch().then().finally(() => {
-    userAuthStore.logout()
+    unsetUser()
     closeWindow(WinType.USER)
   })
 }

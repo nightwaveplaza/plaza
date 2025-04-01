@@ -2,14 +2,14 @@
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 const route = useRoute()
-const userAuthStore = useUserAuthStore()
 const { openWindow, WinType } = useWindows()
+const { setResetToken } = useAuth()
 
 onMounted(() => {
   if (route.params.token) {
-    userAuthStore.resetToken = route.params.token as string
+    setResetToken(route.params.token as string)
     openWindow(WinType.USER_RESET_PASSWORD)
   } else {
     openWindow(WinType.USER_RESET)

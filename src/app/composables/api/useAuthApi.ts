@@ -8,6 +8,15 @@ import {
 } from '@app/types'
 
 export function useAuthApi () {
+  const csrf = () => {
+    const instance = useApi<ResultResponse>()
+    const fetch = () => instance.call({
+      url: '/auth/csrf-cookie'
+    })
+    return { ...instance, fetch }
+
+  }
+
   const login = () => {
     const instance = useApi<UserLoginResponse>()
     const fetch = (data: UserLoginForm) => instance.call({
@@ -48,6 +57,6 @@ export function useAuthApi () {
   }
 
   return {
-    login, logout, resetPassword, resetPasswordConfirm
+    login, logout, resetPassword, resetPasswordConfirm,  csrf
   }
 }

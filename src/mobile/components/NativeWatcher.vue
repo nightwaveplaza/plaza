@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 import { onMounted, watch } from 'vue'
 import { PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
@@ -10,15 +9,16 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { type Background, useBackgrounds  } from '@app/composables/useBackgrounds.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const i18n = useI18n()
 
-const userAuthStore = useUserAuthStore()
 const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow, WinType } = useWindows()
 const { lowQuality, language } = useAppSettings()
 const { background, isColorMode } = useBackgrounds()
+const { isSigned } = useAuth()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -36,7 +36,7 @@ function registerEmitterEvents (): void {
   })
 
   eventBus.on('openWindow', (name: string) => {
-    if ((name === 'user-favorites' || name === 'user') && !userAuthStore.signed) {
+    if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
       openWindow(WinType.USER_LOGIN)
       return
     }

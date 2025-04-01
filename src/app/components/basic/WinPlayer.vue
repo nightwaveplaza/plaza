@@ -69,7 +69,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
@@ -77,15 +76,16 @@ import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useAudioPlayer } from '@app/composables/useAudioPlayer.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
 const { song } = useNowPlayingStatus()
 
 const { t } = useI18n()
-const userAuthStore = useUserAuthStore()
 const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, WinType, winSongInfo } = useWindows()
+const { isSigned } = useAuth()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -125,7 +125,7 @@ function showSongInfo (): void {
 }
 
 function openUserWindow (): void {
-  if (userAuthStore.signed) {
+  if (isSigned.value) {
     openWindow(WinType.USER)
   } else {
     openWindow(WinType.USER_LOGIN)

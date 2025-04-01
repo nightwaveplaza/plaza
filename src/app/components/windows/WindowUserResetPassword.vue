@@ -34,14 +34,14 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
 import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
 const { closeWindow, WinType, winAlert } = useWindows()
-const userAuthStore = useUserAuthStore()
 const { resetPasswordConfirm } = useAuthApi()
 const { isLoading, fetch } = resetPasswordConfirm()
+const { resetToken } = useAuth()
 
 defineProps<{
   name: string,
@@ -57,7 +57,7 @@ function change (): void {
     return winAlert((e as Error).message, t('errors.error'))
   }
 
-  fetch({ token: userAuthStore.resetToken!!, password: password.value }).then(() => {
+  fetch({ token: resetToken.value!!, password: password.value }).then(() => {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_RESET_PASSWORD)
   }).catch(e => {

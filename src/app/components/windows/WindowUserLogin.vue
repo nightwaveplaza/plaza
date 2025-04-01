@@ -44,7 +44,7 @@
           <div v-if="!isMobile()" class="row mt-1 no-gutters justify-content-end">
             <div class="col-12 col-sm-8">
               <div class="checkbox">
-                <input id="remember" v-model="remember" type="checkbox">
+                <input id="remember" v-model="fields.remember" type="checkbox">
                 <label for="remember">{{ t('win.user_login.remember_me') }}</label>
               </div>
             </div>
@@ -71,18 +71,18 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import type { UserLoginForm } from '@app/types'
 import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, WinType, winAlert } = useWindows()
 const { login: loginApi } = useAuthApi()
 const { fetch, isLoading } = loginApi()
-const userAuthStore = useUserAuthStore()
+const { setUser } = useAuth()
 
 defineProps<{
   name: string,
@@ -93,8 +93,8 @@ const win = ref<InstanceType<typeof WinWindow>>()
 const fields: UserLoginForm = reactive({
   username: '',
   password: '',
+  remember: false
 })
-const remember = ref(false)
 
 function login (): void {
   if (fields.username.length === 0 || fields.password.length === 0) {
@@ -102,7 +102,7 @@ function login (): void {
   }
 
   fetch(fields).then(res => {
-    userAuthStore.login(res, remember.value)
+    setUser(res.data)
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {

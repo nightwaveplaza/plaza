@@ -1,9 +1,6 @@
 import { onUnmounted, readonly, ref } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
 import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
-import { useUserAuthStore } from '@app/stores/userAuthStore.ts'
-
-const instance = ref<null | AxiosInstance>(null)
 
 interface ApiErrorResponse {
   message: string
@@ -15,15 +12,50 @@ export interface ApiError {
   code: number
 }
 
+const instance = ref<null | AxiosInstance>(null)
+let isTokenRefreshing = false
+
 function createAxios () {
   const baseURL: string = import.meta.env.VITE_API_URL
   if (!instance.value) {
-    instance.value = axios.create({ baseURL })
+    instance.value = axios.create({
+      baseURL,
+      withCredentials: true,
+      withXSRFToken: true,
+    })
+
+    instance.value.interceptors.response.use(response => response, err => interceptError(err))
   }
 }
 
+async function interceptError(err: AxiosError) {
+  if (!err.response || !err.config) {
+    return Promise.reject(err)
+  }
+
+  const status = err.response.status
+
+  if (err.config.url === '/auth/csrf-cookie') {
+    return Promise.reject(err)
+  }
+
+  if (status === 419) {
+    if (!isTokenRefreshing) {
+      isTokenRefreshing = true
+      try {
+        await instance.value!.request({ url: '/auth/csrf-cookie' })
+      } finally {
+        isTokenRefreshing = false
+      }
+    }
+    // Token refreshed, repeat request
+    return instance.value!(err.config)
+  }
+
+  return Promise.reject(err)
+}
+
 export function useApi<T> () {
-  const userAuthStore = useUserAuthStore()
   const data = ref<T | null>(null)
   const error = ref<ApiError | null>(null)
   const isLoading = ref(false)
@@ -41,10 +73,9 @@ export function useApi<T> () {
     try {
       const response = await instance.value!.request({
         ...config,
-        headers: {
-          'Authorization': 'Bearer ' + userAuthStore.token,
-          'NP-User-Agent': userAuthStore.agent
-        },
+        // headers: {
+        //   //'NP-User-Agent': userAuthStore.agent
+        // },
         signal: controller.signal
       })
       data.value = response.data

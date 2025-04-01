@@ -85,7 +85,8 @@ export interface SongResponse extends ResourceResponse<Song> {
 
 export interface UserLoginForm {
   username: string,
-  password: string
+  password: string,
+  remember: boolean
 }
 
 export interface UserResponse {

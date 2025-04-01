@@ -25,8 +25,8 @@
       <div class="col cell">
         {{ t('win.player.listeners', { listeners }) }}
       </div>
-      <div v-if="userAuthStore.signed" class="col-5 col-sm-4 cell login">
-        {{ t('win.player.user', {user: userAuthStore.username}) }}
+      <div v-if="isSigned" class="col-5 col-sm-4 cell login">
+        {{ t('win.player.user', {user: username}) }}
       </div>
     </div>
   </win-window>
@@ -35,19 +35,19 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
 const { minimizeWindow, WinType } = useWindows()
-const userAuthStore = useUserAuthStore()
 const { listeners } = useNowPlayingStatus()
+const { username, isSigned } = useAuth()
 
 defineProps<{
   name: string

@@ -35,17 +35,17 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api/useUserApi.ts'
 import type { UserPasswordForm } from '@app/types'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const userAuthStore = useUserAuthStore()
 const { winAlert, closeWindow } = useWindows()
 const { updatePassword } = useUserApi()
 const { isLoading, fetch: update } = updatePassword()
+const { unsetUser } = useAuth()
 
 defineProps<{
   name: string,
@@ -66,7 +66,7 @@ function change (): void {
   }
 
   update(fields).then(() => {
-    userAuthStore.logout()
+    unsetUser()
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_PASSWORD)
   }).catch(e =>

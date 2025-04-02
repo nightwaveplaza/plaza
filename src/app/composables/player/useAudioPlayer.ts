@@ -1,9 +1,9 @@
 import Hls from 'hls.js'
 import { watch } from 'vue'
-import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
+import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
-import { useVisual } from '@app/composables/useVisual.ts'
+import { useVisual } from '@app/composables/player/useVisual.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 

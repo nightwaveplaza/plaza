@@ -44,8 +44,11 @@
         <div class="d-flex">
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
-              <win-pagination :pages="favs?.meta.last_page" @change="changePage"
-                              :disabled="isLoading" />
+              <win-pagination
+                :pages="favs?.meta.last_page"
+                :disabled="isLoading"
+                @change="changePage"
+              />
             </div>
             <div class="col-auto">
               <win-button class="px-4" @click="winProps.close()">
@@ -106,7 +109,9 @@ function deleteLike (favoriteId: number): void {
 }
 
 watch(() => error.value, (error) => {
-  if (error) winAlert(error.message, t('errors.error'))
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
 })
 
 onMounted(() => {

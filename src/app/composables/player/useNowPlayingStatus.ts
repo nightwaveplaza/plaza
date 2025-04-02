@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue'
-import type { StatusResponse } from '@app/types'
+import type { Song, StatusResponse } from '@app/types'
 
 const song = reactive({
   id: <string|null>null,
@@ -16,7 +16,7 @@ const listeners = ref(0)
 const updatedAt = ref(0)
 
 export function useNowPlayingStatus() {
-  const setSong = (updatedSong: any) => {
+  const setSong = (updatedSong: Song) => {
     song.id = updatedSong.id
     song.artist = updatedSong.artist
     song.title = updatedSong.title
@@ -26,7 +26,7 @@ export function useNowPlayingStatus() {
     song.artwork_src_sm = updatedSong.artwork_sm_src
   }
 
-  const setStatus = (status: StatusResponse) => {
+  const setStatus = (status: StatusResponse): void => {
     setSong(status.song)
     setPosition(status.position)
     setReactions(status.reactions)
@@ -34,15 +34,15 @@ export function useNowPlayingStatus() {
     updatedAt.value = status.updated_at
   }
 
-  const setReactions = (r: number) => {
+  const setReactions = (r: number): void => {
     reactions.value = r
   }
 
-  const setListeners = (l: number) => {
+  const setListeners = (l: number): void => {
     listeners.value = l
   }
 
-  const setPosition = (p: number) => {
+  const setPosition = (p: number): void => {
     position.value = p
   }
 

@@ -3,17 +3,20 @@ import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus
 import { watch } from 'vue'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
 
-export function useStatusUpdater () {
+/**
+ * useStatusUpdater composable
+ * Uses useSocket and useNowPlayingStatus composable to update current now playing status
+ */
+export function useStatusUpdater (): void {
   const { onEvent, isConnected, reconnectAttempts } = useSocket()
   const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
-  const { openWindow, closeWindow } = useWindows()
+  const { openWindow } = useWindows()
 
+  // Open WinDisconnected when reconnect attempts > 3
   watch(() => reconnectAttempts.value, (attempts) => {
-    if (!isConnected.value && attempts >= 3) openWindow(WinType.DISCONNECTED)
-  })
-
-  watch(() => isConnected.value, (connected) => {
-    if (connected) closeWindow(WinType.DISCONNECTED)
+    if (!isConnected.value && attempts >= 3) {
+      openWindow(WinType.DISCONNECTED)
+    }
   })
 
   onEvent('status', (status) => setStatus(status))

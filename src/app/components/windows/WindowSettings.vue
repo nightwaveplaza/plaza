@@ -123,7 +123,7 @@
                 <input id="low_quality" type="checkbox" :checked="lowQuality" @change="qualityChanged">
                 <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
               </div>
-              <div class="checkbox" v-if="!isMobile()">
+              <div v-if="!isMobile()" class="checkbox">
                 <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged">
                 <label for="hls_beta">HLS</label>
               </div>

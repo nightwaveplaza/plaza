@@ -43,11 +43,12 @@
           <div class="row no-gutters mt-2 w-100">
             <div class="col">
               <win-pagination
-                  v-if="songs && songs?.meta.total > 0"
-                  :pages="songs.meta.last_page"
-                  @change="changePage"
-                  ref="pagination"
-                  :disabled="isLoading" />
+                v-if="songs && songs?.meta.total > 0"
+                :pages="songs.meta.last_page"
+                :disabled="isLoading"
+                @change="changePage"
+                ref="pagination"
+              />
             </div>
             <div class="col-auto">
               <win-button class="px-4" @click="winProps.close()">
@@ -115,7 +116,9 @@ function pad (n: number): string {
 }
 
 watch(() => error.value, (error) => {
-  if (error) winAlert(error.message, t('errors.error'))
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
 })
 
 onMounted(() => {

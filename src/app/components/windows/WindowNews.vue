@@ -3,7 +3,7 @@
     <div class="p-2">
       <div v-if="isLoading" class="content-loading" style="min-height:200px" />
       <win-memo v-if="!isLoading">
-        <template v-for="article in news?.data">
+        <template v-for="article in news?.data" :key="article.id">
           <div v-if="article.text !== ''" v-html="article.text" />
           <div v-if="article.text !== ''" class="row justify-content-between">
             <div class="col-auto">
@@ -60,7 +60,9 @@ function fetchNews () {
 }
 
 watch(() => error.value, (error) => {
-  if (error) winAlert(error.message, t('errors.error'))
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
   if (!news.value) closeWindow(WinType.NEWS)
 })
 

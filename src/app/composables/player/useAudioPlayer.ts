@@ -129,11 +129,11 @@ export function useAudioPlayer() {
     }
   }
 
-  function onAudioPlayEvent() {
+  function onAudioPlayEvent(): void {
     setMediaSessionState('playing')
   }
 
-  function onAudioPauseEvent() {
+  function onAudioPauseEvent(): void {
     setMediaSessionState('paused')
   }
 

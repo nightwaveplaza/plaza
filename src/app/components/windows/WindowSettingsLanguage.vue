@@ -2,9 +2,9 @@
   <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings_language.title')">
     <div class="p-2">
       <win-list scroll>
-        <tr v-for="(lang, name) in _locales" :key="name" class="hover">
-          <td class="p-2 lang-icon noselect" v-html="_flags[name]" />
-          <td class="noselect show-info" :class="{selected: name === language}" @click="switchLanguage(<string>name)">
+        <tr v-for="(lang, n) in _locales" :key="n" class="hover">
+          <td class="p-2 lang-icon noselect" v-html="_flags[n]" />
+          <td class="noselect show-info" :class="{selected: n === language}" @click="switchLanguage(<string>n)">
             {{ lang.name }}
           </td>
         </tr>

@@ -57,7 +57,7 @@ function change (): void {
     return winAlert((e as Error).message, t('errors.error'))
   }
 
-  fetch({ token: resetToken.value!!, password: password.value }).then(() => {
+  fetch({ token: resetToken.value!, password: password.value }).then(() => {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(WinType.USER_RESET_PASSWORD)
   }).catch(e => {

@@ -22,8 +22,8 @@
           </div>
           <div class="col text-center">
             <a href="https://plaza.one/googleplay" target="_blank" class="app-link">
-            <img src="@app/assets/img/app_android.png" class="app-icon" alt=""><br>
-            Android.app
+              <img src="@app/assets/img/app_android.png" class="app-icon" alt=""><br>
+              Android.app
             </a>
           </div>
         </div>

@@ -17,7 +17,7 @@
 
     <!-- Player -->
     <div class="content p-2">
-      <win-player :volume="volume" @update-volume="setVolume"/>
+      <win-player :volume="volume" @update-volume="setVolume" />
     </div>
 
     <!-- Statusbar -->

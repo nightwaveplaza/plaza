@@ -116,7 +116,7 @@ const playText = computed(() => isPlaying.value
 const { getSong } = useSongsApi()
 const { fetch, data: song, error } = getSong()
 
-async function fetchSong() {
+async function fetchSong(): void {
   await fetch(songWindowParams.songId)
 }
 
@@ -174,7 +174,9 @@ function timeUpdated (): void {
 }
 
 watch(() => error.value, (error) => {
-  if (error) winAlert(error.message, t('errors.error'))
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
 })
 
 onMounted(() => {

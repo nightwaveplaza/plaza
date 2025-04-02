@@ -5,7 +5,7 @@
         <slot />
       </table>
     </simplebar>
-    <table class="hover" v-else>
+    <table v-else class="hover">
       <slot />
     </table>
   </div>
@@ -15,18 +15,17 @@
 import { ref } from 'vue'
 import simplebar from 'simplebar-vue'
 
-// Props
 withDefaults(defineProps<{
+  // Enable scrolling
   scroll?: boolean
 }>(), {
   scroll: false,
 })
 
-// Elements
+// Refs to DOM
 const list = ref<HTMLDivElement | null>(null)
 const scrollbar = ref<{ recalculate (): void } | null>(null)
 
-// Methods
 function scrollTop (): void {
   scrollbar.value?.recalculate()
 }

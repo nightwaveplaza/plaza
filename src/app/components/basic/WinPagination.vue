@@ -1,15 +1,15 @@
 <template>
   <div class="row no-gutters pagination">
     <div v-if="page > 1" class="col-4 pr-1">
-      <win-button class="d-block" @click="nextPage(-1)" :disabled="props.disabled">
+      <win-button class="d-block" :disabled="props.disabled" @click="nextPage(-1)">
         <i class="i icon-left-hand" />
       </win-button>
     </div>
     <div class="col-4">
-      <input ref="pageInput" v-model.number="page" type="number" class="d-block" @keydown="useNumberOnly" :readonly="props.disabled">
+      <input ref="pageInput" v-model.number="page" type="number" class="d-block" :readonly="props.disabled" @keydown="useNumberOnly">
     </div>
     <div v-if="pages > 1 && page < pages" class="col-4 pl-1">
-      <win-button class="d-block" @click="nextPage(1)" :disabled="props.disabled">
+      <win-button class="d-block" :disabled="props.disabled" @click="nextPage(1)">
         <i class="i icon-right-hand" />
       </win-button>
     </div>

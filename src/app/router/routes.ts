@@ -1,11 +1,11 @@
 import Index from '@app/views/Index.vue'
-import Reset from '@app/views/Reset.vue'
-import Register from '@app/views/Register.vue'
-import Donate from '@app/views/Donate.vue'
+import ResetPassword from '@app/views/ResetPassword.vue'
+import UserRegister from '@app/views/UserRegister.vue'
+import SupportUs from '@app/views/SupportUs.vue'
 import DeleteAccount from '@app/views/DeleteAccount.vue'
 import PageNotFound from '@app/views/PageNotFound.vue'
 
-function redirect404 () {
+function redirect404 (): void {
   window.location.href = '/404'
 }
 
@@ -18,18 +18,18 @@ export default [
   {
     path: '/reset/:token?',
     name: 'reset',
-    component: Reset,
+    component: ResetPassword,
     props: true,
   },
   {
     path: '/register',
     name: 'register',
-    component: Register,
+    component: UserRegister,
   },
   {
     path: '/donate',
     name: 'donate',
-    component: Donate,
+    component: SupportUs,
   },
   {
     path: '/delete-account',

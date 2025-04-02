@@ -37,10 +37,11 @@
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
               <win-pagination
-                  v-if="history && history?.meta.total > 0"
-                  :pages="history.meta.last_page"
-                  @change="changePage"
-                  :disabled="isLoading" />
+                v-if="history && history?.meta.total > 0"
+                :pages="history.meta.last_page"
+                :disabled="isLoading"
+                @change="changePage"
+              />
             </div>
             <div class="col-auto">
               <win-button class="px-4" @click="winProps.close()">
@@ -89,12 +90,14 @@ function changePage (newPage: number): void {
   fetchHistory()
 }
 
-function fetchHistory() {
+function fetchHistory(): void {
   fetch(page.value)
 }
 
 watch(() => error.value, (error) => {
-  if (error) winAlert(error.message, t('errors.error'))
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
 })
 
 onMounted(() => {

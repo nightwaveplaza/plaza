@@ -1,16 +1,12 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import { type SongResponse } from '@app/types'
+import { type SongResource } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useSongsApi () {
-  const getSong = () => {
-    const instance = useApi<SongResponse>()
-    const fetch = (songId: string) => instance.call({
-      url: `v2/songs/${songId}`
-    })
-    return { ...instance, fetch }
-  }
+export function useSongsApi (): {
+  getSong: () => ApiHandler<SongResource, [{ id: string }]>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getSong
+    getSong: createApiHandler<SongResource, [{ id: string }]>(`v2/songs/{id}`)
   }
 }

@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue'
-import type { Song, StatusResponse } from '@app/types'
+import type { Song, StatusResource } from '@app/types'
 
 const song = reactive({
   id: <string|null>null,
@@ -26,7 +26,7 @@ export function useNowPlayingStatus() {
     song.artwork_src_sm = updatedSong.artwork_sm_src
   }
 
-  const setStatus = (status: StatusResponse): void => {
+  const setStatus = (status: StatusResource): void => {
     setSong(status.song)
     setPosition(status.position)
     setReactions(status.reactions)

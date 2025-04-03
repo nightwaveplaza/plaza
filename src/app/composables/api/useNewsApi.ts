@@ -1,24 +1,14 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import type { NewsLatestResponse, NewsResponse } from '@app/types'
+import type { NewsLatestResource, NewsCollection } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useNewsApi () {
-  const getNews = () => {
-    const instance = useApi<NewsResponse>()
-    const fetch = (page: number) => instance.call({
-      url: `v2/news/?page=${page}`
-    })
-    return { ...instance, fetch }
-  }
-
-  const getLastUpdated = () => {
-    const instance = useApi<NewsLatestResponse>()
-    const fetch = () => instance.call({
-      url: `v2/news/latest`
-    })
-    return { ...instance, fetch }
-  }
+export function useNewsApi (): {
+  getNews: () => ApiHandler<NewsCollection, [{ page: number }]>;
+  getLastUpdated: () => ApiHandler<NewsLatestResource, []>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getNews, getLastUpdated
+    getNews: createApiHandler<NewsCollection, [{ page: number }]>('v2/news'),
+    getLastUpdated: createApiHandler<NewsLatestResource>('v2/news/latest')
   }
 }

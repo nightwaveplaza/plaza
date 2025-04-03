@@ -1,16 +1,12 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import type { HistoryResponse } from '@app/types'
+import type { HistoryCollection } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useHistoryApi () {
-  const getHistory = () => {
-    const instance = useApi<HistoryResponse>()
-    const fetch = (page: number) => instance.call({
-      url: `v2/history/?page=${page}`
-    })
-    return { ...instance, fetch }
-  }
+export function useHistoryApi (): {
+  getHistory: () => ApiHandler<HistoryCollection, [{ page: number }]>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getHistory
+    getHistory: createApiHandler<HistoryCollection, [{ page: number }]>('v2/history')
   }
 }

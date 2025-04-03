@@ -1,4 +1,6 @@
-interface PaginatedResponse<T> {
+import type { BackgroundImage, History, News, Rating, Song, User } from '@app/types/models.ts'
+
+interface PaginatedCollection<T> {
   meta: {
     current_page: number
     from: number
@@ -11,69 +13,52 @@ interface PaginatedResponse<T> {
   data: T[]
 }
 
-interface ResourceResponse<T> {
+interface ApiResource<T> {
   data: T
 }
 
-export interface BackgroundImage {
-  id: number,
-  filename: string
-  author: string
-  author_link: string
-  source: string
-  source_link: string
-  src: string
-  video_src: string
+export interface ResultResource {
+  result: string
 }
 
-export interface BackgroundsResponse {
+/**
+ * Backgrounds
+ */
+export interface BackgroundCollection {
   data: BackgroundImage[]
 }
 
-export interface BackgroundResponse extends ResourceResponse<BackgroundImage> {}
+export interface BackgroundResponse extends ApiResource<BackgroundImage> {}
 
-export interface History {
-  played_at: number
-  song: Song
-}
-
-export interface HistoryResponse extends PaginatedResponse<History> {
+/**
+ * History
+ */
+export interface HistoryCollection extends PaginatedCollection<History> {
+  // additional
   date_range: {
     from_date: number
     to_date: number
   }
 }
 
-export interface News {
-  id: number
-  text: string
-  author: string
-  created_at: number
+/**
+ * News
+ */
+export interface NewsCollection extends PaginatedCollection<News> {
 }
 
-export interface NewsResponse extends PaginatedResponse<News> {}
-
-export interface NewsLatestResponse extends ResourceResponse<News> {}
-
-export interface Rating {
-  song: Song,
-  likes: number
+export interface NewsLatestResource extends ApiResource<News> {
 }
 
-export interface RatingsResponse extends PaginatedResponse<Rating> {}
+/**
+ * Ratings
+ */
+export interface RatingsCollection extends PaginatedCollection<Rating> {}
 
-export interface Song {
-  id: string
-  artist: string
-  album: string
-  title: string
-  length: number
-  artwork_src: string
-  artwork_sm_src: string
-  preview_src: string
-}
-
-export interface SongResponse extends ResourceResponse<Song> {
+/**
+ * Songs
+ */
+export interface SongResource extends ApiResource<Song> {
   stats: {
     likes: string,
     first_played_at: number | null
@@ -83,58 +68,10 @@ export interface SongResponse extends ResourceResponse<Song> {
   }
 }
 
-export interface UserLoginForm {
-  username: string,
-  password: string,
-  remember: boolean
-}
-
-export interface UserResponse {
-  data: User,
-  current_reaction: null|number
-}
-
-export interface User {
-  id: number
-  username: string
-  email: string
-}
-
-export interface UserLoginResponse {
-  data: User,
-  token: string
-}
-
-export interface UserFavoritesResponse extends PaginatedResponse<{
-  id: number
-  song: Song,
-  created_at: number
-}> {
-
-}
-
-export interface UserPasswordForm {
-  current_password: string,
-  password: string
-}
-
-export interface UserEmailForm {
-  current_password: string,
-  email: string
-}
-
-export interface UserRegisterForm {
-  username: string,
-  email: string,
-  password: string,
-  captcha_response: string
-}
-
-export interface ResultResponse {
-  result: string // success
-}
-
-export interface StatusResponse {
+/**
+ * Status
+ */
+export interface StatusResource {
   song: Song
   listeners: number
   updated_at: number
@@ -142,12 +79,21 @@ export interface StatusResponse {
   position: number
 }
 
-export interface UserResetForm {
-  email: string,
-  captcha_response: string
+/**
+ * User
+ */
+export interface UserResource {
+  data: User,
+  current_reaction: null | number
 }
 
-export interface UserResetConfirmForm {
-  password: string
+export interface UserLoginResource {
+  data: User,
   token: string
 }
+
+export interface UserFavoritesCollection extends PaginatedCollection<{
+  id: number
+  song: Song,
+  created_at: number
+}> {}

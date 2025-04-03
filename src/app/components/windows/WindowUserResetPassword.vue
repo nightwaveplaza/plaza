@@ -34,7 +34,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()

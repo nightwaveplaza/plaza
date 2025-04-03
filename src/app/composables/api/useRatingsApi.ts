@@ -1,16 +1,12 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import { type RatingsResponse, RatingsRange } from '@app/types'
+import { type RatingsCollection } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useRatingsApi () {
-  const getRatings = () => {
-    const instance = useApi<RatingsResponse>()
-    const fetch = (range: RatingsRange, page: number) => instance.call({
-      url: `v2/ratings/${range}/?page=${page}`
-    })
-    return { ...instance, fetch }
-  }
+export function useRatingsApi (): {
+  getRatings: () => ApiHandler<RatingsCollection, [{ page: number, range: string }]>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getRatings
+    getRatings: createApiHandler<RatingsCollection, [{ page: number, range: string }]>(`v2/ratings/{range}`)
   }
 }

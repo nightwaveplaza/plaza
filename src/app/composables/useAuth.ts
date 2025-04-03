@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue'
-import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
 const { getUser } = useUserApi()

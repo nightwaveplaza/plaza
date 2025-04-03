@@ -37,7 +37,7 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
-import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import { useUserApi } from '@app/composables/api'
 import type { UserPasswordForm } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
 

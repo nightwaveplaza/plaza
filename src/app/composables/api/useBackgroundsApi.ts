@@ -1,24 +1,14 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import type { BackgroundResponse, BackgroundsResponse } from '@app/types'
+import type { BackgroundResponse, BackgroundCollection } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useBackgroundsApi () {
-  const getBackgrounds = () => {
-    const instance = useApi<BackgroundsResponse>()
-    const fetch = () => instance.call({
-      url: `v2/backgrounds`
-    })
-    return { ...instance, fetch }
-  }
-
-  const getRandomBackground = () => {
-    const instance = useApi<BackgroundResponse>()
-    const fetch = () => instance.call({
-      url: `v2/backgrounds/random`
-    })
-    return { ...instance, fetch }
-  }
+export function useBackgroundsApi (): {
+  getBackgrounds: () => ApiHandler<BackgroundCollection, []>;
+  getRandomBackground: () => ApiHandler<BackgroundResponse, []>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getBackgrounds, getRandomBackground
+    getBackgrounds: createApiHandler<BackgroundCollection>('v2/backgrounds'),
+    getRandomBackground: createApiHandler<BackgroundResponse>('v2/backgrounds/random')
   }
 }

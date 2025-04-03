@@ -108,7 +108,7 @@ import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
 import type { UserRegisterForm } from '@app/types'
-import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import { useUserApi } from '@app/composables/api'
 
 
 const { t } = useI18n()

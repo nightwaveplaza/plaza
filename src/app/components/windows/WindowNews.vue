@@ -56,7 +56,7 @@ function changePage (newPage: number): void {
 }
 
 function fetchNews () {
-  fetch(page.value)
+  fetch({ page: page.value })
 }
 
 watch(() => error.value, (error) => {

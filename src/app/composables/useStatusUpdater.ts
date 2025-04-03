@@ -2,6 +2,7 @@ import { useSocket } from '@app/composables/useSocket.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { watch } from 'vue'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import type { StatusResource } from '@app/types'
 
 /**
  * useStatusUpdater composable
@@ -19,7 +20,7 @@ export function useStatusUpdater (): void {
     }
   })
 
-  onEvent('status', (status) => setStatus(status))
-  onEvent('listeners', (listeners) => setListeners(listeners))
-  onEvent('reactions', (reactions) => setReactions(reactions))
+  onEvent('status', (status) => setStatus(status as StatusResource))
+  onEvent('listeners', (listeners) => setListeners(listeners as number))
+  onEvent('reactions', (reactions) => setReactions(reactions as number))
 }

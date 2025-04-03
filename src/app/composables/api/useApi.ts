@@ -1,68 +1,34 @@
-import { onUnmounted, readonly, ref } from 'vue'
+import { onUnmounted, type Ref, ref, type UnwrapRef } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
-import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
+import api from '@app/api/index.ts'
 
-interface ApiErrorResponse {
-  message: string
-  key: string
-}
-
+// Error structure for API responses
 export interface ApiError {
   message: string,
   code: number
 }
 
-const instance = ref<null | AxiosInstance>(null)
-let isTokenRefreshing = false
-
-function createAxios () {
-  const baseURL: string = import.meta.env.VITE_API_URL
-  if (!instance.value) {
-    instance.value = axios.create({
-      baseURL,
-      withCredentials: true,
-      withXSRFToken: true,
-    })
-
-    instance.value.interceptors.response.use(response => response, err => interceptError(err))
-  }
+// Response wrapper for API calls with loading state
+export interface CallResponse<T> {
+  data: Ref<UnwrapRef<T> | null>
+  error: Ref<ApiError | null>
+  isLoading: Ref<boolean>
+  call: (config: AxiosRequestConfig) => Promise<T>
 }
 
-async function interceptError(err: AxiosError) {
-  if (!err.response || !err.config) {
-    return Promise.reject(err)
-  }
-
-  const status = err.response.status
-
-  if (err.config.url === '/auth/csrf-cookie') {
-    return Promise.reject(err)
-  }
-
-  if (status === 419) {
-    if (!isTokenRefreshing) {
-      isTokenRefreshing = true
-      try {
-        await instance.value!.request({ url: '/auth/csrf-cookie' })
-      } finally {
-        isTokenRefreshing = false
-      }
-    }
-    // Token refreshed, repeat request
-    return instance.value!(err.config)
-  }
-
-  return Promise.reject(err)
-}
-
-export function useApi<T> () {
+/**
+ * API request handler with state management
+ *
+ * Handles API calls and tracks loading state, data and errors.
+ */
+export function useApi<T> (): CallResponse<T> {
   const data = ref<T | null>(null)
   const error = ref<ApiError | null>(null)
   const isLoading = ref(false)
   let controller: AbortController | null = null
 
-  createAxios()
-
+  // Make API request
   const call = async (config: AxiosRequestConfig) => {
     isLoading.value = true
     error.value = null
@@ -71,14 +37,14 @@ export function useApi<T> () {
     controller = new AbortController()
 
     try {
-      const response = await instance.value!.request({
+      const response = await api.request({
         ...config,
         // headers: {
         //   //'NP-User-Agent': userAuthStore.agent
         // },
         signal: controller.signal
       })
-      data.value = response.data
+      data.value = response.data as UnwrapRef<T>
       return response.data as T // For direct request usage
     } catch (err) {
       error.value = handleError(err)
@@ -89,40 +55,40 @@ export function useApi<T> () {
     }
   }
 
+  // Clean up pending requests on component unmount
   onUnmounted(() => controller?.abort())
 
   return {
-    data: readonly(data),
-    error: readonly(error),
-    isLoading: readonly(isLoading),
+    data: data,
+    error: error,
+    isLoading: isLoading,
     call
   }
 }
 
+// Converts various error types into a consistent format
 function handleError (e: Error | AxiosError | unknown): ApiError {
   const { t } = i18n.global
+  const defaultResponse = { message: 'Unknown error', code: 0 }
 
   if (axios.isCancel(e)) {
     return { message: 'Request has been canceled', code: 0 }
   }
 
-  if (e instanceof AxiosError) {
-    const code: number = e.response?.status ?? 0
-
-    if (e.response?.status === 500) {
-      return { message: t('errors.server'), code }
-    }
-
-    if (e.response?.data?.key) {
-      return { message: t((<ApiErrorResponse>e.response.data).key), code }
-    }
-
-    return { message: t('errors.network_fail') + ' ' + e.message, code }
+  if (!(e instanceof AxiosError)) {
+    return e instanceof Error
+      ? { message: e.message, code: 0 }
+      : defaultResponse
   }
 
-  if (e instanceof Error) {
-    return { message: e.message, code: 0 }
-  } else {
-    return { message: 'Unknown error', code: 0 }
+  const code = e.response?.status ?? 0
+  const messageKey = e.response?.data?.key
+
+  if (code === 500) return { message: t('errors.server'), code }
+  if (messageKey) return { message: t(messageKey), code }
+
+  return {
+    code,
+    message: `${t('errors.network_fail')} ${e.message}`,
   }
 }

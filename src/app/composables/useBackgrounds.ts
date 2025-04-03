@@ -1,7 +1,7 @@
 import { computed, type ComputedRef, reactive, type UnwrapNestedRefs } from 'vue'
 import { prefs } from '@app/utils/prefs.ts'
 import { useBackgroundsApi } from '@app/composables/api'
-import { type BackgroundImage, BackgroundMode, type BackgroundsResponse } from '@app/types'
+import { type BackgroundImage, BackgroundMode, type BackgroundCollection } from '@app/types'
 
 /**
  * useBackgrounds composable
@@ -29,7 +29,7 @@ const background = reactive(prefs.get<Background>('background', {
  */
 export function useBackgrounds(): {
   background: UnwrapNestedRefs<Background>;
-  fetch: () => Promise<BackgroundsResponse>;
+  fetch: () => Promise<BackgroundCollection>;
   setRandomBackground: () => void;
   setColorBackground: (color?: string) => void;
   nextBackground: (direction: number) => void;

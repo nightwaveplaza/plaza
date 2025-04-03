@@ -1,52 +1,25 @@
-import { useApi } from '@app/composables/api/useApi.ts'
 import {
-  type ResultResponse,
+  type ResultResource,
   type User,
   type UserEmailForm,
   type UserPasswordForm,
-  type UserRegisterForm, type UserResponse
+  type UserRegisterForm,
+  type UserResource
 } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useUserApi () {
-  const getUser = () => {
-    const instance = useApi<UserResponse>()
-    const fetch = () => instance.call({
-      url: `v2/users/me`
-    })
-    return { ...instance, fetch }
-  }
-
-  const registerUser = () => {
-    const instance = useApi<User>()
-    const fetch = (data: UserRegisterForm) => instance.call({
-      data,
-      method: 'POST',
-      url: `v2/users`
-    })
-    return { ...instance, fetch }
-  }
-
-  const updatePassword = () => {
-    const instance = useApi<ResultResponse>()
-    const fetch = (data: UserPasswordForm) => instance.call({
-      data,
-      method: 'PUT',
-      url: `v2/users/me/password`
-    })
-    return { ...instance, fetch }
-  }
-
-  const updateEmail = () => {
-    const instance = useApi<ResultResponse>()
-    const fetch = (data: UserEmailForm) => instance.call({
-      data,
-      method: 'PUT',
-      url: `v2/users/me/email`
-    })
-    return { ...instance, fetch }
-  }
+export function useUserApi (): {
+  getUser: () => ApiHandler<UserResource, []>;
+  registerUser: () => ApiHandler<User, [UserRegisterForm]>;
+  updatePassword: () => ApiHandler<ResultResource, [UserPasswordForm]>;
+  updateEmail: () => ApiHandler<ResultResource, [UserEmailForm]>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getUser, registerUser, updatePassword, updateEmail
+    getUser: createApiHandler<UserResource>('v2/users/me'),
+    registerUser: createApiHandler<User, [UserRegisterForm]>('v2/users', 'POST'),
+    updatePassword: createApiHandler<ResultResource, [UserPasswordForm]>('v2/users/me/password', 'PUT'),
+    updateEmail: createApiHandler<ResultResource, [UserEmailForm]>('v2/users/me/email', 'PUT')
   }
 }

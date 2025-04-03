@@ -25,7 +25,7 @@ const { winAlert } = useWindows()
 const likeIcon = computed(() => reaction.rate > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => isCurrentReaction.value ? {2: CL_FAV, 1: CL_LIKE}[reaction.rate] ?? '' : '')
 const { sendReaction } = useReactionsApi()
-const { isLoading: sending, send: react } = sendReaction()
+const { isLoading: sending, fetch: react } = sendReaction()
 
 function like (): void {
   // Reset reaction if not current song
@@ -38,7 +38,7 @@ function like (): void {
 }
 
 function send (score: number): void {
-  react(score).then(res => {
+  react({ reaction: score }).then(res => {
     setReactions(res.reactions)
     setReaction(score)
     showTip()

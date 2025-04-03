@@ -75,7 +75,7 @@ import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import type { UserLoginForm } from '@app/types'
-import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()

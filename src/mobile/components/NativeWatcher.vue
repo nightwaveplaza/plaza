@@ -74,7 +74,8 @@ watch(() => background, (b) => {
 )
 
 // Watch user token for changes
-watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
+// TODO
+//watch(() => userAuthStore.token, (t) => Native.setAuthToken(t as string))
 
 // Watch audio quality
 watch(() => lowQuality.value, () => {

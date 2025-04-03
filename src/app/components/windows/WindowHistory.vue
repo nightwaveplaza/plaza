@@ -90,8 +90,8 @@ function changePage (newPage: number): void {
   fetchHistory()
 }
 
-function fetchHistory(): void {
-  fetch(page.value)
+function fetchHistory (): void {
+  fetch({ page: page.value })
 }
 
 watch(() => error.value, (error) => {

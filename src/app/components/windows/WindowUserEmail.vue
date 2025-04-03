@@ -31,7 +31,7 @@ import { onMounted, reactive, ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows, WinType } from '@app/composables/useWindows.ts'
-import { useUserApi } from '@app/composables/api/useUserApi.ts'
+import { useUserApi } from '@app/composables/api'
 import type { UserEmailForm } from '@app/types'
 
 const { t } = useI18n()

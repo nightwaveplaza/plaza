@@ -77,7 +77,7 @@ import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
 import { useSongsApi } from '@app/composables/api'
-import { useUserFavoritesApi } from '@app/composables/api/useUserFavoritesApi.ts'
+import { useUserFavoritesApi } from '@app/composables/api'
 
 const { t } = useI18n()
 const windowsStore = useWindowsStore()
@@ -116,8 +116,8 @@ const playText = computed(() => isPlaying.value
 const { getSong } = useSongsApi()
 const { fetch, data: song, error } = getSong()
 
-async function fetchSong(): void {
-  await fetch(songWindowParams.songId)
+async function fetchSong (): Promise<void> {
+  await fetch({id: songWindowParams.songId})
 }
 
 async function favoriteSong (): Promise<void> {
@@ -125,9 +125,9 @@ async function favoriteSong (): Promise<void> {
 
   try {
     if (song.value?.current_user?.favorite_id) {
-      await deleteFavorite().fetch(song.value.current_user.favorite_id)
+      await deleteFavorite().fetch({ id: song.value.current_user.favorite_id })
     } else {
-      await addFavorite().fetch(song.value!.data.id)
+      await addFavorite().fetch({ song_id: song.value!.data.id })
     }
     await fetchSong()
   } catch (e) {

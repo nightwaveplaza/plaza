@@ -1,36 +1,16 @@
-import { useApi } from '@app/composables/api/useApi.ts'
-import { type UserFavoritesResponse } from '@app/types'
-import type { AxiosResponse } from 'axios'
+import { type ResultResource, type UserFavoritesCollection } from '@app/types'
+import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
-export function useUserFavoritesApi () {
-  const getFavorites = () => {
-    const instance = useApi<UserFavoritesResponse>()
-    const fetch = (page: number) => instance.call({
-      url: `v2/users/me/favorites/?page=${page}`
-    })
-    return { ...instance, fetch }
-  }
-
-  const addFavorite = () => {
-    const instance = useApi<AxiosResponse>()
-    const fetch = (songId: string) => instance.call({
-      data: { song_id: songId },
-      method: 'POST',
-      url: `v2/users/me/favorites`
-    })
-    return { ...instance, fetch }
-  }
-
-  const deleteFavorite = () => {
-    const instance = useApi<AxiosResponse>()
-    const fetch = (favoriteId: number) => instance.call({
-      method: 'DELETE',
-      url: `v2/users/me/favorites/${favoriteId}`
-    })
-    return { ...instance, fetch }
-  }
+export function useUserFavoritesApi (): {
+  getFavorites: () => ApiHandler<UserFavoritesCollection, [{ page: number }]>;
+  addFavorite: () => ApiHandler<ResultResource, [{ song_id: string }]>;
+  deleteFavorite: () => ApiHandler<ResultResource, [{ id: number }]>
+} {
+  const { createApiHandler } = useApiFactory()
 
   return {
-    getFavorites, addFavorite, deleteFavorite
+    getFavorites: createApiHandler<UserFavoritesCollection, [{ page: number }]>('v2/users/me/favorites'),
+    addFavorite: createApiHandler<ResultResource, [{ song_id: string }]>('v2/users/me/favorites', 'POST'),
+    deleteFavorite: createApiHandler<ResultResource, [{ id: number }]>(`v2/users/me/favorites/{id}`, 'DELETE')
   }
 }

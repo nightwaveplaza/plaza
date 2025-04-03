@@ -42,7 +42,7 @@ import { useI18n } from 'vue-i18n'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuthApi } from '@app/composables/api/useAuthApi.ts'
+import { useAuthApi } from '@app/composables/api'
 import type { UserResetForm } from '@app/types'
 
 const { t } = useI18n()

@@ -16,9 +16,10 @@ import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useStatusUpdater } from '@app/composables/useStatusUpdater.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const i18n = useI18n()
-const { openWindow, WinType, openedWindows } = useWindows()
+const { openWindow, openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 const { fetchUser } = useAuth()
@@ -34,7 +35,7 @@ onMounted(() => {
   // todo
   i18n.locale.value = language.value
 
-  openWindow(WinType.LOADING)
+  openWindow(Win.LOADING)
 
   if (isRandomMode.value) {
     fetchBackgrounds().then(() => setRandomBackground())

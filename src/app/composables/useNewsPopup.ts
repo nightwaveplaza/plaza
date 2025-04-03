@@ -1,6 +1,7 @@
 import { prefs } from '@app/utils/prefs.ts'
 import { useNewsApi } from '@app/composables/api'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 /**
  * useNewsPopup composable
@@ -9,7 +10,7 @@ import { useWindows } from '@app/composables/useWindows.ts'
 export function useNewsPopup (): {
   openNewsIfUpdated: () => void
 } {
-  const { openWindow, WinType } = useWindows()
+  const { openWindow } = useWindows()
   const { getLastUpdated } = useNewsApi()
 
   /**
@@ -27,7 +28,7 @@ export function useNewsPopup (): {
         prefs.save('latestNewsRead', res.data.id)
 
         // Open news window after short delay to allow UI updates
-        setTimeout(() => openWindow(WinType.NEWS), 3000)
+        setTimeout(() => openWindow(Win.NEWS), 3000)
       }
     }).catch(() => {
       console.error('Failed to get news.');

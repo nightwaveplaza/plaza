@@ -42,10 +42,11 @@ import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
-const { minimizeWindow, WinType } = useWindows()
+const { minimizeWindow } = useWindows()
 const { listeners } = useNowPlayingStatus()
 const { username, isSigned } = useAuth()
 
@@ -57,7 +58,7 @@ const fullScreenEnabled = computed(() => isMobile() || document.fullscreenEnable
 const win = ref<InstanceType<typeof WinWindow>>()
 
 function minimize (): void {
-  minimizeWindow(WinType.PLAYER)
+  minimizeWindow(Win.PLAYER)
 }
 
 function requestFullScreen (): void {

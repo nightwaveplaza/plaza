@@ -24,9 +24,10 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, WinType } = useWindows()
+const { openWindow, closeWindow } = useWindows()
 const { song } = useNowPlayingStatus()
 
 defineProps<{
@@ -67,8 +68,8 @@ function move (): void {
 
 // waiting for the first status response then check news and open up player
 watch(() => song.id, async () => {
-  openWindow(WinType.PLAYER)
-  closeWindow(WinType.LOADING)
+  openWindow(Win.PLAYER)
+  closeWindow(Win.LOADING)
 })
 
 onMounted(() => {

@@ -30,9 +30,9 @@
 import { onMounted, reactive, ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api'
-import type { UserEmailForm } from '@app/types'
+import { type UserEmailForm, Win } from '@app/types'
 
 const { t } = useI18n()
 const { winAlert, closeWindow } = useWindows()
@@ -55,7 +55,7 @@ function fetchUser (): void {
     disabled.value = false
   }).catch(() => {
     winAlert(t('errors.user_fetch'), t('errors.error'))
-    closeWindow(WinType.USER_EMAIL)
+    closeWindow(Win.USER_EMAIL)
   })
 }
 
@@ -66,7 +66,7 @@ function changeEmail (): void {
 
   update(fields).then(() => {
     winAlert(t('messages.email_changed'), t('messages.success'), 'info')
-    closeWindow(WinType.USER_EMAIL)
+    closeWindow(Win.USER_EMAIL)
   }).catch(e => {
     winAlert(e.message, t('errors.error'))
   })

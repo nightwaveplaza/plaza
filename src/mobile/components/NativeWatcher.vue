@@ -10,12 +10,13 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { type Background, useBackgrounds  } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const i18n = useI18n()
 
 const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
-const { openWindow, closeWindow, WinType } = useWindows()
+const { openWindow, closeWindow } = useWindows()
 const { lowQuality, language } = useAppSettings()
 const { background, isColorMode } = useBackgrounds()
 const { isSigned } = useAuth()
@@ -37,7 +38,7 @@ function registerEmitterEvents (): void {
 
   eventBus.on('openWindow', (name: string) => {
     if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
-      openWindow(WinType.USER_LOGIN)
+      openWindow(Win.USER_LOGIN)
       return
     }
 

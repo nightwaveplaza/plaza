@@ -93,9 +93,10 @@ import { isMobile } from '@app/utils/helpers.ts'
 import { onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, WinType } = useWindows()
+const { openWindow, closeWindow } = useWindows()
 
 defineProps<{
   name: string
@@ -113,18 +114,18 @@ onMounted(() => {
 })
 
 function openCredits (): void {
-  openWindow(WinType.CREDITS)
-  closeWindow(WinType.ABOUT)
+  openWindow(Win.CREDITS)
+  closeWindow(Win.ABOUT)
 }
 
 function openNews (): void {
-  openWindow(WinType.NEWS)
-  closeWindow(WinType.ABOUT)
+  openWindow(Win.NEWS)
+  closeWindow(Win.ABOUT)
 }
 
 function openMobile (): void {
-  openWindow(WinType.MOBILE)
-  closeWindow(WinType.ABOUT)
+  openWindow(Win.MOBILE)
+  closeWindow(Win.ABOUT)
 }
 </script>
 

@@ -106,8 +106,8 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
-import type { UserRegisterForm } from '@app/types'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { type UserRegisterForm, Win } from '@app/types'
 import { useUserApi } from '@app/composables/api'
 
 
@@ -154,7 +154,7 @@ function completeCaptcha (): void {
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
-    closeWindow(WinType.USER_REGISTER)
+    closeWindow(Win.USER_REGISTER)
   }).catch(e => {
     winAlert(e.message, t('errors.error'))
     step.value = 1

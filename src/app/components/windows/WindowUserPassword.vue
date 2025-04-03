@@ -36,9 +36,9 @@
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api'
-import type { UserPasswordForm } from '@app/types'
+import { type UserPasswordForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
@@ -68,7 +68,7 @@ function change (): void {
   update(fields).then(() => {
     unsetUser()
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
-    closeWindow(WinType.USER_PASSWORD)
+    closeWindow(Win.USER_PASSWORD)
   }).catch(e =>
       winAlert(e.message, t('errors.error'))
   )

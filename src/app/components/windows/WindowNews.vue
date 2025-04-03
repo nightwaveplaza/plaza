@@ -34,9 +34,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindows, WinType } from '@app/composables/useWindows'
+import { useWindows } from '@app/composables/useWindows'
 import { useNewsApi } from '@app/composables/api'
 import { fmtDate } from '@app/utils/timeFormats.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { winAlert } = useWindows()
@@ -63,7 +64,7 @@ watch(() => error.value, (error) => {
   if (error) {
     winAlert(error.message, t('errors.error'))
   }
-  if (!news.value) closeWindow(WinType.NEWS)
+  if (!news.value) closeWindow(Win.NEWS)
 })
 
 onMounted(() => {

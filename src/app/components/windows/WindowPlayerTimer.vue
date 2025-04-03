@@ -62,10 +62,11 @@ import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useNumberOnly } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
-const { closeWindow, WinType, winAlert } = useWindows()
+const { closeWindow, winAlert } = useWindows()
 
 defineProps<{
   name: string
@@ -95,7 +96,7 @@ function start (): void {
   }
 
   updateTimeLeft()
-  closeWindow(WinType.PLAYER_TIMER)
+  closeWindow(Win.PLAYER_TIMER)
 }
 
 function add (amount: number): void {

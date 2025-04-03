@@ -19,7 +19,7 @@
               </win-button>
             </div>
             <div class="col-4">
-              <win-button block @click="closeWindow(WinType.USER_RESET_PASSWORD)">
+              <win-button block @click="closeWindow(Win.USER_RESET_PASSWORD)">
                 {{ t('buttons.cancel') }}
               </win-button>
             </div>
@@ -36,9 +36,10 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { closeWindow, WinType, winAlert } = useWindows()
+const { closeWindow, winAlert } = useWindows()
 const { resetPasswordConfirm } = useAuthApi()
 const { isLoading, fetch } = resetPasswordConfirm()
 const { resetToken } = useAuth()
@@ -59,7 +60,7 @@ function change (): void {
 
   fetch({ token: resetToken.value!, password: password.value }).then(() => {
     winAlert(t('messages.password_changed'), t('messages.success'), 'info')
-    closeWindow(WinType.USER_RESET_PASSWORD)
+    closeWindow(Win.USER_RESET_PASSWORD)
   }).catch(e => {
     winAlert(e.message, t('errors.error'))
   })

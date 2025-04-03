@@ -2,17 +2,13 @@ import { defineStore } from 'pinia'
 import type { AlertWindowParams, SongWindowParams, Window } from '@app/types/types'
 import { ref } from 'vue'
 
-interface WindowList {
-  [key: string]: Window
-}
-
 /**
  * Windows store
  * Manages the global state of opened windows
  */
 export const useWindowsStore = defineStore('windowsStore', () => {
   // All opened windows
-  const windows = ref(<WindowList>{})
+  const windows = ref(<Record<string, Window>>{})
 
   // Current active window name and active z-index (CSS)
   const activeWindow = ref('')

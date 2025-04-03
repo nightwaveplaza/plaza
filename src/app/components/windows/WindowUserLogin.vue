@@ -74,12 +74,12 @@ import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import type { UserLoginForm } from '@app/types'
+import { type UserLoginForm, Win } from '@app/types'
 import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, WinType, winAlert } = useWindows()
+const { openWindow, closeWindow, winAlert } = useWindows()
 const { login: loginApi } = useAuthApi()
 const { fetch, isLoading } = loginApi()
 const { setUser } = useAuth()
@@ -111,13 +111,13 @@ function login (): void {
 }
 
 function openRegister (): void {
-  openWindow(WinType.USER_REGISTER)
-  closeWindow(WinType.USER_LOGIN)
+  openWindow(Win.USER_REGISTER)
+  closeWindow(Win.USER_LOGIN)
 }
 
 function openReset (): void {
-  openWindow(WinType.USER_RESET)
-  closeWindow(WinType.USER_LOGIN)
+  openWindow(Win.USER_RESET)
+  closeWindow(Win.USER_LOGIN)
 }
 </script>
 

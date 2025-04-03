@@ -24,7 +24,8 @@
 import { useI18n } from 'vue-i18n'
 import { useSocket } from '@app/composables/useSocket.ts'
 import { watch } from 'vue'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { reconnect, isDead, isConnected } = useSocket()
@@ -37,7 +38,7 @@ defineProps<{
 // Close
 watch(() => isConnected.value, (connected) => {
   if (connected) {
-    closeWindow(WinType.DISCONNECTED)
+    closeWindow(Win.DISCONNECTED)
   }
 })
 </script>

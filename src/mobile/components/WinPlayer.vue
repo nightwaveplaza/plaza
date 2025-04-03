@@ -31,7 +31,7 @@
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
-            <win-button block @click="openWindow(WinType.PLAYER_TIMER)">
+            <win-button block @click="openWindow(Win.PLAYER_TIMER)">
               <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
@@ -59,10 +59,11 @@ import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
-const { openWindow, closeWindow, WinType } = useWindows()
+const { openWindow, closeWindow } = useWindows()
 const { song } = useNowPlayingStatus()
 
 const artwork = computed(() => {
@@ -82,7 +83,7 @@ const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '
 
 function play (): void {
   if (playerPlayback.state === PlayerState.PLAYING) {
-    closeWindow(WinType.PLAYER_TIMER)
+    closeWindow(Win.PLAYER_TIMER)
     playerPlayback.sleepTime = 0
   }
   Native.audioPlay()

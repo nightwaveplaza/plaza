@@ -152,9 +152,10 @@ import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, WinType, winAlert } = useWindows()
+const { openWindow, closeWindow, winAlert } = useWindows()
 const {
   theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls,
   lowQuality, setLowQuality
@@ -199,8 +200,8 @@ function taskbarPositionSelected (e: Event): void {
 }
 
 function openLanguageSettings (): void {
-  openWindow(WinType.SETTINGS_LANGUAGE)
-  closeWindow(WinType.SETTINGS)
+  openWindow(Win.SETTINGS_LANGUAGE)
+  closeWindow(Win.SETTINGS)
 }
 
 function qualityChanged (e: Event): void {

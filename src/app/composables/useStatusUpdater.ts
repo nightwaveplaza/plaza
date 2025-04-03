@@ -1,8 +1,8 @@
 import { useSocket } from '@app/composables/useSocket.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { watch } from 'vue'
-import { useWindows, WinType } from '@app/composables/useWindows.ts'
-import type { StatusResource } from '@app/types'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { type StatusResource, Win } from '@app/types'
 
 /**
  * useStatusUpdater composable
@@ -16,7 +16,7 @@ export function useStatusUpdater (): void {
   // Open WinDisconnected when reconnect attempts > 3
   watch(() => reconnectAttempts.value, (attempts) => {
     if (!isConnected.value && attempts >= 3) {
-      openWindow(WinType.DISCONNECTED)
+      openWindow(Win.DISCONNECTED)
     }
   })
 

@@ -54,7 +54,7 @@
                 </win-button>
               </div>
               <div class="col-6">
-                <win-button block @click="openWindow(WinType.SETTINGS)">
+                <win-button block @click="openWindow(Win.SETTINGS)">
                   <i class="i icon-cog mr-0" />
                 </win-button>
               </div>
@@ -77,6 +77,7 @@ import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
@@ -84,7 +85,7 @@ const { song } = useNowPlayingStatus()
 
 const { t } = useI18n()
 const playerPlayback = usePlayerPlaybackStore()
-const { openWindow, WinType, winSongInfo } = useWindows()
+const { openWindow, winSongInfo } = useWindows()
 const { isSigned } = useAuth()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
@@ -126,14 +127,14 @@ function showSongInfo (): void {
 
 function openUserWindow (): void {
   if (isSigned.value) {
-    openWindow(WinType.USER)
+    openWindow(Win.USER)
   } else {
-    openWindow(WinType.USER_LOGIN)
+    openWindow(Win.USER_LOGIN)
   }
 }
 
 function openTimerWindow (): void {
-  openWindow(WinType.PLAYER_TIMER)
+  openWindow(Win.PLAYER_TIMER)
 }
 
 onMounted(() => {

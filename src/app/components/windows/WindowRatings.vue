@@ -108,7 +108,7 @@ function changeRange (newRange: RatingsRange): void {
 }
 
 function fetchRatings (): void {
-  fetch({ range: range.value as string }, { page: page.value })
+  fetch({ range: range.value }, { page: page.value })
 }
 
 function pad (n: number): string {

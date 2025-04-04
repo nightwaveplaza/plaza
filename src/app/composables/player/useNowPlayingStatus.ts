@@ -1,29 +1,28 @@
-import { reactive, ref } from 'vue'
+import { reactive, type Ref, ref, type UnwrapNestedRefs, type UnwrapRef } from 'vue'
 import type { Song, StatusResource } from '@app/types'
 
-const song = reactive({
-  id: <string|null>null,
-  artist: '...',
-  title: '...',
-  album: '...',
-  length: 0,
-  artwork_src: '',
-  artwork_src_sm: ''
+const song = reactive<Song>({
+  album: '', artist: '', artwork_sm_src: '', artwork_src: '', id: '', length: 0, preview_src: '', title: ''
 })
 const position = ref(0)
 const reactions = ref(0)
 const listeners = ref(0)
 const updatedAt = ref(0)
 
-export function useNowPlayingStatus() {
-  const setSong = (updatedSong: Song) => {
-    song.id = updatedSong.id
-    song.artist = updatedSong.artist
-    song.title = updatedSong.title
-    song.album = updatedSong.album
-    song.length = updatedSong.length
-    song.artwork_src = updatedSong.artwork_src
-    song.artwork_src_sm = updatedSong.artwork_sm_src
+export function useNowPlayingStatus (): {
+  setSong: (updatedSong: Song) => void
+  song: UnwrapNestedRefs<Song>
+  setReactions: (r: number) => void
+  reactions: Ref<UnwrapRef<number>>
+  listeners: Ref<UnwrapRef<number>>
+  setListeners: (l: number) => void
+  position: Ref<UnwrapRef<number>>
+  setPosition: (p: number) => void
+  updatedAt: Ref<UnwrapRef<number>>
+  setStatus: (status: StatusResource) => void
+} {
+  const setSong = (updatedSong: Song): void => {
+    Object.assign(song, updatedSong)
   }
 
   const setStatus = (status: StatusResource): void => {

@@ -9,7 +9,7 @@ import {
 import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
 export function useUserApi (): {
-  getUser: () => ApiHandler<UserResource, []>;
+  getUser: () => ApiHandler<UserResource>;
   registerUser: () => ApiHandler<User, [UserRegisterForm]>;
   updatePassword: () => ApiHandler<ResultResource, [UserPasswordForm]>;
   updateEmail: () => ApiHandler<ResultResource, [UserEmailForm]>

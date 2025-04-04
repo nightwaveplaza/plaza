@@ -29,7 +29,7 @@ export function useApi<T> (): CallResponse<T> {
   let controller: AbortController | null = null
 
   // Make API request
-  const call = async (config: AxiosRequestConfig) => {
+  const call = async (config: AxiosRequestConfig): Promise<T> => {
     isLoading.value = true
     error.value = null
     controller?.abort()
@@ -84,8 +84,12 @@ function handleError (e: Error | AxiosError | unknown): ApiError {
   const code = e.response?.status ?? 0
   const messageKey = e.response?.data?.key
 
-  if (code === 500) return { message: t('errors.server'), code }
-  if (messageKey) return { message: t(messageKey), code }
+  if (code === 500) {
+    return { message: t('errors.server'), code }
+  }
+  if (messageKey) {
+    return { message: t(messageKey), code }
+  }
 
   return {
     code,

@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, type ComputedRef, type Ref, ref, type UnwrapRef } from 'vue'
 import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
@@ -7,10 +7,18 @@ const { getUser } = useUserApi()
 const username = ref<string|null>(null)
 const resetToken = ref<string|null>(null)
 
-export function useAuth() {
+export function useAuth(): {
+  fetchUser: () => void;
+  setUser: (user: User) => void;
+  unsetUser: () => void;
+  username: Ref<UnwrapRef<string | null>>;
+  isSigned: ComputedRef<boolean>;
+  resetToken: Ref<UnwrapRef<string | null>>;
+  setResetToken: (token: string) => void
+} {
   const { resetReaction } = useReactions()
 
-  const fetchUser = () => {
+  const fetchUser = (): void => {
     getUser().fetch().then(res => {
       username.value = res.data.username
     }).catch(() => {
@@ -18,16 +26,16 @@ export function useAuth() {
     })
   }
 
-  const setUser = (user: User) => {
+  const setUser = (user: User): void => {
     username.value = user.username
   }
 
-  const unsetUser = () => {
+  const unsetUser = (): void => {
     resetReaction()
     username.value = null
   }
 
-  const setResetToken = (token: string) => {
+  const setResetToken = (token: string): void => {
     resetToken.value = token
   }
 

@@ -23,7 +23,7 @@ export const useWindowsStore = defineStore('windowsStore', () => {
   function open (name: string, params?: AlertWindowParams | SongWindowParams, winComponent?: string) {
     // If not already open
     if (!windows.value.hasOwnProperty(name)) {
-      let component = winComponent ?? 'window-' + name
+      const component = winComponent ?? 'window-' + name
       windows.value[name] = { params, name, component, isMinimized: false }
     }
     pullUp(name)

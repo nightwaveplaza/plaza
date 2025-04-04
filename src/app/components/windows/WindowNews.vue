@@ -56,7 +56,7 @@ function changePage (newPage: number): void {
   fetchNews()
 }
 
-function fetchNews () {
+function fetchNews (): void {
   fetch({ page: page.value })
 }
 
@@ -64,7 +64,9 @@ watch(() => error.value, (error) => {
   if (error) {
     winAlert(error.message, t('errors.error'))
   }
-  if (!news.value) closeWindow(Win.NEWS)
+  if (!news.value) {
+    closeWindow(Win.NEWS)
+  }
 })
 
 onMounted(() => {

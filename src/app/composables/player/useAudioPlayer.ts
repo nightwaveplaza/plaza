@@ -12,7 +12,11 @@ import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus
  *
  * Controls HTML5 audio playback and handle MediaSession API actions
  */
-export function useAudioPlayer() {
+export function useAudioPlayer(): {
+  playAudio: () => void;
+  stopAudio: () => void;
+  setVisualCanvas: (canvas: HTMLCanvasElement) => void
+} {
   const playerPlayback = usePlayerPlaybackStore()
   const { volume } = useVolumeControl()
   const { startVisual, stopVisual } = useVisual()
@@ -121,7 +125,7 @@ export function useAudioPlayer() {
         artist: song.artist,
         album: song.album,
         artwork: [
-          { src: song.artwork_src, sizes: '500x500', type: 'image/jpg' },
+          { src: song.artwork_src ?? '', sizes: '500x500', type: 'image/jpg' },
         ],
       })
     } else {
@@ -154,7 +158,7 @@ export function useAudioPlayer() {
     }
   }
 
-  function updateMediaSessionPosition () {
+  function updateMediaSessionPosition (): void {
     if ('setPositionState' in navigator.mediaSession) {
       navigator.mediaSession.setPositionState({
         duration: song.length,

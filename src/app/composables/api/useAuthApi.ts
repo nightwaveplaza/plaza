@@ -8,9 +8,9 @@ import {
 } from '@app/types'
 
 export function useAuthApi (): {
-  csrf: () => ApiHandler<ResultResource, []>;
+  csrf: () => ApiHandler<ResultResource>;
   login: () => ApiHandler<UserLoginResource, [UserLoginForm]>;
-  logout: () => ApiHandler<ResultResource, []>;
+  logout: () => ApiHandler<ResultResource>;
   resetPassword: () => ApiHandler<ResultResource, [UserResetForm]>;
   resetPasswordConfirm: () => ApiHandler<ResultResource, [UserResetConfirmForm]>
 } {

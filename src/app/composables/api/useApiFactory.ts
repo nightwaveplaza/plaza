@@ -32,7 +32,7 @@ export function useApiFactory (): {
       const hasPathParams = /\{\w+}/.test(url)
 
       // Fetch method that handles params or data based on HTTP method
-      const fetch = (...args: Args) => {
+      const fetch = (...args: Args): Promise<T> => {
         let finalUrl = url
 
         const [pathParams, requestData] = hasPathParams
@@ -41,11 +41,15 @@ export function useApiFactory (): {
 
         // If url has dynamic params then replace placeholders in URL
         if (hasPathParams) {
-          if (!pathParams) throw new Error('Path parameters are required for this request')
+          if (!pathParams) {
+            throw new Error('Path parameters are required for this request')
+          }
 
           finalUrl = url.replace(/\{(\w+)}/g, (_, key) => {
             const value = pathParams[key]
-            if (value === undefined) throw new Error(`Missing path parameter: ${key}`)
+            if (value === undefined) {
+              throw new Error(`Missing path parameter: ${key}`)
+            }
             return encodeURIComponent(value)
           })
         }

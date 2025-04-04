@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { type Ref, ref } from 'vue'
 import { prefs } from '@app/utils/prefs.ts';
 
 /**
@@ -15,7 +15,10 @@ import { prefs } from '@app/utils/prefs.ts';
 // Keep ref outside of export function to not initialize it every time we use this composable
 const volume = ref(prefs.get<number>('volume', 100)); // default to 100
 
-export function useVolumeControl() {
+export function useVolumeControl(): {
+    volume: Ref<number>;
+    setVolume: (newVolume: number) => void
+} {
     // Updates volume value and immediately persists it to localStorage
     const setVolume = (newVolume: number): void => {
         volume.value = newVolume;

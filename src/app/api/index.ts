@@ -11,7 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.response.use(response => response, err => interceptError(err))
 
-async function interceptError (err: AxiosError) {
+async function interceptError (err: AxiosError): Promise<void> {
   if (!err.response || !err.config) {
     return Promise.reject(err)
   }

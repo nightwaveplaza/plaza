@@ -44,10 +44,10 @@
             <div class="col">
               <win-pagination
                 v-if="songs && songs?.meta.total > 0"
+                ref="pagination"
                 :pages="songs.meta.last_page"
                 :disabled="isLoading"
                 @change="changePage"
-                ref="pagination"
               />
             </div>
             <div class="col-auto">
@@ -107,7 +107,7 @@ function changeRange (newRange: RatingsRange): void {
   pagination.value?.reset()
 }
 
-function fetchRatings () {
+function fetchRatings (): void {
   fetch({ page: page.value, range: range.value })
 }
 

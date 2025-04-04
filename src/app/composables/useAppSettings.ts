@@ -1,5 +1,5 @@
 import _locales from '@locales/_locales.ts'
-import { computed, ref } from 'vue'
+import { computed, type ComputedRef, type Ref, ref, type UnwrapRef } from 'vue'
 import { prefs } from '@app/utils/prefs.ts'
 
 enum PrefKeys {
@@ -16,7 +16,19 @@ const lowQuality = ref(prefs.get<boolean>(PrefKeys.LOW_QUALITY, false))
 const taskbarPosition = ref(prefs.get<string>(PrefKeys.TASKBAR_POSITION, getDefaultTaskbarPosition()))
 const useHls = ref(prefs.get<boolean>(PrefKeys.USE_HLS, true))
 
-export function useAppSettings () {
+export function useAppSettings (): {
+  theme: Ref<UnwrapRef<string>>
+  setTheme: (t: string) => void
+  language: Ref<UnwrapRef<string>>
+  setLanguage: (l: string) => void
+  lowQuality: Ref<UnwrapRef<boolean>>
+  setLowQuality: (v: boolean) => void
+  taskbarPosition: Ref<UnwrapRef<string>>
+  setTaskbarPosition: (p: string) => void
+  useHls: Ref<UnwrapRef<boolean>>
+  setUseHls: (v: boolean) => void
+  themeName: ComputedRef<string>
+} {
   const setTheme = (t: string): void => {
     theme.value = t
     prefs.save<string>(PrefKeys.THEME, theme.value)

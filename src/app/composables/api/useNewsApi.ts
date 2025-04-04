@@ -3,7 +3,7 @@ import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFacto
 
 export function useNewsApi (): {
   getNews: () => ApiHandler<NewsCollection, [{ page: number }]>;
-  getLastUpdated: () => ApiHandler<NewsLatestResource, []>
+  getLastUpdated: () => ApiHandler<NewsLatestResource>
 } {
   const { createApiHandler } = useApiFactory()
 

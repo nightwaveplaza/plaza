@@ -126,11 +126,7 @@ function showSongInfo (): void {
 }
 
 function openUserWindow (): void {
-  if (isSigned.value) {
-    openWindow(Win.USER)
-  } else {
-    openWindow(Win.USER_LOGIN)
-  }
+  openWindow(isSigned.value ? Win.USER : Win.USER_LOGIN)
 }
 
 function openTimerWindow (): void {

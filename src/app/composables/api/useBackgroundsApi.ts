@@ -2,8 +2,8 @@ import type { BackgroundResponse, BackgroundCollection } from '@app/types'
 import { type ApiHandler, useApiFactory } from '@app/composables/api/useApiFactory.ts'
 
 export function useBackgroundsApi (): {
-  getBackgrounds: () => ApiHandler<BackgroundCollection, []>;
-  getRandomBackground: () => ApiHandler<BackgroundResponse, []>
+  getBackgrounds: () => ApiHandler<BackgroundCollection>;
+  getRandomBackground: () => ApiHandler<BackgroundResponse>
 } {
   const { createApiHandler } = useApiFactory()
 

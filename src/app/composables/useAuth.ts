@@ -8,12 +8,12 @@ const username = ref<string|null>(null)
 const resetToken = ref<string|null>(null)
 
 export function useAuth(): {
-  fetchUser: () => void;
-  setUser: (user: User) => void;
-  unsetUser: () => void;
-  username: Ref<UnwrapRef<string | null>>;
-  isSigned: ComputedRef<boolean>;
-  resetToken: Ref<UnwrapRef<string | null>>;
+  fetchUser: () => void
+  setUser: (user: User) => void
+  unsetUser: () => void
+  username: Ref<UnwrapRef<string | null>>
+  isSigned: ComputedRef<boolean>
+  resetToken: Ref<UnwrapRef<string | null>>
   setResetToken: (token: string) => void
 } {
   const { resetReaction } = useReactions()

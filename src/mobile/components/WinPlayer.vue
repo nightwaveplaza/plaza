@@ -54,37 +54,37 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Native } from '@mobile/bridge/native'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { PlayerState } from '@app/types/types.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { Win } from '@app/types'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const { t } = useI18n()
-const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, closeWindow } = useWindows()
 const { song } = useNowPlayingStatus()
+const { state, sleepTime, setSleepTime } = usePlayerPlayback()
 
 const artwork = computed(() => {
   return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
 
 const playText = computed((): string => {
-  switch (playerPlayback.state) {
+  switch (state.value) {
     case PlayerState.LOADING: return t('loading')
     case PlayerState.PLAYING: return t('win.player.btn_stop')
     default: return t('win.player.btn_play')
   }
 })
 
-const isPlaying = computed(() => playerPlayback.state === PlayerState.PLAYING)
-const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '')
+const isPlaying = computed(() => state.value === PlayerState.PLAYING)
+const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 function play (): void {
-  if (playerPlayback.state === PlayerState.PLAYING) {
+  if (state.value === PlayerState.PLAYING) {
     closeWindow(Win.PLAYER_TIMER)
-    playerPlayback.sleepTime = 0
+    setSleepTime(0)
   }
   Native.audioPlay()
 }

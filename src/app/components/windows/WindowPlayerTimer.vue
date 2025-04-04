@@ -58,15 +58,15 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useNumberOnly } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { Win } from '@app/types'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const { t } = useI18n()
-const playerPlayback = usePlayerPlaybackStore()
 const { closeWindow, winAlert } = useWindows()
+const { sleepTime, setSleepTime } = usePlayerPlayback()
 
 defineProps<{
   name: string
@@ -75,10 +75,9 @@ defineProps<{
 const minutes = ref(20)
 const timeLeft = ref(0)
 
-const active = computed(() =>
-    playerPlayback.sleepTime !== 0 && playerPlayback.sleepTime > Date.now())
+const active = computed(() => sleepTime.value !== 0 && sleepTime.value > Date.now())
 const btnText = computed(() =>
-    playerPlayback.sleepTime !== 0 ? t('win.player_timer.stop') : t('win.player_timer.start'))
+    sleepTime.value !== 0 ? t('win.player_timer.stop') : t('win.player_timer.start'))
 const timeText = computed(() => new Date(timeLeft.value).toISOString().substring(11, 19))
 
 // Non-reactive
@@ -86,9 +85,9 @@ let intervalId = 0
 
 function start (): void {
   if (active.value) {
-    playerPlayback.sleepTime = 0
+    setSleepTime(0)
   } else {
-    playerPlayback.sleepTime = Date.now() + (minutes.value * 60 * 1000)
+    setSleepTime(Date.now() + (minutes.value * 60 * 1000))
     winAlert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'), 'info'
@@ -106,7 +105,7 @@ function add (amount: number): void {
 }
 
 function updateTimeLeft (): void {
-  timeLeft.value = playerPlayback.sleepTime - Date.now()
+  timeLeft.value = sleepTime.value - Date.now()
 }
 
 onMounted(() => {

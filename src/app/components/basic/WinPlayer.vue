@@ -70,7 +70,6 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { PlayerState } from '@app/types/types.ts'
 import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts'
@@ -78,15 +77,16 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const { volume, setVolume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
 const { song } = useNowPlayingStatus()
 
 const { t } = useI18n()
-const playerPlayback = usePlayerPlaybackStore()
 const { openWindow, winSongInfo } = useWindows()
 const { isSigned } = useAuth()
+const { state, setState, sleepTime } = usePlayerPlayback()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -96,23 +96,23 @@ const artwork = computed(() => {
 })
 
 const playText = computed((): string => {
-  switch (playerPlayback.state) {
+  switch (state.value) {
     case PlayerState.LOADING: return t('loading')
     case PlayerState.PLAYING: return t('win.player.btn_stop')
     default: return t('win.player.btn_play')
   }
 })
 
-const isPlaying = computed(() => playerPlayback.state === PlayerState.PLAYING)
-const timerColor = computed(() => playerPlayback.sleepTime !== 0 ? '#3455DB' : '')
+const isPlaying = computed(() => state.value === PlayerState.PLAYING)
+const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
 
 watch(volume, (newVolume) => {
   time.value!.showText(t('win.player.volume', { volume: newVolume }))
 })
 
 function play (): void {
-  if (playerPlayback.state === PlayerState.IDLE) {
-    playerPlayback.state = PlayerState.LOADING
+  if (state.value === PlayerState.IDLE) {
+    setState(PlayerState.LOADING)
     playAudio()
   } else {
     stopAudio()

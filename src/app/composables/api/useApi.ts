@@ -12,8 +12,8 @@ export interface ApiError {
 // Response wrapper for API calls with loading state
 export interface CallResponse<T> {
   data: Ref<UnwrapRef<T> | null>
-  error: Ref<ApiError | null>
-  isLoading: Ref<boolean>
+  error: Ref<UnwrapRef<ApiError | null>>
+  isLoading: Ref<UnwrapRef<boolean>>
   call: (config: AxiosRequestConfig) => Promise<T>
 }
 

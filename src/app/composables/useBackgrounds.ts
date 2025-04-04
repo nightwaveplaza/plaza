@@ -28,15 +28,15 @@ const background = reactive(prefs.get<Background>('background', {
  * Provides methods for cycling backgrounds and maintaining state
  */
 export function useBackgrounds(): {
-  background: UnwrapNestedRefs<Background>;
-  fetch: () => Promise<BackgroundCollection>;
-  setRandomBackground: () => void;
-  setColorBackground: (color?: string) => void;
-  nextBackground: (direction: number) => void;
-  isRandomMode: ComputedRef<boolean>;
-  isColorMode: ComputedRef<boolean>;
-  backgroundImage: ComputedRef<string>;
-  backgroundColor: ComputedRef<string>;
+  background: UnwrapNestedRefs<Background>
+  fetch: () => Promise<BackgroundCollection>
+  setRandomBackground: () => void
+  setColorBackground: (color?: string) => void
+  nextBackground: (direction: number) => void
+  isRandomMode: ComputedRef<boolean>
+  isColorMode: ComputedRef<boolean>
+  backgroundImage: ComputedRef<string>
+  backgroundColor: ComputedRef<string>
   loadRandomBackground: () => void
 } {
   const { getBackgrounds, getRandomBackground } = useBackgroundsApi()

@@ -2,10 +2,10 @@ import Hls from 'hls.js'
 import { watch } from 'vue'
 import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { PlayerState } from '@app/types/types.ts'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useVisual } from '@app/composables/player/useVisual.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 /**
  * useAudioPlayer composable
@@ -17,11 +17,11 @@ export function useAudioPlayer(): {
   stopAudio: () => void;
   setVisualCanvas: (canvas: HTMLCanvasElement) => void
 } {
-  const playerPlayback = usePlayerPlaybackStore()
   const { volume } = useVolumeControl()
   const { startVisual, stopVisual } = useVisual()
   const { useHls, lowQuality } = useAppSettings()
   const { song, position } = useNowPlayingStatus()
+  const { state, setState, setSleepTime } = usePlayerPlayback()
 
   let hls: Hls | null = null
   let audio: HTMLAudioElement | null = null
@@ -74,7 +74,7 @@ export function useAudioPlayer(): {
 
     // Start playing
     audio.play().then(() => {
-      playerPlayback.state = PlayerState.PLAYING
+      setState(PlayerState.PLAYING)
       setMediaSessionActions()
       updateAudioMetadata()
 
@@ -102,15 +102,15 @@ export function useAudioPlayer(): {
     audio = null
 
     // Set current state
-    playerPlayback.state = PlayerState.IDLE
-    playerPlayback.sleepTime = 0
+    setState(PlayerState.IDLE)
+    setSleepTime(0)
 
     document.title = 'Nightwave Plaza - Online Vaporwave Radio'
   }
 
   // Update media session and document title
   const updateAudioMetadata = (): void => {
-    if (playerPlayback.state === PlayerState.PLAYING) {
+    if (state.value === PlayerState.PLAYING) {
       document.title = `${song.artist} - ${song.title}`
       updateMediaSession()
       updateMediaSessionPosition()

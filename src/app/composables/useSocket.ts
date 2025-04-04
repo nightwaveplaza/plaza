@@ -1,4 +1,4 @@
-import { computed, type ComputedRef, onUnmounted, type Ref, ref } from 'vue'
+import { computed, type ComputedRef, onUnmounted, type Ref, ref, type UnwrapRef } from 'vue'
 import io, { Socket } from 'socket.io-client'
 
 /**
@@ -40,11 +40,11 @@ function createSocket (): void {
  * Main composable function
  */
 export function useSocket (): {
-  isConnected: Ref<boolean>
+  isConnected: Ref<UnwrapRef<boolean>>
   isDead: ComputedRef<boolean>
   reconnect: () => void
   onEvent: (event: string, callback: (...args: unknown[]) => void) => void
-  reconnectAttempts: Ref<number>
+  reconnectAttempts: Ref<UnwrapRef<number>>
 } {
   // Local event listeners storage for cleanup
   const localEvents: Array<[string, (...args: unknown[]) => void]> = []

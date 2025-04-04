@@ -1,4 +1,4 @@
-import { computed, reactive, type Ref, type UnwrapNestedRefs } from 'vue'
+import { computed, type ComputedRef, reactive, type UnwrapNestedRefs } from 'vue'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { prefs } from '@app/utils/prefs.ts'
 
@@ -22,7 +22,7 @@ const reaction = reactive(prefs.get<UserReaction>('user_reaction', {
  * Main composable function
  */
 export function useReactions(): {
-  isCurrent: Ref<boolean>;
+  isCurrent: ComputedRef<boolean>;
   reaction: UnwrapNestedRefs<UserReaction>;
   setReaction: (newReaction: number) => void;
   resetReaction: () => void

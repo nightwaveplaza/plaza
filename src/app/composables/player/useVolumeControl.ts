@@ -1,4 +1,4 @@
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, type UnwrapRef } from 'vue'
 import { prefs } from '@app/utils/prefs.ts';
 
 /**
@@ -16,7 +16,7 @@ import { prefs } from '@app/utils/prefs.ts';
 const volume = ref(prefs.get<number>('volume', 100)); // default to 100
 
 export function useVolumeControl(): {
-    volume: Ref<number>;
+    volume: Ref<UnwrapRef<number>>
     setVolume: (newVolume: number) => void
 } {
     // Updates volume value and immediately persists it to localStorage

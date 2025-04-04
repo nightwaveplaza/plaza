@@ -7,15 +7,15 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { fmtDuration } from '@app/utils/timeFormats.ts'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
-const playerPlayback = usePlayerPlaybackStore()
 const { song, updatedAt, position } = useNowPlayingStatus()
+const { sleepTime, setSleepTime } = usePlayerPlayback()
 
 const emit = defineEmits(['stopByTimer'])
 
@@ -56,10 +56,10 @@ function tick (): void {
 }
 
 function checkSleepTimer (): void {
-  const t = playerPlayback.sleepTime
+  const t = sleepTime.value
 
   if (t > 0 && t < Date.now()) {
-    playerPlayback.sleepTime = 0
+    setSleepTime(0)
     emit('stopByTimer')
   }
 }

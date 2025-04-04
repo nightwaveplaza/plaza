@@ -4,22 +4,22 @@ import { PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
 import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { type Background, useBackgrounds  } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const i18n = useI18n()
 
-const playerPlayback = usePlayerPlaybackStore()
 const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow } = useWindows()
 const { lowQuality, language } = useAppSettings()
 const { background, isColorMode } = useBackgrounds()
 const { isSigned } = useAuth()
+const { setState, sleepTime, setSleepTime } = usePlayerPlayback()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -51,17 +51,17 @@ function registerEmitterEvents (): void {
   })
 
   eventBus.on('isPlaying', (playing: boolean) => {
-    playerPlayback.state = playing ? PlayerState.PLAYING : PlayerState.IDLE
+    setState(playing ? PlayerState.PLAYING : PlayerState.IDLE)
   })
 
   eventBus.on('isBuffering', () => {
-    playerPlayback.state = PlayerState.LOADING
+    setState(PlayerState.LOADING)
   })
 
   // Event from onResume if sleep timer is still alive
   eventBus.on('sleepTime', (time: number) => {
     if (time > Date.now()) {
-      playerPlayback.sleepTime = time
+      setSleepTime(time)
     }
   })
 }
@@ -84,7 +84,7 @@ watch(() => lowQuality.value, () => {
 })
 
 // Watch timer changes
-watch(() => playerPlayback.sleepTime, (time) => {
+watch(() => sleepTime.value, (time) => {
   Native.setSleepTimer(time)
 })
 

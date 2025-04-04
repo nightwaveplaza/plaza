@@ -29,12 +29,12 @@
 
 <script setup lang="ts">
 import { computed, type CSSProperties, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
-const windowsStore = useWindowsStore()
 
 const emit = defineEmits(['closed'])
+const { openedWindows, activeWindow, activeZIndex, pullUp: pullUpWindow, minimizeWindow, closeWindow, updateTitle } = useWindows()
 
 const props = withDefaults(defineProps<{
   title?: string,
@@ -57,8 +57,8 @@ const style: CSSProperties = reactive({
   width: '',
 })
 
-const isMinimized = computed(() => windowsStore.windows[props.name]?.isMinimized)
-const isActive = computed(() => windowsStore.activeWindow === props.name)
+const isMinimized = computed(() => openedWindows.value[props.name]?.isMinimized)
+const isActive = computed(() => activeWindow.value === props.name)
 const windowPos = ref([0, 0])
 const windowRef = ref<HTMLDivElement | null>(null)
 
@@ -77,8 +77,8 @@ function resetPosition (): void {
 }
 
 function pullUp (): void {
-  windowsStore.pullUp(props.name)
-  style.zIndex = windowsStore.activeZIndex
+  pullUpWindow(props.name)
+  style.zIndex = activeZIndex.value
 }
 
 function startMove (e: MouseEvent): void {
@@ -145,17 +145,17 @@ function recalculatePositions (): void {
 }
 
 function minimize (): void {
-  windowsStore.minimize(props.name)
+  minimizeWindow(props.name)
 }
 
 function close (): void {
   emit('closed')
-  windowsStore.close(props.name)
+  closeWindow(props.name)
 }
 
-watch(() => windowsStore.activeWindow, () => {
-  if (windowsStore.activeWindow === props.name) {
-    style.zIndex = windowsStore.activeZIndex
+watch(() => activeWindow.value, () => {
+  if (activeWindow.value === props.name) {
+    style.zIndex = activeZIndex.value
   }
 })
 
@@ -166,12 +166,12 @@ watch(windowPos, (newWindowPos) => {
 
 onBeforeMount(() => {
   if (props.title) {
-    windowsStore.updateTitle(props.name, props.title)
+    updateTitle(props.name, props.title)
   }
 })
 
 onMounted(() => {
-  style.zIndex = windowsStore.activeZIndex
+  style.zIndex = activeZIndex.value
   style.width = props.width + 'px'
 
   if (props.width > 0 && props.width <= 320) {

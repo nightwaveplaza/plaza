@@ -22,11 +22,11 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { onBeforeMount, reactive } from 'vue'
-import { useWindowsStore } from '@app/stores/windowsStore.ts'
 import type { AlertWindowParams } from '@app/types/types.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
 const { t } = useI18n()
 
-const windowsStore = useWindowsStore()
+const { openedWindows } = useWindows()
 
 const props = defineProps<{
   name: string
@@ -39,7 +39,7 @@ const alertParams: AlertWindowParams = reactive({
 })
 
 onBeforeMount(() => {
-  const params = windowsStore.windows[props.name]?.params as AlertWindowParams
+  const params = openedWindows.value[props.name]?.params as AlertWindowParams
   if (params) {
     alertParams.type = params.type
     alertParams.title = params.title

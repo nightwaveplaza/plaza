@@ -70,7 +70,6 @@
 import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { AxiosError } from 'axios'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { prefs } from '@app/utils/prefs.ts'
 import type { SongWindowParams } from '@app/types/types'
@@ -80,9 +79,9 @@ import { useSongsApi } from '@app/composables/api'
 import { useUserFavoritesApi } from '@app/composables/api'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
 const { winAlert } = useWindows()
 const { addFavorite, deleteFavorite } = useUserFavoritesApi()
+const { openedWindows } = useWindows()
 
 
 const props = defineProps<{
@@ -94,7 +93,7 @@ const songWindowParams: SongWindowParams = reactive({
 })
 
 onBeforeMount(() => {
-  const currentProps = windowsStore.windows[props.name]?.params as SongWindowParams
+  const currentProps = openedWindows.value[props.name]?.params as SongWindowParams
   if (currentProps) {
     songWindowParams.songId = currentProps.songId
   }

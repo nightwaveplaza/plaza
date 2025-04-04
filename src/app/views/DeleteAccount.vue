@@ -26,14 +26,14 @@
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t } = useI18n()
 const router = useRouter()
-const windowsStore = useWindowsStore()
+const { pullUp } = useWindows()
 
 onMounted(() => {
-  windowsStore.pullUp('delete-account')
+  pullUp('delete-account')
 })
 
 function close (): void {

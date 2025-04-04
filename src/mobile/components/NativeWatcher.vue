@@ -3,7 +3,6 @@ import { onMounted, watch } from 'vue'
 import { PlayerState } from '@app/types/types.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { eventBus } from '@mobile/events/eventBus.ts'
-import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
@@ -11,15 +10,16 @@ import { type Background, useBackgrounds  } from '@app/composables/useBackground
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
+import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
 
 const i18n = useI18n()
 
-const iosCallbackStore = useIosCallbackStore()
 const { openWindow, closeWindow } = useWindows()
 const { lowQuality, language } = useAppSettings()
 const { background, isColorMode } = useBackgrounds()
 const { isSigned } = useAuth()
 const { setState, sleepTime, setSleepTime } = usePlayerPlayback()
+const { execute } = useIosCallbacks()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -47,7 +47,7 @@ function registerEmitterEvents (): void {
 
   // ios callbacks
   eventBus.on('iosCallback', (data: string) => {
-    iosCallbackStore.execute(data)
+    execute(data)
   })
 
   eventBus.on('isPlaying', (playing: boolean) => {

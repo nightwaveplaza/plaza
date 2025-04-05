@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { prefs } from '@app/utils/prefs.ts'

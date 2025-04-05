@@ -69,7 +69,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { AxiosError } from 'axios'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { prefs } from '@app/utils/prefs.ts'
 import type { SongWindowParams } from '@app/types/types'
@@ -77,11 +76,12 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
 import { useSongsApi } from '@app/composables/api'
 import { useUserFavoritesApi } from '@app/composables/api'
+import type { ApiError } from '@app/composables/api/useApi.ts'
 
 const { t } = useI18n()
 const { winAlert } = useWindows()
 const { addFavorite, deleteFavorite } = useUserFavoritesApi()
-const { openedWindows } = useWindows()
+const { openedWindows, closeWindow } = useWindows()
 
 
 const props = defineProps<{
@@ -113,10 +113,15 @@ const playText = computed(() => isPlaying.value
 )
 
 const { getSong } = useSongsApi()
-const { fetch, data: song, error } = getSong()
+const { fetch, data: song } = getSong()
 
 async function fetchSong (): Promise<void> {
-  await fetch({id: songWindowParams.songId})
+  try {
+    await fetch({id: songWindowParams.songId})
+  } catch (e) {
+    winAlert((<ApiError>e).message, t('errors.error'))
+    closeWindow(props.name)
+  }
 }
 
 async function favoriteSong (): Promise<void> {
@@ -130,7 +135,7 @@ async function favoriteSong (): Promise<void> {
     }
     await fetchSong()
   } catch (e) {
-    if (e instanceof AxiosError && e.response!.status === 401) {
+    if ((<ApiError>e).code === 401) {
       winAlert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {
@@ -171,12 +176,6 @@ function timeUpdated (): void {
     playTimeLeft.value = 30 - audio.value!.currentTime
   }
 }
-
-watch(() => error.value, (error) => {
-  if (error) {
-    winAlert(error.message, t('errors.error'))
-  }
-})
 
 onMounted(() => {
   fetchSong()

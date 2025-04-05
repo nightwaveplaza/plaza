@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :width="430" name="user-register" :title="t('win.user_register.title')">
+  <win-window v-slot="winProps" :width="430" :name="name" :title="t('win.user_register.title')">
     <div class="p-2 noselect">
       <template v-if="step === 1">
         <div class="row no-gutters">
@@ -60,12 +60,12 @@
             <div class="d-flex flex-grow-0">
               <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
                 <div class="col-auto">
-                  <win-button block class="text-bold px-3" :disabled="sending" @click="register">
+                  <win-button block class="text-bold px-3" :disabled="isLoading" @click="register">
                     {{ t('win.user_register.btn_register') }}
                   </win-button>
                 </div>
                 <div class="col-auto">
-                  <win-button block class="px-3" @click="close">
+                  <win-button block class="px-3" @click="winProps.close()">
                     {{ t('buttons.cancel') }}
                   </win-button>
                 </div>
@@ -103,36 +103,32 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import VueTurnstile from 'vue-turnstile'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import type { UserRegister } from '@app/types/types'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { type UserRegisterForm, Win } from '@app/types'
+import { useUserApi } from '@app/composables/api'
+
 
 const { t } = useI18n()
-const router = useRouter()
-const windowsStore = useWindowsStore()
+const { winAlert, closeWindow } = useWindows()
+const { registerUser } = useUserApi()
+const { isLoading, fetch } = registerUser()
 
-const props = withDefaults(defineProps<{
-  direct: boolean
-}>(), {
-  direct: false
-})
+defineProps<{
+  name: string
+}>()
 
-const fields: UserRegister = reactive({
+const fields: UserRegisterForm = reactive({
   username: '',
   email: '',
   password: '',
   captcha_response: '',
 })
+
 const step = ref(1)
 const passwordR = ref('')
-const sending = ref(false)
-
-const win = ref<InstanceType<typeof WinWindow>>()
 
 /**
  * User register
@@ -141,7 +137,7 @@ function register (): void {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert((e as Error).message, t('errors.error'))
+    return winAlert((e as Error).message, t('errors.error'))
   }
 
   step.value = 2
@@ -150,21 +146,19 @@ function register (): void {
 function completeCaptcha (): void {
   if (fields.captcha_response === '') {
     step.value = 1
-    return windowsStore.alert(t('win.user_register.captcha_fail'), t('errors.error'))
+    return winAlert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.register(fields).then(() => {
-    windowsStore.alert(
+  fetch(fields).then(() => {
+    winAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
-    win.value!.close()
+    closeWindow(Win.USER_REGISTER)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
+    winAlert(e.message, t('errors.error'))
     step.value = 1
-  }).finally(() => sending.value = false)
+  })
 }
 
 /**
@@ -189,14 +183,6 @@ function validate (): void {
 
   if (fields.password !== passwordR.value) {
     throw new Error(t('errors.fields.password_match'))
-  }
-}
-
-function close (): void {
-  if (props.direct) {
-    router.push({ name: 'index' })
-  } else {
-    win.value!.close()
   }
 }
 </script>

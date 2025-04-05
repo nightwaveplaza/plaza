@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" name="player" title="Nightwave Plaza" :width="450">
+  <win-window ref="win" :name="name" title="Nightwave Plaza" :width="450">
     <!-- Minimize button -->
     <template #header>
       <div class="buttons">
@@ -13,20 +13,20 @@
     </template>
 
     <!-- Menu -->
-    <win-menu v-if="!useMobile()" />
+    <win-menu v-if="!isMobile()" />
 
     <!-- Player -->
     <div class="content p-2">
-      <win-player :volume="volume" @update-volume="setVolume"/>
+      <win-player :volume="volume" @update-volume="setVolume" />
     </div>
 
     <!-- Statusbar -->
     <div class="statusbar row no-gutters">
       <div class="col cell">
-        {{ t('win.player.listeners', {listeners: playerSongStore.listeners}) }}
+        {{ t('win.player.listeners', { listeners }) }}
       </div>
-      <div v-if="userAuthStore.signed" class="col-5 col-sm-4 cell login">
-        {{ t('win.player.user', {user: userAuthStore.username}) }}
+      <div v-if="isSigned" class="col-5 col-sm-4 cell login">
+        {{ t('win.player.user', {user: username}) }}
       </div>
     </div>
   </win-window>
@@ -35,29 +35,34 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { Native } from '@mobile/bridge/native.ts'
-import { useVolumeControl } from '@app/composables/useVolumeControl.ts'
+import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useAuth } from '@app/composables/useAuth.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
-const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
-const playerSongStore = usePlayerSongStore()
+const { minimizeWindow } = useWindows()
+const { listeners } = useNowPlayingStatus()
+const { username, isSigned } = useAuth()
 
-const fullScreenEnabled = computed(() => useMobile() || document.fullscreenEnabled)
+defineProps<{
+  name: string
+}>()
+
+const fullScreenEnabled = computed(() => isMobile() || document.fullscreenEnabled)
 const win = ref<InstanceType<typeof WinWindow>>()
 
 function minimize (): void {
-  windowsStore.minimize('player')
+  minimizeWindow(Win.PLAYER)
 }
 
 function requestFullScreen (): void {
-  if (useMobile()) {
+  if (isMobile()) {
     Native.toggleFullscreen()
   } else {
     document.getElementById('app')?.requestFullscreen()

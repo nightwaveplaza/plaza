@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="340" name="mobile" title="Nightwave Plaza Mobile">
+  <win-window v-slot="winProps" :width="340" :name="name" title="Nightwave Plaza Mobile">
     <div class="p-2">
       <win-panel class="mb-2">
         <div class="row no-gutters">
@@ -22,8 +22,8 @@
           </div>
           <div class="col text-center">
             <a href="https://plaza.one/googleplay" target="_blank" class="app-link">
-            <img src="@app/assets/img/app_android.png" class="app-icon" alt=""><br>
-            Android.app
+              <img src="@app/assets/img/app_android.png" class="app-icon" alt=""><br>
+              Android.app
             </a>
           </div>
         </div>
@@ -44,6 +44,10 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+defineProps<{
+  name: string
+}>()
 </script>
 
 <style lang="scss">

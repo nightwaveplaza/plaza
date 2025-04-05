@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="250" name="user-email" :title="t('win.user_email.title')">
+  <win-window ref="win" v-slot="winProps" :width="250" :name="name" :title="t('win.user_email.title')">
     <div class="py-2 px-3">
       <!-- Email -->
       <label for="email">{{ t('fields.email') }}:</label>
@@ -12,7 +12,7 @@
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">
         <div class="col-6">
-          <win-button block :disabled="sending" class="text-bold" @click="update">
+          <win-button block :disabled="isLoading" class="text-bold" @click="changeEmail">
             {{ t('buttons.change') }}
           </win-button>
         </div>
@@ -27,49 +27,48 @@
 </template>
 
 <script setup lang="ts">
-import { api } from '@app/api/api'
 import { onMounted, reactive, ref } from 'vue'
-import type { UserEdit } from '@app/types/types'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useUserApi } from '@app/composables/api'
+import { type UserEmailForm, Win } from '@app/types'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
+const { winAlert, closeWindow } = useWindows()
+const { getUser, updateEmail } = useUserApi()
+const { isLoading, fetch: update } = updateEmail()
 
-const win = ref<InstanceType<typeof WinWindow>>()
-const fields: UserEdit = reactive({
+defineProps<{
+  name: string,
+}>()
+
+const fields: UserEmailForm = reactive({
   current_password: '',
   email: '',
 })
 const disabled = ref(true)
-const sending = ref(false)
 
 function fetchUser (): void {
-  api.user.get().then(res => {
+  getUser().fetch().then(res => {
     fields.email = res.data.email
     disabled.value = false
   }).catch(() => {
-    windowsStore.alert(t('errors.user_fetch'), t('errors.error'))
-    win.value!.close()
+    winAlert(t('errors.user_fetch'), t('errors.error'))
+    closeWindow(Win.USER_EMAIL)
   })
 }
 
-function update (): void {
+function changeEmail (): void {
   if (fields.current_password.length === 0) {
-    return windowsStore.alert(t('errors.fields.current_password_required'), t('errors.error'))
+    return winAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.edit(fields).then(() => {
-    windowsStore.alert(t('messages.email_changed'), t('messages.success'), 'info')
-    win.value!.close()
+  update(fields).then(() => {
+    winAlert(t('messages.email_changed'), t('messages.success'), 'info')
+    closeWindow(Win.USER_EMAIL)
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
-  }).finally(() => {
-    sending.value = false
+    winAlert(e.message, t('errors.error'))
   })
 }
 

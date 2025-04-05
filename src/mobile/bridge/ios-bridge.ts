@@ -1,5 +1,5 @@
 import * as uuid from 'uuid'
-import { useIosCallbackStore } from '@mobile/stores/iosCallbackStore.ts'
+import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
 
 export const iOSBridge = {
   audioPlay: ()
@@ -33,7 +33,7 @@ export const iOSBridge = {
  * @param args
  */
 function sendMessage<T> (name: string, args: Array<string>): Promise<T> {
-  const iosCallbackStore = useIosCallbackStore()
+  const { callbacks, clear } = useIosCallbacks()
   const callbackId = uuid.v4()
 
   if (!window.webkit?.messageHandlers?.plaza) {
@@ -45,12 +45,12 @@ function sendMessage<T> (name: string, args: Array<string>): Promise<T> {
   })
 
   return new Promise<T>(function (resolve, reject) {
-    iosCallbackStore.callbacks[callbackId] = (result, errorMessage): void => {
+    callbacks.value[callbackId] = (result, errorMessage): void => {
       if (errorMessage) {
         reject(new Error(errorMessage))
       } else {
         resolve(<T>result)
-        iosCallbackStore.clear(callbackId)
+        clear(callbackId)
       }
     }
   })

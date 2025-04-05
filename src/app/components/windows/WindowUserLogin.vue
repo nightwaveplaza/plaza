@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="480" name="user-login" :title="t('win.user_login.title')">
+  <win-window v-slot="winProps" ref="win" :width="480" :name="name" :title="t('win.user_login.title')">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
@@ -41,10 +41,10 @@
           </div>
 
           <!-- Remember -->
-          <div v-if="!useMobile()" class="row mt-1 no-gutters justify-content-end">
+          <div v-if="!isMobile()" class="row mt-1 no-gutters justify-content-end">
             <div class="col-12 col-sm-8">
               <div class="checkbox">
-                <input id="remember" v-model="remember" type="checkbox">
+                <input id="remember" v-model="fields.remember" type="checkbox">
                 <label for="remember">{{ t('win.user_login.remember_me') }}</label>
               </div>
             </div>
@@ -53,7 +53,7 @@
 
         <!-- Buttons -->
         <div class="col-auto col-sm-2 p-0 login-buttons">
-          <win-button :disabled="sending" class="mb-2 text-bold" @click="login">
+          <win-button :disabled="isLoading" class="mb-2 text-bold" @click="login">
             {{ t('win.user_login.btn_sign_in') }}
           </win-button>
           <win-button class="mb-2" @click="openRegister">
@@ -71,53 +71,53 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import type { UserLogin } from '@app/types/types'
-import { useMobile } from '@app/composables/useMobile.ts'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { isMobile } from '@app/utils/helpers.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { type UserLoginForm, Win } from '@app/types'
+import { useAuthApi } from '@app/composables/api'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
+const { openWindow, closeWindow, winAlert } = useWindows()
+const { login: loginApi } = useAuthApi()
+const { fetch, isLoading } = loginApi()
+const { setUser } = useAuth()
 
-const userAuthStore = useUserAuthStore()
-const windowsStore = useWindowsStore()
+defineProps<{
+  name: string,
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
 
-const fields: UserLogin = reactive({
+const fields: UserLoginForm = reactive({
   username: '',
   password: '',
+  remember: false
 })
-const remember = ref(false)
-
-const sending = ref<boolean>(false)
 
 function login (): void {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    return windowsStore.alert(t('errors.enter_user_pass'), t('errors.error'))
+    return winAlert(t('errors.enter_user_pass'), t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.login(fields).then(res => {
-    userAuthStore.login(res.data, remember.value)
-    windowsStore.alert(t('messages.auth_success'), t('messages.success'), 'info')
+  fetch(fields).then(res => {
+    setUser(res.data)
+    winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
-  }).finally(() => sending.value = false)
+    winAlert(e.message, t('errors.error'))
+  })
 }
 
 function openRegister (): void {
-  windowsStore.open('user-register')
-  win.value!.close()
+  openWindow(Win.USER_REGISTER)
+  closeWindow(Win.USER_LOGIN)
 }
 
 function openReset (): void {
-  windowsStore.open('user-reset')
-  win.value!.close()
+  openWindow(Win.USER_RESET)
+  closeWindow(Win.USER_LOGIN)
 }
 </script>
 

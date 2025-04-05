@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="380" name="about" :title="t('win.about.title')">
+  <win-window ref="win" v-slot="winProps" :width="380" :name="name" :title="t('win.about.title')">
     <div class="content p-2">
       <div class="row mb-4">
         <div class="col align-self-center text-center">
@@ -87,22 +87,26 @@
 </template>
 
 <script setup lang="ts">
-import { useWindowsStore } from '@app/stores/windowsStore'
 import { useI18n } from 'vue-i18n'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useMobile } from '@app/composables/useMobile.ts'
+import { isMobile } from '@app/utils/helpers.ts'
 import { onMounted, ref } from 'vue'
 import { Native } from '@mobile/bridge/native.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
+const { openWindow, closeWindow } = useWindows()
 
-const windowsStore = useWindowsStore()
+defineProps<{
+  name: string
+}>()
 
 const version = __APP_VERSION__ ?? 'n/a'
 const appVersion = ref('')
 
 onMounted(() => {
-  if (useMobile()) {
+  if (isMobile()) {
     Native.getAppVersion().then(version => {
       appVersion.value = version + ' / '
     })
@@ -110,18 +114,18 @@ onMounted(() => {
 })
 
 function openCredits (): void {
-  windowsStore.open('credits')
-  windowsStore.close('about')
+  openWindow(Win.CREDITS)
+  closeWindow(Win.ABOUT)
 }
 
 function openNews (): void {
-  windowsStore.open('news')
-  windowsStore.close('about')
+  openWindow(Win.NEWS)
+  closeWindow(Win.ABOUT)
 }
 
 function openMobile (): void {
-  windowsStore.open('mobile')
-  windowsStore.close('about')
+  openWindow(Win.MOBILE)
+  closeWindow(Win.ABOUT)
 }
 </script>
 

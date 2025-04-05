@@ -1,38 +1,38 @@
 <template>
-  <win-window v-slot="winProps" :width="440" fluid-height name="ratings" :title="t('win.ratings.title')">
+  <win-window v-slot="winProps" :width="440" fluid-height :name="name" :title="t('win.ratings.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-button :class="{ active: range === 'overtime' }" class="songs-range mr-1" @click="changeRange('overtime')">
+          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(RatingsRange.OVERTIME)">
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
-          <win-button :class="{ active: range === 'monthly' }" class="songs-range mr-1" @click="changeRange('monthly')">
+          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(RatingsRange.MONTHLY)">
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
-          <win-button :class="{ active: range === 'weekly' }" class="songs-range mr-0" @click="changeRange('weekly')">
+          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(RatingsRange.WEEKLY)">
             {{ t('win.ratings.btn_weekly') }}
           </win-button>
         </div>
 
         <!-- Song list -->
         <div class="d-flex flex-grow-1 align-items-stretch">
-          <div v-if="loading" class="content-loading" />
-          <win-list v-else ref="list" scroll>
-            <tr v-for="(song, i) in data.songs" :key="i" class="hover">
+          <div v-if="isLoading" class="content-loading" />
+          <win-list v-if="!isLoading && songs" ref="list" scroll>
+            <tr v-for="(s, i) in songs.data" :key="i" class="hover">
               <td class="text-center noselect" style="width: 37px">
-                {{ pad((page - 1) * data.per_page + i + 1) }}
+                {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="windowsStore.showSong(song.id)">
+              <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
                 <div class="artist">
-                  {{ song.artist }}
+                  {{ s.song.artist }}
                 </div>
                 <div class="title">
-                  {{ song.title }}
+                  {{ s.song.title }}
                 </div>
               </td>
-              <td v-if="range !== 'overtime'" class="text-right noselect pr-2 nowrap" style="width: 57px">
-                {{ song.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+              <td class="text-right noselect pr-2 nowrap" style="width: 57px">
+                {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
               </td>
             </tr>
           </win-list>
@@ -42,7 +42,13 @@
         <div class="d-flex">
           <div class="row no-gutters mt-2 w-100">
             <div class="col">
-              <win-pagination ref="pagination" :pages="data.pages" @change="changePage" />
+              <win-pagination
+                v-if="songs && songs?.meta.total > 0"
+                ref="pagination"
+                :pages="songs.meta.last_page"
+                :disabled="isLoading"
+                @change="changePage"
+              />
             </div>
             <div class="col-auto">
               <win-button class="px-4" @click="winProps.close()">
@@ -56,10 +62,10 @@
 
     <div class="statusbar row no-gutters noselect">
       <div class="col-3 cell d">
-        {{ t('pagination.pages', {n: data.pages}) }}
+        {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
       </div>
       <div class="col cell">
-        {{ t('pagination.songs', {n: data.count}) }}
+        {{ songs ? t('pagination.songs', {n: songs.meta.total}) : '...' }}
       </div>
     </div>
   </win-window>
@@ -67,80 +73,56 @@
 
 
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { api } from '@app/api/api'
-import { useWindowsStore } from '@app/stores/windowsStore'
+import { onMounted, ref, watch } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
-import type { RatingsResponse } from '@app/types/types'
 import { useI18n } from 'vue-i18n'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useRatingsApi } from '@app/composables/api'
+import { RatingsRange } from '@app/types'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
+const { winAlert, winSongInfo } = useWindows()
+const { getRatings } = useRatingsApi()
+
+defineProps<{
+  name: string
+}>()
+
+const page = ref(1)
+const range = ref<RatingsRange>(RatingsRange.OVERTIME)
+const { isLoading, data: songs, fetch, error } = getRatings()
 
 const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()
 
-const data: RatingsResponse = reactive({
-  per_page: 25,
-  pages: 4,
-  songs: [],
-  count: 0
-})
-
-const page = ref(1)
-const range = ref('overtime')
-const loading = ref(true)
-
-function fetchRatings (range: string, page: number): void {
-  loading.value = true
-
-  api.ratings.get(range, page).then(res => {
-    Object.assign(data, res.data)
-  }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
-  }).finally(() => {
-    loading.value = false
-    nextTick(() => {
-      list.value?.scrollTop()
-    })
-  })
-}
-
 function changePage (newPage: number): void {
-  if (!loading.value) {
-    page.value = newPage
-  }
+  page.value = newPage
+  fetchRatings()
 }
 
-function changeRange (newRange: string): void {
-  if (!loading.value) {
-    range.value = newRange
-  }
+function changeRange (newRange: RatingsRange): void {
+  range.value = newRange
+  pagination.value?.reset()
+}
+
+function fetchRatings (): void {
+  fetch({ range: range.value }, { page: page.value })
 }
 
 function pad (n: number): string {
   return n.toString().padStart(3, '0')
 }
 
-watch(range, () => {
-  page.value = 1
-  pagination.value!.reset()
-  fetchRatings(range.value, page.value)
-})
-
-watch(page, () => {
-  fetchRatings(range.value, page.value)
+watch(() => error.value, (error) => {
+  if (error) {
+    winAlert(error.message, t('errors.error'))
+  }
 })
 
 onMounted(() => {
-  fetchRatings(range.value, page.value)
-})
-
-onBeforeUnmount(() => {
-  data.songs = []
+  fetchRatings()
 })
 </script>
 

@@ -1,5 +1,4 @@
 import { createApp, h } from 'vue'
-import { createPinia } from 'pinia'
 import commonComponents from '@app/components/basic'
 import commonWindows from '@app/components/windows'
 import mobileComponents from '@mobile/components'
@@ -14,8 +13,6 @@ const app = createApp({
   render: () => h(App)
 })
 
-const pinia = createPinia()
-app.use(pinia)
 app.use(i18n)
 
 app.use(commonComponents)

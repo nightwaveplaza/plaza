@@ -1,11 +1,11 @@
 <template>
-  <win-window v-slot="winProps" :width="400" fluid-height name="history" :title="t('win.history.title')">
+  <win-window v-slot="winProps" :width="400" fluid-height :name="name" :title="t('win.history.title')">
     <div class="content-fluid p-2">
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
-            <div v-if="data.songs.length > 0" class="col">
-              {{ t('win.history.showing_history', {from: sd(data.from_date), to: sd(data.to_date)}) }}
+            <div v-if="history?.data" class="col">
+              {{ t('win.history.showing_history', {from: fmtDay(history.date_range.from_date), to: fmtDay(history.date_range.to_date)}) }}
             </div>
             <div class="col-auto">
               <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a>
@@ -14,20 +14,20 @@
         </div>
 
         <div class="d-flex flex-grow-1 align-items-stretch">
-          <div v-if="loading" class="content-loading" />
+          <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
-            <tr v-for="song in data.songs" :key="song.id">
-              <td class="pl-2 pr-1 py-1 show-info" @click="windowsStore.showSong(song.id)">
+            <tr v-for="h in history?.data" :key="h.song.id">
+              <td class="pl-2 pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
                 <div class="artist">
-                  {{ song.artist }}
+                  {{ h.song.artist }}
                 </div>
                 <div class="title">
-                  {{ song.title }}
+                  {{ h.song.title }}
                 </div>
               </td>
               <td class="pr-1 text-right noselect" style="width: 78px">
-                {{ sd(song.played_at) }}<br>
-                {{ gt(song.played_at) }}
+                {{ fmtDay(h.played_at) }}<br>
+                {{ fmtTime(h.played_at) }}
               </td>
             </tr>
           </win-list>
@@ -36,7 +36,12 @@
         <div class="d-flex">
           <div class="row no-gutters pt-2 w-100">
             <div class="col">
-              <win-pagination v-if="data.songs.length > 0" :pages="data.pages" @change="changePage" />
+              <win-pagination
+                v-if="history && history?.meta.total > 0"
+                :pages="history.meta.last_page"
+                :disabled="isLoading"
+                @change="changePage"
+              />
             </div>
             <div class="col-auto">
               <win-button class="px-4" @click="winProps.close()">
@@ -50,10 +55,10 @@
 
     <div class="statusbar row no-gutters noselect">
       <div class="col-3 cell d">
-        {{ t('pagination.pages', {n: data.pages}) }}
+        {{ history ? t('pagination.pages', {n: history?.meta.last_page}) : '...' }}
       </div>
       <div class="col cell">
-        {{ t('pagination.songs', {n: data.count}) }}
+        {{ history ? t('pagination.songs', {n: history.meta.total}) : '...' }}
       </div>
     </div>
   </win-window>
@@ -61,62 +66,41 @@
 
 
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindowsStore } from '@app/stores/windowsStore'
-import { api } from '@app/api/api'
-import helperComposable from '@app/composables/helperComposable'
 import type WinList from '@app/components/basic/WinList.vue'
-import type { HistoryResponse } from '@app/types/types'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useHistoryApi } from '@app/composables/api'
+import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
-const { sd, gt } = helperComposable()
+const { winAlert, winSongInfo } = useWindows()
+const { getHistory } = useHistoryApi()
 
-const data: HistoryResponse = reactive({
-  per_page: 25,
-  pages: 4,
-  songs: [],
-  count: 0,
-  from_date: 0,
-  to_date: 0
-})
+defineProps<{
+  name: string
+}>()
 
-const loading = ref(true)
 const page = ref(1)
+const { isLoading, fetch, data: history, error } = getHistory()
 const list = ref<InstanceType<typeof WinList>>()
 
 function changePage (newPage: number): void {
-  if (!loading.value) {
-    page.value = newPage
+  page.value = newPage
+  fetchHistory()
+}
+
+function fetchHistory (): void {
+  fetch({ page: page.value })
+}
+
+watch(() => error.value, (error) => {
+  if (error) {
+    winAlert(error.message, t('errors.error'))
   }
-}
-
-async function fetchHistory (page: number): Promise<void> {
-  loading.value = true
-
-  api.history.get(page).then(res => {
-    Object.assign(data, res.data)
-  }).catch(e => {
-    windowsStore.alert(useApiError(e), t('errors.error'))
-  }).finally(() => {
-    loading.value = false
-    nextTick(() => {
-      list.value?.scrollTop()
-    })
-  })
-}
-
-watch(page, () => {
-  fetchHistory(page.value)
 })
 
 onMounted(() => {
-  fetchHistory(page.value)
-})
-
-onBeforeUnmount(() => {
-  data.songs = []
+  fetchHistory()
 })
 </script>

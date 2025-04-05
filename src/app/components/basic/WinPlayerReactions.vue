@@ -1,78 +1,63 @@
 <template>
   <win-button block :disabled="sending" @click="like">
     <i :class="likeIcon" class="i mr-1" :style="{color: likeColor}" />
-    {{ playerSongStore.reactions }}
+    {{ reactions }}
   </win-button>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { AxiosError } from 'axios'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { api } from '@app/api/api'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import { useUserReactionStore } from '@app/stores/userReactionStore'
-import { useWindowsStore } from '@app/stores/windowsStore'
-import { usePrefs } from '@app/composables/usePrefs'
+import { prefs } from '@app/utils/prefs.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useReactionsApi } from '@app/composables/api'
+import { useReactions } from '@app/composables/useReactions.ts'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
 
 const { t } = useI18n()
-const playerSongStore = usePlayerSongStore()
-const userReactionStore = useUserReactionStore()
-const windowsStore = useWindowsStore()
+const { setReactions, reactions } = useNowPlayingStatus()
+const { reaction, setReaction, isCurrent: isCurrentReaction } = useReactions()
+const { winAlert } = useWindows()
 
-const likeIcon = computed(() => userReactionStore.score > 1 ? 'icon-favorite' : 'icon-like')
-const likeColor = computed(() => {
-  if (playerSongStore.songId === userReactionStore.songId) {
-    return userReactionStore.score === 2 ? CL_FAV : userReactionStore.score === 1 ? CL_LIKE : ''
-  } else {
-    return ''
-  }
-})
-const sending = ref(false)
+const likeIcon = computed(() => reaction.rate > 1 ? 'icon-favorite' : 'icon-like')
+const likeColor = computed(() => isCurrentReaction.value ? {2: CL_FAV, 1: CL_LIKE}[reaction.rate] ?? '' : '')
+const { sendReaction } = useReactionsApi()
+const { isLoading: sending, fetch: react } = sendReaction()
 
-// Methods
 function like (): void {
-  if (playerSongStore.songId !== userReactionStore.songId) {
-    userReactionStore.score = 0
+  // Reset reaction if not current song
+  if (!isCurrentReaction.value) {
+    setReaction(0)
   }
 
-  if (userReactionStore.score === 1) {
-    send(2)
-  } else if (userReactionStore.score === 2) {
-    send(0)
-  } else {
-    send(1)
-  }
+  // rate map if we hit like when score == 1 then favorite, else remove. If no rate, then like
+  send({1: 2, 2: 0}[reaction.rate] ?? 1)
 }
 
 function send (score: number): void {
-  sending.value = true
-
-  api.reactions.react(score).then(res => {
-    playerSongStore.reactions = res.data.reactions
-    userReactionStore.score = score
-    userReactionStore.songId = playerSongStore.songId
+  react({ reaction: score }).then(res => {
+    setReactions(res.reactions)
+    setReaction(score)
     showTip()
-  }).catch(e => {
-    if (e instanceof AxiosError && e.response!.status === 401) {
-      windowsStore.alert(t('errors.please_sign'), t('errors.error'))
+  }).catch(err => {
+    if (err.code === 401) {
+      winAlert(t('errors.please_sign'), t('errors.error'))
+    } else {
+      winAlert(err.message, t('errors.error'))
     }
-  }).finally(() => {
-    sending.value = false
   })
 }
 
 function showTip (): void {
-  const showed = usePrefs.get<number>('reactionTip', 0)
+  const showed = prefs.get<number>('reactionTip', 0)
   if (showed > 0) {
     return
   }
-
-  windowsStore.alert(t('messages.reaction_tip'), t('messages.nice'), 'info')
-
-  usePrefs.save('reactionTip', 1)
+  winAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
+  prefs.save('reactionTip', 1)
 }
+
 </script>

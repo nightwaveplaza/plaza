@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="250" name="user-password" :title="t('win.user_password.title')">
+  <win-window v-slot="winProps" ref="win" :width="250" :name="name" :title="t('win.user_password.title')">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -16,7 +16,7 @@
           <!-- Buttons -->
           <div class="row mt-2 no-gutters justify-content-between">
             <div class="col-6">
-              <win-button block class="text-bold" :disabled="sending" @click="change">
+              <win-button block class="text-bold" :disabled="isLoading" @click="change">
                 {{ t('buttons.change') }}
               </win-button>
             </div>
@@ -34,42 +34,44 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { api } from '@app/api/api'
 import { useI18n } from 'vue-i18n'
-import { useWindowsStore } from '@app/stores/windowsStore'
-import type { UserEdit } from '@app/types/types'
-import { useUserAuthStore } from '@app/stores/userAuthStore'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import { useApiError } from '@app/composables/useApiError.ts'
+import { useWindows } from '@app/composables/useWindows.ts'
+import { useUserApi } from '@app/composables/api'
+import { type UserPasswordForm, Win } from '@app/types'
+import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const windowsStore = useWindowsStore()
-const userAuthStore = useUserAuthStore()
+const { winAlert, closeWindow } = useWindows()
+const { updatePassword } = useUserApi()
+const { isLoading, fetch: update } = updatePassword()
+const { unsetUser } = useAuth()
+
+defineProps<{
+  name: string,
+}>()
 
 const win = ref<InstanceType<typeof WinWindow>>()
-const fields: UserEdit = reactive({
+const fields: UserPasswordForm = reactive({
   current_password: '',
   password: '',
 })
 const passwordRepeat = ref('')
-const sending = ref(false)
 
 function change (): void {
   try {
     validate()
   } catch (e) {
-    return windowsStore.alert((e as Error).message, t('errors.error'))
+    return winAlert((e as Error).message, t('errors.error'))
   }
 
-  sending.value = true
-
-  api.user.edit(fields).then(() => {
-    userAuthStore.logout()
-    windowsStore.alert(t('messages.password_changed'), t('messages.success'), 'info')
-    win.value!.close()
+  update(fields).then(() => {
+    unsetUser()
+    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    closeWindow(Win.USER_PASSWORD)
   }).catch(e =>
-      windowsStore.alert(useApiError(e), t('errors.error'))
-  ).finally(() => sending.value = false)
+      winAlert(e.message, t('errors.error'))
+  )
 }
 
 function validate (): void {

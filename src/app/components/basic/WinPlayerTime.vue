@@ -6,31 +6,25 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { MutationType } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { usePlayerSongStore } from '@app/stores/playerSongStore.ts'
-import helperComposable from '@app/composables/helperComposable'
-import { usePlayerPlaybackStore } from '@app/stores/playerPlaybackStore.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { fmtDuration } from '@app/utils/timeFormats.ts'
+import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const CLOCK_REFRESH = 1000
 
 const { t } = useI18n()
-const playerPlaybackStore = usePlayerPlaybackStore()
-const playerSongStore = usePlayerSongStore()
-const { dur } = helperComposable()
+const { song, updatedAt, position } = useNowPlayingStatus()
+const { sleepTime, setSleepTime } = usePlayerPlayback()
 
 const emit = defineEmits(['stopByTimer'])
 
-const length = ref(0)
 const actualPosition = ref(0)
 const textTime = ref(0)
 const text = ref('')
 const display = computed(() => textTime.value > 0 ? text.value : clock.value)
-const clock = computed(() => length.value > 0 ? dur(actualPosition.value) + ' / ' + dur(length.value) : '...')
+const clock = computed(() => song.length > 0 ? fmtDuration(actualPosition.value) + ' / ' + fmtDuration(song.length) : '...')
 
-// Non-reactive
-let position = 0
-let songUpdatedAt = 0
 let intervalId = 0
 
 function showText (newText: string): void {
@@ -40,12 +34,17 @@ function showText (newText: string): void {
 
 function tick (): void {
   const now = Date.now()
-  let correctedPosition = Math.floor((now - songUpdatedAt) / 1000) + position
-  if (correctedPosition > length.value) {
-    correctedPosition = length.value
+  let correctedPosition = Math.floor((now / 1000) - updatedAt.value) + position.value
+
+  if (correctedPosition < 0) {
+    actualPosition.value = 0
   }
 
-  if (songUpdatedAt) {
+  if (correctedPosition > song.length) {
+    correctedPosition = song.length
+  }
+
+  if (updatedAt.value) {
     actualPosition.value = correctedPosition
   }
 
@@ -57,10 +56,10 @@ function tick (): void {
 }
 
 function checkSleepTimer (): void {
-  const t = playerPlaybackStore.sleepTime
+  const t = sleepTime.value
 
   if (t > 0 && t < Date.now()) {
-    playerPlaybackStore.sleepTime = 0
+    setSleepTime(0)
     emit('stopByTimer')
   }
 }
@@ -68,14 +67,6 @@ function checkSleepTimer (): void {
 onMounted(() => {
   showText(t('win.player.welcome'))
   intervalId = window.setInterval(tick, CLOCK_REFRESH)
-
-  playerSongStore.$subscribe((mutation, state) => {
-    if (mutation.type === MutationType.patchObject) {
-      length.value = state.length
-      position = state.position
-      songUpdatedAt = Date.now()
-    }
-  })
 })
 
 onUnmounted(() => {

@@ -77,12 +77,14 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { type UserLoginForm, Win } from '@app/types'
 import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, winAlert } = useWindows()
-const { login: loginApi } = useAuthApi()
-const { fetch, isLoading } = loginApi()
+const { login: loginApi,  token: tokenApi } = useAuthApi()
 const { setUser } = useAuth()
+const { updateToken } = useAuthToken()
+const { fetch, isLoading } = isMobile() ? tokenApi() : loginApi()
 
 defineProps<{
   name: string,
@@ -103,6 +105,9 @@ function login (): void {
 
   fetch(fields).then(res => {
     setUser(res.data)
+    if (res.token) {
+      updateToken(res.token)
+    }
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {

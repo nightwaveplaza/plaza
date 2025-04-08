@@ -16,12 +16,15 @@ import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
+import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 const { fetchUser } = useAuth()
+const { setToken } = useAuthToken()
+
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
@@ -39,7 +42,11 @@ onMounted(() => {
 
   Native.onReady()
 
-  fetchUser()
+  Native.getAuthToken()!.then((t) => {
+    const token = t as string
+    setToken(token)
+    fetchUser()
+  })
 
   //Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
 })

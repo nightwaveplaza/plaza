@@ -89,7 +89,7 @@ export interface UserResource {
 
 export interface UserLoginResource {
   data: User,
-  token: string
+  token: string | null
 }
 
 export interface UserFavoritesCollection extends PaginatedCollection<{

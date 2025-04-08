@@ -1,7 +1,7 @@
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
-import { type Background, useBackgrounds } from '@app/composables/useBackgrounds.ts'
+import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
@@ -45,7 +45,7 @@ export function useNativeEvents () {
   /**
    * Android events
    */
-  eventBus.on('onResume', () => updateBackgroundNative(background))
+  eventBus.on('onResume', () => updateBackgroundNative)
 
   /**
    * Player events
@@ -86,12 +86,8 @@ export function useNativeEvents () {
   })
 
   // Watch background for changes
-  watch(() => background, (b) => {
-      if (b.image) {
-        updateBackgroundNative(b as Background)
-      }
-    }, { deep: true },
-  )
+  watch(() => background.color, updateBackgroundNative)
+  watch(() => background.image, updateBackgroundNative)
 
   // Watch user token for changes
   watch(() => token.value, t => {
@@ -114,11 +110,13 @@ export function useNativeEvents () {
     Native.setLanguage(language.value)
   })
 
-  const updateBackgroundNative = (bg: Background): void => {
+  function updateBackgroundNative() {
     if (typeof AndroidInterface !== 'undefined') {
-      Native.setBackground(isColorMode.value ? 'solid' : bg.image!.src)
+      Native.setBackground(isColorMode.value ? 'solid' : background.image!.src)
     } else {
-      Native.setBackground(isColorMode.value ? 'solid' : bg.image!.video_src)
+      Native.setBackground(isColorMode.value ? 'solid' : background.image!.video_src)
     }
   }
+
+  return { updateBackgroundNative }
 }

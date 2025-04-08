@@ -2,6 +2,7 @@ import { computed, type ComputedRef, reactive, type UnwrapNestedRefs } from 'vue
 import { prefs } from '@app/utils/prefs.ts'
 import { useBackgroundsApi } from '@app/composables/api'
 import { type BackgroundImage, BackgroundMode, type BackgroundCollection } from '@app/types'
+import { isMobile } from '@app/utils/helpers.ts'
 
 /**
  * useBackgrounds composable
@@ -50,9 +51,9 @@ export function useBackgrounds(): {
       ? `url('${background.image.src}')`
       : ''
   )
-  const backgroundColor = computed(() => background.color)
   const isRandomMode = computed(() => background.mode === BackgroundMode.RANDOM)
   const isColorMode = computed(() => background.mode === BackgroundMode.COLOR)
+  const backgroundColor = computed(() => isMobile() && !isColorMode.value ? 'transparent' : background.color)
 
   /**
    * Sets random background from available list

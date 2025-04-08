@@ -25,7 +25,7 @@ const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackgro
 const { fetchUser } = useAuth()
 const { setToken } = useAuthToken()
 
-useNativeEvents()
+const { updateBackgroundNative } = useNativeEvents()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
@@ -41,6 +41,7 @@ onMounted(() => {
     fetchBackgrounds().then(() => setRandomBackground())
   }
 
+  updateBackgroundNative()
   Native.onReady()
 
   Native.getAuthToken()!.then((t) => {

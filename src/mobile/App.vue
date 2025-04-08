@@ -3,7 +3,6 @@
     <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
 
     <win-taskbar />
-    <native-watcher />
   </div>
 </template>
 
@@ -17,6 +16,7 @@ import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
+import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows } = useWindows()
@@ -25,6 +25,7 @@ const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackgro
 const { fetchUser } = useAuth()
 const { setToken } = useAuthToken()
 
+useNativeEvents()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
@@ -47,7 +48,5 @@ onMounted(() => {
     setToken(token)
     fetchUser()
   })
-
-  //Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
 })
 </script>

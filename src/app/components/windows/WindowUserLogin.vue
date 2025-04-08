@@ -83,7 +83,7 @@ const { t } = useI18n()
 const { openWindow, closeWindow, winAlert } = useWindows()
 const { login: loginApi,  token: tokenApi } = useAuthApi()
 const { setUser } = useAuth()
-const { updateToken } = useAuthToken()
+const { setToken } = useAuthToken()
 const { fetch, isLoading } = isMobile() ? tokenApi() : loginApi()
 
 defineProps<{
@@ -106,7 +106,7 @@ function login (): void {
   fetch(fields).then(res => {
     setUser(res.data)
     if (res.token) {
-      updateToken(res.token)
+      setToken(res.token)
     }
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
     win.value!.close()

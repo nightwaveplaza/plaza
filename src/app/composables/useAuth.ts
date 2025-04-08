@@ -2,6 +2,8 @@ import { computed, type ComputedRef, type Ref, ref, type UnwrapRef } from 'vue'
 import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
+import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
+
 const { getUser } = useUserApi()
 
 const username = ref<string|null>(null)
@@ -17,6 +19,7 @@ export function useAuth(): {
   setResetToken: (token: string) => void
 } {
   const { resetReaction } = useReactions()
+  const { setToken } = useAuthToken()
 
   const fetchUser = (): void => {
     getUser().fetch().then(res => {
@@ -32,6 +35,7 @@ export function useAuth(): {
 
   const unsetUser = (): void => {
     resetReaction()
+    setToken(null)
     username.value = null
   }
 

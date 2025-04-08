@@ -5,6 +5,10 @@ export const AndroidBridge = {
     : void => AndroidInterface.audioStop(),
   setSleepTimer: (time: number)
     : void => AndroidInterface.setSleepTimer(time),
+  onReady: ()
+    : void => AndroidInterface.onReady(),
+  socketReconnect: ()
+    : void => AndroidInterface.socketReconnect(),
   setAuthToken: (token: string)
     : void => AndroidInterface.setAuthToken(token),
   getAuthToken: ()

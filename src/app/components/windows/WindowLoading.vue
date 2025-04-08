@@ -25,6 +25,8 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { Win } from '@app/types'
+import { isMobile } from '@app/utils/helpers.ts'
+import { Native } from '@mobile/bridge/native.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow } = useWindows()
@@ -74,6 +76,9 @@ watch(() => song.id, async () => {
 
 onMounted(() => {
   move()
+  if (isMobile()) {
+    Native.onReady()
+  }
 })
 
 onBeforeUnmount(() => {

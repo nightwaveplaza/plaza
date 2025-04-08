@@ -14,7 +14,6 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
-import { useStatusUpdater } from '@app/composables/useStatusUpdater.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 
@@ -23,9 +22,6 @@ const { openWindow, openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 const { fetchUser } = useAuth()
-
-// Run status updater
-useStatusUpdater()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
@@ -40,6 +36,8 @@ onMounted(() => {
   if (isRandomMode.value) {
     fetchBackgrounds().then(() => setRandomBackground())
   }
+
+  Native.onReady()
 
   Native.getAuthToken()!.then((/*t*/) => {
     //const token = t as string

@@ -26,9 +26,11 @@ import { useSocket } from '@app/composables/useSocket.ts'
 import { watch } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { Win } from '@app/types'
+import { isMobile } from '@app/utils/helpers.ts'
+import { useNativeSocket } from '@mobile/composables/useNativeSocket.ts'
 
 const { t } = useI18n()
-const { reconnect, isDead, isConnected } = useSocket()
+const { reconnect, isDead, isConnected } = isMobile() ? useNativeSocket() : useSocket()
 const { closeWindow } = useWindows()
 
 defineProps<{
@@ -36,6 +38,7 @@ defineProps<{
 }>()
 
 // Close
+
 watch(() => isConnected.value, (connected) => {
   if (connected) {
     closeWindow(Win.DISCONNECTED)

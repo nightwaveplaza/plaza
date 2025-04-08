@@ -17,13 +17,20 @@ export interface SongWindowParams {
 }
 
 export type EventBus = {
-  closeWindow: string;
-  openWindow: string;
-  resume: void;
-  isBuffering: void;
-  isPlaying: boolean;
-  sleepTime: number;
-  iosCallback: string;
+  closeWindow: string
+  openWindow: string
+  onResume: void
+  isBuffering: void
+  isPlaying: boolean
+  sleepTime: number
+  iosCallback: string
+
+  socketConnect: void
+  socketDisconnect: void
+  socketReconnectFailed: void
+  onStatusUpdate: string
+  onListenersUpdate: number
+  onReactionsUpdate: number
 }
 
 export enum PlayerState {
@@ -38,6 +45,10 @@ export interface ifcAndroidInterface {
   audioStop (): void
 
   setSleepTimer (time: number): void
+
+  onReady (): void
+
+  socketReconnect (): void
 
   getAuthToken (): string
 

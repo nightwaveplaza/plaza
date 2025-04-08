@@ -11,6 +11,8 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useNativeSocket } from '@mobile/composables/useNativeSocket.ts'
 
 const i18n = useI18n()
 
@@ -20,6 +22,8 @@ const { background, isColorMode } = useBackgrounds()
 const { isSigned } = useAuth()
 const { setState, sleepTime, setSleepTime } = usePlayerPlayback()
 const { execute } = useIosCallbacks()
+const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
+const { onConnect, onDisconnect, onReconnectFailed } = useNativeSocket()
 
 function updateBackgroundNative (bg: Background): void {
   if (typeof AndroidInterface !== 'undefined') {
@@ -30,7 +34,21 @@ function updateBackgroundNative (bg: Background): void {
 }
 
 function registerEmitterEvents (): void {
-  eventBus.on('resume', () => updateBackgroundNative(background))
+  eventBus.on('socketConnect', () => {
+    onConnect()
+    closeWindow(Win.DISCONNECTED)
+  })
+  eventBus.on('socketDisconnect', () => onDisconnect())
+  eventBus.on('socketReconnectFailed', () => {
+    onReconnectFailed()
+    openWindow(Win.DISCONNECTED)
+  })
+
+  eventBus.on('onStatusUpdate', (rawStatus: string) => setStatus(JSON.parse(rawStatus)))
+  eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
+  eventBus.on('onReactionsUpdate', (r: number) => setReactions(r))
+
+  eventBus.on('onResume', () => updateBackgroundNative(background))
 
   eventBus.on('closeWindow', (name: string) => {
     closeWindow(name)

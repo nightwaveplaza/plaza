@@ -18,6 +18,10 @@ export const iOSBridge = {
     : Promise<void> => sendMessage<void>('toggleFullscreen', []),
   openDrawer: ()
     : Promise<void> => sendMessage<void>('openDrawer', []),
+  onReady: ()
+    : Promise<void> => sendMessage<void>('onReady', []),
+  socketReconnect: ()
+    : Promise<void> => sendMessage<void>('socketReconnect', []),
   getUserAgent: ()
     : Promise<string> => sendMessage<string>('getUserAgent', []),
   getAppVersion: ()

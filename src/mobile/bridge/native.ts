@@ -8,6 +8,10 @@ export const Native = {
     : void | Promise<void> => CurrentBridge().audioStop(),
   setSleepTimer: (time: number)
     : void | Promise<void> => CurrentBridge().setSleepTimer(time),
+  onReady: ()
+    : void | Promise<void> => CurrentBridge().onReady(),
+  socketReconnect: ()
+    : void | Promise<void> => CurrentBridge().socketReconnect(),
   getAuthToken: ()
     : Promise<string> => CurrentBridge().getAuthToken(),
   setAuthToken: (token: string)

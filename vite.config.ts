@@ -14,7 +14,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
   return defineConfig({
     plugins: [
       vue(),
-      getLegacyPlugin(process.env),
+      //getLegacyPlugin(process.env),
     ],
 
     root,

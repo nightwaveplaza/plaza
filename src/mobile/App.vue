@@ -39,10 +39,7 @@ onMounted(() => {
 
   Native.onReady()
 
-  Native.getAuthToken()!.then((/*t*/) => {
-    //const token = t as string
-    fetchUser()
-  })
+  fetchUser()
 
   //Native.getUserAgent()!.then(agent => userAuthStore.agent = agent as string)
 })

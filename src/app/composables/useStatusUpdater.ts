@@ -9,7 +9,7 @@ import { type StatusResource, Win } from '@app/types'
  * Uses useSocket and useNowPlayingStatus composable to update current now playing status
  */
 export function useStatusUpdater (): void {
-  const { onEvent, isConnected, reconnectAttempts } = useSocket()
+  const { onEvent, isConnected, reconnectAttempts, createSocket } = useSocket()
   const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
   const { openWindow } = useWindows()
 
@@ -20,6 +20,7 @@ export function useStatusUpdater (): void {
     }
   })
 
+  createSocket()
   onEvent('status', (status) => setStatus(status as StatusResource))
   onEvent('listeners', (listeners) => setListeners(listeners as number))
   onEvent('reactions', (reactions) => setReactions(reactions as number))

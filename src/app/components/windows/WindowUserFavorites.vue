@@ -74,7 +74,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type WinList from '@app/components/basic/WinList.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate } from '@app/utils/timeFormats.ts'
 import { useUserFavoritesApi } from '@app/composables/api'

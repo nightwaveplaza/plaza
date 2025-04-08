@@ -15,28 +15,6 @@ const isConnected = ref(false)
 const reconnectAttempts = ref(0)
 
 /**
- * Initializes the Socket.io instance if not already created.
- */
-function createSocket (): void {
-  if (!socket.value) {
-    socket.value = io('https://plaza.one', {
-      autoConnect: true,
-      path: '/ws',
-      reconnectionAttempts: MAX_RECONNECT_ATTEMPTS,
-      timeout: 5000
-    })
-
-    // Register global events
-    socket.value.on('connect', () => {
-      isConnected.value = true
-      reconnectAttempts.value = 0
-    })
-    socket.value.on('disconnect', () => isConnected.value = false)
-    socket.value.on('connect_error', () => reconnectAttempts.value += 1)
-  }
-}
-
-/**
  * Main composable function
  */
 export function useSocket (): {
@@ -45,6 +23,7 @@ export function useSocket (): {
   reconnect: () => void
   onEvent: (event: string, callback: (...args: unknown[]) => void) => void
   reconnectAttempts: Ref<UnwrapRef<number>>
+  createSocket: () => void
 } {
   // Local event listeners storage for cleanup
   const localEvents: Array<[string, (...args: unknown[]) => void]> = []
@@ -52,7 +31,27 @@ export function useSocket (): {
   // Computed flag for dead connection state
   const isDead = computed(() => reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS)
 
-  createSocket()
+  /**
+   * Initializes the Socket.io instance if not already created.
+   */
+  function createSocket (): void {
+    if (!socket.value) {
+      socket.value = io('http://127.0.0.1:3001', {
+        autoConnect: true,
+        path: '/ws',
+        reconnectionAttempts: MAX_RECONNECT_ATTEMPTS,
+        timeout: 5000
+      })
+
+      // Register global events
+      socket.value.on('connect', () => {
+        isConnected.value = true
+        reconnectAttempts.value = 0
+      })
+      socket.value.on('disconnect', () => isConnected.value = false)
+      socket.value.on('connect_error', () => reconnectAttempts.value += 1)
+    }
+  }
 
   /**
    * Registers event listener and stores it for later cleanup
@@ -81,6 +80,6 @@ export function useSocket (): {
   })
 
   return {
-    isConnected, isDead, reconnect, onEvent, reconnectAttempts
+    isConnected, isDead, reconnect, onEvent, reconnectAttempts, createSocket
   }
 }

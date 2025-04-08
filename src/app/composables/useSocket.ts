@@ -1,4 +1,4 @@
-import { computed, type ComputedRef, onUnmounted, type Ref, ref, type UnwrapRef } from 'vue'
+import { onUnmounted, type Ref, ref, type UnwrapRef } from 'vue'
 import io, { Socket } from 'socket.io-client'
 
 /**
@@ -6,12 +6,10 @@ import io, { Socket } from 'socket.io-client'
  * Manages socket.io connection.
  */
 
-// Max reconnection attempts before socket io gives up.
-const MAX_RECONNECT_ATTEMPTS = 24
-
 // Global states
 const socket = ref<Socket | null>(null)
 const isConnected = ref(false)
+const isDead = ref(false)
 const reconnectAttempts = ref(0)
 
 /**
@@ -19,17 +17,14 @@ const reconnectAttempts = ref(0)
  */
 export function useSocket (): {
   isConnected: Ref<UnwrapRef<boolean>>
-  isDead: ComputedRef<boolean>
+  isDead: Ref<UnwrapRef<boolean>>
+  reconnectAttempts: Ref<UnwrapRef<number>>
   reconnect: () => void
   onEvent: (event: string, callback: (...args: unknown[]) => void) => void
-  reconnectAttempts: Ref<UnwrapRef<number>>
   createSocket: () => void
 } {
   // Local event listeners storage for cleanup
   const localEvents: Array<[string, (...args: unknown[]) => void]> = []
-
-  // Computed flag for dead connection state
-  const isDead = computed(() => reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS)
 
   /**
    * Initializes the Socket.io instance if not already created.
@@ -39,17 +34,18 @@ export function useSocket (): {
       socket.value = io('http://127.0.0.1:3001', {
         autoConnect: true,
         path: '/ws',
-        reconnectionAttempts: MAX_RECONNECT_ATTEMPTS,
+        reconnectionAttempts: 5,
         timeout: 5000
       })
 
       // Register global events
       socket.value.on('connect', () => {
         isConnected.value = true
-        reconnectAttempts.value = 0
+        isDead.value = false
       })
       socket.value.on('disconnect', () => isConnected.value = false)
-      socket.value.on('connect_error', () => reconnectAttempts.value += 1)
+      socket.value.io.on('reconnect_failed', () => isDead.value = true)
+      socket.value.io.on('reconnect_attempt', (n) => reconnectAttempts.value = n)
     }
   }
 
@@ -67,7 +63,6 @@ export function useSocket (): {
    * Forces reconnection attempt and resets reconnect counter
    */
   const reconnect = (): void => {
-    reconnectAttempts.value = 0
     socket.value?.connect()
   }
 
@@ -80,6 +75,6 @@ export function useSocket (): {
   })
 
   return {
-    isConnected, isDead, reconnect, onEvent, reconnectAttempts, createSocket
+    isConnected, isDead, reconnect, onEvent, createSocket, reconnectAttempts
   }
 }

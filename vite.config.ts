@@ -1,8 +1,7 @@
 import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv, type Plugin, type UserConfig } from 'vite'
+import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import legacy from '@vitejs/plugin-legacy'
 
 export default ({ mode }: { mode: string }): UserConfig => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }

@@ -53,16 +53,16 @@ export default ({ mode }: { mode: string }): UserConfig => {
   })
 }
 
-function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-  // todo do we really need polyfill?
-  if (env.VITE_APP === 'mobile') {
-    return legacy({
-      targets: 'defaults, android >= 5.0, ios >= 12',
-    })
-  } else {
-    return null
-  }
-}
+// function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
+//   // todo do we really need polyfill?
+//   if (env.VITE_APP === 'mobile') {
+//     return legacy({
+//       targets: 'defaults, android >= 5.0, ios >= 12',
+//     })
+//   } else {
+//     return null
+//   }
+// }
 
 function getBuildDate (): string {
   return new Date().toISOString().slice(0, 10).replace(/-/g, '')

@@ -36,14 +36,13 @@ onMounted(() => {
   i18n.locale.value = language.value
 
   openWindow(Win.LOADING)
-  
+
   if (isRandomMode.value) {
     fetchBackgrounds().then(() => setRandomBackground())
   } else {
     updateBackgroundNative()
   }
 
-  updateBackgroundNative()
   Native.onReady()
 
   Native.getAuthToken()!.then((t) => {

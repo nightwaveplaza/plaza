@@ -17,7 +17,7 @@ export function useThemeColor() {
   // Set theme color to browser or Native app
   const setThemeColor = () => {
     let color = themeColors[theme.value as keyof typeof themeColors]
-    document!.querySelector('meta[name="theme-color"]')!.setAttribute('content', color)
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
 
     if (isMobile()) {
       Native.setThemeColor(color)

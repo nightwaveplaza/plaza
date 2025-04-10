@@ -18,12 +18,12 @@ export function useThemeColor() {
   const setThemeColor = () => {
     let color = themeColors[theme.value as keyof typeof themeColors]
     document!.querySelector('meta[name="theme-color"]')!.setAttribute('content', color)
-    
+
     if (isMobile()) {
       Native.setThemeColor(color)
     }
   }
 
-  watch(() => theme.value, () =>  setThemeColor)
-  onMounted(() => setThemeColor)
+  watch(() => theme.value, () => setThemeColor())
+  onMounted(() => setThemeColor())
 }

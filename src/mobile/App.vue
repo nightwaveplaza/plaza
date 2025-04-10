@@ -17,6 +17,7 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
+import { useThemeColor } from '@app/composables/useThemeColor.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows } = useWindows()
@@ -26,6 +27,9 @@ const { fetchUser } = useAuth()
 const { setToken } = useAuthToken()
 
 const { updateBackgroundNative } = useNativeEvents()
+
+// Automatically apply theme color to browser
+useThemeColor()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value

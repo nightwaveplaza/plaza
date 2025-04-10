@@ -29,7 +29,9 @@ export const Native = {
   setBackground: (background: string)
     : void | Promise<void> => CurrentBridge().setBackground(background),
   setLanguage: (lang: string)
-    : void | Promise<void> => CurrentBridge().setLanguage(lang)
+    : void | Promise<void> => CurrentBridge().setLanguage(lang),
+  setThemeColor: (color: string)
+    : void | Promise<void> => CurrentBridge().setThemeColor(color)
 }
 
 const CurrentBridge = (): typeof AndroidBridge | typeof iOSBridge => {

@@ -30,6 +30,8 @@ export const iOSBridge = {
     : Promise<void> => sendMessage<void>('setBackground', [background]),
   setLanguage: (lang: string)
     : Promise<void> => sendMessage<void>('setLanguage', [lang]),
+  setThemeColor: (theme: string)
+    : Promise<void> => sendMessage<void>('setThemeColor', [theme]),
 }
 
 /**

@@ -7,7 +7,6 @@ import WinPlayerReactions from '@app/components/basic/WinPlayerReactions.vue'
 import WinPlayerTime from '@app/components/basic/WinPlayerTime.vue'
 import WinTaskbar from '@app/components/basic/WinTaskbar.vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
-import WinStatusBar from '@app/components/basic/WinStatusBar.vue'
 import WinMenu from '@app/components/basic/WinMenu.vue'
 import WinPlayer from '@app/components/basic/WinPlayer.vue'
 import WinPlayerVolume from '@app/components/basic/WinPlayerVolume.vue'
@@ -24,7 +23,6 @@ export default {
     Vue.component('WinPanel', WinPanel)
     Vue.component('WinPlayerReactions', WinPlayerReactions)
     Vue.component('WinPlayerTime', WinPlayerTime)
-    Vue.component('WinStatusBar', WinStatusBar)
     Vue.component('WinTaskbar', WinTaskbar)
     Vue.component('WinWindow', WinWindow)
     Vue.component('WinMenu', WinMenu)

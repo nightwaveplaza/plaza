@@ -67,4 +67,6 @@ export interface ifcAndroidInterface {
   setBackground (background: string): void
 
   setLanguage (lang: string): void
+
+  setThemeColor (color: string): void
 }

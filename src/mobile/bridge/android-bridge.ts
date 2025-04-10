@@ -27,4 +27,6 @@ export const AndroidBridge = {
     : void => AndroidInterface.setBackground(background),
   setLanguage: (lang: string)
     : void => AndroidInterface.setLanguage(lang),
+  setThemeColor: (color: string)
+    : void => AndroidInterface.setThemeColor(color),
 }

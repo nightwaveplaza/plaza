@@ -20,7 +20,7 @@ export function useNativeEvents () {
   const { lowQuality, language } = useAppSettings()
   const { background, isColorMode } = useBackgrounds()
   const { isSigned } = useAuth()
-  const { setState, sleepTime, setSleepTime } = usePlayerPlayback()
+  const { setState, updateSleepTime } = usePlayerPlayback()
   const { execute } = useIosCallbacks()
   const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
   const { onConnect, onDisconnect, onReconnectFailed } = useNativeSocket()
@@ -75,9 +75,7 @@ export function useNativeEvents () {
 
   // Event from onResume if sleep timer is still alive
   eventBus.on('sleepTime', (time: number) => {
-    if (time > Date.now()) {
-      setSleepTime(time)
-    }
+    updateSleepTime(time)
   })
 
   // ios callbacks
@@ -97,13 +95,6 @@ export function useNativeEvents () {
   // Watch audio quality
   watch(() => lowQuality.value, () => {
     Native.setAudioQuality(lowQuality.value)
-  })
-
-  // Watch timer changes
-  watch(() => sleepTime.value, (time, oldValue) => {
-    if (oldValue == 0 || time == 0) {
-      Native.setSleepTimer(time as number)
-    }
   })
 
   // Watch language change

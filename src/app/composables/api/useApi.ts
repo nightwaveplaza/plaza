@@ -91,12 +91,18 @@ function handleError (e: Error | AxiosError | unknown): ApiError {
 
   const code = e.response?.status ?? 0
   const messageKey = e.response?.data?.key
+  const serverError = e.response?.data?.error
 
   if (code === 500) {
     return { message: t('errors.server'), code }
   }
+
   if (messageKey) {
     return { message: t(messageKey), code }
+  }
+
+  if (serverError) {
+    return { message: serverError, code }
   }
 
   return {

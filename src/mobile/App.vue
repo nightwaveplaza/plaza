@@ -39,9 +39,10 @@ onMounted(() => {
 
   if (isRandomMode.value) {
     fetchBackgrounds().then(() => setRandomBackground())
+  } else {
+    updateBackgroundNative()
   }
 
-  updateBackgroundNative()
   Native.onReady()
 
   Native.getAuthToken()!.then((t) => {

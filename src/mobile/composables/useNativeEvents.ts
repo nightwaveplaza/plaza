@@ -100,8 +100,10 @@ export function useNativeEvents () {
   })
 
   // Watch timer changes
-  watch(() => sleepTime.value, time => {
-    Native.setSleepTimer(time as number)
+  watch(() => sleepTime.value, (time, oldValue) => {
+    if (oldValue == 0 || time == 0) {
+      Native.setSleepTimer(time as number)
+    }
   })
 
   // Watch language change

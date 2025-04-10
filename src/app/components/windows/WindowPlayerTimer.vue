@@ -4,7 +4,7 @@
       <div v-if="active" class="text-center">
         <p>{{ t('win.player_timer.title') }}</p>
         <p class="time-left mt-2">
-          {{ timeText }}
+          {{ fmtDuration(sleepTime / 1000) }}
         </p>
       </div>
       <div v-else class="text-center">
@@ -57,12 +57,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useNumberOnly } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
+import { fmtDuration } from '../../utils/timeFormats.ts'
 
 const { t } = useI18n()
 const { closeWindow, winAlert } = useWindows()
@@ -73,28 +74,22 @@ defineProps<{
 }>()
 
 const minutes = ref(20)
-const timeLeft = ref(0)
 
-const active = computed(() => sleepTime.value !== 0 && sleepTime.value > Date.now())
-const btnText = computed(() =>
-    sleepTime.value !== 0 ? t('win.player_timer.stop') : t('win.player_timer.start'))
-const timeText = computed(() => new Date(timeLeft.value).toISOString().substring(11, 19))
-
-// Non-reactive
-let intervalId = 0
+const active = computed(() => sleepTime.value > 0)
+const btnText = computed(() => active.value ? t('win.player_timer.stop') : t('win.player_timer.start'))
+//const timeText = computed(() => new Date(timeLeft.value).toISOString().substring(11, 19))
 
 function start (): void {
   if (active.value) {
     setSleepTime(0)
   } else {
-    setSleepTime(Date.now() + (minutes.value * 60 * 1000))
+    setSleepTime(minutes.value * 60 * 1000)
     winAlert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'), 'info'
     )
   }
 
-  updateTimeLeft()
   closeWindow(Win.PLAYER_TIMER)
 }
 
@@ -103,19 +98,6 @@ function add (amount: number): void {
   newMinutes = newMinutes ? minutes.value + amount : 0
   minutes.value = newMinutes <= 0 ? 1 : newMinutes
 }
-
-function updateTimeLeft (): void {
-  timeLeft.value = sleepTime.value - Date.now()
-}
-
-onMounted(() => {
-  updateTimeLeft()
-  intervalId = window.setInterval(updateTimeLeft, 1000)
-})
-
-onBeforeUnmount(() => {
-  clearInterval(intervalId)
-})
 </script>
 
 <style lang="scss">

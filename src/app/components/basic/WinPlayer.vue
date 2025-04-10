@@ -104,7 +104,7 @@ const playText = computed((): string => {
 })
 
 const isPlaying = computed(() => state.value === PlayerState.PLAYING)
-const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
+const timerColor = computed(() => sleepTime.value > 0 ? '#3455DB' : '')
 
 watch(volume, (newVolume) => {
   time.value!.showText(t('win.player.volume', { volume: newVolume }))

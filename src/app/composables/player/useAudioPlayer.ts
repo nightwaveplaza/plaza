@@ -72,6 +72,9 @@ export function useAudioPlayer(): {
     audio.addEventListener('play', onAudioPlayEvent)
     audio.addEventListener('pause', onAudioPauseEvent)
 
+    // Set timer to 0
+    setSleepTime(0)
+
     // Start playing
     audio.play().then(() => {
       setState(PlayerState.PLAYING)

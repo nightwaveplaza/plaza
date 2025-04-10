@@ -31,7 +31,7 @@ export function useSocket (): {
    */
   function createSocket (): void {
     if (!socket.value) {
-      socket.value = io('http://127.0.0.1:3001', {
+      socket.value = io('https://plaza.one', {
         autoConnect: true,
         path: '/ws',
         reconnectionAttempts: 5,

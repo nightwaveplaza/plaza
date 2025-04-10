@@ -56,11 +56,13 @@ function tick (): void {
 }
 
 function checkSleepTimer (): void {
-  const t = sleepTime.value
+  if (sleepTime.value > 0) {
+    setSleepTime(sleepTime.value - CLOCK_REFRESH)
 
-  if (t > 0 && t < Date.now()) {
-    setSleepTime(0)
-    emit('stopByTimer')
+    if (sleepTime.value <= 0) {
+      setSleepTime(0)
+      emit('stopByTimer')
+    }
   }
 }
 

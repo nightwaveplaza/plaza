@@ -20,8 +20,8 @@
       "title": "Application Settings",
       "top": "Top",
       "language": "Change Language",
-      "audio_quality": "Audio quality",
-      "quality_changed": "Audio quality has changed. Please restart the playback.",
+      "audio_quality": "Audio Quality",
+      "quality_changed": "Audio quality has changed. Please restart playback.",
       "low_quality": "Low quality",
       "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
       "background": "Background Settings"
@@ -46,28 +46,28 @@
     },
     "credits": {
       "title": "Credits",
-      "created_by": "{app} website and apps created and maintained by {author}.",
+      "created_by": "{app} website and apps were created and are maintained by {author}.",
       "content": "All music and background images",
-      "content_by": "{content} belong to the authors. Musical content has been provided by authors and music labels. If you have any copyright issue, please let us know."
+      "content_by": "{content} belong to their respective authors. Musical content has been provided by artist and labels. If you have any copyright concerns, please let us know."
     },
     "disconnected": {
-      "title": "Connection lost",
-      "connection_lost": "We have lost connection to our servers...",
-      "click_button": "Please click the button below to reconnect.",
-      "trying": "Trying to reconnect...",
+      "title": "Connection Lost",
+      "connection_lost": "Connection to our servers has been lost...",
+      "click_button": "Click the button below to reconnect.",
+      "trying": "Attempting to reconnect...",
       "btn_reconnect": "Reconnect"
     },
     "delete_account": {
-      "if_you_want": "If you want to delete your account please contact us on {email}",
+      "if_you_want": "If you want to delete your account, please contact us on {email}",
       "title": "Delete Account",
-      "title2": "Account deletion",
+      "title2": "Account Deletion",
       "will_be_deleted": "You account and all associated data will be permanently deleted (favorites and like history)."
     },
     "mobile": {
-      "description": "We have the official Android and iOS applications. Please, download it and let Nightwave Plaza show you the past with the music of the future."
+      "description": "Official Android and iOS apps are available. Please, download it and let Nightwave Plaza show you the past with the music of the future."
     },
     "history": {
-      "showing_history": "Showing history: {from} — {to}",
+      "showing_history": "Displaying history: {from} — {to}",
       "title": "Play History"
     },
     "player": {
@@ -80,38 +80,38 @@
     },
     "ratings": {
       "btn_monthly": "Monthly",
-      "btn_overtime": "Overtime",
+      "btn_overtime": "All Time",
       "btn_weekly": "Weekly",
       "title": "Ratings"
     },
     "settings_language": {
-      "select": "Select language",
+      "select": "Select Language",
       "title": "Language Selection",
-      "help": "Do you want to help translate Nightwave Plaza? {link}",
-      "translation_by": "This translation made by {author}.",
+      "help": "Want to help translate Nightwave Plaza? {link}",
+      "translation_by": "Translation provided by {author}.",
       "translation_author_link": "https://plaza.one",
       "translation_author_name": "mr. plaza"
     },
     "song": {
       "album": "Album",
       "artist": "Artist",
-      "btn_play_preview": "Play preview",
+      "btn_play_preview": "Play Preview",
       "btn_stop": "Stop ({time})",
-      "first_played": "First played",
+      "first_played": "First Played",
       "song_title": "Title",
       "title": "Song Info"
     },
     "support": {
-      "thanks": "Thank you for donations, they will go straight into funding the station.",
+      "thanks": "Thank you for your donations. All contributions go directly toward funding the station.",
       "title": "Support Us",
       "title2": "Love Nightwave Plaza?",
       "boosty": "Support on Boosty",
-      "rewards": "You can support the radio station and further updates by donating via Boosty and get special Discord rewards!",
-      "crypto": "Donate crypto",
-      "go_to_site": "Go to Nightwave Plaza website"
+      "rewards": "Support the radio station and future updates by donating via Boosty to receive special Discord rewards!",
+      "crypto": "Crypto Donations",
+      "go_to_site": "Visit Nightwave Plaza Website"
     },
     "user": {
-      "btn_logout": "Logout",
+      "btn_logout": "Log Out",
       "title": "My Profile"
     },
     "user_email": {
@@ -120,14 +120,22 @@
     "user_favorites": {
       "remove": "Remove",
       "title": "My Favorites",
-      "list_empty": "Your list is empty. Click the {icon} button to add songs to this list."
+      "list_empty": "Your list is empty. Click the {icon} button to add songs."
+    },
+    "user_favorites_export": {
+      "btn_export": "Export",
+      "title": "Export Favorites",
+      "description": "Export your favorites list as a CSV file. Click below to begin.",
+      "success": "Export successful! Your file is ready to download.",
+      "error": "Export failed. Please try again later.",
+      "btn_download": "Download"
     },
     "user_login": {
       "btn_register": "Register",
       "btn_reset": "Reset",
-      "type_username": "Type a username and password to sign in to the Nightwave Plaza.",
+      "type_username": "Enter your username and password to sign in to the Nightwave Plaza.",
       "btn_sign_in": "Sign In",
-      "remember_me": "Remember me",
+      "remember_me": "Remember Me",
       "title": "Sign In"
     },
     "news": {
@@ -138,28 +146,28 @@
     },
     "user_register": {
       "btn_register": "Register",
-      "captcha_desc": "Please fill this annoying captcha.",
-      "captcha_fail": "Captcha validation failed.",
-      "captcha_title": "are you still human?",
-      "please_fill": "Please fill out the registration form. All fields are required.",
-      "success": "Registration complete",
+      "captcha_desc": "Complete the captcha verification.",
+      "captcha_fail": "Captcha verification failed.",
+      "captcha_title": "Are you human?",
+      "please_fill": "Please complete all required fields in the registration form.",
+      "success": "Registration Successful",
       "title": "Registration",
       "user_information": "User Information",
       "welcome": "Welcome to Nightwave Plaza, {user}!"
     },
     "user_reset": {
-      "enter_email": "Enter your Email",
-      "instruction": "Enter your email address and click the button — an email will be sent to you with a link to reset your password.",
-      "title": "Reset password"
+      "enter_email": "Enter Your Email",
+      "instruction": "Enter your email address to receive a password reset link.",
+      "title": "Reset Password"
     },
     "player_timer": {
       "title": "Sleep Timer",
       "is_active": "Sleep timer is active",
-      "info": "Set the time for the sleep timer. The music will stop automatically.",
-      "stop": "Stop",
-      "start": "Start",
-      "timer_set": "Timer set",
-      "alert": "Music will stop after {minutes} minute(s)."
+      "info": "Set a timer to automatically stop playback.",
+      "stop": "Stop Timer",
+      "start": "Start Timer",
+      "timer_set": "Timer activated",
+      "alert": "Playback will stop in {minutes} minute(s)."
     }
   },
   "buttons": {
@@ -171,50 +179,50 @@
   },
   "errors": {
     "error": "Error",
-    "please_sign": "Please sign in to your Nightwave Plaza account to use this feature.",
-    "user_fetch": "Can't fetch user data.",
+    "please_sign": "Please sign in to your Nightwave Plaza account to access this feature.",
+    "user_fetch": "Failed to retrieve user data.",
     "server": "Internal server error.",
-    "enter_user_pass": "Please enter user name and password.",
+    "enter_user_pass": "Please enter a username and password.",
     "fields": {
       "email_email": "Email is incorrect.",
-      "email_required": "Please enter email.",
-      "username_alphadash": "Incorrect user name. Only letters, numbers and underscores allowed.",
-      "username_min": "User name is too short.",
-      "username_max": "User name is too long.",
+      "email_required": "Email is required.",
+      "username_alphadash": "Username may only contain letters, numbers, and underscores.",
+      "username_min": "Username is too short.",
+      "username_max": "Username is too long.",
       "password_min": "Password is too short.",
-      "password_match": "Passwords didn't match.",
-      "current_password_required": "Enter current password.",
+      "password_match": "Passwords do not match.",
+      "current_password_required": "Current password is required.",
       "email_unique": "User with this email is already registered.",
-      "username_required": "Please enter user name.",
-      "username_unique": "User name has already been taken.",
-      "password_required": "Please enter password.",
-      "current_password_invalid": "Current password is incorrect.",
-      "captcha_invalid": "The captcha response is invalid."
+      "username_required": "Please enter username.",
+      "username_unique": "Username is already taken.",
+      "password_required": "Password is required.",
+      "current_password_invalid": "Incorrect current password.",
+      "captcha_invalid": "Invalid captcha response."
     },
     "network_fail": "Network is unavailable.",
-    "invalid_user_password": "User name and password do not match.",
+    "invalid_user_password": "Invalid username or password.",
     "user_not_found": "User not found.",
     "song_not_found": "Song not found.",
-    "reset_link_invalid": "Reset password link expired or invalid."
+    "reset_link_invalid": "Password reset link is invalid or expired."
   },
   "fields": {
-    "current_password": "Current password",
+    "current_password": "Current Password",
     "email": "Email",
     "new_password": "New password",
     "password": "Password",
-    "repeat_password": "Password repeat",
-    "username": "User name"
+    "repeat_password": "Password Repeat",
+    "username": "Username"
   },
   "loading": "Loading…",
   "messages": {
     "auth_success": "Authentication successful!",
-    "email_changed": "Email has changed!",
+    "email_changed": "Email updated successfully!",
     "nice": "N I C E",
-    "password_changed": "Password has changed!",
-    "reset_success": "Instructions have been sent to your email.",
+    "password_changed": "Password updated successfully!",
+    "reset_success": "Password reset instructions have been sent to your email.",
     "success": "Success!",
     "saved": "Saved",
-    "reaction_tip": "You have liked the song. Nice! Clicking the like button twice will add song to your favorites list. Give it a try!"
+    "reaction_tip": "Song liked! Double-click the like button to add to favorites. Give it a try!"
   },
   "pagination": {
     "pages": "Pages: {n}",

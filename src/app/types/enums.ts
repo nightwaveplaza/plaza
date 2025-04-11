@@ -29,6 +29,7 @@ export enum Win {
   USER = 'user',
   USER_EMAIL = 'user-email',
   USER_FAVORITES = 'user-favorites',
+  USER_FAVORITES_EXPORT = 'user-favorites-export',
   USER_LOGIN = 'user-login',
   USER_PASSWORD = 'user-password',
   USER_REGISTER = 'user-register',

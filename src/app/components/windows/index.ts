@@ -22,6 +22,7 @@ import WindowUserResetPassword from '@app/components/windows/WindowUserResetPass
 import WindowSettings from '@app/components/windows/WindowSettings.vue'
 import WindowPlayerTimer from '@app/components/windows/WindowPlayerTimer.vue'
 import WindowDisconnected from '@app/components/windows/WindowDisconnected.vue'
+import WindowUserFavoritesExport from '@app/components/windows/WindowUserFavoritesExport.vue'
 
 export default {
   install: (Vue: App): void => {
@@ -31,22 +32,23 @@ export default {
     Vue.component('WindowDisconnected', WindowDisconnected)
     Vue.component('WindowHistory', WindowHistory)
     Vue.component('WindowLoading', WindowLoading)
+    Vue.component('WindowMobile', WindowMobile)
     Vue.component('WindowNews', WindowNews)
+    Vue.component('WindowPlayer', WindowPlayer)
+    Vue.component('WindowPlayerTimer', WindowPlayerTimer)
     Vue.component('WindowRatings', WindowRatings)
     Vue.component('WindowSettings', WindowSettings)
     Vue.component('WindowSettingsLanguage', WindowSettingsLanguage)
     Vue.component('WindowSong', WindowSong)
+    Vue.component('WindowSupport', WindowSupport)
     Vue.component('WindowUser', WindowUser)
     Vue.component('WindowUserEmail', WindowUserEmail)
     Vue.component('WindowUserFavorites', WindowUserFavorites)
+    Vue.component('WindowUserFavoritesExport', WindowUserFavoritesExport)
     Vue.component('WindowUserLogin', WindowUserLogin)
     Vue.component('WindowUserPassword', WindowUserPassword)
     Vue.component('WindowUserRegister', WindowUserRegister)
     Vue.component('WindowUserReset', WindowUserReset)
-    Vue.component('WindowMobile', WindowMobile)
-    Vue.component('WindowPlayer', WindowPlayer)
-    Vue.component('WindowPlayerTimer', WindowPlayerTimer)
-    Vue.component('WindowSupport', WindowSupport)
     Vue.component('WindowUserResetPassword', WindowUserResetPassword)
   }
 }

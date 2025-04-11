@@ -51,7 +51,10 @@
               />
             </div>
             <div class="col-auto">
-              <win-button class="px-4" @click="winProps.close()">
+              <win-button class="px-3 mr-2" @click="openWindow(Win.USER_FAVORITES_EXPORT)">
+                {{ t('win.user_favorites_export.btn_export') }}
+              </win-button>
+              <win-button class="px-3" @click="winProps.close()">
                 {{ t('buttons.close') }}
               </win-button>
             </div>
@@ -77,9 +80,10 @@ import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate } from '@app/utils/timeFormats.ts'
 import { useUserFavoritesApi } from '@app/composables/api'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo } = useWindows()
+const { winAlert, winSongInfo, openWindow } = useWindows()
 const { getFavorites, deleteFavorite } = useUserFavoritesApi()
 const { isLoading, fetch, data: favs, error } = getFavorites()
 

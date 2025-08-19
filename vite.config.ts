@@ -2,6 +2,7 @@ import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import nginxRoutesPlugin from './vite-plugin-nginx-routes'
 
 export default ({ mode }: { mode: string }): UserConfig => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
@@ -14,6 +15,11 @@ export default ({ mode }: { mode: string }): UserConfig => {
     plugins: [
       vue(),
       //getLegacyPlugin(process.env),
+      nginxRoutesPlugin({
+        routesFile: 'src/app/router/routes.ts',
+        outDir: 'dist',
+        mapVar: '$spa_match'
+      })
     ],
 
     root,

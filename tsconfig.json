@@ -82,9 +82,7 @@
 //  ],
   // Specifies the files to be included in the compilation.
   "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
+
   ]
   // Sets up project references to another TypeScript project.
 }

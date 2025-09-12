@@ -1,1 +1,27 @@
-{}
+{
+    "menu": {
+        "play_history": "Historie",
+        "ratings": "Hodnocení",
+        "support_us": "Podpořte nás"
+    },
+    "win": {
+        "settings": {
+            "btn_random": "Náhodné",
+            "application": "Nastavení Aplikace",
+            "bottom": "Dole",
+            "author": "Autor",
+            "appearance": "Nastavení Vzhledu",
+            "btn_solid": "Pevný",
+            "source": "Zdroj",
+            "taskbar": "Hlavní Lišta",
+            "theme": "Téma",
+            "title": "Nastavení Aplikace",
+            "top": "Nahoře",
+            "language": "Změnit Jazyk",
+            "audio_quality": "Kvalita Zvuku",
+            "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání",
+            "low_quality": "Nízká kvalita",
+            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora?{link}"
+        }
+    }
+}

@@ -21,7 +21,12 @@
             "audio_quality": "Kvalita Zvuku",
             "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání.",
             "low_quality": "Nízká kvalita",
-            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora? {link}"
+            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora? {link}",
+            "background": "Nastavení pozadí"
+        },
+        "about": {
+            "btn_credits": "Poděkování",
+            "btn_news": "Novinky"
         }
     }
 }

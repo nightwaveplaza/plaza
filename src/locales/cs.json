@@ -19,9 +19,9 @@
             "top": "Nahoře",
             "language": "Změnit Jazyk",
             "audio_quality": "Kvalita Zvuku",
-            "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání",
+            "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání.",
             "low_quality": "Nízká kvalita",
-            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora?{link}"
+            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora? {link}"
         }
     }
 }

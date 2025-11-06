@@ -20,9 +20,9 @@
         },
         "ratings": {
             "title": "評価",
-            "btn_monthly": "月毎",
+            "btn_monthly": "月間",
             "btn_overtime": "全体",
-            "btn_weekly": "週毎"
+            "btn_weekly": "週間"
         },
         "credits": {
             "title": "クレジット",
@@ -41,14 +41,14 @@
         },
         "history": {
             "showing_history": "履歴を表示しています: {from} — {to}",
-            "title": "プレイ履歴"
+            "title": "履歴"
         },
         "player": {
             "btn_stop": "停止",
             "listeners": "同時視聴者: {listeners}",
-            "user": "ログイン名: {user}",
-            "volume": "ボリューム: {volume} %",
-            "welcome": "おかえりなさい！",
+            "user": "ユーザー名: {user}",
+            "volume": "音量: {volume} %",
+            "welcome": "ようこそ",
             "btn_play": "再生"
         },
         "settings": {
@@ -72,27 +72,27 @@
             "bg_notice": "すべての背景画像はインターネットで見つけました。作者をご存知ですか? {link}"
         },
         "settings_language": {
-            "translation_by": "翻訳: {author}。",
+            "translation_by": "訳: {author}。",
             "translation_author_link": "https://plaza.one",
-            "translation_author_name": "saikooo,Harve(はーべ)",
-            "select": "言語の選択",
-            "title": "言語選択",
-            "help": "Nightwave Plaza 翻訳のお手伝いをしていただけますか?{link}"
+            "translation_author_name": "Harve(はーべ)",
+            "select": "言語",
+            "title": "言語設定",
+            "help": "翻訳者募集中{link}"
         },
         "song": {
             "album": "アルバム",
-            "artist": "アーティスト",
+            "artist": "作者",
             "btn_play_preview": "プレビュー",
             "btn_stop": "停止 ( {time} )",
             "first_played": "初回再生日",
             "song_title": "タイトル",
-            "title": "曲情報"
+            "title": "楽曲情報"
         },
         "support": {
             "title": "支援",
             "title2": "Nightwave Plazaが気に入りましたか?",
             "boosty": "Boostyで支援する",
-            "crypto": "暗号通貨を寄付する",
+            "crypto": "暗号通貨で寄付する",
             "go_to_site": "Nightwave Plazaのウェブサイトへ移動する",
             "thanks": "寄付に感謝します。寄付はそのままNightwave Plaza運営の資金として活用されます。",
             "rewards": "BoostyでNightwave Plazaを支援すると、Discordでの特別報酬を獲得できます!"
@@ -112,9 +112,9 @@
         "user_login": {
             "btn_register": "登録",
             "btn_reset": "リセット",
-            "btn_sign_in": "サインイン",
+            "btn_sign_in": "ログイン",
             "remember_me": "ログイン情報を記憶",
-            "title": "サインイン",
+            "title": "ログイン",
             "type_username": "ユーザー名とパスワードを入力してください。"
         },
         "news": {
@@ -131,22 +131,29 @@
             "success": "登録完了",
             "title": "登録",
             "user_information": "ユーザー情報",
-            "welcome": "Nightwave Plazaへようこそ 、 {user} さん !",
+            "welcome": "ようこそ 、 {user} さん !",
             "please_fill": "登録フォームを記入してください。 全て必須項目です。"
         },
         "user_reset": {
             "enter_email": "メールアドレス",
             "title": "パスワードを再設定する",
-            "instruction": "メールアドレスを入力してボタンを押すと、パスワードをリセットするためのリンクが記載されたメールが送信されます。"
+            "instruction": "メールアドレスを入力してください。パスワードをリセットするためのリンクが記載されたメールが送信されます。"
         },
         "player_timer": {
             "title": "スリープタイマー",
-            "is_active": "スリープタイマーが有効になっています",
+            "is_active": "スリープタイマー：有効",
             "stop": "停止",
             "start": "開始",
             "timer_set": "タイマーセット",
-            "info": "スリープタイマーの時間を設定します。 入力した時間が経過すると音楽は自動的に停止します。",
+            "info": "スリープタイマーの時間を設定します。 設定時間経過後、音楽は自動的に停止します。",
             "alert": "{minutes} 分後、音楽は自動停止します。"
+        },
+        "user_favorites_export": {
+            "title": "エクスポート",
+            "description": "お気に入りリストをCSVファイルにエクスポートします。",
+            "success": "エクスポート完了！",
+            "error": "エクスポート失敗。時間を空けて再度お試しください。",
+            "btn_download": "ダウンロード"
         }
     },
     "menu": {
@@ -164,12 +171,12 @@
     },
     "errors": {
         "error": "エラー",
-        "please_sign": "この機能を使うにはNightwave Plazaのアカウントにサインインしてください。",
-        "user_fetch": "ユーザを取得できません。",
-        "server": "内部サーバーエラーが発生しました。",
+        "please_sign": "この機能を使うにはログインしてください。",
+        "user_fetch": "ユーザーデータを取得できません。",
+        "server": "内部サーバーエラー",
         "enter_user_pass": "ユーザー名とパスワードを入力してください。",
         "fields": {
-            "email_email": "メールアドレスが間違っています。",
+            "email_email": "メールアドレスが誤っています。",
             "username_min": "ユーザー名が短すぎます。",
             "username_max": "ユーザー名が長すぎます。",
             "password_min": "パスワードが短すぎます。",
@@ -206,7 +213,7 @@
         "password_changed": "パスワードが変更されました！",
         "success": "成功！",
         "saved": "保存されました",
-        "reset_success": "パスワード変更用のメールが入力した電子メールに送信されました。",
+        "reset_success": "パスワード変更用のメールが入力したアドレスあてに送信されました。",
         "reaction_tip": "この曲を気に入りましたね。「いいね！」ボタンを 2 回押すと、曲がお気に入りリストに追加されます。"
     },
     "pagination": {

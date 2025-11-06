@@ -5,6 +5,7 @@ button, .button {
   @include font;
   @include d3-object;
 
+  line-height: 120%;
   text-align: center;
   outline: none !important;
   padding: 4px;

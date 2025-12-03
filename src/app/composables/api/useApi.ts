@@ -37,7 +37,7 @@ export function useApi<T> (): CallResponse<T> {
     error.value = null
     controller?.abort()
 
-    controller = new AbortController()
+    controller = new window.AbortController()
 
     try {
       const authHeader = isMobile()

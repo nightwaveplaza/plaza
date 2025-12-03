@@ -38,7 +38,7 @@ export function useApi<T> (): CallResponse<T> {
     controller?.abort()
 
     if (typeof AbortController !== 'undefined') {
-      controller = new window.AbortController()
+      controller = new AbortController()
     }
 
     try {

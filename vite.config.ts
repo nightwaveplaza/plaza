@@ -2,6 +2,8 @@ import { resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import legacy from '@vitejs/plugin-legacy'
+import type { Plugin } from 'vite'
 import nginxRoutesPlugin from './vite-plugin-nginx-routes'
 
 export default ({ mode }: { mode: string }): UserConfig => {
@@ -14,7 +16,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
   return defineConfig({
     plugins: [
       vue(),
-      //getLegacyPlugin(process.env),
+      getLegacyPlugin(process.env),
       nginxRoutesPlugin({
         routesFile: 'src/app/router/routes.ts',
         outDir: 'dist',
@@ -58,16 +60,16 @@ export default ({ mode }: { mode: string }): UserConfig => {
   })
 }
 
-// function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-//   // todo do we really need polyfill?
-//   if (env.VITE_APP === 'mobile') {
-//     return legacy({
-//       targets: 'defaults, android >= 5.0, ios >= 12',
-//     })
-//   } else {
-//     return null
-//   }
-// }
+function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
+  // todo do we really need polyfill?
+  if (env.VITE_APP === 'mobile') {
+    return legacy({
+      targets: 'defaults, android >= 5.0, ios >= 12',
+    })
+  } else {
+    return null
+  }
+}
 
 function getBuildDate (): string {
   return new Date().toISOString().slice(0, 10).replace(/-/g, '')

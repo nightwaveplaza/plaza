@@ -37,7 +37,9 @@ export function useApi<T> (): CallResponse<T> {
     error.value = null
     controller?.abort()
 
-    controller = new window.AbortController()
+    if (typeof AbortController !== 'undefined') {
+      controller = new window.AbortController()
+    }
 
     try {
       const authHeader = isMobile()
@@ -50,7 +52,7 @@ export function useApi<T> (): CallResponse<T> {
           // 'NP-User-Agent': userAuthStore.agent
           ...authHeader
         },
-        signal: controller.signal
+        signal: controller?.signal
       })
       data.value = response.data as UnwrapRef<T>
       return response.data as T // For direct request usage

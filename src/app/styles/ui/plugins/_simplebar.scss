@@ -22,9 +22,12 @@
     display: block;
     opacity: 100;
     width: 16px;
-    bottom: 1px;
     right: 1px;
+    bottom: 1px;
     background: var(--taskbar-btn-dots-bg);
+
+    /* pixel perfect kostyl' */
+    border-bottom: 1px solid var(--window-border-left);
 
     image-rendering: pixelated;
     transition: none;

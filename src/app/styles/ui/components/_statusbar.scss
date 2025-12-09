@@ -1,6 +1,4 @@
-@import "themes/elements";
-
-.statusbar {
+.statusbar, .win-statusbar {
   margin: 2px 1px;
 
   background-image: url("@app/styles/ui/icons/statusbar.png");
@@ -11,9 +9,9 @@
   .cell {
     padding: 3px 4px;
     line-height: 100%;
-    border: 1px solid;
-    @include border-color-tl('content-border-left');
-    @include border-color-rb('content-border-right');
+    border: 1px solid var(--forms-border-left);
+    border-right-color: var(--forms-border-right);
+    border-bottom-color: var(--forms-border-right);
 
     &.d {
       margin-right: 2px;

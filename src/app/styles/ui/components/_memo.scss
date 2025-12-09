@@ -1,0 +1,35 @@
+@import "../mixins";
+
+.memo, .win-memo {
+  @include font;
+  @include d3-content;
+
+  margin: 0;
+  padding: 6px;
+  line-height: 150%;
+  cursor: text;
+
+  p {
+    font-size: 12px;
+    line-height: 150%;
+    padding-right: 12px !important;
+  }
+
+  &.scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .a {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+
+  p.lead {
+    font-size: 14px !important;
+    font-weight: 700;
+  }
+}

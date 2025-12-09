@@ -1,0 +1,70 @@
+.taskbar, .win-taskbar {
+  padding: 2px 0 2px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  background-color: var(--button-bg);
+  border-top: 1px solid var(--window-border-left);
+  box-shadow: var(--taskbar-shadow);
+
+  &.taskbar-top {
+    top: 0;
+    bottom: auto;
+  }
+
+  .divider {
+    height: 100%;
+    width: 3px;
+    box-shadow: var(--window-shadow);
+  }
+
+  .local-time {
+    color: var(--color);
+    margin-right: 2px;
+    padding: 4px 0;
+    text-align: center;
+    border: 1px solid var(--forms-border-left);
+    border-right-color: var(--forms-border-right);
+    border-bottom-color: var(--forms-border-right);
+  }
+
+  button {
+    max-width: 150px;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+    text-align: left;
+    cursor: pointer;
+    color: var(--taskbar-font-color);
+
+    .title {
+      padding-left: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      cursor: pointer;
+    }
+
+    &.active {
+      font-weight: bold;
+      background: var(--taskbar-btn-dots-bg);
+      box-shadow: var(--taskbar-btn-shadow);
+      border-top-color: var(--button-border-right);
+      border-left-color: var(--button-border-right);
+      border-right-color: var(--button-border-left);
+      border-bottom-color: var(--button-border-left);
+    }
+  }
+}

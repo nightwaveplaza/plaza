@@ -144,12 +144,12 @@ label {
       left: 0;
       width: 13px;
       height: 13px;
-      background: url('@app/styles/plaza/icons/checkbox.png');
+      background: url('@app/styles/ui/icons/checkbox.png');
       background-size: 13px;
     }
 
     &:checked + label:before {
-      background: url('@app/styles/plaza/icons/checkbox-active.png');
+      background: url('@app/styles/ui/icons/checkbox-active.png');
       background-size: 13px
     }
 

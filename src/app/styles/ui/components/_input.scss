@@ -1,0 +1,18 @@
+@import "../mixins";
+@import "../variables";
+
+input, .win-input {
+  @include d3-content;
+
+  line-height: 16px;
+  padding: 2px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+label, .win-label {
+  display: inline-block;
+  margin-bottom: $margin-base;
+}

@@ -1,0 +1,49 @@
+.checkbox {
+  label {
+    display: inline;
+    line-height: 100%;
+  }
+
+  input {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 13px;
+    height: 13px;
+
+
+    & + label {
+      cursor: pointer;
+    }
+
+    &:not(checked) {
+      position: absolute;
+      opacity: 0;
+    }
+
+    &:not(checked) + label {
+      position: relative;
+      padding: 0 0 0 17px;
+    }
+
+    &:not(checked) + label:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 13px;
+      height: 13px;
+      background: url('@app/styles/ui/icons/checkbox.png');
+      background-size: 13px;
+    }
+
+    &:checked + label:before {
+      background: url('@app/styles/ui/icons/checkbox-active.png');
+      background-size: 13px
+    }
+
+    &:focus + label:before {
+      box-shadow: none;
+      outline: 0;
+    }
+  }
+}

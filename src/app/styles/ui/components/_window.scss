@@ -1,0 +1,117 @@
+@import "../mixins";
+
+.window, .win-window {
+  @include d3-window;
+  width: 497px;
+  cursor: default;
+  margin: 0 auto;
+  @include font;
+
+  >.inner {
+    position: relative;
+    padding: 2px;
+  }
+
+  .content, .win-window__content {
+    padding: 3px;
+    margin: 1px 1px 0 1px;
+    border: 1px solid var(--forms-border-left);
+    border-right-color: var(--forms-border-right);
+    border-bottom-color: var(--forms-border-right);
+  }
+
+  .header, .win-window__header {
+    margin: 1px;
+    padding: 2px;
+    position: relative;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--window-header-color);
+    background: var(--window-header-gradient);
+
+    &.inactive {
+      background: var(--window-header-inactive);
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      float: left;
+      margin-right: 2px;
+      background-size: cover;
+    }
+
+    .buttons {
+      position: absolute;
+      right: 3px;
+      top: 2px;
+      height: 16px;
+      line-height: 0;
+
+      button {
+        margin: 0;
+        padding: 2px;
+        height: 16px;
+        width: 16px;
+
+        span {
+          height: 100%;
+          width: 100%;
+          display: block;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          cursor: pointer;
+        }
+
+        @include d3-object
+      }
+
+      .button-maximize span {
+        background-image: var(--window-header-button-max);
+      }
+
+      .button-minimize span {
+        background-image: var(--window-header-button-min);
+      }
+
+      .button-close span {
+        background-image: var(--window-header-button-close);
+      }
+    }
+  }
+
+  .menu-bar, .win-window__menu {
+    margin: 1px 1px;
+    line-height: 1;
+    color: var(--color);
+    font-size: 0;
+
+    .action {
+      cursor: pointer;
+      display: inline-block;
+      font-size: $font-size;
+
+      &::first-letter {
+        text-decoration: underline;
+      }
+
+      a {
+        display: block;
+        padding: 5px 6px;
+        color: inherit !important;
+        text-decoration: none;
+
+        &:hover {
+          border: 0;
+          box-shadow: var(--window-shadow);
+        }
+
+        u {
+          cursor: pointer !important;
+        }
+      }
+    }
+  }
+}

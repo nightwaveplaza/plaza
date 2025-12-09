@@ -1,20 +1,17 @@
-@import "plaza/themes/elements.scss";
-
 .content-loading {
   z-index: 9999;
   width: 100%;
   height: 100%;
-  background-color: #FFFFFF;
   background-image: url('@app/assets/img/loading.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 36px 36px;
 
-  border: 1px solid;
-  @include border-shadow('content-shadow');
-  @include border-color-tl('content-border-left');
-  @include border-color-rb('content-border-right');
-  @include background-color('inputs-bg');
+  box-shadow: var(--forms-shadow);
+  border: 1px solid var(--forms-border-left);
+  border-right-color: var(--forms-border-right);
+  border-bottom-color: var(--forms-border-right);
+  background-color: var(--input-bg);
 }
 
 .win98 {

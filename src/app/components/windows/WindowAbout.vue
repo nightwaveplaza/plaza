@@ -1,7 +1,7 @@
 <template>
   <win-window ref="win" v-slot="winProps" :width="380" :name="name" :title="t('win.about.title')">
-    <div class="content p-2">
-      <div class="row mb-4">
+    <div class="p-2">
+      <div class="row mb-2">
         <div class="col align-self-center text-center">
           <p class="lead mb-1">
             Nightwave Plaza

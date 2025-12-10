@@ -1,6 +1,6 @@
 @import "../mixins";
 
-.list, .win-list {
+.win-list {
   @include font;
   @include d3-content;
 

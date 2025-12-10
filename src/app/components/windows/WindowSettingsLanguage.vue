@@ -63,7 +63,7 @@ onMounted(() => {
 
 <style lang="scss">
 #window-settings-language {
-  .list {
+  .win-list {
     height: 175px;
 
     svg {

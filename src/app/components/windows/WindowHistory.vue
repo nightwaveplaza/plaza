@@ -17,7 +17,7 @@
           <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
             <tr v-for="h in history?.data" :key="h.song.id">
-              <td class="pl-2 pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
+              <td class="pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
                 <div class="artist">
                   {{ h.song.artist }}
                 </div>
@@ -25,7 +25,7 @@
                   {{ h.song.title }}
                 </div>
               </td>
-              <td class="pr-1 text-right noselect" style="width: 78px">
+              <td class="text-right noselect" style="width: 78px">
                 {{ fmtDay(h.played_at) }}<br>
                 {{ fmtTime(h.played_at) }}
               </td>

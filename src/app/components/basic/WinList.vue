@@ -1,5 +1,5 @@
 <template>
-  <div ref="list" class="list" :class="{scroll}">
+  <div ref="list" class="win-list" :class="{scroll}">
     <simplebar v-if="scroll" ref="scrollbar" data-simplebar-auto-hide="false">
       <table class="hover">
         <slot />

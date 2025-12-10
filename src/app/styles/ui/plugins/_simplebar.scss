@@ -12,8 +12,12 @@
   right: 0;
 }
 
+.simplebar-scrollable-y .simplebar-content {
+  padding-right: 28px !important;
+}
 .simplebar-content {
-  padding-right: 20px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
 }
 
 .simplebar-track {

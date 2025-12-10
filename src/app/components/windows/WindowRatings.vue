@@ -20,7 +20,7 @@
           <div v-if="isLoading" class="content-loading" />
           <win-list v-if="!isLoading && songs" ref="list" scroll>
             <tr v-for="(s, i) in songs.data" :key="i" class="hover">
-              <td class="text-center noselect" style="width: 37px">
+              <td class="noselect" style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
               <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
@@ -31,7 +31,7 @@
                   {{ s.song.title }}
                 </div>
               </td>
-              <td class="text-right noselect pr-2 nowrap" style="width: 57px">
+              <td class="text-right noselect nowrap" style="width: 57px">
                 {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
               </td>
             </tr>
@@ -128,7 +128,7 @@ onMounted(() => {
 
 <style lang="scss">
 #window-ratings {
-  .list {
+  .win-list {
     table {
       .icon-heart {
         text-shadow: none;

@@ -1,7 +1,7 @@
 <template>
   <button
     ontouchstart
-    class="noselect"
+    class="win-button noselect"
     :class="{'d-block': block}"
     :disabled="disabled"
     @click="emit('click')"

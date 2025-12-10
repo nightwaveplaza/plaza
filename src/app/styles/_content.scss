@@ -14,29 +14,15 @@
   background-color: var(--input-bg);
 }
 
-.win98 {
-  .window {
-    z-index: 100;
-  }
-
-  .window .header .icon {
-    background: url('@app/assets/img/ball.png') no-repeat;
-    background-size: cover;
-  }
-
-  button.close {
-    display: block;
-    width: 100px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.win-window {
+  z-index: 100;
 }
 
-.win98.fluid-height {
+.frame > .fluid-height {
   height: 100% !important;
   max-height: 600px;
 
-  .window {
+  .win-window {
     height: 100% !important;
   }
 

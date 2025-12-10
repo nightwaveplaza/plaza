@@ -49,19 +49,17 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss">
-.win98 {
-  &.alert {
-    .alert-icon {
-      width: 32px;
-      height: 32px;
+.frame .alert {
+  .alert-icon {
+    width: 32px;
+    height: 32px;
 
-      &.info {
-        background-image: url('@app/assets/img/msg_info.png');
-      }
+    &.info {
+      background-image: url('@app/assets/img/msg_info.png');
+    }
 
-      &.warn {
-        background-image: url('@app/assets/img/msg_warning.png');
-      }
+    &.warn {
+      background-image: url('@app/assets/img/msg_warning.png');
     }
   }
 }

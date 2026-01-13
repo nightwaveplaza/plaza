@@ -1,5 +1,5 @@
 <template>
-  <div class="app-desktop" :class="themeName" :style="{backgroundImage, backgroundColor}">
+  <div class="app-desktop" :class="themeName" :data-theme="themeName" :style="{backgroundImage, backgroundColor}">
     <router-view />
 
     <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
@@ -39,6 +39,7 @@ watch(() => openedWindows.value, (n) => {
     router.push({ name: 'index' })
   }
 }, {deep: true})
+
 
 onMounted(() => {
   // todo

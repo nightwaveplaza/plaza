@@ -1,0 +1,11 @@
+.text-field {
+  padding: 6px;
+  font-size: 11px;
+  line-height: 22px;
+  cursor: text;
+  min-height: 14px;
+  border: 1px solid var(--forms-border-left);
+  border-right-color: var(--forms-border-right);
+  border-bottom-color: var(--forms-border-right);
+  background-color: var(--button-bg);
+}

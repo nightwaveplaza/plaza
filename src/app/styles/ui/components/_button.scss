@@ -1,0 +1,39 @@
+@import "../mixins";
+
+.button, button, .win-button {
+  @include font;
+  @include d3-object;
+
+  text-align: center;
+  line-height: 120%;
+  outline: none !important;
+  padding: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: inline-block;
+  text-decoration: none !important;
+  margin: 0;
+  color: inherit;
+
+  i {
+    cursor: pointer;
+    line-height: 11px;
+  }
+
+  &:enabled {
+    color: var(--color);
+  }
+
+  &:disabled {
+    color: var(--color-disabled);
+    text-shadow: 1px 1px white;
+  }
+
+  &:active:enabled, &.active {
+    box-shadow: var(--button-active-shadow);
+    border-left-color: var(--button-border-active);
+    border-top-color: var(--button-border-active);
+    border-right-color: var(--button-border-active);
+    border-bottom-color: var(--button-border-active);
+  }
+}

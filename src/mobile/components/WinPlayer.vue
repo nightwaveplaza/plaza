@@ -149,7 +149,7 @@ function openDrawer (): void {
     text-align: center;
   }
 
-  #window-player .win98 .window {
+  #window-player .win-window {
     width: 90% !important;
   }
 }

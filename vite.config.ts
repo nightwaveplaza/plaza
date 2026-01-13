@@ -38,6 +38,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
           manualChunks: (id) => {
             if (id.includes('hls.js')) {return 'hls'}
             if (id.includes('node_modules')) {return 'vendor'}
+            if (id.includes('app/styles/ui')) {return 'ui'}
           }
         },
       },
@@ -61,7 +62,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
 }
 
 function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-  // todo do we really need polyfill?
+  // need polyfill for old androids
   if (env.VITE_APP === 'mobile') {
     return legacy({
       targets: 'defaults, android >= 5.0, ios >= 12',

@@ -1,0 +1,64 @@
+@import "../mixins";
+
+.win-list {
+  @include font;
+  @include d3-content;
+
+  width: 100%;
+
+  table {
+    width: 100%;
+    border: none;
+    margin: 0 19px 0 1px;
+    border-collapse: collapse;
+
+    tr {
+      border-bottom: 1px #c8c8c8 dashed;
+
+      &.strike {
+        text-decoration: line-through;
+        opacity: 0.4;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        vertical-align: middle;
+
+        &.nowrap {
+          white-space: nowrap;
+        }
+
+        &.show-info {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          div {
+            cursor: pointer;
+          }
+        }
+
+        .artist {
+          margin-bottom: 1px;
+          font-weight: 700;
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+          background: #efe6eb;
+          padding: 0;
+          line-height: 0;
+          border: 1px #808080 solid;
+          border-right-color: #dfdfdf;
+          border-bottom-color: #dfdfdf;
+        }
+      }
+    }
+  }
+}

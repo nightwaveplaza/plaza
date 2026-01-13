@@ -1,5 +1,3 @@
-@import "plaza/themes/elements.scss";
-
 * {
   margin: 0;
   padding: 0;
@@ -73,7 +71,7 @@ button.d-block, .button.d-block, input.d-block {
 
 /* MQ */
 @media (max-width: 500px) {
-  .win98 .window {
+  .win-window {
     width: 100% !important;
   }
 }

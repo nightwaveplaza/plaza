@@ -1,0 +1,32 @@
+@import 'variables';
+
+@mixin font {
+  font-size: $font-size;
+  font-family: $font-family;
+  color: var(--color);
+}
+
+@mixin d3-object() {
+  border: 1px solid var(--button-border-left);
+  border-right-color: var(--button-border-right);
+  border-bottom-color: var(--button-border-right);
+  box-shadow: var(--button-shadow);
+  background-color: var(--button-bg);
+}
+
+@mixin d3-window() {
+  box-shadow: var(--window-shadow);
+  border: 1px solid var(--window-border-left);
+  border-right-color: var(--window-border-right);
+  border-bottom-color: var(--window-border-right);
+  background-color: var(--button-bg);
+}
+
+@mixin d3-content() {
+  box-shadow: var(--forms-shadow);
+  border: 1px solid var(--forms-border-left);
+  border-right-color: var(--forms-border-right);
+  border-bottom-color: var(--forms-border-right);
+  background-color: var(--input-bg);
+}
+

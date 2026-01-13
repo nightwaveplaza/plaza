@@ -1,7 +1,7 @@
 <template>
   <div v-show="!isMinimized" :id="'window-' + name" ref="frame" class="frame row align-items-center">
-    <div :class="{alert: props.isAlert, 'fluid-height': props.fluidHeight}" class="win98 col pl-0 pr-0">
-      <div ref="windowRef" class="window" :style="style" @mousedown="pullUp">
+    <div :class="{alert: props.isAlert, 'fluid-height': props.fluidHeight}" class="col pl-0 pr-0">
+      <div ref="windowRef" class="win-window" :style="style" @mousedown="pullUp">
         <div class="inner">
           <div class="header header-draggable noselect" :class="{inactive: !isActive}"
                @dblclick="resetPosition" @mousedown="startMove"

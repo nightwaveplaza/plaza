@@ -7,7 +7,7 @@
           <win-list v-else ref="list" scroll>
             <template v-if="favs?.data && !isLoading">
               <tr v-for="(f, i) in favs.data" :key="i" :class="{ strike: deleted.includes(f.id) }" class="hover">
-                <td class="p-1 noselect" style="width: 62px">
+                <td class="p-1 pl-0 noselect" style="width: 62px">
                   <img :src="f.song.artwork_src" alt="artwork">
                 </td>
                 <td class="pl-1 show-info" @click="winSongInfo(f.song.id)">

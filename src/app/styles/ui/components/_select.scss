@@ -1,0 +1,41 @@
+@import "../mixins";
+
+.select, .win-select {
+  @include d3-content;
+
+  cursor: pointer;
+  padding: 1px 3px 1px 1px;
+  position: relative;
+
+  &:after {
+    @include d3-window;
+    cursor: pointer;
+    content: ' ';
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    width: 18px;
+    pointer-events: none;
+    background-image: var(--select-dropdown-icon);
+  }
+
+  select {
+    cursor: pointer;
+    margin: 1px;
+    padding: 2px 1px;
+    font-size: 11px;
+    border: 0;
+    width: 100%;
+    color: var(--color);
+    background-color: var(--input-bg);
+
+    &:focus {
+      outline: 0;
+    }
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+}

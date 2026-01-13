@@ -83,7 +83,7 @@
     }
   }
 
-  .menu-bar, .win-window__menu {
+  .win-window__menu {
     margin: 1px 1px;
     line-height: 1;
     color: var(--color);
@@ -93,9 +93,16 @@
       cursor: pointer;
       display: inline-block;
       font-size: $font-size;
+      padding: 5px 6px;
+      text-decoration: none;
 
       &::first-letter {
         text-decoration: underline;
+      }
+
+      &:hover {
+        border: 0;
+        box-shadow: var(--window-shadow);
       }
 
       a {

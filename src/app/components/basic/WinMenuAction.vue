@@ -1,5 +1,5 @@
 <template>
-  <div class="win-window__menu noselect">
+  <div class="action">
     <slot />
   </div>
 </template>

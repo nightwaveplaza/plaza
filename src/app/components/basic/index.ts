@@ -8,6 +8,7 @@ import WinWindow from '@app/components/basic/WinWindow.vue'
 import WinMenu from '@app/components/basic/WinMenu.vue'
 import WinGroupBox from '@app/components/basic/WinGroupBox.vue'
 import WinPanel from '@app/components/basic/WinPanel.vue'
+import WinMenuAction from '@app/components/basic/WinMenuAction.vue'
 
 export default {
   install: (Vue: App): void => {
@@ -15,10 +16,11 @@ export default {
     Vue.component('WinGroupBox', WinGroupBox)
     Vue.component('WinList', WinList)
     Vue.component('WinMemo', WinMemo)
+    Vue.component('WinMenu', WinMenu)
+    Vue.component('WinMenuAction', WinMenuAction)
     Vue.component('WinPagination', WinPagination)
     Vue.component('WinPanel', WinPanel)
     Vue.component('WinTaskbar', WinTaskbar)
     Vue.component('WinWindow', WinWindow)
-    Vue.component('WinMenu', WinMenu)
   },
 }

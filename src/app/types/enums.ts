@@ -27,11 +27,12 @@ export enum Win {
   SONG = 'song',
   SUPPORT = 'support',
   USER = 'user',
-  USER_EMAIL = 'user-email',
   USER_FAVORITES = 'user-favorites',
   USER_FAVORITES_EXPORT = 'user-favorites-export',
   USER_LOGIN = 'user-login',
   USER_PASSWORD = 'user-password',
+  USER_PROFILE_EDIT = 'user-profile-edit',
+  USER_PROFILE_DELETE = 'user-profile-delete',
   USER_REGISTER = 'user-register',
   USER_RESET = 'user-reset',
   USER_RESET_PASSWORD = 'user-reset-password'

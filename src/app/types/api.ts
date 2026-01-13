@@ -87,6 +87,14 @@ export interface UserResource {
   current_reaction: null | number
 }
 
+export interface UserStatsResource {
+  data: {
+    reactions: number,
+    favorites: number,
+  },
+  current_reaction: null | number
+}
+
 export interface UserLoginResource {
   data: User,
   token: string | null

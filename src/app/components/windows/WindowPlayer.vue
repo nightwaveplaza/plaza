@@ -13,7 +13,20 @@
     </template>
 
     <!-- Menu -->
-    <win-menu v-if="!isMobile()" />
+    <win-menu v-if="!isMobile()">
+      <win-menu-action @click="openWindow(Win.ABOUT)">
+        {{ t('menu.about') }}
+      </win-menu-action>
+      <win-menu-action @click="openWindow(Win.HISTORY)">
+        {{ t('menu.play_history') }}
+      </win-menu-action>
+      <win-menu-action @click="openWindow(Win.RATINGS)">
+        {{ t('menu.ratings') }}
+      </win-menu-action>
+      <win-menu-action @click="openWindow(Win.SUPPORT)">
+        {{ t('menu.support_us') }}
+      </win-menu-action>
+    </win-menu>
 
     <!-- Player -->
     <div class="content p-2">
@@ -26,7 +39,7 @@
         {{ t('win.player.listeners', { listeners }) }}
       </div>
       <div v-if="isSigned" class="col-5 col-sm-4 cell login">
-        {{ t('win.player.user', {user: username}) }}
+        {{ t('win.player.user', {user: user?.username }) }}
       </div>
     </div>
   </win-window>
@@ -46,9 +59,9 @@ import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
-const { minimizeWindow } = useWindows()
+const { minimizeWindow, openWindow } = useWindows()
 const { listeners } = useNowPlayingStatus()
-const { username, isSigned } = useAuth()
+const { user, isSigned } = useAuth()
 
 defineProps<{
   name: string

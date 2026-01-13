@@ -9,9 +9,10 @@ export interface UserPasswordForm {
   password: string
 }
 
-export interface UserEmailForm {
+export interface UserProfileForm {
   current_password: string,
-  email: string
+  email: string,
+  username: string
 }
 
 export interface UserRegisterForm {

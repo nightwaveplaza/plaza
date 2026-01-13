@@ -63,7 +63,7 @@ import { useNumberOnly } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
-import { fmtDuration } from '../../utils/timeFormats.ts'
+import { fmtDuration } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
 const { closeWindow, winAlert } = useWindows()

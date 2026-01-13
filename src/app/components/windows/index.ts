@@ -9,7 +9,7 @@ import WindowRatings from '@app/components/windows/WindowRatings.vue'
 import WindowSettingsLanguage from '@app/components/windows/WindowSettingsLanguage.vue'
 import WindowSong from '@app/components/windows/WindowSong.vue'
 import WindowUser from '@app/components/windows/WindowUser.vue'
-import WindowUserEmail from '@app/components/windows/WindowUserEmail.vue'
+import WindowUserProfileEdit from '@app/components/windows/WindowUserProfileEdit.vue'
 import WindowUserFavorites from '@app/components/windows/WindowUserFavorites.vue'
 import WindowUserLogin from '@app/components/windows/WindowUserLogin.vue'
 import WindowUserPassword from '@app/components/windows/WindowUserPassword.vue'
@@ -23,6 +23,7 @@ import WindowSettings from '@app/components/windows/WindowSettings.vue'
 import WindowPlayerTimer from '@app/components/windows/WindowPlayerTimer.vue'
 import WindowDisconnected from '@app/components/windows/WindowDisconnected.vue'
 import WindowUserFavoritesExport from '@app/components/windows/WindowUserFavoritesExport.vue'
+import WindowUserProfileDelete from '@app/components/windows/WindowUserProfileDelete.vue'
 
 export default {
   install: (Vue: App): void => {
@@ -42,7 +43,8 @@ export default {
     Vue.component('WindowSong', WindowSong)
     Vue.component('WindowSupport', WindowSupport)
     Vue.component('WindowUser', WindowUser)
-    Vue.component('WindowUserEmail', WindowUserEmail)
+    Vue.component('WindowUserProfileEdit', WindowUserProfileEdit)
+    Vue.component('WindowUserProfileDelete', WindowUserProfileDelete)
     Vue.component('WindowUserFavorites', WindowUserFavorites)
     Vue.component('WindowUserFavoritesExport', WindowUserFavoritesExport)
     Vue.component('WindowUserLogin', WindowUserLogin)

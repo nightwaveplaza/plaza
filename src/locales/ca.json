@@ -96,7 +96,8 @@
         },
         "user": {
             "btn_logout": "Tancar sessió",
-            "title": "El meu perfil"
+            "title": "El meu perfil",
+            "registered": "Registrat"
         },
         "user_email": {
             "title": "Canviar correu electrònic"
@@ -140,13 +141,20 @@
             "title": "Temporitzador",
             "is_active": "El temporitzador és actiu",
             "start": "Començar",
-            "timer_set": "Temporitzador activat",
+            "timer_set": "Temporitzador activat.",
             "info": "Configuri el temps pel temporitzador. La música pararà automàticament.",
             "alert": "La música pararà d'aquí {minutes} minut(s).",
             "stop": "Aturar"
         },
         "mobile": {
             "description": "Disposem de les aplicacions oficials d'Android i iOS. Si us plau, descarregui i deixi que Nightwave Plaza li mostri el passat amb la música del futur."
+        },
+        "user_profile_edit": {
+            "title": "Edita Perfil"
+        },
+        "user_profile_delete": {
+            "title": "Suprimeix Compte",
+            "confirm": "Confirma supressió"
         }
     },
     "buttons": {

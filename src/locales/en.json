@@ -96,11 +96,11 @@
     "user": {
       "btn_logout": "Log Out",
       "title": "My Profile",
+      "registered": "Registered",
       "statistics": "Statistics",
       "likes": "Likes",
       "favorites": "Favorites",
-      "account": "Account",
-      "registered": "Registered"
+      "account": "Account"
     },
     "user_favorites": {
       "remove": "Remove",

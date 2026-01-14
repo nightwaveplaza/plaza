@@ -51,6 +51,10 @@ const { isLoading } = deleteProfile()
 const { winAlert, closeWindow } = useWindows()
 const { unsetUser } = useAuth()
 
+defineProps<{
+  name: string,
+}>()
+
 const fields = reactive({
   current_password: '',
 })

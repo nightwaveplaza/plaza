@@ -1,7 +1,7 @@
 <template>
   <win-window ref="win" v-slot="winProps" :width="320" :name="name" :title="t('win.user_profile_delete.title')">
     <div class="p-2">
-      <win-memo class="mb-3">
+      <win-memo class="mb-2">
         <p><b>{{ t('win.user_profile_delete.warn1') }}</b></p>
         <p>{{ t('win.user_profile_delete.warn2') }}</p>
         <p>{{ t('win.user_profile_delete.warn3') }}</p>
@@ -9,29 +9,15 @@
         <p>{{ t('win.user_profile_delete.warn5') }}</p>
       </win-memo>
 
-      <win-group-box class="mb-3">
-        <template #title>
-          {{ t('win.user_profile_delete.confirm') }}
-        </template>
-        <template #content>
-          <div class="checkbox">
-            <input id="remember" v-model="deleteConfirm" type="checkbox">
-            <label for="remember">{{ t('win.user_profile_delete.understand') }}</label>
-          </div>
-        </template>
-      </win-group-box>
+      <div class="checkbox mb-3">
+        <input id="remember" v-model="deleteConfirm" type="checkbox">
+        <label for="remember">{{ t('win.user_profile_delete.understand') }}</label>
+      </div>
 
-
-      <win-group-box class="mb-3">
-        <template #title>
-          {{ t('fields.password_confirmation') }}
-        </template>
-        <template #content>
-          <!-- Current password -->
-          <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
-          <input id="password" v-model="fields.current_password" class="d-block" type="password">
-        </template>
-      </win-group-box>
+      <win-panel class="mb-3">
+        <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
+        <input id="password" v-model="fields.current_password" class="d-block" type="password">
+      </win-panel>
 
       <!-- Buttons -->
       <div class="row mt-3 no-gutters justify-content-between">

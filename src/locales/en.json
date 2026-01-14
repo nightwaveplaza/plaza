@@ -40,21 +40,15 @@
       "contact_info": "Contact Information",
       "submissions": "Submissions",
       "streams": "Streams",
-      "send_enquires": "Please send any enquiries you may have to {link}.",
-      "welcome": "Welcome to 24/7 online vaporwave and future funk radio station.",
+      "send_enquires": "Please send any inquiries you may have to {link}.",
+      "welcome": "Welcome to the 24/7 online vaporwave and future funk radio station.",
       "submission_form": "Want to submit music for broadcast? Please use {link}."
     },
     "credits": {
       "title": "Credits",
-      "created_by": "{app} website and apps were created and are maintained by {author}.",
-      "content": "All music and background images",
-      "content_by": "{content} belong to their respective authors. Musical content has been provided by artist and labels. If you have any copyright concerns, please let us know."
-    },
-    "delete_account": {
-      "if_you_want": "If you want to delete your account, please contact us on {email}",
-      "title": "Delete Account",
-      "title2": "Account Deletion",
-      "will_be_deleted": "You account and all associated data will be permanently deleted (favorites and like history)."
+      "created_by": "{app} website and apps area created and maintained by {author}.",
+      "content": "All music and backgrounds",
+      "content_by": "{content} belong to their respective authors. Musical content is provided by artist and labels. If you have any copyright concerns, please let us know."
     },
     "history": {
       "showing_history": "Displaying history: {from} — {to}",
@@ -63,7 +57,7 @@
     "player": {
       "btn_stop": "Stop",
       "listeners": "Listeners: {listeners}",
-      "user": "Logged as: {user}",
+      "user": "Logged in as: {user}",
       "volume": "Volume: {volume}%",
       "welcome": "Welcome back!",
       "btn_play": "Play"
@@ -147,13 +141,13 @@
       "title": "Sleep Timer",
       "is_active": "Sleep timer is active",
       "start": "Start Timer",
-      "timer_set": "Timer activated",
+      "timer_set": "Timer activated.",
       "info": "Set a timer to automatically stop playback.",
       "alert": "Playback will stop in {minutes} minute(s).",
       "stop": "Stop Timer"
     },
     "mobile": {
-      "description": "Official Android and iOS apps are available. Please, download it and let Nightwave Plaza show you the past with the music of the future."
+      "description": "Official Android and iOS apps are available. Please download them and let Nightwave Plaza show you the past through the music of the future."
     },
     "user_profile_edit": {
       "title": "Edit Profile"
@@ -222,13 +216,12 @@
     "reset_link_invalid": "Password reset link is invalid or expired."
   },
   "fields": {
-    "current_password": "Current Password",
-    "new_password": "New password",
+    "current_password": "Please enter your current password to continue",
+    "new_password": "New Password",
     "password": "Password",
-    "repeat_password": "Password Repeat",
+    "repeat_password": "Repeat Password",
     "username": "Username",
     "email": "Email",
-    "password_confirmation": "Password Confirmation",
     "user_details": "User Details"
   },
   "loading": "Loading…",

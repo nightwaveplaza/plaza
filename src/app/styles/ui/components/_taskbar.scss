@@ -1,5 +1,5 @@
-.taskbar, .win-taskbar {
-  padding: 2px 0 2px 0;
+.win-taskbar {
+  padding: 3px 0 2px 0;
   position: absolute;
   left: 0;
   right: 0;
@@ -23,7 +23,7 @@
   .local-time {
     color: var(--color);
     margin-right: 2px;
-    padding: 4px 0;
+    padding: 3px 0;
     text-align: center;
     border: 1px solid var(--forms-border-left);
     border-right-color: var(--forms-border-right);

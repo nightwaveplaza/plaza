@@ -1,8 +1,9 @@
 <template>
-  <div class="taskbar d-flex flex-nowrap" :class="{'taskbar-top': taskbarPosition === 'top'}">
+  <div class="win-taskbar d-flex flex-nowrap" :class="{'taskbar-top': taskbarPosition === 'top'}">
     <div style="flex: 0 0 10px">
       <div class="divider mx-1" />
     </div>
+
     <win-button
       v-for="window in openedWindows"
       :key="window.name"
@@ -10,14 +11,14 @@
       :class="{active: activeWindow === window.name && !window.isMinimized }"
       @click="toggleMinimize(window.name)"
     >
-      <img src="@app/assets/img/ball.png" alt="">
+      <img src="../../assets/img/ball.png" alt="">
       <div class="title">
         {{ window.title }}
       </div>
     </win-button>
 
-    <div class="local-time ml-auto" style="flex: 0 0 60px">
-      {{ time }}
+    <div class="local-time ml-auto" style="flex: 0 0 90px">
+      <win-connection-status /> {{ time }}
     </div>
   </div>
 </template>

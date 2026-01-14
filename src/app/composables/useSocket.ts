@@ -12,9 +12,6 @@ const isConnected = ref(false)
 const isDead = ref(false)
 const reconnectAttempts = ref(0)
 
-// Local event listeners storage for cleanup
-const localEvents: Array<[string, (...args: unknown[]) => void]> = []
-
 /**
  * Main composable function
  */
@@ -26,6 +23,9 @@ export function useSocket (): {
   onEvent: (event: string, callback: (...args: unknown[]) => void) => void
   createSocket: () => void
 } {
+  // Local event listeners storage for cleanup
+  const localEvents: Array<[string, (...args: unknown[]) => void]> = []
+
   /**
    * Initializes the Socket.io instance if not already created.
    */
@@ -34,7 +34,6 @@ export function useSocket (): {
       socket.value = io('https://plaza.one', {
         autoConnect: true,
         path: '/ws',
-        reconnectionAttempts: 5,
         timeout: 5000
       })
 

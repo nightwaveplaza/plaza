@@ -20,8 +20,8 @@
       "top": "Top",
       "language": "Change Language",
       "audio_quality": "Audio Quality",
-      "low_quality": "Low quality",
-      "bg_notice": "All background images were found on the Internet. Do you know the author? {link}",
+      "low_quality": "Low Quality",
+      "bg_notice": "Background images are sourced from the Internet. Know the author? {link}",
       "background": "Background Settings",
       "let_us_know": "Let us know!",
       "quality_changed": "Audio quality has changed. Please restart playback."
@@ -48,7 +48,7 @@
       "title": "Credits",
       "created_by": "{app} website and apps are created and maintained by {author}.",
       "content": "All music and backgrounds",
-      "content_by": "{content} belong to their respective authors. Musical content is provided by artist and labels. If you have any copyright concerns, please let us know."
+      "content_by": "{content} belong to their respective authors. Musical content is provided by artists and labels. If you have any copyright concerns, please let us know."
     },
     "history": {
       "showing_history": "Displaying history: {from} — {to}",
@@ -110,10 +110,10 @@
     "user_login": {
       "btn_register": "Register",
       "btn_reset": "Reset",
-      "btn_sign_in": "Sign In",
+      "btn_sign_in": "Log In",
       "remember_me": "Remember Me",
-      "title": "Sign In",
-      "type_username": "Enter your username and password to sign in to the Nightwave Plaza."
+      "title": "Log In",
+      "type_username": "Enter your username and password to sign in to Nightwave Plaza."
     },
     "news": {
       "title": "News"
@@ -192,13 +192,13 @@
     "server": "Internal server error.",
     "enter_user_pass": "Please enter a username and password.",
     "fields": {
-      "email_email": "Email is incorrect.",
+      "email_email": "Invalid email address.",
       "email_required": "Email is required.",
       "username_min": "Username is too short.",
       "username_max": "Username is too long.",
       "password_match": "Passwords do not match.",
       "email_unique": "User with this email is already registered.",
-      "username_required": "Please enter username.",
+      "username_required": "Please enter a username.",
       "password_required": "Password is required.",
       "current_password_invalid": "Incorrect current password.",
       "captcha_invalid": "Invalid captcha response.",

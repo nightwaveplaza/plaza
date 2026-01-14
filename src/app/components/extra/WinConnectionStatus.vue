@@ -38,7 +38,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     animation: swap-status 1s steps(1) infinite;
-
+    image-rendering: pixelated;
+    
     &.connected {
       animation: none;
       background-position: 0 0;

@@ -1,32 +1,32 @@
 {
-  "menu": {
-    "ratings": "Hodnocení",
-    "play_history": "Historie",
-    "support_us": "Podpořte nás"
-  },
-  "win": {
-    "settings": {
-      "btn_random": "Náhodné",
-      "application": "Nastavení Aplikace",
-      "bottom": "Dole",
-      "author": "Autor",
-      "appearance": "Nastavení Vzhledu",
-      "btn_solid": "Pevný",
-      "source": "Zdroj",
-      "taskbar": "Hlavní Lišta",
-      "theme": "Téma",
-      "title": "Nastavení Aplikace",
-      "top": "Nahoře",
-      "language": "Změnit Jazyk",
-      "audio_quality": "Kvalita Zvuku",
-      "low_quality": "Nízká kvalita",
-      "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora? {link}",
-      "background": "Nastavení pozadí",
-      "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání."
+    "menu": {
+        "ratings": "Hodnocení",
+        "play_history": "Historie",
+        "support_us": "Podpořte nás"
     },
-    "about": {
-      "btn_credits": "Poděkování",
-      "btn_news": "Novinky"
+    "win": {
+        "settings": {
+            "btn_random": "Náhodné",
+            "application": "Nastavení Aplikace",
+            "bottom": "Dole",
+            "author": "Autor",
+            "appearance": "Nastavení Vzhledu",
+            "btn_solid": "Pevný",
+            "source": "Zdroj",
+            "taskbar": "Hlavní Lišta",
+            "theme": "Téma",
+            "title": "Nastavení Aplikace",
+            "top": "Nahoře",
+            "language": "Změnit Jazyk",
+            "audio_quality": "Kvalita Zvuku",
+            "low_quality": "Nízká kvalita",
+            "bg_notice": "Všechny obrázky na pozadí byly nalezeny na internetu. Znáte autora? {link}",
+            "background": "Nastavení pozadí",
+            "quality_changed": "Kvalita zvuku byla změněna. Prosím restartujte přehrávání."
+        },
+        "about": {
+            "btn_credits": "Poděkování",
+            "btn_news": "Novinky"
+        }
     }
-  }
 }

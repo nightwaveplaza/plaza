@@ -96,7 +96,12 @@
         },
         "user": {
             "btn_logout": "Ausloggen",
-            "title": "Mein Profil"
+            "title": "Mein Profil",
+            "statistics": "Statistiken",
+            "likes": "Likes",
+            "favorites": "Favoriten",
+            "registered": "Registriert",
+            "account": "Konto"
         },
         "user_email": {
             "title": "E-Mail-Adresse Ändern"
@@ -140,13 +145,41 @@
             "title": "Sleep-Timer",
             "is_active": "Sleep-Timer ist aktiv",
             "start": "Start",
-            "timer_set": "Timer gesetzt",
+            "timer_set": "Timer gesetzt.",
             "info": "Wähle die Zeit für den Sleep-Timer. Die Wiedergabe wird nach Ablauf gestoppt.",
             "alert": "Wiedergabe wird nach {minutes} Minute(n) gestoppt.",
             "stop": "Stopp"
         },
         "mobile": {
             "description": "Nightwave Plaza ist offiziell für Android und iOS erhätlich. Probiere es bitte aus, dann zeigen wir dir das Gestern mit der Musik von Morgen."
+        },
+        "user_profile_edit": {
+            "title": "Profil bearbeiten"
+        },
+        "user_profile_delete": {
+            "title": "Konto löschen",
+            "confirm": "Löschung bestätigen",
+            "understand": "Ich verstehe, mein Konto löschen.",
+            "warn1": "Durch diese Aktion wird Ihr Nightwave Plaza-Konto vollständig gelöscht.",
+            "warn2": "— Sofortige Löschung.",
+            "warn3": "— Alle Ihre Daten werden vollständig gelöscht.",
+            "warn4": "— Eine Wiederherstellung ist nicht möglich.",
+            "warn5": "— Sie können sich erneut mit demselben Benutzernamen und derselben E-Mail-Adresse registrieren (sofern verfügbar)."
+        },
+        "disconnected": {
+            "title": "Verbindung unterbrochen",
+            "connection_lost": "Die Verbindung zu unseren Servern wurde unterbrochen...",
+            "click_button": "Klicken Sie auf die Schaltfläche unten, um die Verbindung wiederherzustellen.",
+            "trying": "Versuche, die Verbindung wiederherzustellen...",
+            "btn_reconnect": "Erneut verbinden"
+        },
+        "user_favorites_export": {
+            "btn_export": "Exportieren",
+            "title": "Favoriten exportieren",
+            "description": "Exportieren Sie Ihre Favoritenliste als CSV-Datei. Klicken Sie unten, um zu beginnen.",
+            "success": "Export erfolgreich! Ihre Datei steht zum Download bereit.",
+            "error": "Export fehlgeschlagen. Bitte versuchen Sie es später erneut.",
+            "btn_download": "Herunterladen"
         }
     },
     "buttons": {
@@ -154,7 +187,8 @@
         "continue": "Fortsetzen",
         "ok": "OK",
         "change": "Ändern",
-        "close": "Schließen"
+        "close": "Schließen",
+        "save": "Speichern"
     },
     "errors": {
         "error": "Fehler",
@@ -175,7 +209,8 @@
             "password_min": "Passwort ist zu kurz.",
             "current_password_required": "Gebe dein derzeitiges Passwort ein.",
             "username_unique": "Dieser Nutzername wurde bereits vergeben.",
-            "username_alphadash": "Ungültiger Nutzername. Nur Buchstaben, Nummern und Unterstriche (_) sind erlaubt."
+            "username_alphadash": "Ungültiger Nutzername. Nur Buchstaben, Nummern und Unterstriche (_) sind erlaubt.",
+            "delete_confirm_required": "Sie müssen die Löschung Ihres Kontos bestätigen."
         },
         "network_fail": "Netzwerk ist nicht verfügbar.",
         "invalid_user_password": "Nutzername und Passwort stimmen nicht überein.",
@@ -185,12 +220,13 @@
         "reset_link_invalid": "Link für die Wiederherstellung des Passworts ist abgelaufen oder ungültig."
     },
     "fields": {
-        "current_password": "Derzeitiges Passwort",
+        "current_password": "Bitte geben Sie Ihr aktuelles Passwort ein, um fortzufahren",
         "new_password": "Neues Passwort",
         "password": "Passwort",
         "repeat_password": "Passwort erneut eingeben",
         "username": "Benutzername",
-        "email": "E-Mail"
+        "email": "E-Mail",
+        "user_details": "Benutzerdaten"
     },
     "loading": "Laden…",
     "messages": {
@@ -201,7 +237,9 @@
         "reset_success": "Die Anweisungen wurde Dir per E-Mail gesendet.",
         "success": "Erfolg!",
         "saved": "Gespeichert",
-        "reaction_tip": "Du hast diesen Song ge-liked, schön! Klicke den Like-Button nochmal, um diesen Song zu deinen Favoriten hinzuzufügen. Versuch's mal!"
+        "reaction_tip": "Du hast diesen Song ge-liked, schön! Klicke den Like-Button nochmal, um diesen Song zu deinen Favoriten hinzuzufügen. Versuch's mal!",
+        "profile_updated": "Das Profil wurde aktualisiert.",
+        "profile_deleted": "Ihr Konto wurde gelöscht."
     },
     "pagination": {
         "pages": "Seiten: {n}",

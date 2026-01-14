@@ -1,211 +1,211 @@
 {
-  "menu": {
-    "about": "Sobre",
-    "ratings": "Mais Populares",
-    "play_history": "Histórico",
-    "support_us": "Apoie-nos"
-  },
-  "win": {
-    "settings": {
-      "btn_random": "Aleatório",
-      "application": "Configurações do Sistema",
-      "bottom": "Em Baixo",
-      "author": "Créditos",
-      "appearance": "Configurações de Estilo",
-      "btn_solid": "Cor Sólida",
-      "source": "Fonte",
-      "taskbar": "Barra de Tarefas",
-      "theme": "Tema",
-      "title": "Configurações do Sistema",
-      "top": "Em Cima",
-      "language": "Alterar Idioma",
-      "audio_quality": "Qualidade do Áudio",
-      "low_quality": "Reduzida",
-      "bg_notice": "Todos os planos de fundo foram achados na Rede. Conhece o criador de algum? {link}.",
-      "background": "Plano de Fundo",
-      "let_us_know": "Avise-nos",
-      "quality_changed": "Qualidade do áudio ajustada. Por gentileza, reinicie a transmissão."
+    "menu": {
+        "about": "Sobre",
+        "ratings": "Mais Populares",
+        "play_history": "Histórico",
+        "support_us": "Apoie-nos"
     },
-    "about": {
-      "btn_credits": "Créditos",
-      "btn_news": "Novidades",
-      "discord": "Faça parte do servidor da nossa comunidade no {discord}!",
-      "playlists": "Listas",
-      "submission_link": "nosso formulário",
-      "title": "Sobre",
-      "useful_links": "Links Úteis",
-      "mobile": "Aplicativos Móveis (iOS e Android)",
-      "version": "Versão",
-      "show_more": "Ver mais",
-      "contact_info": "Meios de Contato",
-      "submissions": "Envios",
-      "streams": "Transmissões",
-      "send_enquires": "Por gentileza, envie quaisquer indagações para {link}.",
-      "welcome": "Bem-vindo(a) à rádio que toca \"vaporwave\" e \"future funk\" 24 horas por dia.",
-      "submission_form": "Quer enviar músicas para a transmissão? É só preencher {link}."
+    "win": {
+        "settings": {
+            "btn_random": "Aleatório",
+            "application": "Configurações do Sistema",
+            "bottom": "Em Baixo",
+            "author": "Créditos",
+            "appearance": "Configurações de Estilo",
+            "btn_solid": "Cor Sólida",
+            "source": "Fonte",
+            "taskbar": "Barra de Tarefas",
+            "theme": "Tema",
+            "title": "Configurações do Sistema",
+            "top": "Em Cima",
+            "language": "Alterar Idioma",
+            "audio_quality": "Qualidade do Áudio",
+            "low_quality": "Reduzida",
+            "bg_notice": "Todos os planos de fundo foram achados na Rede. Conhece o criador de algum? {link}.",
+            "background": "Plano de Fundo",
+            "let_us_know": "Avise-nos",
+            "quality_changed": "Qualidade do áudio ajustada. Por gentileza, reinicie a transmissão."
+        },
+        "about": {
+            "btn_credits": "Créditos",
+            "btn_news": "Novidades",
+            "discord": "Faça parte do servidor da nossa comunidade no {discord}!",
+            "playlists": "Listas",
+            "submission_link": "nosso formulário",
+            "title": "Sobre",
+            "useful_links": "Links Úteis",
+            "mobile": "Aplicativos Móveis (iOS e Android)",
+            "version": "Versão",
+            "show_more": "Ver mais",
+            "contact_info": "Meios de Contato",
+            "submissions": "Envios",
+            "streams": "Transmissões",
+            "send_enquires": "Por gentileza, envie quaisquer indagações para {link}.",
+            "welcome": "Bem-vindo(a) à rádio que toca \"vaporwave\" e \"future funk\" 24 horas por dia.",
+            "submission_form": "Quer enviar músicas para a transmissão? É só preencher {link}."
+        },
+        "credits": {
+            "title": "Créditos",
+            "created_by": "O site e os aplicativos do {app} são de autoria e manutenção do {author}.",
+            "content": "Todas as músicas e planos de fundo",
+            "content_by": "{content} pertencem a seus criadores. Todo o conteúdo audiovisual foi fornecido pelos responsáveis. Se seus direitos estiverem sendo violados, por gentileza, avise-nos."
+        },
+        "history": {
+            "showing_history": "Histórico em questão: {from} — {to}",
+            "title": "Histórico"
+        },
+        "player": {
+            "btn_stop": "Parar",
+            "listeners": "{listeners} ouvinte(s).",
+            "user": "Usuário: {user}.",
+            "volume": "Volume: {volume}%.",
+            "welcome": "Sentimos sua falta!",
+            "btn_play": "Tocar"
+        },
+        "ratings": {
+            "btn_monthly": "Do Mês",
+            "btn_overtime": "De Todas",
+            "btn_weekly": "Da Semana",
+            "title": "Mais Populares"
+        },
+        "settings_language": {
+            "select": "Escolha um Idioma",
+            "title": "Alterar Idioma",
+            "help": "Quer ajudar a traduzir o Nightwave Plaza? {link}!",
+            "translation_author_name": "Nathan",
+            "translation_author_link": "https://github.com/ntn-ss/",
+            "translation_by": "Tradução PT-BR: {author}."
+        },
+        "song": {
+            "album": "Álbum",
+            "artist": "Artista",
+            "btn_play_preview": "Tocar palinha",
+            "btn_stop": "Parar ({time})",
+            "song_title": "Título",
+            "title": "Dados da Música",
+            "first_played": "Inaugurada em"
+        },
+        "support": {
+            "title": "Apoie-nos",
+            "title2": "Apaixonou no Nightwave Plaza?",
+            "crypto": "Doar em Criptomoeda",
+            "go_to_site": "Ir ao site do Nightwave Plaza",
+            "boosty": "Apoie pelo Boosty",
+            "thanks": "Agradecemos pelas doações, o montante arrecadado vai para o sustento da rádio.",
+            "rewards": "Você pode apoiar nosso custeio e ser recompensado no Discord doando pelo Boosty!"
+        },
+        "user": {
+            "btn_logout": "Sair",
+            "title": "Perfil"
+        },
+        "user_email": {
+            "title": "Trocar E-mail"
+        },
+        "user_favorites": {
+            "remove": "Remover",
+            "title": "Favoritas",
+            "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"{icon}\" para adicionar músicas aqui."
+        },
+        "user_login": {
+            "btn_register": "Cadastrar",
+            "btn_reset": "Redefinir",
+            "btn_sign_in": "Entrar",
+            "remember_me": "Lembrar de Mim",
+            "title": "Entrar",
+            "type_username": "Insira seu usuário e sua senha para acessar o Nightwave Plaza."
+        },
+        "news": {
+            "title": "Novidades"
+        },
+        "user_password": {
+            "title": "Trocar Senha"
+        },
+        "user_register": {
+            "btn_register": "Cadastrar",
+            "captcha_desc": "Por favor, responda a este Captcha chato.",
+            "captcha_fail": "Verificação por Captcha malsucedida.",
+            "captcha_title": "você ainda é humano?",
+            "please_fill": "Por gentileza, preencha o formulário de cadastro. Todos os campos são obrigatórios.",
+            "success": "Cadastro Concluído",
+            "title": "Cadastro",
+            "welcome": "Bem-vindo(a) ao Nightwave Plaza, {user}!",
+            "user_information": "Dados Pessoais"
+        },
+        "user_reset": {
+            "enter_email": "Insira seu E-mail",
+            "title": "Redefinir Senha",
+            "instruction": "Insira seu endereço de e-mail e clique em \"Redefinir\". Enviaremos um e-mail com o link de redefinição da sua senha."
+        },
+        "player_timer": {
+            "title": "Contagem",
+            "is_active": "Contagem ativada",
+            "start": "Iniciar",
+            "timer_set": "Contagem Regressiva",
+            "info": "Defina um limite para a Contagem. A música vai parar automaticamente.",
+            "alert": "A música vai parar daqui a {minutes} minuto(s).",
+            "stop": "Parar"
+        },
+        "mobile": {
+            "description": "Temos aplicativos oficiais para Android e iOS, baixe-os à vontade. Veja o passado no presente e o presente no futuro com o Nightwave Plaza."
+        }
     },
-    "credits": {
-      "title": "Créditos",
-      "created_by": "O site e os aplicativos do {app} são de autoria e manutenção do {author}.",
-      "content": "Todas as músicas e planos de fundo",
-      "content_by": "{content} pertencem a seus criadores. Todo o conteúdo audiovisual foi fornecido pelos responsáveis. Se seus direitos estiverem sendo violados, por gentileza, avise-nos."
+    "buttons": {
+        "cancel": "Cancelar",
+        "continue": "Continuar",
+        "ok": "Confirmar",
+        "change": "Trocar",
+        "close": "Fechar"
     },
-    "history": {
-      "showing_history": "Histórico em questão: {from} — {to}",
-      "title": "Histórico"
+    "errors": {
+        "error": "Erro",
+        "user_fetch": "Não pudemos obter os dados do usuário.",
+        "server": "Erro Interno do Servidor.",
+        "enter_user_pass": "Insira usuário e senha, por gentileza.",
+        "fields": {
+            "email_email": "E-mail inválido.",
+            "email_required": "Insira seu e-mail, por gentileza.",
+            "username_min": "Esse usuário é muito curto.",
+            "username_max": "Esse usuário é muito longo.",
+            "password_match": "As senhas não coincidem.",
+            "email_unique": "Outro usuário já se cadastrou com esse endereço.",
+            "username_required": "Por favor, insira seu usuário.",
+            "password_required": "Por gentileza, insira a sua senha.",
+            "current_password_invalid": "A senha atual não confere.",
+            "captcha_invalid": "A resulução do Captcha foi malsucedida.",
+            "password_min": "Essa senha é muito curta.",
+            "current_password_required": "Insira sua senha atual.",
+            "username_unique": "Esse usuário já foi escolhido.",
+            "username_alphadash": "Usuário inválido. Apenas letras, números e sublinhados são permitidos."
+        },
+        "network_fail": "Falha na Conexão.",
+        "invalid_user_password": "O usuário e a senha não coincidem.",
+        "user_not_found": "Usuário não encontrado.",
+        "song_not_found": "Música não encontrada.",
+        "please_sign": "Por gentileza, acesse sua conta do Nightwave Plaza para usar essa função.",
+        "reset_link_invalid": "O link de redefinição de senha expirou ou é inválido."
     },
-    "player": {
-      "btn_stop": "Parar",
-      "listeners": "{listeners} ouvinte(s).",
-      "user": "Usuário: {user}.",
-      "volume": "Volume: {volume}%.",
-      "welcome": "Sentimos sua falta!",
-      "btn_play": "Tocar"
-    },
-    "ratings": {
-      "btn_monthly": "Do Mês",
-      "btn_overtime": "De Todas",
-      "btn_weekly": "Da Semana",
-      "title": "Mais Populares"
-    },
-    "settings_language": {
-      "select": "Escolha um Idioma",
-      "title": "Alterar Idioma",
-      "help": "Quer ajudar a traduzir o Nightwave Plaza? {link}!",
-      "translation_author_name": "Nathan",
-      "translation_author_link": "https://github.com/ntn-ss/",
-      "translation_by": "Tradução PT-BR: {author}."
-    },
-    "song": {
-      "album": "Álbum",
-      "artist": "Artista",
-      "btn_play_preview": "Tocar palinha",
-      "btn_stop": "Parar ({time})",
-      "song_title": "Título",
-      "title": "Dados da Música",
-      "first_played": "Inaugurada em"
-    },
-    "support": {
-      "title": "Apoie-nos",
-      "title2": "Apaixonou no Nightwave Plaza?",
-      "crypto": "Doar em Criptomoeda",
-      "go_to_site": "Ir ao site do Nightwave Plaza",
-      "boosty": "Apoie pelo Boosty",
-      "thanks": "Agradecemos pelas doações, o montante arrecadado vai para o sustento da rádio.",
-      "rewards": "Você pode apoiar nosso custeio e ser recompensado no Discord doando pelo Boosty!"
-    },
-    "user": {
-      "btn_logout": "Sair",
-      "title": "Perfil"
-    },
-    "user_email": {
-      "title": "Trocar E-mail"
-    },
-    "user_favorites": {
-      "remove": "Remover",
-      "title": "Favoritas",
-      "list_empty": "Sua aba \"Favoritas\" está vazia. Clique no botão \"{icon}\" para adicionar músicas aqui."
-    },
-    "user_login": {
-      "btn_register": "Cadastrar",
-      "btn_reset": "Redefinir",
-      "btn_sign_in": "Entrar",
-      "remember_me": "Lembrar de Mim",
-      "title": "Entrar",
-      "type_username": "Insira seu usuário e sua senha para acessar o Nightwave Plaza."
-    },
-    "news": {
-      "title": "Novidades"
-    },
-    "user_password": {
-      "title": "Trocar Senha"
-    },
-    "user_register": {
-      "btn_register": "Cadastrar",
-      "captcha_desc": "Por favor, responda a este Captcha chato.",
-      "captcha_fail": "Verificação por Captcha malsucedida.",
-      "captcha_title": "você ainda é humano?",
-      "please_fill": "Por gentileza, preencha o formulário de cadastro. Todos os campos são obrigatórios.",
-      "success": "Cadastro Concluído",
-      "title": "Cadastro",
-      "welcome": "Bem-vindo(a) ao Nightwave Plaza, {user}!",
-      "user_information": "Dados Pessoais"
-    },
-    "user_reset": {
-      "enter_email": "Insira seu E-mail",
-      "title": "Redefinir Senha",
-      "instruction": "Insira seu endereço de e-mail e clique em \"Redefinir\". Enviaremos um e-mail com o link de redefinição da sua senha."
-    },
-    "player_timer": {
-      "title": "Contagem",
-      "is_active": "Contagem ativada",
-      "start": "Iniciar",
-      "timer_set": "Contagem Regressiva",
-      "info": "Defina um limite para a Contagem. A música vai parar automaticamente.",
-      "alert": "A música vai parar daqui a {minutes} minuto(s).",
-      "stop": "Parar"
-    },
-    "mobile": {
-      "description": "Temos aplicativos oficiais para Android e iOS, baixe-os à vontade. Veja o passado no presente e o presente no futuro com o Nightwave Plaza."
-    }
-  },
-  "buttons": {
-    "cancel": "Cancelar",
-    "continue": "Continuar",
-    "ok": "Confirmar",
-    "change": "Trocar",
-    "close": "Fechar"
-  },
-  "errors": {
-    "error": "Erro",
-    "user_fetch": "Não pudemos obter os dados do usuário.",
-    "server": "Erro Interno do Servidor.",
-    "enter_user_pass": "Insira usuário e senha, por gentileza.",
     "fields": {
-      "email_email": "E-mail inválido.",
-      "email_required": "Insira seu e-mail, por gentileza.",
-      "username_min": "Esse usuário é muito curto.",
-      "username_max": "Esse usuário é muito longo.",
-      "password_match": "As senhas não coincidem.",
-      "email_unique": "Outro usuário já se cadastrou com esse endereço.",
-      "username_required": "Por favor, insira seu usuário.",
-      "password_required": "Por gentileza, insira a sua senha.",
-      "current_password_invalid": "A senha atual não confere.",
-      "captcha_invalid": "A resulução do Captcha foi malsucedida.",
-      "password_min": "Essa senha é muito curta.",
-      "current_password_required": "Insira sua senha atual.",
-      "username_unique": "Esse usuário já foi escolhido.",
-      "username_alphadash": "Usuário inválido. Apenas letras, números e sublinhados são permitidos."
+        "current_password": "Senha atual",
+        "new_password": "Senha nova",
+        "password": "Senha",
+        "repeat_password": "Repita a senha",
+        "username": "Usuário",
+        "email": "E-mail"
     },
-    "network_fail": "Falha na Conexão.",
-    "invalid_user_password": "O usuário e a senha não coincidem.",
-    "user_not_found": "Usuário não encontrado.",
-    "song_not_found": "Música não encontrada.",
-    "please_sign": "Por gentileza, acesse sua conta do Nightwave Plaza para usar essa função.",
-    "reset_link_invalid": "O link de redefinição de senha expirou ou é inválido."
-  },
-  "fields": {
-    "current_password": "Senha atual",
-    "new_password": "Senha nova",
-    "password": "Senha",
-    "repeat_password": "Repita a senha",
-    "username": "Usuário",
-    "email": "E-mail"
-  },
-  "loading": "Aguarde…",
-  "messages": {
-    "auth_success": "Autenticação concluída!",
-    "email_changed": "E-mail alterado!",
-    "nice": "M A S S A",
-    "password_changed": "Senha alterada!",
-    "reset_success": "Enviamos as instruções para o seu e-mail.",
-    "success": "Sucesso!",
-    "saved": "Salvo",
-    "reaction_tip": "Você curtiu essa música. Legal! Experimenta clicar no botão \"Curtir\" duas vezes, que ela vai pras suas Favoritas."
-  },
-  "pagination": {
-    "pages": "{n} página(s).",
-    "songs": "{n} música(s)."
-  },
-  "name": "Português Brasileiro"
+    "loading": "Aguarde…",
+    "messages": {
+        "auth_success": "Autenticação concluída!",
+        "email_changed": "E-mail alterado!",
+        "nice": "M A S S A",
+        "password_changed": "Senha alterada!",
+        "reset_success": "Enviamos as instruções para o seu e-mail.",
+        "success": "Sucesso!",
+        "saved": "Salvo",
+        "reaction_tip": "Você curtiu essa música. Legal! Experimenta clicar no botão \"Curtir\" duas vezes, que ela vai pras suas Favoritas."
+    },
+    "pagination": {
+        "pages": "{n} página(s).",
+        "songs": "{n} música(s)."
+    },
+    "name": "Português Brasileiro"
 }

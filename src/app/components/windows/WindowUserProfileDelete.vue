@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="320" :name="name" :title="t('win.user_profile_delete.title')">
+  <win-window v-slot="{ close }" :width="320" :name="name" :title="t('win.user_profile_delete.title')">
     <div class="p-2">
       <win-memo class="mb-2">
         <p><b>{{ t('win.user_profile_delete.warn1') }}</b></p>
@@ -27,7 +27,7 @@
           </win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">
+          <win-button block @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>

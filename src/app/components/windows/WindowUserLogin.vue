@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="480" :name="name" :title="t('win.user_login.title')">
+  <win-window v-slot="{ close }" ref="win" :width="480" :name="name" :title="t('win.user_login.title')">
     <div class="noselect">
       <div class="row no-gutters p-2">
         <div class="col-12 d-block d-sm-none mb-3 p-0">
@@ -59,7 +59,7 @@
           <win-button class="mb-2" @click="openRegister">
             {{ t('win.user_login.btn_register') }}
           </win-button>
-          <win-button @click="winProps.close()">
+          <win-button @click="close()">
             {{ t('buttons.cancel') }}
           </win-button>
         </div>

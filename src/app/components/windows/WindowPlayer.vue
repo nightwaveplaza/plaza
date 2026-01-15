@@ -12,36 +12,40 @@
       </div>
     </template>
 
-    <!-- Menu -->
-    <win-menu v-if="!isMobile()">
-      <win-menu-action @click="openWindow(Win.ABOUT)">
-        {{ t('menu.about') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.HISTORY)">
-        {{ t('menu.play_history') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.RATINGS)">
-        {{ t('menu.ratings') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.SUPPORT)">
-        {{ t('menu.support_us') }}
-      </win-menu-action>
-    </win-menu>
+    <template #default>
+      <!-- Menu -->
+      <win-menu v-if="!isMobile()">
+        <win-menu-action @click="openWindow(Win.ABOUT)">
+          {{ t('menu.about') }}
+        </win-menu-action>
+        <win-menu-action @click="openWindow(Win.HISTORY)">
+          {{ t('menu.play_history') }}
+        </win-menu-action>
+        <win-menu-action @click="openWindow(Win.RATINGS)">
+          {{ t('menu.ratings') }}
+        </win-menu-action>
+        <win-menu-action @click="openWindow(Win.SUPPORT)">
+          {{ t('menu.support_us') }}
+        </win-menu-action>
+      </win-menu>
 
-    <!-- Player -->
-    <div class="content p-2">
-      <win-player :volume="volume" @update-volume="setVolume" />
-    </div>
+      <!-- Player -->
+      <div class="content p-2">
+        <win-player :volume="volume" @update-volume="setVolume" />
+      </div>
+    </template>
 
     <!-- Statusbar -->
-    <div class="statusbar row no-gutters">
-      <div class="col cell">
-        {{ t('win.player.listeners', { listeners }) }}
+    <template #statusbar>
+      <div class="row no-gutters">
+        <div class="col cell">
+          {{ t('win.player.listeners', { listeners }) }}
+        </div>
+        <div v-if="isSigned" class="col-5 col-sm-4 cell login">
+          {{ t('win.player.user', {user: user?.username }) }}
+        </div>
       </div>
-      <div v-if="isSigned" class="col-5 col-sm-4 cell login">
-        {{ t('win.player.user', {user: user?.username }) }}
-      </div>
-    </div>
+    </template>
   </win-window>
 </template>
 
@@ -101,14 +105,10 @@ function requestFullScreen (): void {
     background: #efe6eb;
     padding: 0;
     line-height: 0;
-    height: auto;
+    //height: auto;
     width: 112px;
-  }
-
-  .cover img {
     cursor: pointer;
-    width: 100%;
-    height: 100%;
+    background-size: cover;
   }
 
   .player-time-container {

@@ -1,73 +1,77 @@
 <template>
-  <win-window v-slot="winProps" :width="440" fluid-height :name="name" :title="t('win.ratings.title')">
-    <div class="content-fluid p-2">
-      <div class="d-flex flex-column h-100">
-        <!-- Range buttons -->
-        <div class="d-flex mb-1">
-          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(RatingsRange.OVERTIME)">
-            {{ t('win.ratings.btn_overtime') }}
-          </win-button>
-          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(RatingsRange.MONTHLY)">
-            {{ t('win.ratings.btn_monthly') }}
-          </win-button>
-          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(RatingsRange.WEEKLY)">
-            {{ t('win.ratings.btn_weekly') }}
-          </win-button>
-        </div>
+  <win-window :width="440" :height="600" fluid-height :name="name" :title="t('win.ratings.title')">
+    <template #default="{ close }">
+      <div class="p-2 h-100">
+        <div class="d-flex flex-column h-100">
+          <!-- Range buttons -->
+          <div class="d-flex mb-1">
+            <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(RatingsRange.OVERTIME)">
+              {{ t('win.ratings.btn_overtime') }}
+            </win-button>
+            <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(RatingsRange.MONTHLY)">
+              {{ t('win.ratings.btn_monthly') }}
+            </win-button>
+            <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(RatingsRange.WEEKLY)">
+              {{ t('win.ratings.btn_weekly') }}
+            </win-button>
+          </div>
 
-        <!-- Song list -->
-        <div class="d-flex flex-grow-1 align-items-stretch">
-          <div v-if="isLoading" class="content-loading" />
-          <win-list v-if="!isLoading && songs" ref="list" scroll>
-            <tr v-for="(s, i) in songs.data" :key="i" class="hover">
-              <td class="noselect" style="width: 25px">
-                {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
-              </td>
-              <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
-                <div class="artist">
-                  {{ s.song.artist }}
-                </div>
-                <div class="title">
-                  {{ s.song.title }}
-                </div>
-              </td>
-              <td class="text-right noselect nowrap" style="width: 57px">
-                {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
-              </td>
-            </tr>
-          </win-list>
-        </div>
+          <!-- Song list -->
+          <div class="d-flex flex-grow-1 align-items-stretch">
+            <div v-if="isLoading" class="content-loading" />
+            <win-list v-if="!isLoading && songs" ref="list" scroll>
+              <tr v-for="(s, i) in songs.data" :key="i" class="hover">
+                <td class="noselect" style="width: 25px">
+                  {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
+                </td>
+                <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
+                  <div class="artist">
+                    {{ s.song.artist }}
+                  </div>
+                  <div class="title">
+                    {{ s.song.title }}
+                  </div>
+                </td>
+                <td class="text-right noselect nowrap" style="width: 57px">
+                  {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+                </td>
+              </tr>
+            </win-list>
+          </div>
 
-        <!-- List footer buttons -->
-        <div class="d-flex">
-          <div class="row no-gutters mt-2 w-100">
-            <div class="col">
-              <win-pagination
-                v-if="songs && songs?.meta.total > 0"
-                ref="pagination"
-                :pages="songs.meta.last_page"
-                :disabled="isLoading"
-                @change="changePage"
-              />
-            </div>
-            <div class="col-auto">
-              <win-button class="px-4" @click="winProps.close()">
-                {{ t('buttons.close') }}
-              </win-button>
+          <!-- List footer buttons -->
+          <div class="d-flex">
+            <div class="row no-gutters mt-2 w-100">
+              <div class="col">
+                <win-pagination
+                  v-if="songs && songs?.meta.total > 0"
+                  ref="pagination"
+                  :pages="songs.meta.last_page"
+                  :disabled="isLoading"
+                  @change="changePage"
+                />
+              </div>
+              <div class="col-auto">
+                <win-button class="px-4" @click="close()">
+                  {{ t('buttons.close') }}
+                </win-button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
 
-    <div class="statusbar row no-gutters noselect">
-      <div class="col-3 cell d">
-        {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
+    <template #statusbar>
+      <div class="row no-gutters">
+        <div class="col-3 cell d">
+          {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
+        </div>
+        <div class="col cell">
+          {{ songs ? t('pagination.songs', {n: songs.meta.total}) : '...' }}
+        </div>
       </div>
-      <div class="col cell">
-        {{ songs ? t('pagination.songs', {n: songs.meta.total}) : '...' }}
-      </div>
-    </div>
+    </template>
   </win-window>
 </template>
 

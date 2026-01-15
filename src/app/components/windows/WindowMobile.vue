@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="340" :name="name" title="Nightwave Plaza Mobile">
+  <win-window v-slot="{ close }" :width="340" :name="name" title="Nightwave Plaza Mobile">
     <div class="p-2">
       <win-panel class="mb-2">
         <div class="row no-gutters">
@@ -31,7 +31,7 @@
 
       <div class="row justify-content-center mt-3">
         <div class="col-auto">
-          <win-button class="px-4" @click="winProps.close()">
+          <win-button class="px-4" @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>

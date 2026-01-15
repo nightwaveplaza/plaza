@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="250" :name="name" :title="t('win.player_timer.title')">
+  <win-window ref="win" v-slot="{ close }" :width="250" :name="name" :title="t('win.player_timer.title')">
     <div class="p-3">
       <div v-if="active" class="text-center">
         <p>{{ t('win.player_timer.title') }}</p>
@@ -47,7 +47,7 @@
           </win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">
+          <win-button block @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>

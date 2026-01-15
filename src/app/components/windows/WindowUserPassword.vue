@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="250" :name="name" :title="t('win.user_password.title')">
+  <win-window v-slot="{ close }" :width="250" :name="name" :title="t('win.user_password.title')">
     <div class="py-2 px-2">
       <win-panel class="mb-3">
         <!-- Current password -->
@@ -21,7 +21,7 @@
           </win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">
+          <win-button block @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>
@@ -49,7 +49,6 @@ defineProps<{
   name: string,
 }>()
 
-const win = ref<InstanceType<typeof WinWindow>>()
 const fields: UserPasswordForm = reactive({
   current_password: '',
   password: '',

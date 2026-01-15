@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="300" :name="name" :title="t('win.user_favorites.title')">
+  <win-window v-slot="{ close }" :width="300" :name="name" :title="t('win.user_favorites.title')">
     <div class="p-3">
       <win-panel class="mb-3 text-center px-2 py-3">
         <template v-if="data === null">
@@ -25,7 +25,7 @@
       </win-panel>
 
       <div class="text-center">
-        <win-button class="px-3 mx-auto" @click="winProps.close()">
+        <win-button class="px-3 mx-auto" @click="close()">
           {{ t('buttons.close') }}
         </win-button>
       </div>

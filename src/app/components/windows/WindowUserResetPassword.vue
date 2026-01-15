@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" :name="name" :title="t('win.user_password.title')" :width="280">
+  <win-window v-slot="{ close }" :name="name" :title="t('win.user_password.title')" :width="280">
     <div class="py-2">
       <div class="row no-gutters">
         <div class="col-10 offset-1">
@@ -19,7 +19,7 @@
               </win-button>
             </div>
             <div class="col-4">
-              <win-button block @click="closeWindow(Win.USER_RESET_PASSWORD)">
+              <win-button block @click="close()">
                 {{ t('buttons.cancel') }}
               </win-button>
             </div>

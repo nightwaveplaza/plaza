@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" :width="270" :name="name" :title="t('win.user_profile_edit.title')">
+  <win-window v-slot="{ close }" :width="270" :name="name" :title="t('win.user_profile_edit.title')">
     <win-menu class="text-right">
       <win-menu-action @click="open(Win.USER_PROFILE_DELETE)">
         {{ t('win.user_profile_delete.title') }}
@@ -36,7 +36,7 @@
           </win-button>
         </div>
         <div class="col-4">
-          <win-button block @click="winProps.close()">
+          <win-button block @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>

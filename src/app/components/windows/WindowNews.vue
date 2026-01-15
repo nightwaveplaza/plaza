@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="350" :name="name" :title="t('win.news.title')">
+  <win-window v-slot="{ close }" :width="350" :name="name" :title="t('win.news.title')">
     <div class="p-2">
       <div v-if="isLoading" class="content-loading" style="min-height:200px" />
       <win-memo v-if="!isLoading">
@@ -22,7 +22,7 @@
           <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isLoading" @change="changePage" />
         </div>
         <div class="col-4 ml-auto">
-          <win-button block @click="winProps.close()">
+          <win-button block @click="close()">
             {{ t('buttons.close') }}
           </win-button>
         </div>

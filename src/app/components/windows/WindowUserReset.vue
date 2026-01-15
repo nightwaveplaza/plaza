@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="320" :name="name" :title="t('win.user_reset.title')">
+  <win-window v-slot="{ close }" ref="win" :width="320" :name="name" :title="t('win.user_reset.title')">
     <div class="p-2">
       <p class="pb-3 px-3 text-center">
         {{ t('win.user_reset.instruction') }}
@@ -25,7 +25,7 @@
               </win-button>
             </div>
             <div class="col-4">
-              <win-button block @click="winProps.close()">
+              <win-button block @click="close()">
                 {{ t('buttons.close') }}
               </win-button>
             </div>

@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings_language.title')">
+  <win-window v-slot="{ close }" :width="280" :name="name" :title="t('win.settings_language.title')">
     <div class="p-2">
       <win-list scroll>
         <tr v-for="(lang, n) in _locales" :key="n" class="hover">
@@ -26,7 +26,7 @@
       </win-panel>
 
       <div class="text-center mt-3">
-        <win-button class="px-4" @click="winProps.close()">
+        <win-button class="px-4" @click="close()">
           {{ t('buttons.close') }}
         </win-button>
       </div>

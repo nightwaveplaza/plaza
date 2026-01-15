@@ -1,8 +1,8 @@
-import { nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 
 const SNAP_SIZE = 15
 
-export function useDraggable(targetRef: Ref<HTMLElement | null>) {
+export function useDraggable(windowRef: Ref<HTMLElement | null>) {
   const x = ref(0)
   const y = ref(0)
 
@@ -13,6 +13,7 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
   let resizeDebounceTimeout: ReturnType<typeof setTimeout>|undefined = undefined
   const isDragging = ref(false)
   const isCentered = ref(false)
+  const height = ref(0)
 
   let resizeObserver: ResizeObserver | null = null
 
@@ -61,14 +62,14 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
 
     const viewportW = window.innerWidth
     const viewportH = window.innerHeight
-    const rect = targetRef.value!.getBoundingClientRect()
+    const rect = windowRef.value!.getBoundingClientRect()
     // Snap to right
-    if (nextX + targetRef.value!.offsetWidth > window.innerWidth - SNAP_SIZE) {
+    if (nextX + windowRef.value!.offsetWidth > window.innerWidth - SNAP_SIZE) {
       nextX = viewportW - rect.width
     }
 
     // Snap to bottom
-    if (nextY + targetRef.value!.offsetHeight > window.innerHeight - SNAP_SIZE) {
+    if (nextY + windowRef.value!.offsetHeight > window.innerHeight - SNAP_SIZE) {
       nextY = viewportH - rect.height
     }
 
@@ -100,17 +101,16 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
    * Check bounds and return window if out of screen
    */
   function checkBounds() {
-    if (!targetRef.value) return
+    if (!windowRef.value) return
+
+    const rect = windowRef.value.getBoundingClientRect()
+    const viewportW = window.innerWidth
+    const viewportH = window.innerHeight
 
     // If user didn't move the window, center it
     if (isCentered.value) {
       centerWindow()
     }
-
-    const rect = targetRef.value.getBoundingClientRect()
-
-    const viewportW = window.innerWidth
-    const viewportH = window.innerHeight
 
     // Check left
     if (x.value < 0) {
@@ -135,8 +135,8 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
 
   const centerWindow = (): void => {
     nextTick().then(() => {
-      if (targetRef.value) {
-        const el = targetRef.value
+      if (windowRef.value) {
+        const el = windowRef.value
 
         // Target window size
         const winWidth = el.offsetWidth
@@ -154,8 +154,12 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
     })
   }
 
+  onBeforeMount(() => {
+    centerWindow()
+  })
+
   onMounted(() => {
-    if (!targetRef.value) return
+    if (!windowRef.value) return
 
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('orientationchange', handleWindowResize)
@@ -164,7 +168,7 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
     resizeObserver = new ResizeObserver(() => {
       handleWindowResize()
     })
-    resizeObserver.observe(targetRef.value)
+    resizeObserver.observe(windowRef.value)
   })
 
   onBeforeUnmount(() => {
@@ -178,5 +182,5 @@ export function useDraggable(targetRef: Ref<HTMLElement | null>) {
     }
   })
 
-  return {x, y, centerWindow, handleDragStart }
+  return {x, y, height, centerWindow, handleDragStart }
 }

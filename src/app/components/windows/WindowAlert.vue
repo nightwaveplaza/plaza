@@ -1,5 +1,5 @@
 <template>
-  <win-window ref="win" v-slot="winProps" is-alert :name="name" :title="alertParams.title" :width="290">
+  <win-window ref="win" v-slot="{ close }" is-alert :name="name" :title="alertParams.title" :width="290">
     <div class="p-2">
       <div class="row no-gutters">
         <div class="col-auto text-center align-self-center">
@@ -11,7 +11,7 @@
       </div>
 
       <div class="text-center">
-        <win-button class="mt-2 mx-auto px-4" @click="winProps.close()">
+        <win-button class="mt-2 mx-auto px-4" @click="close()">
           {{ t('buttons.ok') }}
         </win-button>
       </div>

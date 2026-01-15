@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="360" :name="name" :title="t('win.song.title')">
+  <win-window v-slot="{ close }" :width="360" :name="name" :title="t('win.song.title')">
     <div class="p-2 song-info">
       <div v-if="song">
         <win-panel>
@@ -47,7 +47,7 @@
             </win-button>
           </div>
           <div class="col-auto ml-auto">
-            <win-button class="px-4" @click="winProps.close()">
+            <win-button class="px-4" @click="close()">
               {{ t('buttons.close') }}
             </win-button>
           </div>

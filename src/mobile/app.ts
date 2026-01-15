@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
 import commonComponents from '@app/components/basic'
+import commonExtraComponents from '@app/components/extra'
 import commonWindows from '@app/components/windows'
 import commonPlayer from '@app/components/player'
 import mobileComponents from '@mobile/components'
@@ -17,6 +18,7 @@ const app = createApp({
 app.use(i18n)
 
 app.use(commonComponents)
+app.use(commonExtraComponents)
 app.use(commonPlayer)
 app.use(commonWindows)
 

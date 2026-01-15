@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="450" :name="name" :title="t('win.support.title')">
+  <win-window v-slot="{ close }" :width="450" :name="name" :title="t('win.support.title')">
     <div class="p-2">
       <p class="lead mt-2 mb-3 text-center">
         <b>{{ t('win.support.title2') }}</b>
@@ -26,7 +26,7 @@
       </p>
 
       <div class="text-center mt-3">
-        <win-button class="mx-auto px-4" @click="winProps.close()">
+        <win-button class="mx-auto px-4" @click="close()">
           {{ t('buttons.close') }}
         </win-button>
       </div>
@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 
@@ -44,8 +43,6 @@ const { t } = useI18n()
 defineProps<{
   name: string
 }>()
-
-const win = ref<InstanceType<typeof WinWindow>>()
 </script>
 
 <style lang="scss">

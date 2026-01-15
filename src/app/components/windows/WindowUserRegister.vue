@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="430" :name="name" :title="t('win.user_register.title')">
+  <win-window v-slot="{ close }" :width="430" :name="name" :title="t('win.user_register.title')">
     <div class="p-2 noselect">
       <template v-if="step === 1">
         <div class="row no-gutters">
@@ -65,7 +65,7 @@
                   </win-button>
                 </div>
                 <div class="col-auto">
-                  <win-button block class="px-3" @click="winProps.close()">
+                  <win-button block class="px-3" @click="close()">
                     {{ t('buttons.cancel') }}
                   </win-button>
                 </div>

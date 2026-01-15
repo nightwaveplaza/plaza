@@ -1,5 +1,5 @@
 <template>
-  <win-window v-slot="winProps" :width="280" :name="name" :title="t('win.settings.title')">
+  <win-window v-slot="{ close }" :width="280" :name="name" :title="t('win.settings.title')">
     <div class="p-2">
       <!-- Background -->
       <win-group-box class="mb-2">
@@ -137,7 +137,7 @@
         <win-button class="px-2" @click="openLanguageSettings">
           {{ t('win.settings.language') }}
         </win-button>
-        <win-button class="px-4" @click="winProps.close()">
+        <win-button class="px-4" @click="close()">
           {{ t('buttons.close') }}
         </win-button>
       </div>

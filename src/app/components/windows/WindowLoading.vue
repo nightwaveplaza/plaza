@@ -68,12 +68,6 @@ function move (): void {
   requestAnimationFrame(move)
 }
 
-// waiting for the first status response then check news and open up player
-watch(() => song.id, async () => {
-  openWindow(Win.PLAYER)
-  closeWindow(Win.LOADING)
-})
-
 onMounted(() => {
   move()
   if (isMobile()) {
@@ -83,6 +77,12 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   loading = false
+})
+
+// waiting for the first status response then check news and open up player
+watch(() => song.id, () => {
+  openWindow(Win.PLAYER)
+  closeWindow(Win.LOADING)
 })
 </script>
 

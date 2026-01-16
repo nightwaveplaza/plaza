@@ -31,14 +31,17 @@ export function useNativeEvents () {
    */
   eventBus.on('socketConnect', () => {
     onConnect()
-    closeWindow(Win.DISCONNECTED)
+    //closeWindow(Win.DISCONNECTED)
   })
   eventBus.on('socketDisconnect', () => onDisconnect())
   eventBus.on('socketReconnectFailed', () => {
     onReconnectFailed()
-    openWindow(Win.DISCONNECTED)
+    //openWindow(Win.DISCONNECTED)
   })
-  eventBus.on('onStatusUpdate', (s: string) => setStatus(JSON.parse(s)))
+  eventBus.on('onStatusUpdate', (s: string) => {
+    console.log(s)
+    setStatus(JSON.parse(s))
+  })
   eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
   eventBus.on('onReactionsUpdate', (r: number) => setReactions(r))
 

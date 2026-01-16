@@ -23,8 +23,6 @@ const i18n = useI18n()
 const { openWindow, openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
-const { fetchUser } = useAuth()
-const { setToken } = useAuthToken()
 
 const { updateBackgroundNative } = useNativeEvents()
 
@@ -51,8 +49,8 @@ onMounted(() => {
 
   Native.getAuthToken()!.then((t) => {
     const token = t as string
-    setToken(token)
-    fetchUser()
+    useAuthToken().setToken(token)
+    useAuth().fetchUser()
   })
 })
 </script>

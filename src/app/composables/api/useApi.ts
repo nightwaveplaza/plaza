@@ -1,4 +1,4 @@
-import { onUnmounted, type Ref, ref, type UnwrapRef } from 'vue'
+import { type Ref, ref, type UnwrapRef } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import api from '@app/api/index.ts'
@@ -66,7 +66,7 @@ export function useApi<T> (): CallResponse<T> {
   }
 
   // Clean up pending requests on component unmount
-  onUnmounted(() => controller?.abort())
+  //onUnmounted(() => controller?.abort())
 
   return {
     data: data,

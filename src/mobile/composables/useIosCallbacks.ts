@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { type Ref, ref, type UnwrapRef } from 'vue'
 
 interface CallbackInterface {
   [key: string]: {
@@ -8,8 +8,12 @@ interface CallbackInterface {
 
 const callbacks = ref<CallbackInterface>({})
 
-export function useIosCallbacks() {
-  const execute = (data: string) => {
+export function useIosCallbacks(): {
+  execute: (data: string) => void;
+  clear: (callbackId: string) => void;
+  callbacks: Ref<UnwrapRef<CallbackInterface>>
+} {
+  const execute = (data: string): void => {
     const callback = JSON.parse(data)
 
     if (callback.id in callbacks.value) {
@@ -21,7 +25,7 @@ export function useIosCallbacks() {
     }
   }
 
-  const clear = (callbackId: string) => {
+  const clear = (callbackId: string): void => {
     delete callbacks.value[callbackId]
   }
 

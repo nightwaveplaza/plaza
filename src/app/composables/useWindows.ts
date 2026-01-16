@@ -5,7 +5,6 @@ const windows = ref(<Record<string, Window>>{})
 const activeWindow = ref('')
 const activeZIndex = ref(100)
 
-
 /**
  * useWindows composable
  * Shared logic to manage opened windows
@@ -18,7 +17,7 @@ export function useWindows () {
    * @param params
    * @param winComponent
    */
-  const openWindow = (name: string, params?: AlertWindowParams | SongWindowParams, winComponent?: string) => {
+  const openWindow = (name: string, params?: AlertWindowParams | SongWindowParams, winComponent?: string): void => {
     if (name in windows.value) {
       restore(name)
     } else {
@@ -33,7 +32,7 @@ export function useWindows () {
     activeZIndex.value++
   }
 
-  const closeWindow = (name: Win | string) => {
+  const closeWindow = (name: Win | string): void => {
     if (name in windows.value) {
       delete windows.value[name]
     }
@@ -41,26 +40,26 @@ export function useWindows () {
     pullUp()
   }
 
-  const minimizeWindow = (name: string) => {
+  const minimizeWindow = (name: string): void => {
     if (name in windows.value) {
-      windows.value[name]!!.isMinimized = true
+      windows.value[name]!.isMinimized = true
     }
   }
 
-  const restore = (name: string) => {
+  const restore = (name: string): void => {
     if (name in windows.value) {
-      windows.value[name]!!.isMinimized = false
+      windows.value[name]!.isMinimized = false
       pullUp(name)
     }
   }
 
-  const updateTitle = (name: string, title: string) => {
+  const updateTitle = (name: string, title: string): void => {
     if (name in windows.value) {
-      windows.value[name]!!.title = title
+      windows.value[name]!.title = title
     }
   }
 
-  const toggleMinimize = (name: Win | string) => {
+  const toggleMinimize = (name: Win | string): void => {
     if (name in windows.value) {
       if (windows.value[name]!.isMinimized) {
         restore(name)
@@ -74,13 +73,13 @@ export function useWindows () {
     }
   }
 
-  const winAlert = (text: string, title: string, type = 'warn') => {
+  const winAlert = (text: string, title: string, type = 'warn'): void => {
     // Window name must be unique, generate random string for alerts
     const id = Math.random().toString(36).slice(2, 11)
     openWindow(`${Win.ALERT}-${id}`, { text, title, type, }, 'window-alert')
   }
 
-  const winSongInfo = (id: string) => {
+  const winSongInfo = (id: string): void => {
     openWindow(`${Win.SONG}-${id}`, { songId: id }, 'window-song')
   }
 

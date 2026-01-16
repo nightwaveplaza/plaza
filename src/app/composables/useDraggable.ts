@@ -2,7 +2,7 @@ import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } fr
 
 const SNAP_SIZE = 15
 
-export function useDraggable(windowRef: Ref<HTMLElement | null>) {
+export function useDraggable (windowRef: Ref<HTMLElement | null>) {
   const x = ref(0)
   const y = ref(0)
 
@@ -10,12 +10,10 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
   let startMousePositionY = 0
   let startWindowPositionX = 0
   let startWindowPositionY = 0
-  let resizeDebounceTimeout: ReturnType<typeof setTimeout>|undefined = undefined
+  let resizeDebounceTimeout: ReturnType<typeof setTimeout> | undefined = undefined
   const isDragging = ref(false)
   const isCentered = ref(false)
   const height = ref(0)
-
-  let resizeObserver: ResizeObserver | null = null
 
   /**
    * Start dragging
@@ -41,7 +39,10 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
    * @param e
    */
   const handleMouseMove = (e: MouseEvent): void => {
-    if (!isDragging.value) return
+    if (!isDragging.value) {
+      return
+    }
+
     e.preventDefault()
 
     const mouseDeltaX = e.clientX - startMousePositionX
@@ -100,7 +101,7 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
   /**
    * Check bounds and return window if out of screen
    */
-  function checkBounds() {
+  function checkBounds () {
     if (!windowRef.value) return
 
     const rect = windowRef.value.getBoundingClientRect()
@@ -158,6 +159,7 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
     centerWindow()
   })
 
+  // let resizeObserver: ResizeObserver | null = null
   onMounted(() => {
     if (!windowRef.value) return
 
@@ -165,10 +167,10 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
     window.addEventListener('orientationchange', handleWindowResize)
 
     // Create observer
-    resizeObserver = new ResizeObserver(() => {
-      handleWindowResize()
-    })
-    resizeObserver.observe(windowRef.value)
+    //resizeObserver = new ResizeObserver(() => {
+    //handleWindowResize()
+    //})
+    //resizeObserver.observe(windowRef.value)
   })
 
   onBeforeUnmount(() => {
@@ -177,10 +179,10 @@ export function useDraggable(windowRef: Ref<HTMLElement | null>) {
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('orientationchange', handleWindowResize)
 
-    if (resizeObserver) {
-      resizeObserver.disconnect()
-    }
+    //if (resizeObserver) {
+    //  resizeObserver.disconnect()
+    //}
   })
 
-  return {x, y, height, centerWindow, handleDragStart }
+  return { x, y, height, centerWindow, handleDragStart }
 }

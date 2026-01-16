@@ -1,6 +1,5 @@
 <template>
-  <div class="win-connection-status mr-1" :class="{'connected': isConnected, 'on-off': blink}">
-  </div>
+  <div class="win-connection-status mr-1" :class="{'connected': isConnected, 'on-off': blink}" />
 </template>
 
 <script setup lang="ts">
@@ -18,7 +17,7 @@
     once: true
   })
 
-  function _blink() {
+  function _blink(): void {
     if (!blink.value) {
       blink.value = true
       setTimeout(() => {

@@ -13,7 +13,9 @@ import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { eventBus } from '@mobile/emitter.ts'
 
-export function useNativeEvents () {
+export function useNativeEvents (): {
+  updateBackgroundNative: () => void
+} {
   const i18n = useI18n()
 
   const { openWindow, closeWindow } = useWindows()
@@ -106,7 +108,7 @@ export function useNativeEvents () {
     Native.setLanguage(language.value)
   })
 
-  function updateBackgroundNative() {
+  function updateBackgroundNative (): void {
     if (typeof AndroidInterface !== 'undefined') {
       Native.setBackground(isColorMode.value ? 'solid' : background.image!.src)
     } else {

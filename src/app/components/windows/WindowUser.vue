@@ -42,14 +42,14 @@
                   <col style="width: auto">
                 </colgroup>
                 <tbody>
-                <tr>
-                  <td><b>{{ t('win.user.likes') }}:</b></td>
-                  <td>{{ reactions ?? '...' }}</td>
-                </tr>
-                <tr>
-                  <td><b>{{ t('win.user.favorites') }}:</b></td>
-                  <td>{{ favorites ?? '...' }}</td>
-                </tr>
+                  <tr>
+                    <td><b>{{ t('win.user.likes') }}:</b></td>
+                    <td>{{ reactions ?? '...' }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>{{ t('win.user.favorites') }}:</b></td>
+                    <td>{{ favorites ?? '...' }}</td>
+                  </tr>
                 </tbody>
               </table>
             </template>

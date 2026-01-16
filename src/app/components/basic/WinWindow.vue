@@ -1,6 +1,12 @@
 <template>
-  <div ref="windowRef" class="win-window"
-       :style="style" @mousedown="pullUp" v-show="!isMinimized" :id="'window-' + name" :class="{alert: props.isAlert}">
+  <div ref="windowRef"
+       class="win-window"
+       v-show="!isMinimized"
+       :id="'window-' + name"
+       :style="style"
+       :class="{alert: props.isAlert}"
+       @mousedown="pullUp"
+  >
     <div class="inner" :class="{'d-flex flex-column h-100': height}">
       <div class="header header-draggable noselect" :class="{inactive: !isActive}"
            @dblclick="centerWindow" @mousedown="handleDragStart"

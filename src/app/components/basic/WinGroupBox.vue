@@ -1,9 +1,9 @@
 <template>
-  <div class="group-box" :class="props.class">
-    <div class="gb-label noselect">
+  <div class="win-group-box" :class="props.class">
+    <div class="win-group-box__label noselect">
       <span><slot name="title" /></span>
     </div>
-    <div class="gb-body p-2">
+    <div class="win-group-box__body p-2">
       <div class="mt-1">
         <slot name="content" />
       </div>

@@ -11,12 +11,12 @@ const themeColors = {
   'desert': '#d5ccbb'
 }
 
-export function useThemeColor() {
+export function useThemeColor(): void {
   const { theme } = useAppSettings()
 
   // Set theme color to browser or Native app
-  const setThemeColor = () => {
-    let color = themeColors[theme.value as keyof typeof themeColors]
+  const setThemeColor = (): void => {
+    const color = themeColors[theme.value as keyof typeof themeColors]
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
 
     if (isMobile()) {

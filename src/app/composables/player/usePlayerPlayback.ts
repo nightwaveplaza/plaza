@@ -1,12 +1,18 @@
 import { PlayerState } from '@app/types/types.ts'
-import { ref } from 'vue'
+import { type Ref, ref, type UnwrapRef } from 'vue'
 import { Native } from '@mobile/bridge/native.ts'
 import { isMobile } from '@app/utils/helpers.ts'
 
 const state = ref(PlayerState.IDLE)
 const sleepTime = ref(0)
 
-export function usePlayerPlayback() {
+export function usePlayerPlayback(): {
+  state: Ref<UnwrapRef<PlayerState>>;
+  setState: (s: PlayerState) => void;
+  sleepTime: Ref<UnwrapRef<number>>;
+  setSleepTime: (t: number) => void;
+  updateSleepTime: (t: number) => void
+} {
 
   const setState = (s: PlayerState) => {
     state.value = s
@@ -20,7 +26,7 @@ export function usePlayerPlayback() {
     }
   }
 
-  const updateSleepTime = (t: number) => {
+  const updateSleepTime = (t: number): void => {
     sleepTime.value = t
   }
 

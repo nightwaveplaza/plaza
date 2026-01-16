@@ -1,8 +1,8 @@
 @import "../mixins";
 
-.button, button, .win-button {
-  @include font;
+.win-button {
   @include d3-object;
+  @include font;
 
   text-align: center;
   line-height: 120%;

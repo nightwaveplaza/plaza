@@ -1,5 +1,5 @@
 <template>
-  <div class="panel p-2" :class="props.class">
+  <div class="win-panel p-2" :class="props.class">
     <slot />
   </div>
 </template>

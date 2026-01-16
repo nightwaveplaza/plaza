@@ -13,7 +13,7 @@ export function useUserApi (): {
   registerUser: () => ApiHandler<User, [UserRegisterForm]>;
   updatePassword: () => ApiHandler<ResultResource, [UserPasswordForm]>;
   updateProfile: () => ApiHandler<UserResource, [UserProfileForm]>;
-  deleteProfile: () => ApiHandler<{}, [{current_password: string}]>;
+  deleteProfile: () => ApiHandler<Record<string, never>, [{current_password: string}]>;
 } {
   const { createApiHandler } = useApiFactory()
 
@@ -23,6 +23,6 @@ export function useUserApi (): {
     registerUser: createApiHandler<User, [UserRegisterForm]>('v2/users', 'POST'),
     updatePassword: createApiHandler<ResultResource, [UserPasswordForm]>('v2/users/me/password', 'PUT'),
     updateProfile: createApiHandler<UserResource, [UserProfileForm]>('v2/users/me', 'PUT'),
-    deleteProfile: createApiHandler<{}, [{ current_password: string }]>('v2/users/me', 'DELETE')
+    deleteProfile: createApiHandler<Record<string, never>, [{ current_password: string }]>('v2/users/me', 'DELETE')
   }
 }

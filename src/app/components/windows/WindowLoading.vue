@@ -20,17 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { Win } from '@app/types'
-import { isMobile } from '@app/utils/helpers.ts'
-import { Native } from '@mobile/bridge/native.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
-const { song } = useNowPlayingStatus()
 
 defineProps<{
   name: string
@@ -70,19 +63,10 @@ function move (): void {
 
 onMounted(() => {
   move()
-  if (isMobile()) {
-    Native.onReady()
-  }
 })
 
 onBeforeUnmount(() => {
   loading = false
-})
-
-// waiting for the first status response then check news and open up player
-watch(() => song.id, () => {
-  openWindow(Win.PLAYER)
-  closeWindow(Win.LOADING)
 })
 </script>
 

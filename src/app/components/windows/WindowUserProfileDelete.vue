@@ -1,44 +1,41 @@
 <template>
-  <win-window v-slot="{ close }" :width="320" :name="name" :title="t('win.user_profile_delete.title')">
-    <div class="p-2">
-      <win-memo class="mb-2">
-        <p><b>{{ t('win.user_profile_delete.warn1') }}</b></p>
-        <p>{{ t('win.user_profile_delete.warn2') }}</p>
-        <p>{{ t('win.user_profile_delete.warn3') }}</p>
-        <p>{{ t('win.user_profile_delete.warn4') }}</p>
-        <p>{{ t('win.user_profile_delete.warn5') }}</p>
-      </win-memo>
+  <div class="p-2">
+    <win-memo class="mb-2">
+      <p><b>{{ t('win.user_profile_delete.warn1') }}</b></p>
+      <p>{{ t('win.user_profile_delete.warn2') }}</p>
+      <p>{{ t('win.user_profile_delete.warn3') }}</p>
+      <p>{{ t('win.user_profile_delete.warn4') }}</p>
+      <p>{{ t('win.user_profile_delete.warn5') }}</p>
+    </win-memo>
 
-      <div class="checkbox mb-3">
-        <input id="remember" v-model="deleteConfirm" type="checkbox">
-        <label for="remember">{{ t('win.user_profile_delete.understand') }}</label>
+    <div class="checkbox mb-3">
+      <input id="remember" v-model="deleteConfirm" type="checkbox">
+      <label for="remember">{{ t('win.user_profile_delete.understand') }}</label>
+    </div>
+
+    <win-panel class="mb-3">
+      <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
+      <input id="password" v-model="fields.current_password" class="d-block" type="password">
+    </win-panel>
+
+    <!-- Buttons -->
+    <div class="row mt-3 no-gutters justify-content-between">
+      <div class="col-6">
+        <win-button block :disabled="isLoading" class="text-bold" @click="deleteAccount">
+          {{ t('win.user_profile_delete.title') }}
+        </win-button>
       </div>
-
-      <win-panel class="mb-3">
-        <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
-        <input id="password" v-model="fields.current_password" class="d-block" type="password">
-      </win-panel>
-
-      <!-- Buttons -->
-      <div class="row mt-3 no-gutters justify-content-between">
-        <div class="col-6">
-          <win-button block :disabled="isLoading" class="text-bold" @click="deleteAccount">
-            {{ t('win.user_profile_delete.title') }}
-          </win-button>
-        </div>
-        <div class="col-4">
-          <win-button block @click="close()">
-            {{ t('buttons.close') }}
-          </win-button>
-        </div>
+      <div class="col-4">
+        <win-button block @click="closeWindow(Win.USER_PROFILE_DELETE)">
+          {{ t('buttons.close') }}
+        </win-button>
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useI18n } from 'vue-i18n'
 import { useUserApi } from '@app/composables/api'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -50,10 +47,6 @@ const { deleteProfile } = useUserApi()
 const { isLoading } = deleteProfile()
 const { winAlert, closeWindow } = useWindows()
 const { unsetUser } = useAuth()
-
-defineProps<{
-  name: string,
-}>()
 
 const fields = reactive({
   current_password: '',
@@ -78,5 +71,4 @@ function deleteAccount() {
     winAlert(e.message, t('errors.error'))
   })
 }
-
 </script>

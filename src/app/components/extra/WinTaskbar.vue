@@ -6,14 +6,14 @@
 
     <win-button
       v-for="window in openedWindows"
-      :key="window.name"
+      :key="window.id"
       class="mr-1" style="flex: 1 1 auto"
-      :class="{active: activeWindow === window.name && !window.isMinimized }"
-      @click="toggleMinimize(window.name)"
+      :class="{active: activeWindow === window.id && !window.isMinimized }"
+      @click="toggleMinimize(window.id)"
     >
       <img src="../../assets/img/ball.png" alt="">
       <div class="title">
-        {{ window.title }}
+        {{ window.title ?? t(window.titleKey) }}
       </div>
     </win-button>
 
@@ -29,9 +29,11 @@ import { i18n } from '@locales/_i18n.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { isMobile } from '@app/utils/helpers.ts'
+import { useI18n } from 'vue-i18n'
 
 const { toggleMinimize, openedWindows, activeWindow } = useWindows()
 const { taskbarPosition } = useAppSettings()
+const { t } = useI18n()
 
 const time = ref('0:00 PM')
 

@@ -1,75 +1,72 @@
 <template>
-  <win-window v-slot="{ close }" :width="360" :name="name" :title="t('win.song.title')">
-    <div class="p-2 song-info">
-      <div v-if="song">
-        <win-panel>
-          <div class="row mt-0">
-            <div class="col">
-              <div class="mb-1">
-                <div class="noselect">
-                  <strong>{{ t('win.song.artist') }}:</strong><br>
-                </div>
-                {{ song.data.artist }}
+  <div class="p-2 song-info">
+    <div v-if="song">
+      <win-panel>
+        <div class="row mt-0">
+          <div class="col">
+            <div class="mb-1">
+              <div class="noselect">
+                <strong>{{ t('win.song.artist') }}:</strong><br>
               </div>
-              <div class="mb-1">
-                <div class="noselect">
-                  <strong>{{ t('win.song.album') }}:</strong><br>
-                </div>
-                {{ song.data.album }}
-              </div>
-              <div class="mb-2">
-                <div class="noselect">
-                  <strong>{{ t('win.song.song_title') }}:</strong><br>
-                </div>
-                {{ song.data.title }}
-              </div>
-              <div>
-                <i class="i icon-clock" /> {{ songLength }} &nbsp;
-                <i class="i icon-like" style="color: #c12727" /> {{ song.stats.likes }}
-              </div>
+              {{ song.data.artist }}
             </div>
-            <div class="col-5">
-              <img :src="artwork" alt="artwork" class="artwork simple-border">
+            <div class="mb-1">
+              <div class="noselect">
+                <strong>{{ t('win.song.album') }}:</strong><br>
+              </div>
+              {{ song.data.album }}
+            </div>
+            <div class="mb-2">
+              <div class="noselect">
+                <strong>{{ t('win.song.song_title') }}:</strong><br>
+              </div>
+              {{ song.data.title }}
+            </div>
+            <div>
+              <i class="i icon-clock" /> {{ songLength }} &nbsp;
+              <i class="i icon-like" style="color: #c12727" /> {{ song.stats.likes }}
             </div>
           </div>
-        </win-panel>
-
-        <div class="row mt-2">
-          <div class="col-4 pr-1">
-            <audio ref="audio" :src="song.data.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
-            <win-button block :disabled="song.data.preview_src === null" @click="play">
-              {{ playText }}
-            </win-button>
-          </div>
-          <div class="col-2 pl-0">
-            <win-button block :disabled="sending" @click="favoriteSong">
-              <i class="icon-favorite i" :style="{color: favoriteColor }" />
-            </win-button>
-          </div>
-          <div class="col-auto ml-auto">
-            <win-button class="px-4" @click="close()">
-              {{ t('buttons.close') }}
-            </win-button>
+          <div class="col-5">
+            <img :src="artwork" alt="artwork" class="artwork simple-border">
           </div>
         </div>
-      </div>
-      <div v-else class="text-center">
-        {{ t('loading') }}
-      </div>
-    </div>
+      </win-panel>
 
-    <div v-if="song" class="statusbar row no-gutters noselect">
-      <div v-if="song.stats.first_played_at" class="col cell">
-        {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
+      <div class="row mt-2">
+        <div class="col-4 pr-1">
+          <audio ref="audio" :src="song.data.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
+          <win-button block :disabled="song.data.preview_src === null" @click="play">
+            {{ playText }}
+          </win-button>
+        </div>
+        <div class="col-2 pl-0">
+          <win-button block :disabled="sending" @click="favoriteSong">
+            <i class="icon-favorite i" :style="{color: favoriteColor }" />
+          </win-button>
+        </div>
+        <div class="col-auto ml-auto">
+          <win-button class="px-4" @click="closeWindow(winId!)">
+            {{ t('buttons.close') }}
+          </win-button>
+        </div>
       </div>
     </div>
-  </win-window>
+    <div v-else class="text-center">
+      {{ t('loading') }}
+    </div>
+  </div>
+
+  <div v-if="song" class="statusbar row no-gutters noselect">
+    <div v-if="song.stats.first_played_at" class="col cell">
+      {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { prefs } from '@app/utils/prefs.ts'
 import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -83,21 +80,9 @@ const { winAlert } = useWindows()
 const { addFavorite, deleteFavorite } = useUserFavoritesApi()
 const { openedWindows, closeWindow } = useWindows()
 
+const winId: Ref<string> | undefined = inject('windowId')
 
-const props = defineProps<{
-  name: string,
-}>()
-
-const songWindowParams: SongWindowParams = reactive({
-  songId: ''
-})
-
-onBeforeMount(() => {
-  const currentProps = openedWindows.value[props.name]?.params as SongWindowParams
-  if (currentProps) {
-    songWindowParams.songId = currentProps.songId
-  }
-})
+const params = computed(() => openedWindows.value[winId!.value]?.params as SongWindowParams)
 
 const audio = ref<HTMLAudioElement>()
 
@@ -117,10 +102,10 @@ const { fetch, data: song } = getSong()
 
 async function fetchSong (): Promise<void> {
   try {
-    await fetch({id: songWindowParams.songId})
+    await fetch({id: params.value.songId})
   } catch (e) {
     winAlert((<ApiError>e).message, t('errors.error'))
-    closeWindow(props.name)
+    closeWindow(winId!.value)
   }
 }
 

@@ -2,7 +2,12 @@
   <div class="app-desktop" :class="themeName" :data-theme="themeName" :style="{backgroundImage, backgroundColor}">
     <router-view />
 
-    <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
+    <win-window
+        v-for="window in openedWindows"
+        :key="window.id"
+        :id="window.id"
+        :component="window.component"
+    />
 
     <win-taskbar />
   </div>

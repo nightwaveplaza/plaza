@@ -1,71 +1,69 @@
 <template>
-  <win-window v-slot="{ close }" ref="win" :width="480" :name="name" :title="t('win.user_login.title')">
-    <div class="noselect">
-      <div class="row no-gutters p-2">
-        <div class="col-12 d-block d-sm-none mb-3 p-0">
-          {{ t('win.user_login.type_username') }}
-        </div>
+  <div class="noselect">
+    <div class="row no-gutters p-2">
+      <div class="col-12 d-block d-sm-none mb-3 p-0">
+        {{ t('win.user_login.type_username') }}
+      </div>
 
-        <div class="col-auto d-none d-sm-block pr-3">
-          <img alt="" class="img-key" height="48" src="@app/assets/img/key.png" width="45">
-        </div>
+      <div class="col-auto d-none d-sm-block pr-3">
+        <img alt="" class="img-key" height="48" src="@app/assets/img/key.png" width="45">
+      </div>
 
-        <div class="col pl-0 pr-2">
-          <div class="row no-gutters d-none d-sm-block mb-2">
-            <div class="col-12">
-              {{ t('win.user_login.type_username') }}
-            </div>
-          </div>
-
-          <!-- Username -->
-          <div class="row no-gutters">
-            <div class="col-8 col-sm-4 align-self-center">
-              <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
-            </div>
-            <div class="col-8 col-sm-5">
-              <input id="username" v-model="fields.username" class="mr-0 ml-0 w-100" type="text">
-            </div>
-          </div>
-
-          <!-- Password -->
-          <div class="row mt-1 no-gutters">
-            <div class="col-8 col-sm-4 align-self-center">
-              <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
-            </div>
-            <div class="col-8 col-sm-5">
-              <input id="password" v-model="fields.password" class="mr-0 ml-0 w-100" type="password">
-            </div>
-            <div class="col-2 col-sm-2 ml-2 align-self-center">
-              <a role="button" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
-            </div>
-          </div>
-
-          <!-- Remember -->
-          <div v-if="!isMobile()" class="row mt-1 no-gutters justify-content-end">
-            <div class="col-12 col-sm-8">
-              <div class="checkbox">
-                <input id="remember" v-model="fields.remember" type="checkbox">
-                <label for="remember">{{ t('win.user_login.remember_me') }}</label>
-              </div>
-            </div>
+      <div class="col pl-0 pr-2">
+        <div class="row no-gutters d-none d-sm-block mb-2">
+          <div class="col-12">
+            {{ t('win.user_login.type_username') }}
           </div>
         </div>
 
-        <!-- Buttons -->
-        <div class="col-auto col-sm-2 p-0 login-buttons">
-          <win-button :disabled="isLoading" class="mb-2 text-bold" @click="login">
-            {{ t('win.user_login.btn_sign_in') }}
-          </win-button>
-          <win-button class="mb-2" @click="openRegister">
-            {{ t('win.user_login.btn_register') }}
-          </win-button>
-          <win-button @click="close()">
-            {{ t('buttons.cancel') }}
-          </win-button>
+        <!-- Username -->
+        <div class="row no-gutters">
+          <div class="col-8 col-sm-4 align-self-center">
+            <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
+          </div>
+          <div class="col-8 col-sm-5">
+            <input id="username" v-model="fields.username" class="mr-0 ml-0 w-100" type="text">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row mt-1 no-gutters">
+          <div class="col-8 col-sm-4 align-self-center">
+            <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
+          </div>
+          <div class="col-8 col-sm-5">
+            <input id="password" v-model="fields.password" class="mr-0 ml-0 w-100" type="password">
+          </div>
+          <div class="col-2 col-sm-2 ml-2 align-self-center">
+            <a role="button" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
+          </div>
+        </div>
+
+        <!-- Remember -->
+        <div v-if="!isMobile()" class="row mt-1 no-gutters justify-content-end">
+          <div class="col-12 col-sm-8">
+            <div class="checkbox">
+              <input id="remember" v-model="fields.remember" type="checkbox">
+              <label for="remember">{{ t('win.user_login.remember_me') }}</label>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Buttons -->
+      <div class="col-auto col-sm-2 p-0 login-buttons">
+        <win-button :disabled="isLoading" class="mb-2 text-bold" @click="login">
+          {{ t('win.user_login.btn_sign_in') }}
+        </win-button>
+        <win-button class="mb-2" @click="openRegister">
+          {{ t('win.user_login.btn_register') }}
+        </win-button>
+        <win-button @click="closeWindow(Win.USER_LOGIN)">
+          {{ t('buttons.cancel') }}
+        </win-button>
+      </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -86,12 +84,6 @@ const { setUser } = useAuth()
 const { setToken } = useAuthToken()
 const { fetch, isLoading } = isMobile() ? tokenApi() : loginApi()
 
-defineProps<{
-  name: string,
-}>()
-
-const win = ref<InstanceType<typeof WinWindow>>()
-
 const fields: UserLoginForm = reactive({
   username: '',
   password: '',
@@ -109,7 +101,7 @@ function login (): void {
       setToken(res.token)
     }
     winAlert(t('messages.auth_success'), t('messages.success'), 'info')
-    win.value!.close()
+    closeWindow(Win.USER_LOGIN)
   }).catch(e => {
     winAlert(e.message, t('errors.error'))
   })

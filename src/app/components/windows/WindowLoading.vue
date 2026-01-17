@@ -1,22 +1,16 @@
 <template>
-  <win-window :width="220" :name="name" title="Nightwave Plaza">
-    <template #header>
-      <div class="buttons" />
-    </template>
-
-    <div class="p-3">
-      <p class="text-center">
-        <strong>{{ t('loading') }}</strong>
-      </p>
-      <div ref="bar" class="text-field progress-bar">
-        <div ref="progress" :style="style" class="progress">
-          <div />
-          <div />
-          <div />
-        </div>
+  <div class="p-3">
+    <p class="text-center">
+      <strong>{{ t('loading') }}</strong>
+    </p>
+    <div ref="bar" class="text-field progress-bar">
+      <div ref="progress" :style="style" class="progress">
+        <div />
+        <div />
+        <div />
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,10 +18,6 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-
-defineProps<{
-  name: string
-}>()
 
 const style = ref({
   transform: `translate(0px, 0px)`,

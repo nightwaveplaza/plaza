@@ -1,59 +1,57 @@
 <template>
-  <win-window ref="win" v-slot="{ close }" :width="250" :name="name" :title="t('win.player_timer.title')">
-    <div class="p-3">
-      <div v-if="active" class="text-center">
-        <p>{{ t('win.player_timer.title') }}</p>
-        <p class="time-left mt-2">
-          {{ fmtDuration(sleepTime / 1000) }}
-        </p>
-      </div>
-      <div v-else class="text-center">
-        <p class="text-center">
-          {{ t('win.player_timer.info') }}
-        </p>
+  <div class="p-3">
+    <div v-if="active" class="text-center">
+      <p>{{ t('win.player_timer.title') }}</p>
+      <p class="time-left mt-2">
+        {{ fmtDuration(sleepTime / 1000) }}
+      </p>
+    </div>
+    <div v-else class="text-center">
+      <p class="text-center">
+        {{ t('win.player_timer.info') }}
+      </p>
 
-        <div class="row no-gutters mt-3">
-          <div class="col-2 pr-1">
-            <win-button block @click="add(-10)">
-              -10
-            </win-button>
-          </div>
-          <div class="col-2 pr-1">
-            <win-button block @click="add(-5)">
-              -5
-            </win-button>
-          </div>
-          <div class="col-4 pr-1">
-            <input v-model.number="minutes" class="d-block text-center" type="number" @keydown="useNumberOnly">
-          </div>
-          <div class="col-2 pr-1">
-            <win-button block @click="add(5)">
-              +5
-            </win-button>
-          </div>
-          <div class="col-2">
-            <win-button block @click="add(10)">
-              +10
-            </win-button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Buttons -->
-      <div class="row mt-3 no-gutters justify-content-between">
-        <div class="col-6">
-          <win-button block class="text-bold" @click="start()">
-            {{ btnText }}
+      <div class="row no-gutters mt-3">
+        <div class="col-2 pr-1">
+          <win-button block @click="add(-10)">
+            -10
           </win-button>
         </div>
-        <div class="col-4">
-          <win-button block @click="close()">
-            {{ t('buttons.close') }}
+        <div class="col-2 pr-1">
+          <win-button block @click="add(-5)">
+            -5
+          </win-button>
+        </div>
+        <div class="col-4 pr-1">
+          <input v-model.number="minutes" class="d-block text-center" type="number" @keydown="useNumberOnly">
+        </div>
+        <div class="col-2 pr-1">
+          <win-button block @click="add(5)">
+            +5
+          </win-button>
+        </div>
+        <div class="col-2">
+          <win-button block @click="add(10)">
+            +10
           </win-button>
         </div>
       </div>
     </div>
-  </win-window>
+
+    <!-- Buttons -->
+    <div class="row mt-3 no-gutters justify-content-between">
+      <div class="col-6">
+        <win-button block class="text-bold" @click="start()">
+          {{ btnText }}
+        </win-button>
+      </div>
+      <div class="col-4">
+        <win-button block @click="closeWindow(Win.PLAYER_TIMER)">
+          {{ t('buttons.close') }}
+        </win-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -68,10 +66,6 @@ import { fmtDuration } from '@app/utils/timeFormats.ts'
 const { t } = useI18n()
 const { closeWindow, winAlert } = useWindows()
 const { sleepTime, setSleepTime } = usePlayerPlayback()
-
-defineProps<{
-  name: string
-}>()
 
 const minutes = ref(20)
 

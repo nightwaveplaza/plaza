@@ -1,14 +1,26 @@
-export interface Window {
-  name: string,
+import type { WindowHeaderButtons } from '@app/types/enums.ts'
+
+export interface WindowConfig {
+  width: number,
+  height?: number,
+
+  titleKey?: string,
+  title?: string,
+
+  headerButtons?: WindowHeaderButtons[],
+  isAlert?: boolean
+}
+
+export interface WindowState extends WindowConfig {
+  id: string,
   component: string,
   isMinimized: boolean,
-  title?: string,
-  params?: AlertWindowParams | SongWindowParams
+  zIndex: number,
+  params?: AlertWindowParams | SongWindowParams,
 }
 
 export interface AlertWindowParams {
   type: string,
-  title: string,
   text: string
 }
 

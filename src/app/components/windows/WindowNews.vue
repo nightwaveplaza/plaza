@@ -1,34 +1,33 @@
 <template>
-  <win-window v-slot="{ close }" :width="350" :name="name" :title="t('win.news.title')">
-    <div class="p-2">
-      <div v-if="isLoading" class="content-loading" style="min-height:200px" />
-      <win-memo v-if="!isLoading">
-        <template v-for="article in news?.data" :key="article.id">
-          <div v-if="article.text !== ''" v-html="article.text" />
-          <div v-if="article.text !== ''" class="row justify-content-between">
-            <div class="col-auto">
-              {{ article.author }}
-            </div>
-            <div class="col-auto">
-              {{ fmtDate(article.created_at) }}
-            </div>
-          </div>
-        </template>
-      </win-memo>
+  <div class="p-2">
+    <div v-if="isLoading" class="content-loading" style="min-height:200px" />
 
-      <!-- Buttons -->
-      <div class="row mt-2 no-gutters noselect">
-        <div class="col">
-          <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isLoading" @change="changePage" />
+    <win-memo v-if="!isLoading">
+      <template v-for="article in news?.data" :key="article.id">
+        <div v-if="article.text !== ''" v-html="article.text" />
+        <div v-if="article.text !== ''" class="row justify-content-between">
+          <div class="col-auto">
+            {{ article.author }}
+          </div>
+          <div class="col-auto">
+            {{ fmtDate(article.created_at) }}
+          </div>
         </div>
-        <div class="col-4 ml-auto">
-          <win-button block @click="close()">
-            {{ t('buttons.close') }}
-          </win-button>
-        </div>
+      </template>
+    </win-memo>
+
+    <!-- Buttons -->
+    <div class="row mt-2 no-gutters noselect">
+      <div class="col">
+        <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isLoading" @change="changePage" />
+      </div>
+      <div class="col-4 ml-auto">
+        <win-button block @click="closeWindow(Win.NEWS)">
+          {{ t('buttons.close') }}
+        </win-button>
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -43,10 +42,6 @@ const { t } = useI18n()
 const { winAlert } = useWindows()
 const { getNews } = useNewsApi()
 const { closeWindow } = useWindows()
-
-defineProps<{
-  name: string
-}>()
 
 const page = ref(1)
 const { isLoading, data: news, fetch, error } = getNews()

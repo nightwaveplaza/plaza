@@ -69,7 +69,7 @@ export function useNativeEvents (): {
     closeWindow(name)
   })
 
-  eventBus.on('openWindow', (name: string) => {
+  eventBus.on('openWindow', (name: Win) => {
     if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
       openWindow(Win.USER_LOGIN)
       return

@@ -1,6 +1,12 @@
 <template>
   <div :class="themeName" :style="{backgroundColor}" class="app-desktop">
-    <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
+
+    <win-window
+        v-for="window in openedWindows"
+        :key="window.id"
+        :id="window.id"
+        :component="window.component"
+    />
 
     <win-taskbar />
   </div>

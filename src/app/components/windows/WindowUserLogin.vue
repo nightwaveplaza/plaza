@@ -67,9 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { type UserLoginForm, Win } from '@app/types'

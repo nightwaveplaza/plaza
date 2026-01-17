@@ -41,6 +41,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { closeWindow } = useWindows()

@@ -13,7 +13,7 @@
     >
       <img src="../../assets/img/ball.png" alt="">
       <div class="title">
-        {{ window.title ?? t(window.titleKey) }}
+        {{ window.title ? window.title : window.titleKey ? t(window.titleKey) : ' ' }}
       </div>
     </win-button>
 

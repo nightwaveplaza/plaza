@@ -40,7 +40,7 @@ export function useWindows () {
     }
   }
 
-  const pullUp = (winId?: string) => {
+  const pullUp = (winId?: string): void => {
     activeWindow.value = winId ?? (Object.keys(windows.value).pop() ?? '')
     activeZIndex.value++
     if (activeWindow.value in windows.value) {

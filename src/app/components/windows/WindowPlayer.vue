@@ -28,7 +28,7 @@
       <div v-if="isSigned" class="col-5 col-sm-4 cell login">
         {{ t('win.player.user', {user: user?.username }) }}
       </div>
-  </div>
+    </div>
   </div>
 </template>
 

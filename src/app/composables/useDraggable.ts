@@ -3,7 +3,7 @@ import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
 
-export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string) {
+export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string): void {
   const { openedWindows, moveTo } = useWindows()
 
   let startMousePositionX = 0
@@ -100,8 +100,10 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
   /**
    * Check bounds and return window if out of screen
    */
-  function checkBounds () {
-    if (!windowRef.value) return
+  function checkBounds (): void {
+    if (!windowRef.value) {
+      return
+    }
 
     const rect = windowRef.value.getBoundingClientRect()
     const viewportW = window.innerWidth
@@ -173,7 +175,9 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
 
   // let resizeObserver: ResizeObserver | null = null
   onMounted(() => {
-    if (!windowRef.value) return
+    if (!windowRef.value) {
+      return
+    }
 
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('orientationchange', handleWindowResize)

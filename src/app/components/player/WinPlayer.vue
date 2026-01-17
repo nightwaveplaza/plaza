@@ -3,7 +3,8 @@
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0 px-4 px-sm-0">
       <div class="cover simple-border noselect embed-responsive embed-responsive-1by1"
            :style="{'background-image': `url('${artwork}')`}"
-           @click="showSongInfo" />
+           @click="showSongInfo"
+      />
     </div>
 
     <div class="col-12 col-sm">

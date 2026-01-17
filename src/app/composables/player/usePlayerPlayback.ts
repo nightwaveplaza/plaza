@@ -14,11 +14,11 @@ export function usePlayerPlayback(): {
   updateSleepTime: (t: number) => void
 } {
 
-  const setState = (s: PlayerState) => {
+  const setState = (s: PlayerState): void => {
     state.value = s
   }
 
-  const setSleepTime = (t: number) => {
+  const setSleepTime = (t: number): void => {
     sleepTime.value = t
 
     if (isMobile()) {

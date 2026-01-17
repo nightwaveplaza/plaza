@@ -1,11 +1,11 @@
 <template>
-  <div ref="windowRef"
-       class="win-window"
-       v-show="!windowState.isMinimized"
-       :id="'window-' + id"
-       :style="style"
-       :class="{'window-alert': windowState.isAlert}"
-       @mousedown="pullUp"
+  <div v-show="!windowState.isMinimized"
+       ref="windowRef"
+      :id="'window-' + id"
+      class="win-window"
+      :style="style"
+      :class="{'window-alert': windowState.isAlert}"
+      @mousedown="pullUp"
   >
     <div class="inner" :class="{'d-flex flex-column h-100': windowState.height}">
       <div class="header header-draggable noselect"
@@ -15,20 +15,14 @@
       >
         <div class="icon" />
         {{ windowTitle }}
-        <div class="buttons" v-if="windowState.headerButtons?.length !== 0">
-          <win-button class="button-minimize"
-                      @click="minimize"
-                      v-if="showMinimizeButton">
+        <div v-if="windowState.headerButtons?.length !== 0" class="buttons">
+          <win-button v-if="showMinimizeButton" class="button-minimize" @click="minimize">
             <span />
           </win-button>
-          <win-button v-if="showMaximizeButton"
-                      class="button-maximize"
-                      @click="toggleFullScreen">
+          <win-button v-if="showMaximizeButton" class="button-maximize" @click="toggleFullScreen">
             <span />
           </win-button>
-          <win-button class="button-close"
-                      @click="close"
-                      v-if="showCloseButton">
+          <win-button v-if="showCloseButton" class="button-close" @click="close">
             <span />
           </win-button>
         </div>
@@ -103,7 +97,7 @@ const showCloseButton = computed(() => {
       (windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_CLOSE))
 })
 
-function toggleFullScreen() {
+function toggleFullScreen(): void {
   requestFullscreen()
 }
 
@@ -120,7 +114,7 @@ function close (): void {
   closeWindow(props.id)
 }
 
-function calculateHeight() {
+function calculateHeight(): void {
   if (!windowState.value.height) {
     return
   }

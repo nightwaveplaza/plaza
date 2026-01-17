@@ -54,7 +54,7 @@ const fields = reactive({
 
 const deleteConfirm = ref(false)
 
-function deleteAccount() {
+function deleteAccount(): void {
   if (deleteConfirm.value === false) {
     return winAlert(t('errors.fields.delete_confirm_required'), t('errors.error'))
   }

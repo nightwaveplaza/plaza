@@ -28,7 +28,6 @@
         {{ t('buttons.close') }}
       </win-button>
     </div>
-
   </div>
 </template>
 

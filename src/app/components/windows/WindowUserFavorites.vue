@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex-grow-1 h-100">
     <div class="p-2 h-100">
       <div class="d-flex flex-column h-100">

@@ -23,7 +23,7 @@
               <td class="noselect" style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
+              <td class="py-1 show-info" @click="showSongInfo(s.song.id)">
                 <div class="artist">
                   {{ s.song.artist }}
                 </div>
@@ -84,7 +84,7 @@ import { useRatingsApi } from '@app/composables/api'
 import { RatingsRange, Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo, closeWindow } = useWindows()
+const { showAlert, showSongInfo, closeWindow } = useWindows()
 const { getRatings } = useRatingsApi()
 
 const page = ref(1)
@@ -114,7 +114,7 @@ function pad (n: number): string {
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

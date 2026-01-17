@@ -37,7 +37,7 @@ import { type UserPasswordForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const { winAlert, closeWindow } = useWindows()
+const { showAlert, closeWindow } = useWindows()
 const { updatePassword } = useUserApi()
 const { isLoading, fetch: update } = updatePassword()
 const { unsetUser } = useAuth()
@@ -52,15 +52,15 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return winAlert((e as Error).message, t('errors.error'))
+    return showAlert((e as Error).message, t('errors.error'))
   }
 
   update(fields).then(() => {
     unsetUser()
-    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(Win.USER_PASSWORD)
   }).catch(e =>
-      winAlert(e.message, t('errors.error'))
+      showAlert(e.message, t('errors.error'))
   )
 }
 

@@ -37,7 +37,7 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { closeWindow, winAlert } = useWindows()
+const { closeWindow, showAlert } = useWindows()
 const { resetPasswordConfirm } = useAuthApi()
 const { isLoading, fetch } = resetPasswordConfirm()
 const { resetToken } = useAuth()
@@ -49,14 +49,14 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return winAlert((e as Error).message, t('errors.error'))
+    return showAlert((e as Error).message, t('errors.error'))
   }
 
   fetch({ token: resetToken.value!, password: password.value }).then(() => {
-    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(Win.USER_RESET_PASSWORD)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 

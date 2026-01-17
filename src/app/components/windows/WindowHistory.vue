@@ -17,7 +17,7 @@
           <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
             <tr v-for="h in history?.data" :key="h.song.id">
-              <td class="pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
+              <td class="pr-1 py-1 show-info" @click="showSongInfo(h.song.id)">
                 <div class="artist">
                   {{ h.song.artist }}
                 </div>
@@ -77,7 +77,7 @@ import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo, closeWindow } = useWindows()
+const { showAlert, showSongInfo, closeWindow } = useWindows()
 const { getHistory } = useHistoryApi()
 
 const page = ref(1)
@@ -95,7 +95,7 @@ function fetchHistory (): void {
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

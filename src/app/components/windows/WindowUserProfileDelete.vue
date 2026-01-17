@@ -45,7 +45,7 @@ import { useAuth } from '@app/composables/useAuth.ts'
 const { t } = useI18n()
 const { deleteProfile } = useUserApi()
 const { isLoading } = deleteProfile()
-const { winAlert, closeWindow } = useWindows()
+const { showAlert, closeWindow } = useWindows()
 const { unsetUser } = useAuth()
 
 const fields = reactive({
@@ -56,19 +56,19 @@ const deleteConfirm = ref(false)
 
 function deleteAccount(): void {
   if (deleteConfirm.value === false) {
-    return winAlert(t('errors.fields.delete_confirm_required'), t('errors.error'))
+    return showAlert(t('errors.fields.delete_confirm_required'), t('errors.error'))
   }
 
   if (fields.current_password.length === 0) {
-    return winAlert(t('errors.fields.current_password_required'), t('errors.error'))
+    return showAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
   deleteProfile().fetch(fields).then(() => {
-    winAlert(t('messages.profile_deleted'), t('messages.success'), 'info')
+    showAlert(t('messages.profile_deleted'), t('messages.success'), 'info')
     unsetUser()
     closeWindow(Win.USER_PROFILE_DELETE)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 </script>

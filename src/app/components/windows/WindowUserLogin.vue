@@ -77,7 +77,7 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, winAlert } = useWindows()
+const { openWindow, closeWindow, showAlert } = useWindows()
 const { login: loginApi,  token: tokenApi } = useAuthApi()
 const { setUser } = useAuth()
 const { setToken } = useAuthToken()
@@ -91,7 +91,7 @@ const fields: UserLoginForm = reactive({
 
 function login (): void {
   if (fields.username.length === 0 || fields.password.length === 0) {
-    return winAlert(t('errors.enter_user_pass'), t('errors.error'))
+    return showAlert(t('errors.enter_user_pass'), t('errors.error'))
   }
 
   fetch(fields).then(res => {
@@ -99,10 +99,10 @@ function login (): void {
     if (res.token) {
       setToken(res.token)
     }
-    winAlert(t('messages.auth_success'), t('messages.success'), 'info')
+    showAlert(t('messages.auth_success'), t('messages.success'), 'info')
     closeWindow(Win.USER_LOGIN)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 

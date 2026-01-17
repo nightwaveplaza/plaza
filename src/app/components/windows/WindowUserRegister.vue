@@ -109,7 +109,7 @@ import { useUserApi } from '@app/composables/api'
 
 
 const { t } = useI18n()
-const { winAlert, closeWindow } = useWindows()
+const { showAlert, closeWindow } = useWindows()
 const { registerUser } = useUserApi()
 const { isLoading, fetch } = registerUser()
 
@@ -130,7 +130,7 @@ function register (): void {
   try {
     validate()
   } catch (e) {
-    return winAlert((e as Error).message, t('errors.error'))
+    return showAlert((e as Error).message, t('errors.error'))
   }
 
   step.value = 2
@@ -139,17 +139,17 @@ function register (): void {
 function completeCaptcha (): void {
   if (fields.captcha_response === '') {
     step.value = 1
-    return winAlert(t('win.user_register.captcha_fail'), t('errors.error'))
+    return showAlert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
   fetch(fields).then(() => {
-    winAlert(
+    showAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
     closeWindow(Win.USER_REGISTER)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
     step.value = 1
   })
 }

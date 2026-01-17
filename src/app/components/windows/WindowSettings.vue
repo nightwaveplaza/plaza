@@ -153,7 +153,7 @@ import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { openWindow, closeWindow, winAlert } = useWindows()
+const { openWindow, closeWindow, showAlert } = useWindows()
 const {
   theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls,
   lowQuality, setLowQuality
@@ -200,12 +200,12 @@ function openLanguageSettings (): void {
 
 function qualityChanged (e: Event): void {
   setLowQuality((e.target as HTMLInputElement).checked)
-  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 function hlsChanged (e: Event): void {
   setUseHls((e.target as HTMLInputElement).checked)
-  winAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
+  showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 onMounted(() => {

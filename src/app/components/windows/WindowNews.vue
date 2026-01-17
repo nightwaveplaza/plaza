@@ -39,7 +39,7 @@ import { fmtDate } from '@app/utils/timeFormats.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert } = useWindows()
+const { showAlert } = useWindows()
 const { getNews } = useNewsApi()
 const { closeWindow } = useWindows()
 
@@ -57,7 +57,7 @@ function fetchNews (): void {
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
   if (!news.value) {
     closeWindow(Win.NEWS)

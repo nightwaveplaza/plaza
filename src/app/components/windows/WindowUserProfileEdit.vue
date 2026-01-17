@@ -52,7 +52,7 @@ import { type UserProfileForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const { winAlert, closeWindow, openWindow } = useWindows()
+const { showAlert, closeWindow, openWindow } = useWindows()
 const { updateProfile } = useUserApi()
 const { user, setUser } = useAuth()
 const { isLoading } = updateProfile()
@@ -70,15 +70,15 @@ function fetchUser (): void {
 
 function update (): void {
   if (fields.current_password.length === 0) {
-    return winAlert(t('errors.fields.current_password_required'), t('errors.error'))
+    return showAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
   updateProfile().fetch(fields).then(res => {
-    winAlert(t('messages.profile_updated'), t('messages.success'), 'info')
+    showAlert(t('messages.profile_updated'), t('messages.success'), 'info')
     setUser(res.data)
     closeWindow(Win.USER_PROFILE_EDIT)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 

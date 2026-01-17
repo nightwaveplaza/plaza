@@ -44,7 +44,7 @@ import { useAuthApi } from '@app/composables/api'
 import { type UserResetForm, Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, closeWindow } = useWindows()
+const { showAlert, closeWindow } = useWindows()
 const { resetPassword } = useAuthApi()
 const { isLoading, fetch } = resetPassword()
 
@@ -58,7 +58,7 @@ const showCaptcha = ref(false)
 
 function reset (): void {
   if (fields.email.length === 0) {
-    return winAlert(t('errors.fields.email_required'), t('errors.error'))
+    return showAlert(t('errors.fields.email_required'), t('errors.error'))
   }
 
   showCaptcha.value = true
@@ -66,11 +66,11 @@ function reset (): void {
 
 function completeCaptcha (): void {
   fetch(fields).then(() => {
-    winAlert(t('messages.reset_success'), t('messages.success'), 'info')
+    showAlert(t('messages.reset_success'), t('messages.success'), 'info')
     win.value!.close()
   }).catch(e => {
     showCaptcha.value = false
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 

@@ -10,7 +10,7 @@
                 <td class="p-1 pl-0 noselect" style="width: 62px">
                   <img :src="f.song.artwork_src" alt="artwork">
                 </td>
-                <td class="pl-1 show-info" @click="winSongInfo(f.song.id)">
+                <td class="pl-1 show-info" @click="showSongInfo(f.song.id)">
                   <div class="artist">
                     {{ f.song.artist }}
                   </div>
@@ -85,7 +85,7 @@ import { useUserFavoritesApi } from '@app/composables/api'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo, openWindow, closeWindow } = useWindows()
+const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows()
 const { getFavorites, deleteFavorite } = useUserFavoritesApi()
 const { isLoading, fetch, data: favs, error } = getFavorites()
 
@@ -105,13 +105,13 @@ function deleteLike (favoriteId: number): void {
   deleteFavorite().fetch({ id: favoriteId }).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

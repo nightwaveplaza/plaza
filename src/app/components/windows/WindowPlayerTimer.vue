@@ -64,7 +64,7 @@ import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 import { fmtDuration } from '@app/utils/timeFormats.ts'
 
 const { t } = useI18n()
-const { closeWindow, winAlert } = useWindows()
+const { closeWindow, showAlert } = useWindows()
 const { sleepTime, setSleepTime } = usePlayerPlayback()
 
 const minutes = ref(20)
@@ -78,7 +78,7 @@ function start (): void {
     setSleepTime(0)
   } else {
     setSleepTime(minutes.value * 60 * 1000)
-    winAlert(
+    showAlert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'), 'info'
     )

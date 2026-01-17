@@ -76,7 +76,7 @@ import { useUserFavoritesApi } from '@app/composables/api'
 import type { ApiError } from '@app/composables/api/useApi.ts'
 
 const { t } = useI18n()
-const { winAlert } = useWindows()
+const { showAlert } = useWindows()
 const { addFavorite, deleteFavorite } = useUserFavoritesApi()
 const { openedWindows, closeWindow } = useWindows()
 
@@ -104,7 +104,7 @@ async function fetchSong (): Promise<void> {
   try {
     await fetch({id: params.value.songId})
   } catch (e) {
-    winAlert((<ApiError>e).message, t('errors.error'))
+    showAlert((<ApiError>e).message, t('errors.error'))
     closeWindow(winId!.value)
   }
 }
@@ -121,7 +121,7 @@ async function favoriteSong (): Promise<void> {
     await fetchSong()
   } catch (e) {
     if ((<ApiError>e).code === 401) {
-      winAlert(t('errors.please_sign'), t('errors.error'))
+      showAlert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {
     sending.value = false

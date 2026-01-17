@@ -92,14 +92,14 @@ export function useWindows () {
     }
   }
 
-  const winAlert = (text: string, title: string, type = 'warn'): void => {
+  const showAlert = (text: string, title: string, type = 'warn'): void => {
     // Window winId must be unique, generate random string for alerts
     const id = Math.random().toString(36).slice(2, 11)
     openWindow(Win.ALERT, id, { text, type })
     windows.value[id]!.title = title
   }
 
-  const winSongInfo = (id: string): void => {
+  const showSongInfo = (id: string): void => {
     openWindow(Win.SONG, id, { songId: id })
   }
 
@@ -110,8 +110,8 @@ export function useWindows () {
     activeWindow,
     minimizeWindow,
     toggleMinimize,
-    winAlert,
-    winSongInfo,
+    showAlert,
+    showSongInfo,
     pullUp,
     moveTo
   }

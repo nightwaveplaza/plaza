@@ -1,10 +1,10 @@
 import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
 
-export function useDraggable (windowRef: Ref<HTMLElement | null>) {
-  const x = ref(0)
-  const y = ref(0)
+export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string) {
+  const { openedWindows, moveTo } = useWindows()
 
   let startMousePositionX = 0
   let startMousePositionY = 0
@@ -27,8 +27,8 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>) {
     isDragging.value = true
     startMousePositionX = e.clientX
     startMousePositionY = e.clientY
-    startWindowPositionX = x.value
-    startWindowPositionY = y.value
+    startWindowPositionX = openedWindows.value[winId]!.x
+    startWindowPositionY = openedWindows.value[winId]!.y
 
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseup', handleMouseUp)
@@ -74,8 +74,7 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>) {
       nextY = viewportH - rect.height
     }
 
-    x.value = nextX
-    y.value = nextY
+    moveTo(winId, nextX, nextY)
     isCentered.value = false
   }
 
@@ -113,24 +112,36 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>) {
       centerWindow()
     }
 
+    let outOfBounds = false
+    let nextX = openedWindows.value[winId]!.x
+    let nextY = openedWindows.value[winId]!.y
+
     // Check left
-    if (x.value < 0) {
-      x.value = 0
+    if (nextX < 0) {
+      nextX = 0
+      outOfBounds = true
     }
 
     // Check top
-    if (y.value < 0) {
-      y.value = 0
+    if (nextY < 0) {
+      nextY = 0
+      outOfBounds = true
     }
 
     // Check right
-    if (x.value + rect.width > viewportW) {
-      x.value = Math.max(0, viewportW - rect.width)
+    if (nextX + rect.width > viewportW) {
+      nextX = Math.max(0, viewportW - rect.width)
+      outOfBounds = true
     }
 
     // Check bottom
-    if (y.value + rect.height > viewportH) {
-      y.value = Math.max(0, viewportH - rect.height)
+    if (nextY + rect.height > viewportH) {
+      nextY = Math.max(0, viewportH - rect.height)
+      outOfBounds = true
+    }
+
+    if (outOfBounds) {
+      moveTo(winId, nextX, nextY)
     }
   }
 
@@ -147,9 +158,10 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>) {
         const viewportW = window.innerWidth
         const viewportH = window.innerHeight
 
-        x.value = (viewportW / 2) - (winWidth / 2)
-        y.value = (viewportH / 2) - (winHeight / 2)
+        const nextX = (viewportW / 2) - (winWidth / 2)
+        const nextY = (viewportH / 2) - (winHeight / 2)
 
+        moveTo(winId, nextX, nextY)
         isCentered.value = true
       }
     })
@@ -184,5 +196,5 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>) {
     //}
   })
 
-  return { x, y, height, centerWindow, handleDragStart }
+  return { height, centerWindow, handleDragStart }
 }

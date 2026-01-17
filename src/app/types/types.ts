@@ -1,4 +1,4 @@
-import type { WindowHeaderButtons } from '@app/types/enums.ts'
+import { Win, type WindowHeaderButtons } from '@app/types/enums.ts'
 
 export interface WindowConfig {
   width: number,
@@ -14,8 +14,12 @@ export interface WindowConfig {
 export interface WindowState extends WindowConfig {
   id: string,
   component: string,
+
+  x: number,
+  y: number,
   isMinimized: boolean,
   zIndex: number,
+
   params?: AlertWindowParams | SongWindowParams,
 }
 
@@ -30,7 +34,7 @@ export interface SongWindowParams {
 
 export type EventBus = {
   closeWindow: string
-  openWindow: string
+  openWindow: Win
   onResume: void
   isBuffering: void
   isPlaying: boolean

@@ -30,6 +30,8 @@ export function useWindows () {
         ...registry[win],
         params,
         id: winId,
+        x: 0,
+        y: 0,
         isMinimized: false,
         zIndex: activeZIndex.value,
         component: 'window-' + win
@@ -83,6 +85,13 @@ export function useWindows () {
     }
   }
 
+  const moveTo = (winId: Win | string, x: number, y: number): void => {
+    if (winId in windows.value) {
+      windows.value[winId]!.x = x
+      windows.value[winId]!.y = y
+    }
+  }
+
   const winAlert = (text: string, title: string, type = 'warn'): void => {
     // Window winId must be unique, generate random string for alerts
     const id = Math.random().toString(36).slice(2, 11)
@@ -104,6 +113,6 @@ export function useWindows () {
     winAlert,
     winSongInfo,
     pullUp,
-    activeZIndex
+    moveTo
   }
 }

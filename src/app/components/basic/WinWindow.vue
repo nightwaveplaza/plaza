@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties, onMounted, provide, type Ref, ref, toRef } from 'vue'
+import { computed, type CSSProperties, onMounted, onUnmounted, provide, type Ref, ref, toRef } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useDraggable } from '@app/composables/useDraggable.ts'
 import { useI18n } from 'vue-i18n'
@@ -68,8 +68,8 @@ const windowState: Ref<WindowState> = computed(() => {
 const style = computed<CSSProperties>(() => ({
   zIndex: windowState.value.zIndex,
   position: 'absolute',
-  left: `${x.value}px`,
-  top: `${y.value}px`,
+  left: `${windowState.value.x}px`,
+  top: `${windowState.value.y}px`,
   transform: '',
   width: `${windowState.value.width}px`,
   maxWidth: windowState.value.width > 0 && windowState.value.width <= 320 ? `${windowState.value.width}px` : 'none',
@@ -77,9 +77,10 @@ const style = computed<CSSProperties>(() => ({
   height: windowState.value.height ? `${actualHeight.value}px`: 'auto'
 }))
 
-const isActive = computed(() => activeWindow.value === props.id)
 const windowRef = ref<HTMLDivElement | null>(null)
-const { centerWindow, handleDragStart, x, y } = useDraggable(windowRef)
+const { centerWindow, handleDragStart } = useDraggable(windowRef, props.id)
+
+const isActive = computed(() => activeWindow.value === props.id)
 const actualHeight = ref(windowState.value.height ?? 0)
 
 const windowTitle = computed(() => {
@@ -125,30 +126,21 @@ function calculateHeight() {
   }
 
   const viewportHeight = window.innerHeight
-  const availableSpace = viewportHeight - y.value
+  const availableSpace = viewportHeight - windowState.value.y
 
   const maxAllowedHeight = Math.max(40, availableSpace)
 
   actualHeight.value = Math.min(windowState.value.height, maxAllowedHeight)
 }
 
-// watch(() => activeWindow.value, () => {
-//   if (activeWindow.value === props.id) {
-//     zIndex.value = activeZIndex.value
-//   }
-// })
-
-// onBeforeMount(() => {
-//   if (props.title) {
-//     //updateTitle(props.name, props.title)
-//   }
-// })
-
 onMounted(() => {
-
   window.addEventListener('resize', calculateHeight)
   window.addEventListener('orientationchange', calculateHeight)
-  // zIndex.value = activeZIndex.value
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', calculateHeight)
+  window.removeEventListener('orientationchange', calculateHeight)
 })
 
 defineExpose({

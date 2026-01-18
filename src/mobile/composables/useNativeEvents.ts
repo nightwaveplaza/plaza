@@ -40,10 +40,7 @@ export function useNativeEvents (): {
     onReconnectFailed()
     //openWindow(Win.DISCONNECTED)
   })
-  eventBus.on('onStatusUpdate', (s: string) => {
-    console.log(s)
-    setStatus(JSON.parse(s))
-  })
+  eventBus.on('onStatusUpdate', (s: string) => setStatus(JSON.parse(s)))
   eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
   eventBus.on('onReactionsUpdate', (r: number) => setReactions(r))
 

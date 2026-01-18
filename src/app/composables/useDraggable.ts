@@ -1,11 +1,13 @@
-import { nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { onBeforeUnmount, ref, type Ref, type UnwrapRef } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
 
 export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string): {
   centerWindow: () => void;
-  handleDragStart: (e: MouseEvent) => void
+  handleDragStart: (e: MouseEvent) => void;
+  checkBounds: () => void;
+  isCentered: Ref<UnwrapRef<boolean>>
 } {
   const { openedWindows, moveTo } = useWindows()
 
@@ -13,7 +15,6 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
   let startMousePositionY = 0
   let startWindowPositionX = 0
   let startWindowPositionY = 0
-  let resizeDebounceTimeout: ReturnType<typeof setTimeout> | undefined = undefined
   const isDragging = ref(false)
   const isCentered = ref(false)
 
@@ -90,19 +91,9 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
   }
 
   /**
-   * Handle window resize event (debounce checkBounds)
-   */
-  const handleWindowResize = (): void => {
-    clearTimeout(resizeDebounceTimeout)
-    resizeDebounceTimeout = setTimeout(() => {
-      checkBounds()
-    }, 100)
-  }
-
-  /**
    * Check bounds and return window if out of screen
    */
-  function checkBounds (): void {
+  const checkBounds = (): void => {
     if (!windowRef.value) {
       return
     }
@@ -110,11 +101,6 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
     const rect = windowRef.value.getBoundingClientRect()
     const viewportW = window.innerWidth
     const viewportH = window.innerHeight
-
-    // If user didn't move the window, center it
-    if (isCentered.value) {
-      centerWindow()
-    }
 
     let outOfBounds = false
     let nextX = openedWindows.value[winId]!.x
@@ -150,53 +136,29 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
   }
 
   const centerWindow = (): void => {
-    nextTick().then(() => {
-      if (windowRef.value) {
-        const el = windowRef.value
+    if (windowRef.value) {
+      const el = windowRef.value
 
-        // Target window size
-        const winWidth = el.offsetWidth
-        const winHeight = el.offsetHeight
+      // Target window size
+      const winWidth = el.offsetWidth
+      const winHeight = el.offsetHeight
 
-        // Viewport size
-        const viewportW = window.innerWidth
-        const viewportH = window.innerHeight
+      // Viewport size
+      const viewportW = window.innerWidth
+      const viewportH = window.innerHeight
 
-        const nextX = (viewportW / 2) - (winWidth / 2)
-        const nextY = (viewportH / 2) - (winHeight / 2)
+      const nextX = (viewportW / 2) - (winWidth / 2)
+      const nextY = (viewportH / 2) - (winHeight / 2)
 
-        moveTo(winId, nextX, nextY)
-        isCentered.value = true
-      }
-    })
-  }
-
-  // let resizeObserver: ResizeObserver | null = null
-  onMounted(() => {
-    if (!windowRef.value) {
-      return
+      moveTo(winId, nextX, nextY)
+      isCentered.value = true
     }
-
-    window.addEventListener('resize', handleWindowResize)
-    window.addEventListener('orientationchange', handleWindowResize)
-
-    // Create observer
-    //resizeObserver = new ResizeObserver(() => {
-    //handleWindowResize()
-    //})
-    //resizeObserver.observe(windowRef.value)
-  })
+  }
 
   onBeforeUnmount(() => {
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('mouseup', handleMouseUp)
-    window.removeEventListener('resize', handleWindowResize)
-    window.removeEventListener('orientationchange', handleWindowResize)
-
-    //if (resizeObserver) {
-    //  resizeObserver.disconnect()
-    //}
   })
 
-  return { centerWindow, handleDragStart }
+  return { centerWindow, handleDragStart, checkBounds, isCentered }
 }

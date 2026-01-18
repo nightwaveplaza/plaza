@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import {
   computed,
-  type CSSProperties,
+  type CSSProperties, nextTick,
   onBeforeMount,
   onMounted,
   onUnmounted,
@@ -82,7 +82,7 @@ const style = computed<CSSProperties>(() => ({
 }))
 
 const windowRef = ref<HTMLDivElement | null>(null)
-const { centerWindow, handleDragStart } = useDraggable(windowRef, props.id)
+const { centerWindow, checkBounds, handleDragStart, isCentered } = useDraggable(windowRef, props.id)
 
 const isActive = computed(() => activeWindow.value === props.id)
 const actualHeight = ref(windowState.value.height ?? 0)
@@ -129,7 +129,7 @@ function calculateHeight(): void {
     return
   }
 
-  const viewportHeight = window.innerHeight
+  const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight
   const availableSpace = viewportHeight - 28 - 30 // taskbar height and paddings
   const maxAllowedHeight = Math.max(40, availableSpace)
 
@@ -140,19 +140,32 @@ onBeforeMount(() => {
   recenter()
 })
 
-function recenter(): void {
+async function recenter(): Promise<void> {
   calculateHeight()
-  centerWindow()
+  await nextTick()
+
+  if (isCentered.value) {
+    centerWindow()
+  } else {
+    checkBounds()
+  }
 }
 
 onMounted(() => {
+  isCentered.value = true
+  recenter()
   window.addEventListener('resize', recenter)
-  window.addEventListener('orientationchange', recenter)
+  window.visualViewport?.addEventListener('resize', recenter)
+
+  // window.matchMedia('(orientation: portrait)').addEventListener('change', () => {
+  //   setTimeout(recenter, 100)
+  //   setTimeout(recenter, 500) // Дожимаем после анимации
+  // })
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', recenter)
-  window.removeEventListener('orientationchange', recenter)
+  window.visualViewport?.removeEventListener('resize', recenter)
 })
 
 defineExpose({

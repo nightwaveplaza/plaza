@@ -66,7 +66,7 @@
 
   <div class="win-window__statusbar noselect">
     <div class="row no-gutters song-list-statusbar">
-      <div class="col-3 cell d">
+      <div class="col-auto cell pr-4 d">
         {{ t('pagination.pages', {n: favs?.meta.last_page}) }}
       </div>
       <div class="col cell">

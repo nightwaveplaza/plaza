@@ -1,5 +1,5 @@
 <template>
-  <div class="win-group-box" :class="props.class">
+  <div class="win-group-box">
     <div class="win-group-box__label noselect">
       <span><slot name="title" /></span>
     </div>
@@ -10,11 +10,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const props = withDefaults(defineProps<{
-  class?: string
-}>(), {
-  class: '',
-})
-</script>

@@ -1,10 +1,9 @@
-import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref, type UnwrapRef } from 'vue'
+import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
 
 export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string): {
-  height: Ref<UnwrapRef<number>>;
   centerWindow: () => void;
   handleDragStart: (e: MouseEvent) => void
 } {
@@ -17,7 +16,6 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
   let resizeDebounceTimeout: ReturnType<typeof setTimeout> | undefined = undefined
   const isDragging = ref(false)
   const isCentered = ref(false)
-  const height = ref(0)
 
   /**
    * Start dragging
@@ -204,5 +202,5 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
     //}
   })
 
-  return { height, centerWindow, handleDragStart }
+  return { centerWindow, handleDragStart }
 }

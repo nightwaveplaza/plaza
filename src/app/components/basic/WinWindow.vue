@@ -137,18 +137,22 @@ function calculateHeight(): void {
 }
 
 onBeforeMount(() => {
-  calculateHeight()
-  centerWindow()
+  recenter()
 })
 
+function recenter(): void {
+  calculateHeight()
+  centerWindow()
+}
+
 onMounted(() => {
-  window.addEventListener('resize', calculateHeight)
-  window.addEventListener('orientationchange', calculateHeight)
+  window.addEventListener('resize', recenter)
+  window.addEventListener('orientationchange', recenter)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', calculateHeight)
-  window.removeEventListener('orientationchange', calculateHeight)
+  window.removeEventListener('resize', recenter)
+  window.removeEventListener('orientationchange', recenter)
 })
 
 defineExpose({

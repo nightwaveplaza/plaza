@@ -121,6 +121,7 @@ function openDrawer (): void {
     line-height: 0;
     height: auto;
     width: 112px;
+    background-size: cover;
   }
 
   .cover img {

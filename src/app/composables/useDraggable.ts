@@ -1,4 +1,4 @@
-import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 
 const SNAP_SIZE = 15
@@ -170,10 +170,6 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
       }
     })
   }
-
-  onBeforeMount(() => {
-    centerWindow()
-  })
 
   // let resizeObserver: ResizeObserver | null = null
   onMounted(() => {

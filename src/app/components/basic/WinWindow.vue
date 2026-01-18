@@ -34,7 +34,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties, onMounted, onUnmounted, provide, type Ref, ref, toRef } from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  provide,
+  type Ref,
+  ref,
+  toRef
+} from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useDraggable } from '@app/composables/useDraggable.ts'
 import { useI18n } from 'vue-i18n'
@@ -120,12 +130,16 @@ function calculateHeight(): void {
   }
 
   const viewportHeight = window.innerHeight
-  const availableSpace = viewportHeight - windowState.value.y
-
+  const availableSpace = viewportHeight - 28 - 30 // taskbar height and paddings
   const maxAllowedHeight = Math.max(40, availableSpace)
 
   actualHeight.value = Math.min(windowState.value.height, maxAllowedHeight)
 }
+
+onBeforeMount(() => {
+  calculateHeight()
+  centerWindow()
+})
 
 onMounted(() => {
   window.addEventListener('resize', calculateHeight)

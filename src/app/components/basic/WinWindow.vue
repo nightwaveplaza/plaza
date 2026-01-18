@@ -159,7 +159,7 @@ onMounted(() => {
 
   // window.matchMedia('(orientation: portrait)').addEventListener('change', () => {
   //   setTimeout(recenter, 100)
-  //   setTimeout(recenter, 500) // Дожимаем после анимации
+  //   setTimeout(recenter, 500)
   // })
 })
 

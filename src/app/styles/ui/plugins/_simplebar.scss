@@ -40,6 +40,10 @@
     /* please don't change 'position' */
     position: absolute;
   }
+
+  &.simplebar-horizontal {
+    display: none;
+  }
 }
 
 .simplebar-scrollbar {

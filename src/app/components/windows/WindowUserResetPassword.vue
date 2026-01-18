@@ -1,33 +1,31 @@
 <template>
-  <win-window ref="win" :name="name" :title="t('win.user_password.title')" :width="280">
-    <div class="py-2">
-      <div class="row no-gutters">
-        <div class="col-10 offset-1">
-          <!-- New password -->
-          <label for="password">{{ t('fields.new_password') }}:</label>
-          <input id="password" v-model="password" class="d-block mb-2" type="password">
+  <div class="py-2">
+    <div class="row no-gutters">
+      <div class="col-10 offset-1">
+        <!-- New password -->
+        <label for="password">{{ t('fields.new_password') }}:</label>
+        <input id="password" v-model="password" class="d-block mb-2" type="password">
 
-          <!-- Repeat password -->
-          <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
-          <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
+        <!-- Repeat password -->
+        <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
+        <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
 
-          <!-- Buttons -->
-          <div class="row mt-2 no-gutters justify-content-between">
-            <div class="col-6">
-              <win-button block class="text-bold" :disabled="isLoading" @click="change">
-                {{ t('buttons.change') }}
-              </win-button>
-            </div>
-            <div class="col-4">
-              <win-button block @click="closeWindow(Win.USER_RESET_PASSWORD)">
-                {{ t('buttons.cancel') }}
-              </win-button>
-            </div>
+        <!-- Buttons -->
+        <div class="row mt-2 no-gutters justify-content-between">
+          <div class="col-6">
+            <win-button block class="text-bold" :disabled="isLoading" @click="change">
+              {{ t('buttons.change') }}
+            </win-button>
+          </div>
+          <div class="col-4">
+            <win-button block @click="closeWindow(Win.USER_RESET_PASSWORD)">
+              {{ t('buttons.cancel') }}
+            </win-button>
           </div>
         </div>
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -39,14 +37,10 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { closeWindow, winAlert } = useWindows()
+const { closeWindow, showAlert } = useWindows()
 const { resetPasswordConfirm } = useAuthApi()
 const { isLoading, fetch } = resetPasswordConfirm()
 const { resetToken } = useAuth()
-
-defineProps<{
-  name: string,
-}>()
 
 const password = ref('')
 const passwordRepeat = ref('')
@@ -55,14 +49,14 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return winAlert((e as Error).message, t('errors.error'))
+    return showAlert((e as Error).message, t('errors.error'))
   }
 
   fetch({ token: resetToken.value!, password: password.value }).then(() => {
-    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(Win.USER_RESET_PASSWORD)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 

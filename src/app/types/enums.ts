@@ -14,7 +14,6 @@ export enum Win {
   ABOUT = 'about',
   ALERT = 'alert',
   CREDITS = 'credits',
-  DISCONNECTED = 'disconnected',
   HISTORY = 'history',
   LOADING = 'loading',
   MOBILE = 'mobile',
@@ -36,4 +35,10 @@ export enum Win {
   USER_REGISTER = 'user-register',
   USER_RESET = 'user-reset',
   USER_RESET_PASSWORD = 'user-reset-password'
+}
+
+export enum WindowHeaderButtons {
+  BTN_MINIMIZE = 'minimize',
+  BTN_MAXIMIZE = 'maximize',
+  BTN_CLOSE = 'close'
 }

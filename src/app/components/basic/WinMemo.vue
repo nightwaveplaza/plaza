@@ -1,5 +1,5 @@
 <template>
-  <div ref="memo" class="memo p-2">
+  <div ref="memo" class="win-memo p-2">
     <slot />
   </div>
 </template>

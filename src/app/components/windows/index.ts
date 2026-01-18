@@ -21,7 +21,6 @@ import WindowSupport from '@app/components/windows/WindowSupport.vue'
 import WindowUserResetPassword from '@app/components/windows/WindowUserResetPassword.vue'
 import WindowSettings from '@app/components/windows/WindowSettings.vue'
 import WindowPlayerTimer from '@app/components/windows/WindowPlayerTimer.vue'
-import WindowDisconnected from '@app/components/windows/WindowDisconnected.vue'
 import WindowUserFavoritesExport from '@app/components/windows/WindowUserFavoritesExport.vue'
 import WindowUserProfileDelete from '@app/components/windows/WindowUserProfileDelete.vue'
 
@@ -30,7 +29,6 @@ export default {
     Vue.component('WindowAbout', WindowAbout)
     Vue.component('WindowAlert', WindowAlert)
     Vue.component('WindowCredits', WindowCredits)
-    Vue.component('WindowDisconnected', WindowDisconnected)
     Vue.component('WindowHistory', WindowHistory)
     Vue.component('WindowLoading', WindowLoading)
     Vue.component('WindowMobile', WindowMobile)

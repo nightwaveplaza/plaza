@@ -1,6 +1,6 @@
 <template>
-  <win-window v-slot="winProps" :width="450" fluid-height :name="name" :title="t('win.user_favorites.title')">
-    <div class="content-fluid p-2">
+  <div class="flex-grow-1 h-100">
+    <div class="p-2 h-100">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading noselect" />
@@ -10,7 +10,7 @@
                 <td class="p-1 pl-0 noselect" style="width: 62px">
                   <img :src="f.song.artwork_src" alt="artwork">
                 </td>
-                <td class="pl-1 show-info" @click="winSongInfo(f.song.id)">
+                <td class="pl-1 show-info" @click="showSongInfo(f.song.id)">
                   <div class="artist">
                     {{ f.song.artist }}
                   </div>
@@ -54,7 +54,7 @@
               <win-button class="px-3 mr-2" @click="openWindow(Win.USER_FAVORITES_EXPORT)">
                 {{ t('win.user_favorites_export.btn_export') }}
               </win-button>
-              <win-button class="px-3" @click="winProps.close()">
+              <win-button class="px-3" @click="closeWindow(Win.USER_FAVORITES)">
                 {{ t('buttons.close') }}
               </win-button>
             </div>
@@ -62,8 +62,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="statusbar row no-gutters song-list-statusbar noselect">
+  <div class="win-window__statusbar noselect">
+    <div class="row no-gutters song-list-statusbar">
       <div class="col-3 cell d">
         {{ t('pagination.pages', {n: favs?.meta.last_page}) }}
       </div>
@@ -71,7 +73,7 @@
         {{ t('pagination.songs', {n: favs?.meta.total}) }}
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -83,13 +85,9 @@ import { useUserFavoritesApi } from '@app/composables/api'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo, openWindow } = useWindows()
+const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows()
 const { getFavorites, deleteFavorite } = useUserFavoritesApi()
 const { isLoading, fetch, data: favs, error } = getFavorites()
-
-defineProps<{
-  name: string,
-}>()
 
 const deleted = ref([] as Array<number>)
 const page = ref(1)
@@ -107,13 +105,13 @@ function deleteLike (favoriteId: number): void {
   deleteFavorite().fetch({ id: favoriteId }).then(() => {
     deleted.value.push(favoriteId)
   }).catch(e => {
-    winAlert(e.message, t('errors.error'))
+    showAlert(e.message, t('errors.error'))
   })
 }
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

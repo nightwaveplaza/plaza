@@ -1,9 +1,10 @@
 <template>
   <div class="row no-gutters">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
-      <div class="cover simple-border noselect">
-        <img :src="artwork" alt="artwork">
-      </div>
+      <div class="cover simple-border noselect embed-responsive embed-responsive-1by1"
+           :style="{'background-image': `url('${artwork}')`}"
+           @click="openSongInfo"
+      />
     </div>
 
     <div class="col-12 col-sm">
@@ -62,13 +63,19 @@ import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
+const { openWindow, closeWindow, showSongInfo } = useWindows()
 const { song } = useNowPlayingStatus()
 const { state, sleepTime, setSleepTime } = usePlayerPlayback()
 
 const artwork = computed(() => {
   return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
+
+function openSongInfo (): void {
+  if (song.id) {
+    showSongInfo(song.id)
+  }
+}
 
 const playText = computed((): string => {
   switch (state.value) {

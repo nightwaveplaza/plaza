@@ -1,40 +1,23 @@
 <template>
-  <win-window :width="220" :name="name" title="Nightwave Plaza">
-    <template #header>
-      <div class="buttons" />
-    </template>
-
-    <div class="p-3">
-      <p class="text-center">
-        <strong>{{ t('loading') }}</strong>
-      </p>
-      <div ref="bar" class="text-field progress-bar">
-        <div ref="progress" :style="style" class="progress">
-          <div />
-          <div />
-          <div />
-        </div>
+  <div class="p-3">
+    <p class="text-center">
+      <strong>{{ t('loading') }}</strong>
+    </p>
+    <div ref="bar" class="text-field progress-bar">
+      <div ref="progress" :style="style" class="progress">
+        <div />
+        <div />
+        <div />
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { Win } from '@app/types'
-import { isMobile } from '@app/utils/helpers.ts'
-import { Native } from '@mobile/bridge/native.ts'
 
 const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
-const { song } = useNowPlayingStatus()
-
-defineProps<{
-  name: string
-}>()
 
 const style = ref({
   transform: `translate(0px, 0px)`,
@@ -68,17 +51,8 @@ function move (): void {
   requestAnimationFrame(move)
 }
 
-// waiting for the first status response then check news and open up player
-watch(() => song.id, async () => {
-  openWindow(Win.PLAYER)
-  closeWindow(Win.LOADING)
-})
-
 onMounted(() => {
   move()
-  if (isMobile()) {
-    Native.onReady()
-  }
 })
 
 onBeforeUnmount(() => {

@@ -1,6 +1,6 @@
 <template>
-  <win-window v-slot="winProps" :width="440" fluid-height :name="name" :title="t('win.ratings.title')">
-    <div class="content-fluid p-2">
+  <div class="flex-grow-1 h-100">
+    <div class="p-2 h-100">
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
@@ -23,7 +23,7 @@
               <td class="noselect" style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="winSongInfo(s.song.id)">
+              <td class="py-1 show-info" @click="showSongInfo(s.song.id)">
                 <div class="artist">
                   {{ s.song.artist }}
                 </div>
@@ -51,7 +51,7 @@
               />
             </div>
             <div class="col-auto">
-              <win-button class="px-4" @click="winProps.close()">
+              <win-button class="px-4" @click="closeWindow(Win.RATINGS)">
                 {{ t('buttons.close') }}
               </win-button>
             </div>
@@ -59,8 +59,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="statusbar row no-gutters noselect">
+  <div class="win-window__statusbar noselect">
+    <div class="row no-gutters">
       <div class="col-3 cell d">
         {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
       </div>
@@ -68,27 +70,22 @@
         {{ songs ? t('pagination.songs', {n: songs.meta.total}) : '...' }}
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useRatingsApi } from '@app/composables/api'
-import { RatingsRange } from '@app/types'
+import { RatingsRange, Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo } = useWindows()
+const { showAlert, showSongInfo, closeWindow } = useWindows()
 const { getRatings } = useRatingsApi()
-
-defineProps<{
-  name: string
-}>()
 
 const page = ref(1)
 const range = ref<RatingsRange>(RatingsRange.OVERTIME)
@@ -117,7 +114,7 @@ function pad (n: number): string {
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

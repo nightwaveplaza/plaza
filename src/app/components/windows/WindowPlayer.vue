@@ -1,40 +1,27 @@
 <template>
-  <win-window ref="win" :name="name" title="Nightwave Plaza" :width="450">
-    <!-- Minimize button -->
-    <template #header>
-      <div class="buttons">
-        <win-button class="button-minimize" @click="minimize">
-          <span />
-        </win-button>
-        <win-button v-if="fullScreenEnabled" class="button-maximize" @click="requestFullScreen">
-          <span />
-        </win-button>
-      </div>
-    </template>
+  <!-- Menu -->
+  <win-menu v-if="!isMobile()">
+    <win-menu-action @click="openWindow(Win.ABOUT)">
+      {{ t('menu.about') }}
+    </win-menu-action>
+    <win-menu-action @click="openWindow(Win.HISTORY)">
+      {{ t('menu.play_history') }}
+    </win-menu-action>
+    <win-menu-action @click="openWindow(Win.RATINGS)">
+      {{ t('menu.ratings') }}
+    </win-menu-action>
+    <win-menu-action @click="openWindow(Win.SUPPORT)">
+      {{ t('menu.support_us') }}
+    </win-menu-action>
+  </win-menu>
 
-    <!-- Menu -->
-    <win-menu v-if="!isMobile()">
-      <win-menu-action @click="openWindow(Win.ABOUT)">
-        {{ t('menu.about') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.HISTORY)">
-        {{ t('menu.play_history') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.RATINGS)">
-        {{ t('menu.ratings') }}
-      </win-menu-action>
-      <win-menu-action @click="openWindow(Win.SUPPORT)">
-        {{ t('menu.support_us') }}
-      </win-menu-action>
-    </win-menu>
+  <!-- Player -->
+  <div class="content p-2">
+    <win-player :volume="volume" @update-volume="setVolume" />
+  </div>
 
-    <!-- Player -->
-    <div class="content p-2">
-      <win-player :volume="volume" @update-volume="setVolume" />
-    </div>
-
-    <!-- Statusbar -->
-    <div class="statusbar row no-gutters">
+  <div class="win-window__statusbar noselect">
+    <div class="row no-gutters">
       <div class="col cell">
         {{ t('win.player.listeners', { listeners }) }}
       </div>
@@ -42,15 +29,12 @@
         {{ t('win.player.user', {user: user?.username }) }}
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { isMobile } from '@app/utils/helpers.ts'
-import { Native } from '@mobile/bridge/native.ts'
 import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
@@ -59,28 +43,10 @@ import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { volume, setVolume } = useVolumeControl()
-const { minimizeWindow, openWindow } = useWindows()
+const { openWindow } = useWindows()
 const { listeners } = useNowPlayingStatus()
 const { user, isSigned } = useAuth()
 
-defineProps<{
-  name: string
-}>()
-
-const fullScreenEnabled = computed(() => isMobile() || document.fullscreenEnabled)
-const win = ref<InstanceType<typeof WinWindow>>()
-
-function minimize (): void {
-  minimizeWindow(Win.PLAYER)
-}
-
-function requestFullScreen (): void {
-  if (isMobile()) {
-    Native.toggleFullscreen()
-  } else {
-    document.getElementById('app')?.requestFullscreen()
-  }
-}
 </script>
 
 <style lang="scss">
@@ -101,14 +67,10 @@ function requestFullScreen (): void {
     background: #efe6eb;
     padding: 0;
     line-height: 0;
-    height: auto;
+    //height: auto;
     width: 112px;
-  }
-
-  .cover img {
     cursor: pointer;
-    width: 100%;
-    height: 100%;
+    background-size: cover;
   }
 
   .player-time-container {

@@ -1,192 +1,154 @@
 <template>
-  <div v-show="!isMinimized" :id="'window-' + name" ref="frame" class="frame row align-items-center">
-    <div :class="{alert: props.isAlert, 'fluid-height': props.fluidHeight}" class="col pl-0 pr-0">
-      <div ref="windowRef" class="win-window" :style="style" @mousedown="pullUp">
-        <div class="inner">
-          <div class="header header-draggable noselect" :class="{inactive: !isActive}"
-               @dblclick="resetPosition" @mousedown="startMove"
-          >
-            <div class="icon" />
-            {{ title }}
-            <slot name="header">
-              <div class="buttons">
-                <win-button class="button-minimize" @click="minimize">
-                  <span />
-                </win-button>
-                <win-button class="button-close" @click="close">
-                  <span />
-                </win-button>
-              </div>
-            </slot>
-          </div>
-
-          <slot :close="close" />
+  <div v-show="!windowState.isMinimized"
+       ref="windowRef"
+      :id="'window-' + id"
+      class="win-window"
+      :style="style"
+      :class="{'window-alert': windowState.isAlert}"
+      @mousedown="pullUp"
+  >
+    <div class="inner" :class="{'d-flex flex-column h-100': windowState.height}">
+      <div class="header header-draggable noselect"
+           :class="{inactive: !isActive}"
+           @dblclick="centerWindow"
+           @mousedown="handleDragStart"
+      >
+        <div class="icon" />
+        {{ windowTitle }}
+        <div v-if="windowState.headerButtons?.length !== 0" class="buttons">
+          <win-button v-if="showMinimizeButton" class="button-minimize" @click="minimize">
+            <span />
+          </win-button>
+          <win-button v-if="showMaximizeButton" class="button-maximize" @click="toggleFullScreen">
+            <span />
+          </win-button>
+          <win-button v-if="showCloseButton" class="button-close" @click="close">
+            <span />
+          </win-button>
         </div>
       </div>
+
+      <component :is="props.component" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  provide,
+  type Ref,
+  ref,
+  toRef
+} from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useDraggable } from '@app/composables/useDraggable.ts'
+import { useI18n } from 'vue-i18n'
+import { WindowHeaderButtons, type WindowState } from '@app/types'
 
-const SNAP_SIZE = 15
+import { useFullscreen } from '@app/composables/useFullscreen.ts'
 
 const emit = defineEmits(['closed'])
-const { openedWindows, activeWindow, activeZIndex, pullUp: pullUpWindow, minimizeWindow, closeWindow, updateTitle } = useWindows()
+const { openedWindows, activeWindow, pullUp: pullUpWindow, minimizeWindow, closeWindow } = useWindows()
+const { isFullscreenEnabled, requestFullscreen } = useFullscreen()
 
-const props = withDefaults(defineProps<{
-  title?: string,
-  name: string,
-  isAlert?: boolean,
-  width?: number,
-  fluidHeight?: boolean
-}>(), {
-  title: ' ',
-  width: 500,
-  fluidHeight: false,
+const { t } = useI18n()
+
+const props = defineProps<{
+  id: string,
+  component: string
+}>()
+
+provide('windowId', toRef(props, 'id'))
+
+const windowState: Ref<WindowState> = computed(() => {
+  return openedWindows.value[props.id]!
 })
 
-const style: CSSProperties = reactive({
-  zIndex: 100,
-  position: 'relative',
-  left: '0px',
-  top: '0px',
+const style = computed<CSSProperties>(() => ({
+  zIndex: windowState.value.zIndex,
+  position: 'absolute',
+  left: `${windowState.value.x}px`,
+  top: `${windowState.value.y}px`,
   transform: '',
-  width: '',
+  width: `${windowState.value.width}px`,
+  maxWidth: windowState.value.width > 0 && windowState.value.width <= 320 ? `${windowState.value.width}px` : 'none',
+  maxHeight: windowState.value.height ? `${windowState.value.height}px`: 'none',
+  height: windowState.value.height ? `${actualHeight.value}px`: 'auto'
+}))
+
+const windowRef = ref<HTMLDivElement | null>(null)
+const { centerWindow, handleDragStart } = useDraggable(windowRef, props.id)
+
+const isActive = computed(() => activeWindow.value === props.id)
+const actualHeight = ref(windowState.value.height ?? 0)
+
+const windowTitle = computed(() => {
+  const { title, titleKey } = windowState.value
+  return title ? title : (titleKey ? t(titleKey) : ' ')
 })
 
-const isMinimized = computed(() => openedWindows.value[props.name]?.isMinimized)
-const isActive = computed(() => activeWindow.value === props.name)
-const windowPos = ref([0, 0])
-const windowRef = ref<HTMLDivElement | null>(null)
+const showMinimizeButton = computed(() => {
+  return windowState.value.headerButtons === undefined ||
+      (windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_MINIMIZE))
+})
 
-// Non-reactive
-let winDefPositionX = 0
-let winDefPositionY = 0
-let borderX = 0
-let borderY = 0
-let offsetX = 0
-let offsetY = 0
-let moving = false
+const showMaximizeButton = computed(() => {
+  return windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_MAXIMIZE) &&
+      isFullscreenEnabled
+})
 
-// Methods
-function resetPosition (): void {
-  windowPos.value = [0, 0]
+const showCloseButton = computed(() => {
+  return windowState.value.headerButtons === undefined ||
+      (windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_CLOSE))
+})
+
+function toggleFullScreen(): void {
+  requestFullscreen()
 }
 
 function pullUp (): void {
-  pullUpWindow(props.name)
-  style.zIndex = activeZIndex.value
-}
-
-function startMove (e: MouseEvent): void {
-  if ((e.target as HTMLElement).tagName === 'BUTTON' || (e.target as HTMLElement).tagName === 'SPAN') {
-    return
-  }
-
-  recalculatePositions()
-  moving = true
-  offsetX = e.offsetX
-  offsetY = e.offsetY
-}
-
-function move (e: MouseEvent): void {
-  if (!moving) {return}
-  e.preventDefault()
-
-  const mousePosX = e.clientX - offsetX
-  const mousePosY = e.clientY - offsetY
-  let x = mousePosX - winDefPositionX
-  let y = mousePosY - winDefPositionY
-
-  if (mousePosX - SNAP_SIZE <= 0) {
-    x = 0 - winDefPositionX
-  }
-
-  if (mousePosY - SNAP_SIZE <= 0) {
-    y = 0 - winDefPositionY!
-  }
-
-  if (mousePosX + SNAP_SIZE >= borderX) {
-    x = winDefPositionX
-  }
-
-  if (mousePosY + SNAP_SIZE >= borderY) {
-    y = borderY - winDefPositionY
-  }
-
-  windowPos.value = [x, y]
-}
-
-function stopMove (e: Event): void {
-  if (!moving) {return}
-  e.preventDefault()
-
-  moving = false
-}
-
-function recalculatePositions (): void {
-  const newBorderX = window.innerWidth - windowRef.value!.offsetWidth
-  const newBorderY = window.innerHeight - windowRef.value!.offsetHeight
-
-  if (windowPos.value[0] === 0 && windowPos.value[1] === 0) {
-    const rect = windowRef.value!.getBoundingClientRect()
-    winDefPositionX = rect.x
-    winDefPositionY = rect.y
-  } else {
-    winDefPositionX += (newBorderX - borderX) / 2
-    winDefPositionY += (newBorderY - borderY) / 2
-  }
-
-  borderX = newBorderX
-  borderY = newBorderY
+  pullUpWindow(props.id)
 }
 
 function minimize (): void {
-  minimizeWindow(props.name)
+  minimizeWindow(props.id)
 }
 
 function close (): void {
   emit('closed')
-  closeWindow(props.name)
+  closeWindow(props.id)
 }
 
-watch(() => activeWindow.value, () => {
-  if (activeWindow.value === props.name) {
-    style.zIndex = activeZIndex.value
+function calculateHeight(): void {
+  if (!windowState.value.height) {
+    return
   }
-})
 
-watch(windowPos, (newWindowPos) => {
-  style.left = newWindowPos[0] + 'px'
-  style.top = newWindowPos[1] + 'px'
-})
+  const viewportHeight = window.innerHeight
+  const availableSpace = viewportHeight - 28 - 30 // taskbar height and paddings
+  const maxAllowedHeight = Math.max(40, availableSpace)
+
+  actualHeight.value = Math.min(windowState.value.height, maxAllowedHeight)
+}
 
 onBeforeMount(() => {
-  if (props.title) {
-    updateTitle(props.name, props.title)
-  }
+  calculateHeight()
+  centerWindow()
 })
 
 onMounted(() => {
-  style.zIndex = activeZIndex.value
-  style.width = props.width + 'px'
-
-  if (props.width > 0 && props.width <= 320) {
-    style.maxWidth = props.width + 'px'
-  }
-
-  window.addEventListener('mouseup', stopMove)
-  window.addEventListener('mousemove', move)
-  window.addEventListener('resize', recalculatePositions)
+  window.addEventListener('resize', calculateHeight)
+  window.addEventListener('orientationchange', calculateHeight)
 })
 
-onBeforeUnmount(() => {
-  window.removeEventListener('mouseup', stopMove)
-  window.removeEventListener('mousemove', move)
-  window.removeEventListener('resize', recalculatePositions)
+onUnmounted(() => {
+  window.removeEventListener('resize', calculateHeight)
+  window.removeEventListener('orientationchange', calculateHeight)
 })
 
 defineExpose({

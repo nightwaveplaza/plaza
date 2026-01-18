@@ -1,7 +1,8 @@
 import { createApp, h } from 'vue'
-import commonComponents from '@app/components/basic'
-import commonWindows from '@app/components/windows'
-import commonPlayer from '@app/components/player'
+import plazaComponents from '@app/components/basic'
+import plazaExtraComponents from '@app/components/extra'
+import plazaPlayer from '@app/components/player'
+import plazaWindows from '@app/components/windows'
 import mobileComponents from '@mobile/components'
 import App from '@mobile/App.vue'
 import { i18n } from '@locales/_i18n.ts'
@@ -16,9 +17,10 @@ const app = createApp({
 
 app.use(i18n)
 
-app.use(commonComponents)
-app.use(commonPlayer)
-app.use(commonWindows)
+app.use(plazaComponents)
+app.use(plazaExtraComponents)
+app.use(plazaPlayer)
+app.use(plazaWindows)
 
 delete app._context.components['WinPlayer']
 app.use(mobileComponents)

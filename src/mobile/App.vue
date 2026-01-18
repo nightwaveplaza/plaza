@@ -1,7 +1,11 @@
 <template>
   <div :class="themeName" :style="{backgroundColor}" class="app-desktop">
-    <component :is="window.component" v-for="window in openedWindows" :key="window.name" :name="window.name" />
-
+    <win-window
+      v-for="window in openedWindows"
+      :id="window.id"
+      :key="window.id"
+      :component="window.component"
+    />
     <win-taskbar />
   </div>
 </template>
@@ -18,15 +22,15 @@ import { Win } from '@app/types'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 import { useThemeColor } from '@app/composables/useThemeColor.ts'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 
 const i18n = useI18n()
-const { openWindow, openedWindows } = useWindows()
+const { openWindow, openedWindows, closeWindow } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
-const { fetchUser } = useAuth()
-const { setToken } = useAuthToken()
 
 const { updateBackgroundNative } = useNativeEvents()
+const { song } = useNowPlayingStatus()
 
 // Automatically apply theme color to browser
 useThemeColor()
@@ -51,8 +55,16 @@ onMounted(() => {
 
   Native.getAuthToken()!.then((t) => {
     const token = t as string
-    setToken(token)
-    fetchUser()
+    useAuthToken().setToken(token)
+    useAuth().fetchUser()
   })
+})
+
+// waiting for the first status response then check news and open up player
+watch(() => song.id, () => {
+  openWindow(Win.PLAYER)
+  closeWindow(Win.LOADING)
+}, {
+  once: true
 })
 </script>

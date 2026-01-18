@@ -2,10 +2,11 @@
 
 .win-window {
   @include d3-window;
+  @include font;
+
   width: 497px;
   cursor: default;
   margin: 0 auto;
-  @include font;
 
   >.inner {
     position: relative;

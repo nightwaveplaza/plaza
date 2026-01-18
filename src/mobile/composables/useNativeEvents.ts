@@ -13,7 +13,9 @@ import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { eventBus } from '@mobile/emitter.ts'
 
-export function useNativeEvents () {
+export function useNativeEvents (): {
+  updateBackgroundNative: () => void
+} {
   const i18n = useI18n()
 
   const { openWindow, closeWindow } = useWindows()
@@ -31,12 +33,12 @@ export function useNativeEvents () {
    */
   eventBus.on('socketConnect', () => {
     onConnect()
-    closeWindow(Win.DISCONNECTED)
+    //closeWindow(Win.DISCONNECTED)
   })
   eventBus.on('socketDisconnect', () => onDisconnect())
   eventBus.on('socketReconnectFailed', () => {
     onReconnectFailed()
-    openWindow(Win.DISCONNECTED)
+    //openWindow(Win.DISCONNECTED)
   })
   eventBus.on('onStatusUpdate', (s: string) => setStatus(JSON.parse(s)))
   eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
@@ -64,7 +66,7 @@ export function useNativeEvents () {
     closeWindow(name)
   })
 
-  eventBus.on('openWindow', (name: string) => {
+  eventBus.on('openWindow', (name: Win) => {
     if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
       openWindow(Win.USER_LOGIN)
       return
@@ -103,7 +105,7 @@ export function useNativeEvents () {
     Native.setLanguage(language.value)
   })
 
-  function updateBackgroundNative() {
+  function updateBackgroundNative (): void {
     if (typeof AndroidInterface !== 'undefined') {
       Native.setBackground(isColorMode.value ? 'solid' : background.image!.src)
     } else {

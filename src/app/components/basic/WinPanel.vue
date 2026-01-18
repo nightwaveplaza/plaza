@@ -1,13 +1,5 @@
 <template>
-  <div class="panel p-2" :class="props.class">
+  <div class="win-panel p-2">
     <slot />
   </div>
 </template>
-
-<script setup lang="ts">
-const props = withDefaults(defineProps<{
-  class?: string
-}>(), {
-  class: '',
-})
-</script>

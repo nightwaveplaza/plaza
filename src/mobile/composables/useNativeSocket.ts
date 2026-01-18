@@ -12,19 +12,19 @@ export function useNativeSocket(): {
   onDisconnect: () => void;
   reconnect: () => void
 } {
-  const onReconnectFailed = () => {
+  const onReconnectFailed = (): void => {
     isDead.value = true
   }
 
-  const onConnect = () => {
+  const onConnect = (): void => {
     isConnected.value = true
   }
 
-  const onDisconnect = () => {
+  const onDisconnect = (): void => {
     isConnected.value = false
   }
 
-  const reconnect = () => {
+  const reconnect = (): void => {
     isDead.value = false
     Native.socketReconnect()
   }

@@ -1,14 +1,30 @@
-export interface Window {
-  name: string,
-  component: string,
-  isMinimized: boolean,
+import { Win, type WindowHeaderButtons } from '@app/types/enums.ts'
+
+export interface WindowConfig {
+  width: number,
+  height?: number,
+
+  titleKey?: string,
   title?: string,
-  params?: AlertWindowParams | SongWindowParams
+
+  headerButtons?: WindowHeaderButtons[],
+  isAlert?: boolean
+}
+
+export interface WindowState extends WindowConfig {
+  id: string,
+  component: string,
+
+  x: number,
+  y: number,
+  isMinimized: boolean,
+  zIndex: number,
+
+  params?: AlertWindowParams | SongWindowParams,
 }
 
 export interface AlertWindowParams {
   type: string,
-  title: string,
   text: string
 }
 
@@ -18,7 +34,7 @@ export interface SongWindowParams {
 
 export type EventBus = {
   closeWindow: string
-  openWindow: string
+  openWindow: Win
   onResume: void
   isBuffering: void
   isPlaying: boolean

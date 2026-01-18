@@ -1,55 +1,47 @@
 <template>
-  <win-window v-slot="winProps" ref="win" :width="250" :name="name" :title="t('win.user_password.title')">
-    <div class="py-2 px-2">
-      <win-panel class="mb-3">
-        <!-- Current password -->
-        <label for="current_password">{{ t('fields.current_password') }}:</label>
-        <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password">
-        <!-- New password password -->
-        <label for="password">{{ t('fields.new_password') }}:</label>
-        <input id="password" v-model="fields.password" class="d-block mb-2" type="password">
-        <!-- Repeat password -->
-        <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
-        <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
-      </win-panel>
+  <div class="py-2 px-2">
+    <win-panel class="mb-3">
+      <!-- Current password -->
+      <label for="current_password">{{ t('fields.current_password') }}:</label>
+      <input id="current_password" v-model="fields.current_password" class="d-block mb-2" type="password">
+      <!-- New password password -->
+      <label for="password">{{ t('fields.new_password') }}:</label>
+      <input id="password" v-model="fields.password" class="d-block mb-2" type="password">
+      <!-- Repeat password -->
+      <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
+      <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
+    </win-panel>
 
-      <!-- Buttons -->
-      <div class="row mt-2 no-gutters justify-content-between">
-        <div class="col-6">
-          <win-button block class="text-bold" :disabled="isLoading" @click="change">
-            {{ t('buttons.change') }}
-          </win-button>
-        </div>
-        <div class="col-4">
-          <win-button block @click="winProps.close()">
-            {{ t('buttons.close') }}
-          </win-button>
-        </div>
+    <!-- Buttons -->
+    <div class="row mt-2 no-gutters justify-content-between">
+      <div class="col-6">
+        <win-button block class="text-bold" :disabled="isLoading" @click="change">
+          {{ t('buttons.change') }}
+        </win-button>
+      </div>
+      <div class="col-4">
+        <win-button block @click="closeWindow(Win.USER_PASSWORD)">
+          {{ t('buttons.close') }}
+        </win-button>
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import WinWindow from '@app/components/basic/WinWindow.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useUserApi } from '@app/composables/api'
 import { type UserPasswordForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
 
 const { t } = useI18n()
-const { winAlert, closeWindow } = useWindows()
+const { showAlert, closeWindow } = useWindows()
 const { updatePassword } = useUserApi()
 const { isLoading, fetch: update } = updatePassword()
 const { unsetUser } = useAuth()
 
-defineProps<{
-  name: string,
-}>()
-
-const win = ref<InstanceType<typeof WinWindow>>()
 const fields: UserPasswordForm = reactive({
   current_password: '',
   password: '',
@@ -60,15 +52,15 @@ function change (): void {
   try {
     validate()
   } catch (e) {
-    return winAlert((e as Error).message, t('errors.error'))
+    return showAlert((e as Error).message, t('errors.error'))
   }
 
   update(fields).then(() => {
     unsetUser()
-    winAlert(t('messages.password_changed'), t('messages.success'), 'info')
+    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(Win.USER_PASSWORD)
   }).catch(e =>
-      winAlert(e.message, t('errors.error'))
+      showAlert(e.message, t('errors.error'))
   )
 }
 

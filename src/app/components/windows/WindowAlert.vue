@@ -1,55 +1,37 @@
 <template>
-  <win-window ref="win" v-slot="winProps" is-alert :name="name" :title="alertParams.title" :width="290">
-    <div class="p-2">
-      <div class="row no-gutters">
-        <div class="col-auto text-center align-self-center">
-          <div class="alert-icon" :class="alertParams.type" />
-        </div>
-        <div class="col align-self-center">
-          <p class="pl-2" style="line-height: 125%" v-html="alertParams.text" />
-        </div>
+  <div class="p-2">
+    <div class="row no-gutters">
+      <div class="col-auto text-center align-self-center">
+        <div class="alert-icon" :class="params.type" />
       </div>
-
-      <div class="text-center">
-        <win-button class="mt-2 mx-auto px-4" @click="winProps.close()">
-          {{ t('buttons.ok') }}
-        </win-button>
+      <div class="col align-self-center">
+        <p class="pl-2" style="line-height: 125%" v-html="params.text" />
       </div>
     </div>
-  </win-window>
+
+    <div class="text-center">
+      <win-button class="mt-2 mx-auto px-4" @click="closeWindow(winId!)">
+        {{ t('buttons.ok') }}
+      </win-button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onBeforeMount, reactive } from 'vue'
+import { computed, inject, type Ref } from 'vue'
 import type { AlertWindowParams } from '@app/types/types.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 const { t } = useI18n()
 
-const { openedWindows } = useWindows()
+const { openedWindows, closeWindow } = useWindows()
+const winId: Ref<string> | undefined = inject('windowId')
 
-const props = defineProps<{
-  name: string
-}>()
-
-const alertParams: AlertWindowParams = reactive({
-  type: 'warn',
-  title: '',
-  text: ''
-})
-
-onBeforeMount(() => {
-  const params = openedWindows.value[props.name]?.params as AlertWindowParams
-  if (params) {
-    alertParams.type = params.type
-    alertParams.title = params.title
-    alertParams.text = params.text
-  }
-})
+const params = computed(() => openedWindows.value[winId!.value]?.params as AlertWindowParams)
 </script>
 
 <style lang="scss">
-.frame .alert {
+.window-alert {
   .alert-icon {
     width: 32px;
     height: 32px;

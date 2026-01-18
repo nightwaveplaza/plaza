@@ -20,7 +20,7 @@ const CL_LIKE = '#c12727'
 const { t } = useI18n()
 const { setReactions, reactions } = useNowPlayingStatus()
 const { reaction, setReaction, isCurrent: isCurrentReaction } = useReactions()
-const { winAlert } = useWindows()
+const { showAlert } = useWindows()
 
 const likeIcon = computed(() => reaction.rate > 1 ? 'icon-favorite' : 'icon-like')
 const likeColor = computed(() => isCurrentReaction.value ? {2: CL_FAV, 1: CL_LIKE}[reaction.rate] ?? '' : '')
@@ -44,9 +44,9 @@ function send (score: number): void {
     showTip()
   }).catch(err => {
     if (err.code === 401) {
-      winAlert(t('errors.please_sign'), t('errors.error'))
+      showAlert(t('errors.please_sign'), t('errors.error'))
     } else {
-      winAlert(err.message, t('errors.error'))
+      showAlert(err.message, t('errors.error'))
     }
   })
 }
@@ -56,7 +56,7 @@ function showTip (): void {
   if (showed > 0) {
     return
   }
-  winAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
+  showAlert(t('messages.reaction_tip'), t('messages.nice'), 'info')
   prefs.save('reactionTip', 1)
 }
 

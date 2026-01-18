@@ -1,8 +1,8 @@
 @import "../mixins";
 
-.memo, .win-memo {
-  @include font;
+.win-memo {
   @include d3-content;
+  @include font;
 
   margin: 0;
   padding: 6px;

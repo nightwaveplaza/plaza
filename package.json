@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "watch": "cross-env NODE_ENV=development vite build --watch",

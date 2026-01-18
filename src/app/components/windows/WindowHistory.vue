@@ -1,6 +1,6 @@
 <template>
-  <win-window v-slot="winProps" :width="400" fluid-height :name="name" :title="t('win.history.title')">
-    <div class="content-fluid p-2">
+  <div class="flex-grow-1 h-100">
+    <div class="p-2 h-100">
       <div class="d-flex flex-column h-100">
         <div class="d-flex mb-1">
           <div class="row no-gutters w-100">
@@ -17,7 +17,7 @@
           <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
             <tr v-for="h in history?.data" :key="h.song.id">
-              <td class="pr-1 py-1 show-info" @click="winSongInfo(h.song.id)">
+              <td class="pr-1 py-1 show-info" @click="showSongInfo(h.song.id)">
                 <div class="artist">
                   {{ h.song.artist }}
                 </div>
@@ -44,7 +44,7 @@
               />
             </div>
             <div class="col-auto">
-              <win-button class="px-4" @click="winProps.close()">
+              <win-button class="px-4" @click="closeWindow(Win.HISTORY)">
                 {{ t('buttons.close') }}
               </win-button>
             </div>
@@ -52,8 +52,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="statusbar row no-gutters noselect">
+  <div class="win-window__statusbar noselect">
+    <div class="row no-gutters">
       <div class="col-3 cell d">
         {{ history ? t('pagination.pages', {n: history?.meta.last_page}) : '...' }}
       </div>
@@ -61,7 +63,7 @@
         {{ history ? t('pagination.songs', {n: history.meta.total}) : '...' }}
       </div>
     </div>
-  </win-window>
+  </div>
 </template>
 
 
@@ -72,14 +74,11 @@ import type WinList from '@app/components/basic/WinList.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useHistoryApi } from '@app/composables/api'
 import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
+import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { winAlert, winSongInfo } = useWindows()
+const { showAlert, showSongInfo, closeWindow } = useWindows()
 const { getHistory } = useHistoryApi()
-
-defineProps<{
-  name: string
-}>()
 
 const page = ref(1)
 const { isLoading, fetch, data: history, error } = getHistory()
@@ -96,7 +95,7 @@ function fetchHistory (): void {
 
 watch(() => error.value, (error) => {
   if (error) {
-    winAlert(error.message, t('errors.error'))
+    showAlert(error.message, t('errors.error'))
   }
 })
 

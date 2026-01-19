@@ -6,7 +6,7 @@
         {{ t('win.settings.background') }}
       </template>
       <template #content>
-        <div v-if="isColorMode" class="row palette no-gutters">
+        <div v-if="isColorMode" class="row palette gx-0">
           <div v-for="color in palette" :key="color" class="col-auto">
             <button class="color" :style="{backgroundColor: color}" @click="setColorBackground(color)" />
           </div>
@@ -33,18 +33,18 @@
           </p>
         </win-memo>
 
-        <div class="row no-gutters mt-2 noselect">
-          <div class="col-2 pr-1">
+        <div class="row gx-0 mt-2 noselect">
+          <div class="col-2 pe-1">
             <win-button block @click="nextBackground(-1)">
               &lt;
             </win-button>
           </div>
-          <div class="col-2 pr-1">
+          <div class="col-2 pe-1">
             <win-button block @click="nextBackground(1)">
               &gt;
             </win-button>
           </div>
-          <div class="col-4 pr-1">
+          <div class="col-4 pe-1">
             <win-button block :class="{active: isRandomMode}" @click="setRandomBackground">
               {{ t('win.settings.btn_random') }}
             </win-button>
@@ -72,20 +72,20 @@
         {{ t('win.settings.appearance') }}
       </template>
       <template #content>
-        <div class="row no-gutters">
+        <div class="row gx-0">
           <div class="col-7 align-content-end">
             <div class="mb-1">
               {{ t('win.settings.theme') }}
             </div>
             <div class="select">
-              <select @change="themeSelected">
+              <select @change="themeSelected" id="theme-select">
                 <option v-for="item in themes" :key="item[0]" :value="item[0]" :selected="theme === item[0]">
                   {{ item[1] }}
                 </option>
               </select>
             </div>
           </div>
-          <div class="col ml-2 align-content-end">
+          <div class="col ms-2 align-content-end">
             <div class="mb-1">
               {{ t('win.settings.taskbar') }}
             </div>

@@ -1,14 +1,14 @@
 <template>
-  <div class="row no-gutters">
+  <div class="row gx-0">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
-      <div class="cover simple-border noselect embed-responsive embed-responsive-1by1"
+      <div class="cover simple-border noselect ratio ratio-1x1"
            :style="{'background-image': `url('${artwork}')`}"
            @click="openSongInfo"
       />
     </div>
 
     <div class="col-12 col-sm">
-      <div class="player-meta pl-sm-2">
+      <div class="player-meta ps-sm-2">
         <div class="player-artist track-artist mb-2">
           {{ song.artist }}
         </div>
@@ -16,28 +16,28 @@
           {{ song.title }}
         </div>
 
-        <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
-          <div class="col-12 col-md-6 pr-0">
+        <div class="row my-1 my-sm-2 py-1 gx-0 noselect">
+          <div class="col-12 col-md-6 pe-0">
             <div class="text-field p-0 m-0 player-time-container">
               <win-player-time />
             </div>
           </div>
         </div>
 
-        <div class="row no-gutters">
-          <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pr-2">
+        <div class="row gx-0">
+          <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pe-2">
             <win-button class="player-play" block @click="play">
               {{ playText }}
             </win-button>
           </div>
 
-          <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pr-2">
+          <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pe-2">
             <win-button block @click="openWindow(Win.PLAYER_TIMER)">
               <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
 
-          <div class="col-3 pr-2">
+          <div class="col-3 pe-2">
             <win-player-reactions />
           </div>
 

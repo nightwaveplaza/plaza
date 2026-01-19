@@ -1,8 +1,8 @@
 <template>
   <div class="p-2">
     <win-panel class="mb-2">
-      <div class="row no-gutters">
-        <div class="col text-center mr-2">
+      <div class="row gx-0">
+        <div class="col text-center me-2">
           {{ t('win.mobile.description') }}
         </div>
         <div class="col-auto">
@@ -12,7 +12,7 @@
     </win-panel>
 
     <win-memo>
-      <div class="row no-gutters my-2">
+      <div class="row gx-0 my-2">
         <div class="col text-center">
           <a href="https://plaza.one/ios" target="_blank" class="app-link">
             <img src="@app/assets/img/app_ios.png" class="app-icon" alt=""><br>

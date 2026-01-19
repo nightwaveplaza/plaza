@@ -5,7 +5,7 @@
     </p>
 
     <!-- Email -->
-    <div class="row no-gutters mb-3">
+    <div class="row gx-0 mb-3">
       <div class="col-6 offset-3">
         <label for="email">{{ t('win.user_reset.enter_email') }}:</label>
         <input id="email" v-model="fields.email" class="d-block" type="email">
@@ -15,11 +15,11 @@
     <vue-turnstile v-if="showCaptcha" v-model="fields.captcha_response" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
 
     <!-- Buttons -->
-    <div class="row no-gutters">
+    <div class="row gx-0">
       <div class="col-sm-8 offset-sm-2">
-        <div class="py-2 row no-gutters justify-content-between">
+        <div class="py-2 row gx-0 justify-content-between">
           <div class="col-6">
-            <win-button block class="text-bold" :disabled="isLoading" @click="reset">
+            <win-button block class="fw-bold" :disabled="isLoading" @click="reset">
               {{ t('win.user_login.btn_reset') }}
             </win-button>
           </div>

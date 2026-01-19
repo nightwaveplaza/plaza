@@ -48,7 +48,7 @@
       <p class="mb-2">
         {{ t('win.about.playlists') }}<br>
         <a href="https://plaza.one/plaza.m3u" target="_blank">M3U (Winamp)</a>
-        <a class="ml-3" href="https://plaza.one/plaza.pls" target="_blank">PLS (Foobar2000)</a>
+        <a class="ms-3" href="https://plaza.one/plaza.pls" target="_blank">PLS (Foobar2000)</a>
       </p>
       <p>
         {{ t('win.about.streams') }}<br>
@@ -58,18 +58,18 @@
       </p>
     </win-panel>
 
-    <div class="row buttons no-gutters w-100">
+    <div class="row buttons gx-0 w-100">
       <div class="col-auto">
-        <win-button class="px-4 mr-2" @click="openCredits">
+        <win-button class="px-4 me-2" @click="openCredits">
           {{ t('win.about.btn_credits') }}
         </win-button>
       </div>
       <div class="col-auto">
-        <win-button class="px-4 mr-2" @click="openNews">
+        <win-button class="px-4 me-2" @click="openNews">
           {{ t('win.about.btn_news') }}
         </win-button>
       </div>
-      <div class="col-auto ml-auto">
+      <div class="col-auto ms-auto">
         <win-button class="px-4" @click="closeWindow(Win.ABOUT)">
           {{ t('buttons.close') }}
         </win-button>
@@ -78,7 +78,7 @@
   </div>
 
   <div class="win-window__statusbar noselect">
-    <div class="row no-gutters">
+    <div class="row gx-0">
       <div class="col cell">
         {{ t('win.about.version') }}: {{ appVersion }}{{ version }}
       </div>

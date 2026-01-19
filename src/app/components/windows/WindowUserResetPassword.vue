@@ -1,6 +1,6 @@
 <template>
   <div class="py-2">
-    <div class="row no-gutters">
+    <div class="row gx-0">
       <div class="col-10 offset-1">
         <!-- New password -->
         <label for="password">{{ t('fields.new_password') }}:</label>
@@ -11,9 +11,9 @@
         <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
 
         <!-- Buttons -->
-        <div class="row mt-2 no-gutters justify-content-between">
+        <div class="row mt-2 gx-0 justify-content-between">
           <div class="col-6">
-            <win-button block class="text-bold" :disabled="isLoading" @click="change">
+            <win-button block class="fw-bold" :disabled="isLoading" @click="change">
               {{ t('buttons.change') }}
             </win-button>
           </div>

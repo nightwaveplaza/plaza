@@ -19,9 +19,9 @@
     </win-panel>
 
     <!-- Buttons -->
-    <div class="row mt-3 no-gutters justify-content-between">
+    <div class="row mt-3 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block :disabled="isLoading" class="text-bold" @click="deleteAccount">
+        <win-button block :disabled="isLoading" class="fw-bold" @click="deleteAccount">
           {{ t('win.user_profile_delete.title') }}
         </win-button>
       </div>

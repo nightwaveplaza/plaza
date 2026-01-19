@@ -1,14 +1,14 @@
 <template>
-  <div class="row no-gutters">
+  <div class="row gx-0">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0 px-4 px-sm-0">
-      <div class="cover simple-border noselect embed-responsive embed-responsive-1by1"
+      <div class="cover simple-border noselect ratio ratio-1x1"
            :style="{'background-image': `url('${artwork}')`}"
            @click="openSongInfo"
       />
     </div>
 
     <div class="col-12 col-sm">
-      <div class="player-meta pl-sm-2">
+      <div class="player-meta ps-sm-2">
         <div class="player-artist track-artist mb-2">
           {{ song.artist }}
         </div>
@@ -16,22 +16,22 @@
           {{ song.title }}
         </div>
 
-        <div class="row my-1 my-sm-2 py-1 no-gutters noselect">
-          <div class="col-12 col-md-7 pr-0 pr-md-2">
+        <div class="row my-1 my-sm-2 py-1 gx-0 noselect">
+          <div class="col-12 col-md-7 pe-0 pe-md-2">
             <div class="text-field p-0 m-0 player-time-container">
               <canvas ref="canvas" class="player-visual" />
               <win-player-time ref="time" @stop-by-timer="stopAudio" />
             </div>
           </div>
 
-          <div class="col col-md-5 d-none d-md-block">
+          <div class="col col-md-5 d-none d-md-block position-relative">
             <win-player-volume :volume="volume" @update-volume="setVolume" />
           </div>
         </div>
 
-        <div class="row no-gutters">
-          <div class="col-8 col-md-7 pr-md-2">
-            <div class="row no-gutters">
+        <div class="row gx-0">
+          <div class="col-8 col-md-7 pe-md-2">
+            <div class="row gx-0">
               <div :class="{'col-8': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying}">
                 <win-button class="player-play" block @click="play()">
                   {{ playText }}
@@ -48,15 +48,15 @@
             </div>
           </div>
           <div class="col-4 col-md-5">
-            <div class="row no-gutters">
+            <div class="row gx-0">
               <div class="col-6">
                 <win-button block @click="openUserWindow()">
-                  <i class="i icon-user mr-0" />
+                  <i class="i icon-user me-0" />
                 </win-button>
               </div>
               <div class="col-6">
                 <win-button block @click="openWindow(Win.SETTINGS)">
-                  <i class="i icon-cog mr-0" />
+                  <i class="i icon-cog me-0" />
                 </win-button>
               </div>
             </div>

@@ -1,13 +1,13 @@
-html {
-  box-sizing: border-box;
-  -ms-overflow-style: scrollbar;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
+//html {
+//  box-sizing: border-box;
+//  -ms-overflow-style: scrollbar;
+//}
+//
+//*,
+//*::before,
+//*::after {
+//  box-sizing: inherit;
+//}
 
 $spacer: 16px !default;
 
@@ -58,3 +58,9 @@ $spacer: 16px !default;
 // Utilities
 @import "bootstrap/scss/utilities/api";
 // scss-docs-end import-stack
+
+
+:root {
+  --bs-body-font-size: 11px;
+  --bs-body-font-family: Tahoma, Verdana, Segoe, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+}

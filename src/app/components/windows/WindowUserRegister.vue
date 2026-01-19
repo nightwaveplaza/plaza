@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 noselect">
     <template v-if="step === 1">
-      <div class="row no-gutters">
+      <div class="row gx-0">
         <div class="col-sm-4 d-none d-sm-block">
           <img alt="register" class="img-register" src="@app/assets/img/register.png">
         </div>
@@ -16,7 +16,7 @@
             </p>
 
             <!-- Username -->
-            <div class="row no-gutters mb-2">
+            <div class="row gx-0 mb-2">
               <div class="col-5 align-self-center">
                 <label for="register-username">{{ t('fields.username') }}:</label>
               </div>
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Password -->
-            <div class="row no-gutters mb-2">
+            <div class="row gx-0 mb-2">
               <div class="col-5 align-self-center">
                 <label for="register-password">{{ t('fields.password') }}:</label>
               </div>
@@ -36,7 +36,7 @@
             </div>
 
             <!-- Password repeat -->
-            <div class="row no-gutters mb-2">
+            <div class="row gx-0 mb-2">
               <div class="col-5 align-self-center">
                 <label for="register-password-repeat">{{ t('fields.repeat_password') }}:</label>
               </div>
@@ -46,7 +46,7 @@
             </div>
 
             <!-- Email -->
-            <div class="row no-gutters mb-2">
+            <div class="row gx-0 mb-2">
               <div class="col-5 align-self-center">
                 <label for="register-email">{{ t('fields.email') }}:</label>
               </div>
@@ -57,9 +57,9 @@
           </div>
 
           <div class="d-flex flex-grow-0">
-            <div class="row no-gutters mt-2 justify-content-between flex-grow-1 mb-fix">
+            <div class="row gx-0 mt-2 justify-content-between flex-grow-1 mb-fix">
               <div class="col-auto">
-                <win-button block class="text-bold px-3" :disabled="isLoading" @click="register">
+                <win-button block class="fw-bold px-3" :disabled="isLoading" @click="register">
                   {{ t('win.user_register.btn_register') }}
                 </win-button>
               </div>
@@ -86,7 +86,7 @@
         <vue-turnstile v-model="fields.captcha_response" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
       </div>
       <br>
-      <win-button class="mx-auto px-4 text-bold" @click="completeCaptcha">
+      <win-button class="mx-auto px-4 fw-bold" @click="completeCaptcha">
         {{ t('buttons.continue') }}
       </win-button>
     </div>

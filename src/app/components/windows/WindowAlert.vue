@@ -1,11 +1,11 @@
 <template>
   <div class="p-2">
-    <div class="row no-gutters">
+    <div class="row gx-0">
       <div class="col-auto text-center align-self-center">
         <div class="alert-icon" :class="params.type" />
       </div>
       <div class="col align-self-center">
-        <p class="pl-2" style="line-height: 125%" v-html="params.text" />
+        <p class="ps-2" style="line-height: 125%" v-html="params.text" />
       </div>
     </div>
 

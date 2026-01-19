@@ -1,6 +1,6 @@
 <template>
-  <div class="row no-gutters pagination">
-    <div v-if="page > 1" class="col-4 pr-1">
+  <div class="row gx-0 pagination">
+    <div v-if="page > 1" class="col-4 pe-1">
       <win-button class="d-block" :disabled="props.disabled" @click="nextPage(-1)">
         <i class="i icon-left-hand" />
       </win-button>
@@ -8,7 +8,7 @@
     <div class="col-4">
       <input ref="pageInput" v-model.number="page" type="number" class="d-block" :readonly="props.disabled" @keydown="useNumberOnly">
     </div>
-    <div v-if="pages > 1 && page < pages" class="col-4 pl-1">
+    <div v-if="pages > 1 && page < pages" class="col-4 ps-1">
       <win-button class="d-block" :disabled="props.disabled" @click="nextPage(1)">
         <i class="i icon-right-hand" />
       </win-button>

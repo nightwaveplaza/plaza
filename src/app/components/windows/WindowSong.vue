@@ -34,18 +34,18 @@
       </win-panel>
 
       <div class="row mt-2">
-        <div class="col-4 pr-1">
+        <div class="col-4 pe-1">
           <audio ref="audio" :src="song.data.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
           <win-button block :disabled="song.data.preview_src === null" @click="play">
             {{ playText }}
           </win-button>
         </div>
-        <div class="col-2 pl-0">
+        <div class="col-2 ps-0">
           <win-button block :disabled="sending" @click="favoriteSong">
             <i class="icon-favorite i" :style="{color: favoriteColor }" />
           </win-button>
         </div>
-        <div class="col-auto ml-auto">
+        <div class="col-auto ms-auto">
           <win-button class="px-4" @click="closeWindow(winId!)">
             {{ t('buttons.close') }}
           </win-button>
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div v-if="song" class="statusbar row no-gutters noselect">
+  <div v-if="song" class="statusbar row gx-0 noselect">
     <div v-if="song.stats.first_played_at" class="col cell">
       {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
     </div>

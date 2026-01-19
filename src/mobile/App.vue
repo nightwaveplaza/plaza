@@ -34,6 +34,9 @@ const { openNewsIfUpdated } = useNewsPopup()
 const { updateBackgroundNative } = useNativeEvents()
 const { song } = useNowPlayingStatus()
 
+// Automatically apply theme color to browser
+useThemeColor()
+
 watch(() => language.value, () => {
   i18n.locale.value = language.value
 })
@@ -41,9 +44,6 @@ watch(() => language.value, () => {
 onMounted(() => {
   // todo
   i18n.locale.value = language.value
-
-  // Automatically apply theme color to browser
-  useThemeColor()
 
   openWindow(Win.LOADING)
   setTimeout(() => Native.onReady(), 1000) // let loading animation play a bit

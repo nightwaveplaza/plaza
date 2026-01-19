@@ -13,9 +13,9 @@
     </win-panel>
 
     <!-- Buttons -->
-    <div class="row mt-2 no-gutters justify-content-between">
+    <div class="row mt-2 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block class="text-bold" :disabled="isLoading" @click="change">
+        <win-button block class="fw-bold" :disabled="isLoading" @click="change">
           {{ t('buttons.change') }}
         </win-button>
       </div>

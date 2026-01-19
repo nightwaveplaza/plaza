@@ -1,3 +1,7 @@
+import '@app/styles/dist.scss'
+import '@app/styles/ui/ui.scss'
+import '@app/styles/app.scss'
+
 import { createApp, h } from 'vue'
 import { router } from '@app/router'
 import { i18n } from '@locales/_i18n'

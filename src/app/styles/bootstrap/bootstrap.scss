@@ -1,26 +1,66 @@
-html {
-  box-sizing: border-box;
-  -ms-overflow-style: scrollbar;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
+//html {
+//  box-sizing: border-box;
+//  -ms-overflow-style: scrollbar;
+//}
+//
+//*,
+//*::before,
+//*::after {
+//  box-sizing: inherit;
+//}
 
 $spacer: 16px !default;
 
+// scss-docs-start import-stack
+// Configuration
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
 
-@import "bootstrap/scss/mixins/breakpoints";
-@import "bootstrap/scss/mixins/grid-framework";
-@import "bootstrap/scss/mixins/grid";
-
+// Layout & components
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
 @import "bootstrap/scss/grid";
-@import "bootstrap/scss/utilities/display";
-@import "bootstrap/scss/utilities/flex";
-@import "bootstrap/scss/utilities/spacing";
-@import "bootstrap/scss/utilities/sizing";
-@import "bootstrap/scss/utilities/embed";
+//@import "tables";
+//@import "forms";
+//@import "buttons";
+//@import "transitions";
+//@import "dropdown";
+//@import "button-group";
+//@import "nav";
+//@import "navbar";
+//@import "card";
+//@import "accordion";
+//@import "breadcrumb";
+//@import "pagination";
+//@import "badge";
+//@import "alert";
+//@import "progress";
+//@import "list-group";
+//@import "close";
+//@import "toasts";
+//@import "modal";
+//@import "tooltip";
+//@import "popover";
+//@import "carousel";
+//@import "spinners";
+//@import "offcanvas";
+//@import "placeholders";
+
+// Helpers
+@import "bootstrap/scss/helpers";
+
+// Utilities
+@import "bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
+
+
+:root {
+  --bs-body-font-size: 11px;
+  --bs-body-font-family: Tahoma, Verdana, Segoe, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+}

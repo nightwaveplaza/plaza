@@ -1,3 +1,7 @@
+import '@mobile/styles/dist.scss'
+import '@app/styles/ui/ui.scss'
+import '@mobile/styles/app.scss'
+
 import { createApp, h } from 'vue'
 import plazaComponents from '@app/components/basic'
 import plazaExtraComponents from '@app/components/extra'

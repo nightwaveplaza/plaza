@@ -11,21 +11,21 @@
         {{ t('win.player_timer.info') }}
       </p>
 
-      <div class="row no-gutters mt-3">
-        <div class="col-2 pr-1">
+      <div class="row gx-0 mt-3">
+        <div class="col-2 pe-1">
           <win-button block @click="add(-10)">
             -10
           </win-button>
         </div>
-        <div class="col-2 pr-1">
+        <div class="col-2 pe-1">
           <win-button block @click="add(-5)">
             -5
           </win-button>
         </div>
-        <div class="col-4 pr-1">
+        <div class="col-4 pe-1">
           <input v-model.number="minutes" class="d-block text-center" type="number" @keydown="useNumberOnly">
         </div>
-        <div class="col-2 pr-1">
+        <div class="col-2 pe-1">
           <win-button block @click="add(5)">
             +5
           </win-button>
@@ -39,9 +39,9 @@
     </div>
 
     <!-- Buttons -->
-    <div class="row mt-3 no-gutters justify-content-between">
+    <div class="row mt-3 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block class="text-bold" @click="start()">
+        <win-button block class="fw-bold" @click="start()">
           {{ btnText }}
         </win-button>
       </div>

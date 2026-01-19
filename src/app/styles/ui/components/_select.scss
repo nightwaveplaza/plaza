@@ -6,6 +6,7 @@
   cursor: pointer;
   padding: 1px 3px 1px 1px;
   position: relative;
+  line-height: 100%;
 
   &:after {
     @include d3-window;

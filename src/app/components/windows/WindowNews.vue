@@ -17,11 +17,11 @@
     </win-memo>
 
     <!-- Buttons -->
-    <div class="row mt-2 no-gutters noselect">
+    <div class="row mt-2 gx-0 noselect">
       <div class="col">
         <win-pagination v-if="news && news.meta.total > 0" :pages="news.meta.last_page" :disabled="isLoading" @change="changePage" />
       </div>
-      <div class="col-4 ml-auto">
+      <div class="col-4 ms-auto">
         <win-button block @click="closeWindow(Win.NEWS)">
           {{ t('buttons.close') }}
         </win-button>

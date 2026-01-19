@@ -1,5 +1,5 @@
 <template>
-  <win-menu class="text-right">
+  <win-menu class="text-end">
     <win-menu-action @click="open(Win.USER_PROFILE_DELETE)">
       {{ t('win.user_profile_delete.title') }}
     </win-menu-action>
@@ -28,9 +28,9 @@
     </win-panel>
 
     <!-- Buttons -->
-    <div class="row mt-3 no-gutters justify-content-between">
+    <div class="row mt-3 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block :disabled="isLoading" class="text-bold" @click="update">
+        <win-button block :disabled="isLoading" class="fw-bold" @click="update">
           {{ t('buttons.save') }}
         </win-button>
       </div>

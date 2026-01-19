@@ -13,11 +13,11 @@
 
   <div class="p-2">
     <win-panel class="p-2 mb-2">
-      <div class="row no-gutters">
+      <div class="row gx-0">
         <div class="col-2 align-self-center noselect">
           <img src="@app/assets/img/user_card.png" alt="user">
         </div>
-        <div class="col pl-2">
+        <div class="col ps-2">
           <div class="username mb-1">
             {{ user?.username }}
           </div>
@@ -28,7 +28,7 @@
       </div>
     </win-panel>
 
-    <div class="row no-gutters mb-3">
+    <div class="row gx-0 mb-3">
       <div class="col">
         <win-group-box>
           <template #title>
@@ -54,7 +54,7 @@
           </template>
         </win-group-box>
       </div>
-      <div class="col pl-2">
+      <div class="col ps-2">
         <win-group-box>
           <template #title>
             {{ t('win.user.account') }}

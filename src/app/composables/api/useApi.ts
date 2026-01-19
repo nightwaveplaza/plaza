@@ -1,4 +1,4 @@
-import { type Ref, ref, type UnwrapRef } from 'vue'
+import { type Ref, ref, shallowRef, type UnwrapRef } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import api from '@app/api/index.ts'
@@ -13,9 +13,9 @@ export interface ApiError {
 
 // Response wrapper for API calls with loading state
 export interface CallResponse<T> {
-  data: Ref<UnwrapRef<T> | null>
-  error: Ref<UnwrapRef<ApiError | null>>
-  isLoading: Ref<UnwrapRef<boolean>>
+  data: Ref<T | null>
+  error: Ref<ApiError | null>
+  isLoading: Ref<boolean>
   call: (config: AxiosRequestConfig) => Promise<T>
 }
 
@@ -25,8 +25,8 @@ export interface CallResponse<T> {
  * Handles API calls and tracks loading state, data and errors.
  */
 export function useApi<T> (): CallResponse<T> {
-  const data = ref<T | null>(null)
-  const error = ref<ApiError | null>(null)
+  const data = shallowRef<T | null>(null)
+  const error = shallowRef<ApiError | null>(null)
   const isLoading = ref(false)
   let controller: AbortController | null = null
   const { token } = useAuthToken()
@@ -50,7 +50,8 @@ export function useApi<T> (): CallResponse<T> {
         ...config,
         headers: {
           // 'NP-User-Agent': userAuthStore.agent
-          ...authHeader
+          ...authHeader,
+          ...(config.headers ?? {})
         },
         signal: controller?.signal
       })

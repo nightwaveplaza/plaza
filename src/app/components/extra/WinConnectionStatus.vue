@@ -1,5 +1,5 @@
 <template>
-  <div class="win-connection-status mr-1" :class="{'connected': isConnected, 'on-off': blink}" />
+  <div class="win-connection-status me-1" :class="{'connected': isConnected, 'on-off': blink}" />
 </template>
 
 <script setup lang="ts">

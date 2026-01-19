@@ -1,6 +1,6 @@
 <template>
   <win-button block :disabled="sending" @click="like">
-    <i :class="likeIcon" class="i mr-1" :style="{color: likeColor}" />
+    <i :class="likeIcon" class="i me-1" :style="{color: likeColor}" />
     {{ reactions }}
   </win-button>
 </template>

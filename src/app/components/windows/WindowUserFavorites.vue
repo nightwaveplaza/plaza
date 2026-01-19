@@ -7,10 +7,10 @@
           <win-list v-else ref="list" scroll>
             <template v-if="favs?.data && !isLoading">
               <tr v-for="(f, i) in favs.data" :key="i" :class="{ strike: deleted.includes(f.id) }" class="hover">
-                <td class="p-1 pl-0 noselect" style="width: 62px">
+                <td class="p-1 ps-0 noselect" style="width: 62px">
                   <img :src="f.song.artwork_src" alt="artwork">
                 </td>
-                <td class="pl-1 show-info" @click="showSongInfo(f.song.id)">
+                <td class="ps-1 show-info" @click="showSongInfo(f.song.id)">
                   <div class="artist">
                     {{ f.song.artist }}
                   </div>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="d-flex">
-          <div class="row no-gutters pt-2 w-100">
+          <div class="row gx-0 pt-2 w-100">
             <div class="col">
               <win-pagination
                 :pages="favs?.meta.last_page"
@@ -51,7 +51,7 @@
               />
             </div>
             <div class="col-auto">
-              <win-button class="px-3 mr-2" @click="openWindow(Win.USER_FAVORITES_EXPORT)">
+              <win-button class="px-3 me-2" @click="openWindow(Win.USER_FAVORITES_EXPORT)">
                 {{ t('win.user_favorites_export.btn_export') }}
               </win-button>
               <win-button class="px-3" @click="closeWindow(Win.USER_FAVORITES)">
@@ -65,8 +65,8 @@
   </div>
 
   <div class="win-window__statusbar noselect">
-    <div class="row no-gutters song-list-statusbar">
-      <div class="col-auto cell pr-4 d">
+    <div class="row gx-0 song-list-statusbar">
+      <div class="col-auto cell pe-4 d">
         {{ t('pagination.pages', {n: favs?.meta.last_page}) }}
       </div>
       <div class="col cell">

@@ -4,13 +4,13 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range mr-1" @click="changeRange(RatingsRange.OVERTIME)">
+          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range me-1" @click="changeRange(RatingsRange.OVERTIME)">
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
-          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range mr-1" @click="changeRange(RatingsRange.MONTHLY)">
+          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range me-1" @click="changeRange(RatingsRange.MONTHLY)">
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
-          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range mr-0" @click="changeRange(RatingsRange.WEEKLY)">
+          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range me-0" @click="changeRange(RatingsRange.WEEKLY)">
             {{ t('win.ratings.btn_weekly') }}
           </win-button>
         </div>
@@ -18,7 +18,7 @@
         <!-- Song list -->
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading" />
-          <win-list v-if="!isLoading && songs" ref="list" scroll>
+          <win-list v-if="!isLoading && songs" scroll>
             <tr v-for="(s, i) in songs.data" :key="i" class="hover">
               <td class="noselect" style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
@@ -31,8 +31,8 @@
                   {{ s.song.title }}
                 </div>
               </td>
-              <td class="text-right noselect nowrap" style="width: 57px">
-                {{ s.likes }}<i class="i icon-like ml-1" style="color: #c12727" />
+              <td class="text-end noselect nowrap" style="width: 57px">
+                {{ s.likes }}<i class="i icon-like ms-1" style="color: #c12727" />
               </td>
             </tr>
           </win-list>
@@ -40,7 +40,7 @@
 
         <!-- List footer buttons -->
         <div class="d-flex">
-          <div class="row no-gutters mt-2 w-100">
+          <div class="row gx-0 mt-2 w-100">
             <div class="col">
               <win-pagination
                 v-if="songs && songs?.meta.total > 0"
@@ -62,8 +62,8 @@
   </div>
 
   <div class="win-window__statusbar noselect">
-    <div class="row no-gutters">
-      <div class="col-auto cell pr-4 d">
+    <div class="row gx-0">
+      <div class="col-auto cell pe-4 d">
         {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
       </div>
       <div class="col cell">
@@ -76,7 +76,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -91,7 +90,6 @@ const page = ref(1)
 const range = ref<RatingsRange>(RatingsRange.OVERTIME)
 const { isLoading, data: songs, fetch, error } = getRatings()
 
-const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()
 
 function changePage (newPage: number): void {

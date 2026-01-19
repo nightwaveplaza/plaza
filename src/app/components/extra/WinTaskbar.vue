@@ -7,7 +7,7 @@
     <win-button
       v-for="window in openedWindows"
       :key="window.id"
-      class="mr-1" style="flex: 1 1 auto"
+      class="me-1" style="flex: 1 1 auto"
       :class="{active: activeWindow === window.id && !window.isMinimized }"
       @click="toggleMinimize(window.id)"
     >
@@ -17,7 +17,7 @@
       </div>
     </win-button>
 
-    <div class="local-time ml-auto" style="flex: 0 0 90px">
+    <div class="local-time ms-auto" style="flex: 0 0 90px">
       <win-connection-status v-if="!isMobile()" /> {{ time }}
     </div>
   </div>

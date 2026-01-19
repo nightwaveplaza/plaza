@@ -25,5 +25,11 @@ export function useThemeColor(): void {
   }
 
   watch(() => theme.value, () => setThemeColor())
-  onMounted(() => setThemeColor())
+  onMounted(() => {
+    if (isMobile()) {
+      setTimeout(() => setThemeColor(), 1000)
+    } else {
+      setThemeColor()
+    }
+  })
 }

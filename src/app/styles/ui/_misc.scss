@@ -4,6 +4,7 @@ a {
   cursor: pointer;
   outline: 0;
 
+  &.link,
   &:link,
   &:hover,
   &:active,

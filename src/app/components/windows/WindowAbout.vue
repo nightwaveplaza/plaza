@@ -39,7 +39,7 @@
 
       <p class="mb-2">
         <strong>{{ t('win.about.mobile') }}</strong><br>
-        <a role="button" @click="openMobile">{{ t('win.about.show_more') }}</a>
+        <a role="button" class="link" @click="openMobile">{{ t('win.about.show_more') }}</a>
       </p>
 
       <p>

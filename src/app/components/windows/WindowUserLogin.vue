@@ -35,7 +35,7 @@
             <input id="password" v-model="fields.password" class="me-0 ms-0 w-100" type="password">
           </div>
           <div class="col-2 col-sm-2 ms-2 align-self-center">
-            <a role="button" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
+            <a role="button" class="link" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
           </div>
         </div>
 

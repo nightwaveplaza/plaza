@@ -15,7 +15,7 @@
 
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading" />
-          <win-list v-else ref="list" scroll>
+          <win-list v-else scroll>
             <tr v-for="h in history?.data" :key="h.song.id">
               <td class="pe-1 py-1 show-info" @click="showSongInfo(h.song.id)">
                 <div class="artist">
@@ -70,7 +70,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type WinList from '@app/components/basic/WinList.vue'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useHistoryApi } from '@app/composables/api'
 import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
@@ -82,7 +81,6 @@ const { getHistory } = useHistoryApi()
 
 const page = ref(1)
 const { isLoading, fetch, data: history, error } = getHistory()
-const list = ref<InstanceType<typeof WinList>>()
 
 function changePage (newPage: number): void {
   page.value = newPage

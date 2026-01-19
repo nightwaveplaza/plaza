@@ -18,7 +18,7 @@
         <!-- Song list -->
         <div class="d-flex flex-grow-1 align-items-stretch">
           <div v-if="isLoading" class="content-loading" />
-          <win-list v-if="!isLoading && songs" ref="list" scroll>
+          <win-list v-if="!isLoading && songs" scroll>
             <tr v-for="(s, i) in songs.data" :key="i" class="hover">
               <td class="noselect" style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
@@ -76,7 +76,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import type WinList from '@app/components/basic/WinList.vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -91,7 +90,6 @@ const page = ref(1)
 const range = ref<RatingsRange>(RatingsRange.OVERTIME)
 const { isLoading, data: songs, fetch, error } = getRatings()
 
-const list = ref<InstanceType<typeof WinList>>()
 const pagination = ref<InstanceType<typeof WinPagination>>()
 
 function changePage (newPage: number): void {

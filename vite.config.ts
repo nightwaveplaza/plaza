@@ -39,6 +39,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
             if (id.includes('hls.js')) {return 'hls'}
             if (id.includes('node_modules')) {return 'vendor'}
             if (id.includes('app/styles/ui')) {return 'ui'}
+            if (id.includes('app/styles/app')) {return 'app'}
             if (id.includes('app/styles/dist')) {return 'dist'}
           }
         },
@@ -59,6 +60,15 @@ export default ({ mode }: { mode: string }): UserConfig => {
         '@locales': fileURLToPath(new URL('./src/locales', import.meta.url)),
         'hls.js': 'hls.js/dist/hls.light.mjs',
       },
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+          silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
+        }
+      }
     }
   })
 }

@@ -23,11 +23,13 @@ import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
+const { openNewsIfUpdated } = useNewsPopup()
 
 const { updateBackgroundNative } = useNativeEvents()
 const { song } = useNowPlayingStatus()
@@ -58,6 +60,8 @@ onMounted(() => {
     useAuthToken().setToken(token)
     useAuth().fetchUser()
   })
+
+  openNewsIfUpdated()
 })
 
 // waiting for the first status response then check news and open up player

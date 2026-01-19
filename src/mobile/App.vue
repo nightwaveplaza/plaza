@@ -46,14 +46,13 @@ onMounted(() => {
   i18n.locale.value = language.value
 
   openWindow(Win.LOADING)
+  setTimeout(() => Native.onReady(), 1000) // let loading animation play a bit
 
   if (isRandomMode.value) {
     fetchBackgrounds().then(() => setRandomBackground())
   } else {
     updateBackgroundNative()
   }
-
-  Native.onReady()
 
   Native.getAuthToken()!.then((t) => {
     const token = t as string

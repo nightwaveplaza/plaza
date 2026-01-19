@@ -60,14 +60,13 @@ onMounted(() => {
     useAuthToken().setToken(token)
     useAuth().fetchUser()
   })
-
-  openNewsIfUpdated()
 })
 
 // waiting for the first status response then check news and open up player
 watch(() => song.id, () => {
   openWindow(Win.PLAYER)
   closeWindow(Win.LOADING)
+  openNewsIfUpdated()
 }, {
   once: true
 })

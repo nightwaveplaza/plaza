@@ -37,7 +37,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.13",
     "axios": "^1.6.8",
-    "bootstrap": "4.6.2",
+    "bootstrap": "5.3.8",
     "country-flag-icons": "^1.5.12",
     "hls.js": "^1.5.15",
     "mitt": "^3.0.1",

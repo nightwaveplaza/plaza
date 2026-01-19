@@ -39,6 +39,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
             if (id.includes('hls.js')) {return 'hls'}
             if (id.includes('node_modules')) {return 'vendor'}
             if (id.includes('app/styles/ui')) {return 'ui'}
+            if (id.includes('app/styles/dist')) {return 'dist'}
           }
         },
       },

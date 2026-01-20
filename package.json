@@ -8,9 +8,11 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "watch": "cross-env NODE_ENV=development vite build --watch",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.mjs,.ts,.tsx,.cts,.mts"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@rushstack/eslint-patch": "^1.15.0",
     "@tsconfig/node20": "^20.1.8",
     "@types/node": "^20.11.30",
@@ -24,13 +26,17 @@
     "autoprefixer": "^10.4.23",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-no-relative-import-paths": "^1.6.1",
     "eslint-plugin-unused-imports": "^4.3.0",
     "eslint-plugin-vue": "^10.7.0",
+    "globals": "^17.0.0",
     "sass": "^1.97.2",
     "terser": "^5.46.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
     "vite": "^7.3.1",
+    "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^3.2.2"
   },
   "dependencies": {

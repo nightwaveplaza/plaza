@@ -1,5 +1,5 @@
 <template>
-  <div :class="themeName" :style="{backgroundColor}" class="app-desktop">
+  <div :class="themeName" :data-theme="themeName" :style="{backgroundColor}" class="app-desktop">
     <win-window
       v-for="window in openedWindows"
       :id="window.id"

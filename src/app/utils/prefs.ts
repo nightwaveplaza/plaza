@@ -11,7 +11,7 @@ export const prefs = {
 
     try {
       return JSON.parse(str) as T
-    } catch (e) {
+    } catch {
       return def ?? null as T
     }
   }

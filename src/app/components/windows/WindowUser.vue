@@ -61,12 +61,14 @@
           </template>
           <template #content>
             <table>
-              <tr>
-                <td><b>{{ t('win.user.registered') }}:</b></td>
-              </tr>
-              <tr>
-                <td>{{ fmtDate(user?.created_at ?? 0) }}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td><b>{{ t('win.user.registered') }}:</b></td>
+                </tr>
+                <tr>
+                  <td>{{ fmtDate(user?.created_at ?? 0) }}</td>
+                </tr>
+              </tbody>
             </table>
           </template>
         </win-group-box>

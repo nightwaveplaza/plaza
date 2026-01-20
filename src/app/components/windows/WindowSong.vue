@@ -27,8 +27,10 @@
               <i class="i icon-like" style="color: #c12727" /> {{ song.stats.likes }}
             </div>
           </div>
-          <div class="col-5">
-            <img :src="artwork" alt="artwork" class="artwork simple-border">
+          <div class="col-5 align-self-center">
+            <div class="artwork simple-border ratio ratio-1x1"
+                 :style="{'background-image': `url('${artwork}')`}"
+            />
           </div>
         </div>
       </win-panel>
@@ -177,10 +179,9 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .song-info {
   .artwork {
-    display: block;
     width: 100%;
-    max-width: 146px;
     height: auto;
+    background-size: cover;
   }
 
   .group-box {

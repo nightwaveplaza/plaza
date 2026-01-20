@@ -1,11 +1,11 @@
 <template>
   <div v-show="!windowState.isMinimized"
+       :id="'window-' + id"
        ref="windowRef"
-      :id="'window-' + id"
-      class="win-window"
-      :style="style"
-      :class="{'window-alert': windowState.isAlert}"
-      @mousedown="pullUp"
+       class="win-window"
+       :style="style"
+       :class="{'window-alert': windowState.isAlert}"
+       @mousedown="pullUp"
   >
     <div class="inner" :class="{'d-flex flex-column h-100': windowState.height}">
       <div class="header header-draggable noselect"
@@ -65,6 +65,9 @@ const props = defineProps<{
 
 provide('windowId', toRef(props, 'id'))
 
+const windowRef = ref<HTMLDivElement | null>(null)
+const { centerWindow, checkBounds, handleDragStart, isCentered } = useDraggable(windowRef, props.id)
+
 const windowState: Ref<WindowState> = computed(() => {
   return openedWindows.value[props.id]!
 })
@@ -80,9 +83,6 @@ const style = computed<CSSProperties>(() => ({
   maxHeight: windowState.value.height ? `${windowState.value.height}px`: 'none',
   height: windowState.value.height ? `${actualHeight.value}px`: 'auto'
 }))
-
-const windowRef = ref<HTMLDivElement | null>(null)
-const { centerWindow, checkBounds, handleDragStart, isCentered } = useDraggable(windowRef, props.id)
 
 const isActive = computed(() => activeWindow.value === props.id)
 const actualHeight = ref(windowState.value.height ?? 0)

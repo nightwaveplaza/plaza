@@ -1,6 +1,6 @@
 <template>
-  <div class="progress-track">
-    <div class="progress-blocks">
+  <div ref="trackRef" class="progress-track">
+    <div class="progress-blocks" :style="{ animationDuration: dynamicDuration }">
       <div class="block"></div>
       <div class="block"></div>
       <div class="block"></div>
@@ -9,12 +9,40 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   height?: number
 }>(), {
   height: 20
+})
+
+const trackRef = ref<HTMLDivElement | null>(null)
+const trackWidth = ref(0)
+let resizeObserver: ResizeObserver | null = null
+
+const dynamicDuration = computed(() => {
+  if (!trackWidth.value) return '0s'
+  const seconds = trackWidth.value / 125 // speed 
+  return `${seconds}s`
+})
+
+onMounted(() => {
+  if (trackRef.value) {
+    resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        trackWidth.value = entry.contentRect.width
+      }
+    })
+
+    resizeObserver.observe(trackRef.value)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (resizeObserver && trackRef.value) {
+    resizeObserver.unobserve(trackRef.value)
+  }
 })
 
 const cssHeight = computed(() => {
@@ -38,7 +66,10 @@ const cssHeight = computed(() => {
   bottom: 2px;
   display: flex;
   gap: 1px;
-  animation: bounce 2.0s linear infinite alternate;
+  animation-name: bounce;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 .block {

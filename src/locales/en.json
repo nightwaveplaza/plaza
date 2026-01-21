@@ -206,7 +206,8 @@
       "current_password_required": "Current password is required.",
       "username_unique": "Username is already taken.",
       "username_alphadash": "Username may only contain letters, numbers, and underscores.",
-      "delete_confirm_required": "You must confirm account deletion."
+      "delete_confirm_required": "You must confirm account deletion.",
+      "captcha_response_required": "Failed to check captcha."
     },
     "network_fail": "Network is unavailable.",
     "invalid_user_password": "Invalid username or password.",

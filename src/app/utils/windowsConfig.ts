@@ -96,7 +96,7 @@ export const registry: Record<Win, WindowConfig> = {
   },
   [Win.USER_RESET]: {
     titleKey: 'win.user_reset.title',
-    width: 320,
+    width: 330,
   },
   [Win.USER_RESET_PASSWORD]: {
     titleKey: 'win.user_password.title',

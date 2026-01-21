@@ -1,7 +1,7 @@
 <template>
   <div class="p-2">
     <div class="row mb-3">
-      <div class="col-auto align-self-center pe-1">
+      <div class="col-3 pe-1 align-self-center text-center">
         <img src="@app/assets/img/keys-5.png" alt="keys" />
       </div>
       <div class="col">
@@ -11,18 +11,12 @@
       </div>
     </div>
 
-    <div class="captcha mb-3">
-      <vue-turnstile
-          v-model="fields.captcha_response"
-          :site-key="turnstileKey"
-          size="flexible"
-      />
-    </div>
+    <win-captcha v-model="fields.captcha_response" class="mb-3" />
 
     <!-- Buttons -->
     <div class="row gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block :disabled="isLoading" class="fw-bold" @click="reset">
+        <win-button block :disabled="isLoading || fields.captcha_response === ''" class="fw-bold" @click="reset">
           {{ t('win.user_login.btn_reset') }}
         </win-button>
       </div>
@@ -38,7 +32,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import VueTurnstile from 'vue-turnstile'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAuthApi } from '@app/composables/api'
 import { type UserResetForm, Win } from '@app/types'
@@ -47,7 +40,6 @@ const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
 const { resetPassword } = useAuthApi()
 const { isLoading, fetch } = resetPassword()
-const turnstileKey = import.meta.env.VITE_TURNSTILE_KEY
 
 const fields: UserResetForm = reactive({
   email: '',

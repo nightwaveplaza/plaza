@@ -23,7 +23,7 @@ let resizeObserver: ResizeObserver | null = null
 
 const dynamicDuration = computed(() => {
   if (!trackWidth.value) return '0s'
-  const seconds = trackWidth.value / 125 // speed 
+  const seconds = trackWidth.value / 125 // speed
   return `${seconds}s`
 })
 

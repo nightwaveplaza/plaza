@@ -59,11 +59,3 @@ function reset (): void {
   })
 }
 </script>
-
-<style lang="scss">
-#window-user-reset {
-  .captcha > div {
-    line-height: 0;
-  }
-}
-</style>

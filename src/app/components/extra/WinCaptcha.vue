@@ -1,8 +1,11 @@
 <template>
   <win-panel>
     <div class="row justify-content-between">
-      <div class="col-auto align-self-center lh-1">
-        Security check...
+      <div class="col-auto align-self-center lh-1" >
+        <span class="small">
+          <template v-if="!needsInteractive">▶</template><template v-else>▼</template>&nbsp;
+        </span>
+        <a class="link" role="button" @click="needsInteractive = !needsInteractive">Security check...</a>
       </div>
       <div class="col">
         <win-loading-bar v-if="model === ''" :height="20" />
@@ -14,7 +17,7 @@
         v-model="model"
         :site-key="turnstileKey"
         size="flexible"
-        appearance="interaction-only"
+        appearance="always"
         class="mt-3 lh-1"
         @before-interactive="onBeforeInteractive"
         @error="onError"
@@ -33,6 +36,7 @@ const model = defineModel<string>({ default: '' })
 const needsInteractive = ref(false)
 
 function onError(error: number) {
+  needsInteractive.value = true
   console.error(error)
 }
 

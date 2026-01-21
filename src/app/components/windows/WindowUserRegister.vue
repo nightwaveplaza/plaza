@@ -83,7 +83,7 @@
         {{ t('win.user_register.captcha_desc') }}
       </p>
       <div class="d-inline-block my-3">
-        <vue-turnstile v-model="fields.captcha_response" site-key="0x4AAAAAAAJlKRFzqmHHqPtK" />
+        <vue-turnstile v-model="fields.captcha_response" :site-key="turnstileKey" />
       </div>
       <br>
       <win-button class="mx-auto px-4 fw-bold" @click="completeCaptcha">
@@ -112,6 +112,7 @@ const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
 const { registerUser } = useUserApi()
 const { isLoading, fetch } = registerUser()
+const turnstileKey = import.meta.env.VITE_TURNSTILE_KEY
 
 const fields: UserRegisterForm = reactive({
   username: '',

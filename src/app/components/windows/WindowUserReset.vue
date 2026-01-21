@@ -14,7 +14,7 @@
     <div class="captcha mb-3">
       <vue-turnstile
           v-model="fields.captcha_response"
-          site-key="0x4AAAAAAAJlKRFzqmHHqPtK"
+          :site-key="turnstileKey"
           size="flexible"
       />
     </div>
@@ -47,6 +47,7 @@ const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
 const { resetPassword } = useAuthApi()
 const { isLoading, fetch } = resetPassword()
+const turnstileKey = import.meta.env.VITE_TURNSTILE_KEY
 
 const fields: UserResetForm = reactive({
   email: '',

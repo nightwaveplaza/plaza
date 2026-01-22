@@ -54,9 +54,10 @@ const cssHeight = computed(() => {
 .progress-track {
   position: relative;
   height: v-bind(cssHeight);
-  border: 1px solid #808080;
-  border-right-color: #dfdfdf;
-  border-bottom-color: #dfdfdf;
+  border: 1px solid var(--forms-border-left);
+  border-right-color: var(--forms-border-right);
+  border-bottom-color: var(--forms-border-right);
+  background-color: var(--button-bg);
   overflow: hidden;
 }
 

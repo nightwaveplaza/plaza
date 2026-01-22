@@ -1,13 +1,13 @@
 <template>
-  <win-panel>
+  <win-panel class="overflow-hidden px-2 py-1">
     <div class="row justify-content-between">
-      <div class="col-auto align-self-center lh-1" >
+      <div class="col-auto align-self-center lh-lg" >
         <span class="small">
           <template v-if="!needsInteractive">▶</template><template v-else>▼</template>&nbsp;
         </span>
         <a class="link" role="button" @click="needsInteractive = !needsInteractive">Security check...</a>
       </div>
-      <div class="col">
+      <div class="col align-self-center">
         <win-loading-bar v-if="model === ''" :height="20" />
         <img v-else src="@app/assets/img/check-0.png" style="height: 20px" class="float-end"  alt="ok"/>
       </div>
@@ -18,7 +18,7 @@
         :site-key="turnstileKey"
         size="flexible"
         appearance="always"
-        class="mt-3 lh-1"
+        class="mt-2 lh-1"
         @before-interactive="onBeforeInteractive"
         @error="onError"
     />

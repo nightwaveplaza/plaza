@@ -11,7 +11,7 @@
       :class="{active: activeWindow === window.id && !window.isMinimized }"
       @click="toggleMinimize(window.id)"
     >
-      <img src="../../assets/img/ball.png" alt="">
+      <div class="window-icon" :class="window.icon" />
       <div class="title">
         {{ window.title ? window.title : window.titleKey ? t(window.titleKey) : ' ' }}
       </div>

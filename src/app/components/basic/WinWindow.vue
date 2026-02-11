@@ -1,19 +1,21 @@
 <template>
-  <div v-show="!windowState.isMinimized"
-       :id="'window-' + id"
-       ref="windowRef"
-       class="win-window"
-       :style="style"
-       :class="{'window-alert': windowState.isAlert}"
-       @mousedown="pullUp"
+  <div
+      v-show="!windowState.isMinimized"
+      :id="'window-' + id"
+      ref="windowRef"
+      class="win-window"
+      :style="style"
+      :class="{'window-alert': windowState.isAlert}"
+      @mousedown="pullUp"
   >
     <div class="inner" :class="{'d-flex flex-column h-100': windowState.height}">
-      <div class="header header-draggable noselect"
-           :class="{inactive: !isActive}"
-           @dblclick="centerWindow"
-           @mousedown="handleDragStart"
+      <div
+          class="header header-draggable noselect"
+          :class="{inactive: !isActive}"
+          @dblclick="centerWindow"
+          @mousedown="handleDragStart"
       >
-        <div class="icon" />
+        <div class="window-icon" :class="headerIcon" />
         {{ windowTitle }}
         <div v-if="windowState.headerButtons?.length !== 0" class="buttons">
           <win-button v-if="showMinimizeButton" class="button-minimize" @click="minimize">
@@ -48,7 +50,7 @@ import {
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useDraggable } from '@app/composables/useDraggable.ts'
 import { useI18n } from 'vue-i18n'
-import { WindowHeaderButtons, type WindowState } from '@app/types'
+import {type AlertWindowParams, WindowHeaderButtons, type WindowState} from '@app/types'
 
 import { useFullscreen } from '@app/composables/useFullscreen.ts'
 
@@ -105,6 +107,12 @@ const showMaximizeButton = computed(() => {
 const showCloseButton = computed(() => {
   return windowState.value.headerButtons === undefined ||
       (windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_CLOSE))
+})
+
+const headerIcon = computed(() => {
+  return windowState.value.isAlert
+      ? (windowState.value.params as AlertWindowParams).type ===  'info' ? 'msg_information' : 'msg_warning'
+      : windowState.value.icon
 })
 
 function toggleFullScreen(): void {

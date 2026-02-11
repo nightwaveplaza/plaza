@@ -33,15 +33,15 @@
   button {
     max-width: 150px;
     overflow: hidden;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0 4px;
     position: relative;
     text-align: left;
     cursor: pointer;
     color: var(--taskbar-font-color);
 
     .title {
-      padding-left: 22px;
+      padding-left: 2px;
+      line-height: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

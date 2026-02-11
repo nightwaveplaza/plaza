@@ -8,7 +8,8 @@ export interface WindowConfig {
   title?: string,
 
   headerButtons?: WindowHeaderButtons[],
-  isAlert?: boolean
+  isAlert?: boolean,
+  icon?: string
 }
 
 export interface WindowState extends WindowConfig {

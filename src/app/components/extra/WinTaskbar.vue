@@ -11,7 +11,14 @@
       :class="{active: activeWindow === window.id && !window.isMinimized }"
       @click="toggleMinimize(window.id)"
     >
-      <div class="window-icon" :class="window.icon" />
+      <img
+          :src="getWindowIcon(window).src"
+          :srcset="getWindowIcon(window).srcset"
+          width="16"
+          height="16"
+          class="win-icon"
+          alt="icon"
+      />
       <div class="title">
         {{ window.title ? window.title : window.titleKey ? t(window.titleKey) : ' ' }}
       </div>
@@ -30,6 +37,7 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useI18n } from 'vue-i18n'
+import { getWindowIcon } from "@app/utils/icons.ts"
 
 const { toggleMinimize, openedWindows, activeWindow } = useWindows()
 const { taskbarPosition } = useAppSettings()

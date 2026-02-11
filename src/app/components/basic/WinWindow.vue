@@ -10,12 +10,18 @@
   >
     <div class="inner" :class="{'d-flex flex-column h-100': windowState.height}">
       <div
-          class="header header-draggable noselect"
+          class="win-window__header noselect"
           :class="{inactive: !isActive}"
           @dblclick="centerWindow"
           @mousedown="handleDragStart"
       >
-        <div class="window-icon" :class="headerIcon" />
+        <img
+            :src="windowIcon.src"
+            :srcset="windowIcon.srcset"
+            width="16"
+            height="16"
+            alt="icon"
+        />
         {{ windowTitle }}
         <div v-if="windowState.headerButtons?.length !== 0" class="buttons">
           <win-button v-if="showMinimizeButton" class="button-minimize" @click="minimize">
@@ -50,7 +56,8 @@ import {
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useDraggable } from '@app/composables/useDraggable.ts'
 import { useI18n } from 'vue-i18n'
-import {type AlertWindowParams, WindowHeaderButtons, type WindowState} from '@app/types'
+import { WindowHeaderButtons, type WindowState } from '@app/types'
+import { getWindowIcon } from '@app/utils/icons'
 
 import { useFullscreen } from '@app/composables/useFullscreen.ts'
 
@@ -109,11 +116,7 @@ const showCloseButton = computed(() => {
       (windowState.value.headerButtons?.includes(WindowHeaderButtons.BTN_CLOSE))
 })
 
-const headerIcon = computed(() => {
-  return windowState.value.isAlert
-      ? (windowState.value.params as AlertWindowParams).type ===  'info' ? 'msg_information' : 'msg_warning'
-      : windowState.value.icon
-})
+const windowIcon = computed(() => getWindowIcon(windowState.value))
 
 function toggleFullScreen(): void {
   requestFullscreen()

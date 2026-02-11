@@ -21,7 +21,7 @@
     border-bottom-color: var(--forms-border-right);
   }
 
-  .header, .win-window__header {
+  .win-window__header {
     margin: 1px;
     padding: 2px;
     position: relative;
@@ -33,6 +33,11 @@
 
     &.inactive {
       background: var(--window-header-gradient-disabled);
+    }
+
+    img {
+      float: left;
+      margin-right: 2px;
     }
 
     .buttons {
@@ -113,67 +118,6 @@
         }
       }
     }
-  }
-}
-
-.window-icon {
-  width: 16px;
-  height: 16px;
-  float: left;
-  margin-right: 2px;
-  background: url('@app/assets/img/ball.png') no-repeat;
-  background-size: cover;
-
-  &.help_question_mark {
-    background-image: url('@app/assets/icons/help_question_mark-1.png')
-  }
-  &.msg_warning {
-    background-image: url('@app/assets/icons/msg_warning-2.png')
-  }
-  &.msg_information {
-    background-image: url('@app/assets/icons/msg_information-2.png')
-  }
-  &.calendar {
-    background-image: url('@app/assets/icons/calendar.png')
-  }
-  &.chart {
-    background-image: url('@app/assets/icons/chart1-2.png')
-  }
-  &.smiley {
-    background-image: url('@app/assets/icons/utopia_smiley.png')
-  }
-  &.document {
-    background-image: url('@app/assets/icons/document-1.png')
-  }
-  &.clock {
-    background-image: url('@app/assets/icons/clock-0.png')
-  }
-  &.gears {
-    background-image: url('@app/assets/icons/gears-1.png')
-  }
-  &.world {
-    background-image: url('@app/assets/icons/world-5.png')
-  }
-  &.cd_audio {
-    background-image: url('@app/assets/icons/cd_audio_cd_a-1.png')
-  }
-  &.user_computer {
-    background-image: url('@app/assets/icons/user_computer-0.png')
-  }
-  &.world_star {
-    background-image: url('@app/assets/icons/world_star-1.png')
-  }
-  &.keys {
-    background-image: url('@app/assets/icons/keys-0.png')
-  }
-  &.settings_gear {
-    background-image: url('@app/assets/icons/settings_gear_cool-3.png')
-  }
-  &.recycle_bin_full {
-    background-image: url('@app/assets/icons/recycle_bin_full_2k-5.png')
-  }
-  &.modem {
-    background-image: url('@app/assets/icons/modem-0.png')
   }
 }
 

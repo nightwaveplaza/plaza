@@ -8,6 +8,10 @@ on:
         required: true
         type: string
 
+env:
+  VITE_API_URL: https://api.plaza.one
+  VITE_TURNSTILE_KEY: ${{ vars.VITE_TURNSTILE_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest

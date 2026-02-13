@@ -1,0 +1,91 @@
+name: Build View Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Build version (e.g. 236)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # --- BUILD APP ---
+      - name: Build app version
+        run: |
+          rm -rf dist
+          VITE_APP=app yarn build
+          mv dist dist-app
+
+      # --- BUILD MOBILE ---
+      - name: Build mobile version
+        run: |
+          rm -rf dist
+          VITE_APP=mobile yarn build
+          mv dist dist-mobile
+
+      # --- ZIP APP ---
+      - name: Zip app build
+        run: |
+          cd dist-app
+          zip -r ../build-app-${{ github.event.inputs.version }}.zip .
+          cd ..
+
+      # --- ZIP MOBILE ---
+      - name: Zip mobile build
+        run: |
+          cd dist-mobile
+          zip -r ../build-mobile-${{ github.event.inputs.version }}.zip .
+          cd ..
+
+      # --- CREATE RELEASE ---
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: v${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            build-app-${{ github.event.inputs.version }}.zip
+            build-mobile-${{ github.event.inputs.version }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --- UPLOAD RELEASE TO S3 ---
+      - name: Install MinIO client
+        run: |
+          curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+          --create-dirs \
+          -o $HOME/minio-binaries/mc
+          chmod +x $HOME/minio-binaries/mc
+          echo "$HOME/minio-binaries" >> $GITHUB_PATH
+
+      - name: Configure MinIO
+        run: |
+          mc alias set gh-deploy ${{ secrets.MINIO_ENDPOINT }} \
+          ${{ secrets.MINIO_ACCESS_KEY }} \
+          ${{ secrets.MINIO_SECRET_KEY }}
+
+      - name: Upload to MinIO
+        run: |
+          mc cp build-mobile-${{ github.event.inputs.version }}.zip \
+          gh-deploy/${{ secrets.MINIO_BUCKET }}/${{ github.event.inputs.version }}/build-mobile-${{ github.event.inputs.version }}.zip
+        env:
+          MINIO_BUCKET: ${{ secrets.MINIO_BUCKET }}
+          MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}

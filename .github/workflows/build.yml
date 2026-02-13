@@ -10,7 +10,7 @@ on:
 
 env:
   VITE_API_URL: https://api.plaza.one
-  VITE_TURNSTILE_KEY: ${{ vars.VITE_TURNSTILE_KEY }}
+  VITE_TURNSTILE_KEY: ${{ secrets.TURNSTILE_KEY }}
 
 jobs:
   build:

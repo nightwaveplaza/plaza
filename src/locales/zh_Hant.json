@@ -1,5 +1,68 @@
 {
     "menu": {
         "about": "關於"
-    }
+    },
+    "win": {
+        "settings": {
+            "btn_random": "隨機",
+            "author": "作者",
+            "theme": "主題",
+            "language": "更改語言"
+        },
+        "about": {
+            "btn_news": "消息",
+            "title": "關於",
+            "version": "版本"
+        },
+        "player": {
+            "btn_stop": "停止",
+            "welcome": "歡迎回來！",
+            "btn_play": "播放"
+        },
+        "settings_language": {
+            "title": "語言選擇"
+        },
+        "song": {
+            "album": "專輯",
+            "song_title": "歌名"
+        },
+        "user": {
+            "btn_logout": "登出",
+            "favorites": ""
+        },
+        "user_login": {
+            "btn_register": "註冊",
+            "title": "登入"
+        },
+        "news": {
+            "title": "消息"
+        },
+        "user_password": {
+            "title": "更改密碼"
+        },
+        "user_register": {
+            "btn_register": "註冊",
+            "success": "註冊成功",
+            "title": "註冊"
+        },
+        "user_favorites_export": {
+            "btn_download": "下載"
+        }
+    },
+    "buttons": {
+        "cancel": "取消",
+        "continue": "繼續",
+        "ok": "好",
+        "change": "更改",
+        "close": "關閉",
+        "save": "儲存"
+    },
+    "fields": {
+        "username": "用戶名",
+        "email": "電子信箱"
+    },
+    "messages": {
+        "saved": "存檔"
+    },
+    "name": "英文"
 }

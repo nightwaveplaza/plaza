@@ -20,7 +20,10 @@
             "btn_play": "播放"
         },
         "settings_language": {
-            "title": "語言選擇"
+            "title": "語言選擇",
+            "translation_author_link": "https://plaza.one",
+            "select": "選擇語言",
+            "translation_author_name": "plaza先生"
         },
         "song": {
             "album": "專輯",
@@ -43,10 +46,14 @@
         "user_register": {
             "btn_register": "註冊",
             "success": "註冊成功",
-            "title": "註冊"
+            "title": "註冊",
+            "welcome": "歡迎來到Nightwave Plaza, {user}!"
         },
         "user_favorites_export": {
             "btn_download": "下載"
+        },
+        "support": {
+            "title2": "你愛Nightwave Plaza嗎？"
         }
     },
     "buttons": {

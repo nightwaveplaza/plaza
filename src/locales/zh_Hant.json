@@ -1,33 +1,73 @@
 {
     "menu": {
-        "about": "關於"
+        "about": "關於",
+        "ratings": "排行榜",
+        "play_history": "播放紀錄",
+        "support_us": "支持我們"
     },
     "win": {
         "settings": {
             "btn_random": "隨機",
             "author": "作者",
             "theme": "主題",
-            "language": "更改語言"
+            "language": "更改語言",
+            "application": "程式設定",
+            "bottom": "底部",
+            "appearance": "外觀設定",
+            "btn_solid": "單色",
+            "source": "來源",
+            "taskbar": "工作列",
+            "title": "程式設定",
+            "top": "頂部",
+            "audio_quality": "音質",
+            "low_quality": "低品質",
+            "background": "背景設定",
+            "bg_notice": "背景圖片取自網路。若您知道原作者是誰，請告知我們。{link}",
+            "let_us_know": "請告訴我們！",
+            "quality_changed": "音訊品質已變更。請重新播放。"
         },
         "about": {
             "btn_news": "消息",
             "title": "關於",
-            "version": "版本"
+            "version": "版本",
+            "btn_credits": "致謝",
+            "discord": "快來加入我們的 {discord}社群！",
+            "playlists": "播放清單",
+            "submission_link": "這份表單",
+            "submission_form": "想在電台播放您的音樂嗎？請填寫{link}。",
+            "useful_links": "相關連結",
+            "mobile": "行動應用程式 (iOS / Android)",
+            "show_more": "顯示更多",
+            "contact_info": "聯絡資訊",
+            "submissions": "投稿",
+            "streams": "串流",
+            "send_enquires": "如有任何問題，歡迎來信至{link}。",
+            "welcome": "歡迎來到 24 小時不打烊的線上蒸汽波與future funk電台。"
         },
         "player": {
             "btn_stop": "停止",
             "welcome": "歡迎回來！",
-            "btn_play": "播放"
+            "btn_play": "播放",
+            "listeners": "收聽人數：{listeners}",
+            "user": "目前登入者：{user}",
+            "volume": "音量：{volume}%"
         },
         "settings_language": {
             "title": "語言選擇",
             "translation_author_link": "https://plaza.one",
             "select": "選擇語言",
-            "translation_author_name": "plaza先生"
+            "translation_author_name": "plaza先生",
+            "help": "想協助翻譯 Nightwave Plaza 嗎？{link}",
+            "translation_by": "由{author}提供翻譯"
         },
         "song": {
             "album": "專輯",
-            "song_title": "歌名"
+            "song_title": "歌名",
+            "artist": "創作者",
+            "btn_play_preview": "預覽播放",
+            "btn_stop": "停止 ({time})",
+            "title": "歌曲資訊",
+            "first_played": "首次播放"
         },
         "user": {
             "btn_logout": "登出",
@@ -54,6 +94,22 @@
         },
         "support": {
             "title2": "你愛Nightwave Plaza嗎？"
+        },
+        "credits": {
+            "title": "致謝",
+            "created_by": "{app}的網站與應用程式皆由{author}開發及維護。",
+            "content": "所有音樂與背景素材",
+            "content_by": "{content}皆歸原作者所有。音樂內容由歌手與唱片公司提供。若您對版權有任何疑慮，請與我們聯繫。"
+        },
+        "history": {
+            "showing_history": "歷史紀錄：{from} — {to}",
+            "title": "播放紀錄"
+        },
+        "ratings": {
+            "btn_monthly": "本月",
+            "btn_weekly": "本週",
+            "btn_overtime": "總排名",
+            "title": "排行榜"
         }
     },
     "buttons": {

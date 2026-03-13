@@ -31,7 +31,7 @@
             "title": "關於",
             "version": "版本",
             "btn_credits": "致謝",
-            "discord": "快來加入我們的 {discord} 社群！",
+            "discord": "快來加入我們的{discord}社群！",
             "playlists": "播放清單",
             "submission_link": "這份表單",
             "submission_form": "想在電台播放您的音樂嗎？請填寫 {link}。",
@@ -75,7 +75,8 @@
             "registered": "已註冊",
             "statistics": "統計資料",
             "likes": "按讚數",
-            "account": "帳號"
+            "account": "帳號",
+            "title": "個人資料"
         },
         "user_login": {
             "btn_register": "註冊",
@@ -100,7 +101,12 @@
             "user_information": "用戶資訊"
         },
         "user_favorites_export": {
-            "btn_download": "下載"
+            "btn_download": "下載",
+            "btn_export": "匯出",
+            "title": "匯出我的最愛",
+            "description": "將最愛清單匯出成 CSV 檔。請點擊下方按鈕開始。",
+            "success": "匯出完成！現在可以下載你的檔案了。",
+            "error": "匯出失敗。請稍後再試。"
         },
         "support": {
             "title2": "你愛Nightwave Plaza嗎？",
@@ -135,6 +141,38 @@
             "enter_email": "輸入您的電子郵件",
             "title": "重設密碼",
             "instruction": "請輸入註冊信箱，我們將寄送密碼重設連結。"
+        },
+        "player_timer": {
+            "title": "睡眠計時器",
+            "is_active": "睡眠計時器已啟用",
+            "start": "開始計時",
+            "timer_set": "已開啟計時。",
+            "alert": "將在{minutes}分鐘後停止播放。",
+            "info": "設定計時器，讓播放自動停止。",
+            "stop": "結束計時"
+        },
+        "mobile": {
+            "description": "官方 Android 和 iOS App 上架啦！趕快下載，讓 Nightwave Plaza 帶你透過未來的旋律重返過去。"
+        },
+        "user_profile_edit": {
+            "title": "編輯個人資料"
+        },
+        "user_profile_delete": {
+            "title": "刪除帳號",
+            "confirm": "確認刪除",
+            "understand": "我瞭解了，請把我的帳號刪除。",
+            "warn1": "執行此動作後，您的 Nightwave Plaza 帳號將被永久刪除。",
+            "warn2": "— 立即刪除。",
+            "warn3": "— 所有資料將會被永久刪除。",
+            "warn4": "— 無法恢復。",
+            "warn5": "— 你可以重新使用相同的用戶名與電子郵件地址進行註冊（若該帳號仍可使用）。"
+        },
+        "disconnected": {
+            "title": "連線中斷",
+            "connection_lost": "無法連線至伺服器...",
+            "click_button": "請按下方按鈕以重新連線。",
+            "trying": "重新連線中...",
+            "btn_reconnect": "重新連線"
         }
     },
     "buttons": {
@@ -147,10 +185,56 @@
     },
     "fields": {
         "username": "用戶名",
-        "email": "電子信箱"
+        "email": "電子信箱",
+        "current_password": "若要繼續，請輸入您現在的密碼",
+        "new_password": "設定新密碼",
+        "password": "密碼",
+        "repeat_password": "再次輸入密碼",
+        "user_details": "用戶資訊"
     },
     "messages": {
-        "saved": "存檔"
+        "saved": "存檔",
+        "auth_success": "驗證成功！",
+        "password_changed": "密碼更新成功！",
+        "reset_success": "密碼重設說明已發送到您的電子郵件。",
+        "success": "成功！",
+        "reaction_tip": "歌曲已點讚！快速點擊兩次喜歡按鈕即可收藏。動手試試吧！",
+        "profile_updated": "個人資料已更新。",
+        "profile_deleted": "你的帳號已刪除。"
     },
-    "name": "英文"
+    "name": "英文",
+    "errors": {
+        "error": "錯誤",
+        "user_fetch": "無法取得使用者資料。",
+        "server": "內部伺服器錯誤。",
+        "enter_user_pass": "請輸入用戶名和密碼。",
+        "fields": {
+            "email_email": "電子郵件地址不正確。",
+            "email_required": "電子郵件為必填欄位。",
+            "username_min": "用戶名長度不足。",
+            "username_max": "用戶名過長。",
+            "password_match": "密碼不符。",
+            "email_unique": "此電子郵件已被註冊。",
+            "username_required": "請輸入用戶名。",
+            "password_required": "密碼為必填項目。",
+            "current_password_invalid": "密碼錯誤。",
+            "captcha_invalid": "驗證碼錯誤。",
+            "password_min": "密碼長度不足。",
+            "current_password_required": "請輸入目前密碼。",
+            "username_unique": "該用戶名已有人使用。",
+            "username_alphadash": "用戶名僅限使用英文字母、數字及底線。",
+            "delete_confirm_required": "您需要確認是否刪除帳號。"
+        },
+        "network_fail": "無法連線至網路。",
+        "invalid_user_password": "用戶名或密碼錯誤。",
+        "user_not_found": "找不到該用戶。",
+        "song_not_found": "查無此歌曲。",
+        "please_sign": "請登入你的 Nightwave Plaza 帳號才能使用這項功能。",
+        "reset_link_invalid": "密碼重設連結已失效或逾期。"
+    },
+    "loading": "載入中…",
+    "pagination": {
+        "pages": "頁數：{n}",
+        "songs": "曲目：{n}"
+    }
 }

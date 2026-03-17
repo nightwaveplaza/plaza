@@ -200,9 +200,10 @@
         "success": "成功！",
         "reaction_tip": "歌曲已點讚！快速點擊兩次喜歡按鈕即可收藏。動手試試吧！",
         "profile_updated": "個人資料已更新。",
-        "profile_deleted": "你的帳號已刪除。"
+        "profile_deleted": "你的帳號已刪除。",
+        "nice": "很棒"
     },
-    "name": "英文",
+    "name": "繁體中文",
     "errors": {
         "error": "錯誤",
         "user_fetch": "無法取得使用者資料。",

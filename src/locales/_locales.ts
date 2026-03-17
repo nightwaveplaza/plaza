@@ -6,6 +6,7 @@ import it from '@locales/it.json'
 import ca from '@locales/ca.json'
 import ja from '@locales/ja.json'
 import pt_BR from '@locales/pt_BR.json'
+import zh_Hant from '@locales/zh_Hant.json'
 
 interface JSONValue {
   [key: string]: string | JSONValue
@@ -24,4 +25,5 @@ export default {
   'ja': ja,
   'pt-BR': pt_BR,
   'ru': ru,
+  'zh-Hant': zh_Hant,
 } as LocaleArray

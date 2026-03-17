@@ -1,4 +1,4 @@
-import { BR, DE, US, RU, ES, IT, JP } from 'country-flag-icons/string/3x2'
+import { BR, DE, US, RU, ES, IT, JP, TW } from 'country-flag-icons/string/3x2'
 import CA from './flags/catalonia'
 
 export default {
@@ -10,6 +10,7 @@ export default {
   'it': IT,
   'ca': CA,
   'ja': JP,
+  'zh-Hant': TW
 } as {
   [key: string]: string
 }

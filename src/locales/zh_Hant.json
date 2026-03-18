@@ -34,7 +34,7 @@
             "discord": "快來加入我們的{discord}社群！",
             "playlists": "播放清單",
             "submission_link": "這份表單",
-            "submission_form": "想在電台播放您的音樂嗎？請填寫 {link}。",
+            "submission_form": "想在電台播放你的音樂嗎？請填寫 {link}。",
             "useful_links": "相關連結",
             "mobile": "行動應用程式 (iOS / Android)",
             "show_more": "顯示更多",
@@ -84,7 +84,7 @@
             "btn_reset": "重設",
             "btn_sign_in": "登入",
             "remember_me": "記住我",
-            "type_username": "請輸入您的使用者名稱和密碼以登入 Nightwave Plaza。"
+            "type_username": "請輸入你的用戶名和密碼以登入 Nightwave Plaza。"
         },
         "news": {
             "title": "消息"
@@ -113,14 +113,14 @@
             "title": "支持我們",
             "go_to_site": "前往 Nightwave Plaza 網站",
             "boosty": "在 Boosty 上支持",
-            "thanks": "感謝您的捐款。您的每一分支持都將全數用於電台營運。",
+            "thanks": "感謝你的捐款。你的每一分支持都將全數用於電台營運。",
             "rewards": "喜歡我們的電台嗎？用 Boosty 抖內支持一下，還能拿 Discord 專屬獎勵喔！"
         },
         "credits": {
             "title": "致謝",
             "created_by": "{app}的網站與應用程式皆由{author}開發及維護。",
             "content": "所有音樂與背景素材",
-            "content_by": "{content} 皆歸原作者所有。音樂內容由歌手與唱片公司提供。若您對版權有任何疑慮，請與我們聯繫。"
+            "content_by": "{content} 皆歸原作者所有。音樂內容由歌手與唱片公司提供。若你對版權有任何疑慮，請與我們聯繫。"
         },
         "history": {
             "showing_history": "歷史紀錄： {from} — {to}",
@@ -135,10 +135,10 @@
         "user_favorites": {
             "remove": "移除",
             "title": "我的最愛",
-            "list_empty": "您的清單目前沒有內容。請點擊 {icon} 按鈕來新增歌曲。"
+            "list_empty": "你的清單目前沒有內容。請點擊 {icon} 按鈕來新增歌曲。"
         },
         "user_reset": {
-            "enter_email": "輸入您的電子郵件",
+            "enter_email": "輸入你的電子郵件",
             "title": "重設密碼",
             "instruction": "請輸入註冊信箱，我們將寄送密碼重設連結。"
         },
@@ -161,7 +161,7 @@
             "title": "刪除帳號",
             "confirm": "確認刪除",
             "understand": "我瞭解了，請把我的帳號刪除。",
-            "warn1": "執行此動作後，您的 Nightwave Plaza 帳號將被永久刪除。",
+            "warn1": "執行此動作後，你的 Nightwave Plaza 帳號將被永久刪除。",
             "warn2": "— 立即刪除。",
             "warn3": "— 所有資料將會被永久刪除。",
             "warn4": "— 無法恢復。",
@@ -186,7 +186,7 @@
     "fields": {
         "username": "用戶名",
         "email": "電子信箱",
-        "current_password": "若要繼續，請輸入您現在的密碼",
+        "current_password": "若要繼續，請輸入你現在的密碼",
         "new_password": "設定新密碼",
         "password": "密碼",
         "repeat_password": "再次輸入密碼",
@@ -196,7 +196,7 @@
         "saved": "存檔",
         "auth_success": "驗證成功！",
         "password_changed": "密碼更新成功！",
-        "reset_success": "密碼重設說明已發送到您的電子郵件。",
+        "reset_success": "密碼重設說明已發送到你的電子郵件。",
         "success": "成功！",
         "reaction_tip": "歌曲已點讚！快速點擊兩次喜歡按鈕即可收藏。動手試試吧！",
         "profile_updated": "個人資料已更新。",
@@ -224,7 +224,7 @@
             "current_password_required": "請輸入目前密碼。",
             "username_unique": "該用戶名已有人使用。",
             "username_alphadash": "用戶名僅限使用英文字母、數字及底線。",
-            "delete_confirm_required": "您需要確認是否刪除帳號。"
+            "delete_confirm_required": "你需要確認是否刪除帳號。"
         },
         "network_fail": "無法連線至網路。",
         "invalid_user_password": "用戶名或密碼錯誤。",

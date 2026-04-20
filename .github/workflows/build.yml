@@ -98,15 +98,23 @@ jobs:
         run: |
           # Get min android version
           MIN_ANDROID=$(jq -r '.min_android_version' version_manifest.json)
+          
           # Download manifest file
           mc cp gh-deploy/${{ secrets.MINIO_BUCKET }}/update-manifest.json ./manifest.json || echo '{"versions":[]}' > manifest.json
           
+          # Set download url
           DOWNLOAD_URL="${{ secrets.MINIO_ENDPOINT }}/${{ secrets.MINIO_BUCKET }}/${{ env.APP_VERSION }}/build-mobile-${{ env.APP_VERSION }}.zip"
           
+          # Calculate hash
+          FILE_HASH=$(sha256sum build-mobile-${{ env.APP_VERSION }}.zip | awk '{ print $1 }')
+          
           # Update manifest for new version
-          jq --arg av "$MIN_ANDROID" --arg vv "${{ env.APP_VERSION }}" --arg url "$DOWNLOAD_URL" \
-             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url else . end)) as $new_list | 
-              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "view_version": ($vv|tonumber), "url": $url}] end' \
+          jq --arg av "$MIN_ANDROID" \
+             --arg vv "${{ env.APP_VERSION }}" \
+             --arg url "$DOWNLOAD_URL" \
+             --arg hash "$FILE_HASH" \
+             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
+              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
              manifest.json > new_manifest.json
           
           # Upload new manifest

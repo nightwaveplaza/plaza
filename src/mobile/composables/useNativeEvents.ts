@@ -7,7 +7,7 @@ import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNativeSocket } from '@mobile/composables/useNativeSocket.ts'
-import { PlayerState, Win } from '@app/types'
+import { PlayerState, type StatusResource, Win } from '@app/types'
 import { Native } from '@mobile/bridge/native.ts'
 import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
@@ -40,7 +40,7 @@ export function useNativeEvents (): {
     onReconnectFailed()
     //openWindow(Win.DISCONNECTED)
   })
-  eventBus.on('onStatusUpdate', (s: string) => setStatus(JSON.parse(s)))
+  eventBus.on('onStatusUpdate', (s: StatusResource) => setStatus(s))
   eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
   eventBus.on('onReactionsUpdate', (r: number) => setReactions(r))
 

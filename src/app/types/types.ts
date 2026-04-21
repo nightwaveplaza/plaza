@@ -1,4 +1,5 @@
 import { Win, type WindowHeaderButtons } from '@app/types/enums.ts'
+import type { StatusResource } from '@app/types/api.ts'
 
 export interface WindowConfig {
   width: number,
@@ -45,7 +46,7 @@ export type EventBus = {
   socketConnect: void
   socketDisconnect: void
   socketReconnectFailed: void
-  onStatusUpdate: string
+  onStatusUpdate: StatusResource
   onListenersUpdate: number
   onReactionsUpdate: number
 }

@@ -57,9 +57,7 @@ function tick (): void {
 
 function checkSleepTimer (): void {
   if (sleepTime.value > 0) {
-    setSleepTime(sleepTime.value - CLOCK_REFRESH)
-
-    if (sleepTime.value <= 0) {
+    if (Date.now() > sleepTime.value) {
       setSleepTime(0)
       emit('stopByTimer')
     }

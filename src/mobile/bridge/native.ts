@@ -6,8 +6,8 @@ export const Native = {
     : void | Promise<void> => CurrentBridge().audioPlay(),
   audioStop: ()
     : void | Promise<void> => CurrentBridge().audioStop(),
-  setSleepTimer: (time: number)
-    : void | Promise<void> => CurrentBridge().setSleepTimer(time),
+  setSleepTimer: (sleepTime: number)
+    : void | Promise<void> => CurrentBridge().setSleepTimer(sleepTime),
   onReady: ()
     : void | Promise<void> => CurrentBridge().onReady(),
   socketReconnect: ()

@@ -65,11 +65,22 @@ import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 const { t } = useI18n()
 const { openWindow, closeWindow, showSongInfo } = useWindows()
 const { song } = useNowPlayingStatus()
-const { state, sleepTime, setSleepTime } = usePlayerPlayback()
+const { state, setState, sleepTime, setSleepTime, updateSleepTime } = usePlayerPlayback()
 
 const artwork = computed(() => {
   return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
 })
+
+// Register events
+window.addEventListener('player:playing', (e: Event) =>
+    setState((e as CustomEvent).detail ? PlayerState.PLAYING : PlayerState.IDLE)
+)
+window.addEventListener('player:buffering', () =>
+    setState(PlayerState.LOADING)
+)
+window.addEventListener('player:sleeptime', (e: Event) =>
+    updateSleepTime((e as CustomEvent).detail)
+)
 
 function openSongInfo (): void {
   if (song.id) {

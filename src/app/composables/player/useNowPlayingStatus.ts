@@ -1,4 +1,4 @@
-import { reactive, type Ref, ref, type UnwrapNestedRefs, type UnwrapRef } from 'vue'
+import { reactive, ref } from 'vue'
 import type { Song, StatusResource } from '@app/types'
 
 const song = reactive<Song>({
@@ -9,43 +9,16 @@ const reactions = ref(0)
 const listeners = ref(0)
 const updatedAt = ref(0)
 
-export function useNowPlayingStatus (): {
-  setSong: (updatedSong: Song) => void
-  song: UnwrapNestedRefs<Song>
-  setReactions: (r: number) => void
-  reactions: Ref<UnwrapRef<number>>
-  listeners: Ref<UnwrapRef<number>>
-  setListeners: (l: number) => void
-  position: Ref<UnwrapRef<number>>
-  setPosition: (p: number) => void
-  updatedAt: Ref<UnwrapRef<number>>
-  setStatus: (status: StatusResource) => void
-} {
-  const setSong = (updatedSong: Song): void => {
-    Object.assign(song, updatedSong)
-  }
-
+export function useNowPlayingStatus() {
   const setStatus = (status: StatusResource): void => {
-    setSong(status.song)
-    setPosition(status.position)
-    setReactions(status.reactions)
-    setListeners(status.listeners)
+    Object.assign(song, status.song)
+    position.value = status.position
+    reactions.value = status.reactions
+    listeners.value = status.listeners
     updatedAt.value = status.updated_at
   }
 
-  const setReactions = (r: number): void => {
-    reactions.value = r
-  }
-
-  const setListeners = (l: number): void => {
-    listeners.value = l
-  }
-
-  const setPosition = (p: number): void => {
-    position.value = p
-  }
-
   return {
-    setSong, song, setReactions, reactions, listeners, setListeners, position, setPosition, updatedAt, setStatus
+    song, position, reactions, listeners, updatedAt, setStatus
   }
 }

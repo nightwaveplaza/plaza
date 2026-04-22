@@ -3,10 +3,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useSocket } from '@app/composables/useSocket.ts'
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
+  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
+  import { useSocketStore } from '@app/composables/useSocketStore.ts'
 
-  const { onEvent, isConnected } = useSocket()
+  const { listeners, song, reactions } = useNowPlayingStatus()
+  const { isConnected } = useSocketStore()
+
   const blink = ref(false)
   let blinkTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -22,9 +25,9 @@
     }, 750)
   }
 
-  onEvent('status', triggerBlink)
-  onEvent('listeners', triggerBlink)
-  onEvent('reactions', triggerBlink)
+  watch(listeners, () => triggerBlink)
+  watch(reactions, () => triggerBlink)
+  watch(song, () => triggerBlink)
 </script>
 
 <style lang="scss">

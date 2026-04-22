@@ -50,7 +50,7 @@ export default ({ mode }: { mode: string }): UserConfig => {
           }
         },
       },
-      // target: 'es2015',
+      target: ['es2015'],
       assetsInlineLimit: 4096,
       minify,
     },
@@ -80,14 +80,22 @@ export default ({ mode }: { mode: string }): UserConfig => {
 }
 
 function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
-  // need polyfill for old androids
-  if (env.VITE_APP === 'mobile') {
-    return legacy({
-      targets: 'defaults, android >= 6.0, ios >= 12',
-    })
-  } else {
+  if (env.VITE_APP !== 'mobile' || env.NODE_ENV === 'development') {
     return null
   }
+
+  return legacy({
+    targets: ['chrome >= 51', 'ios >= 12'],
+    polyfills: [
+      'es.symbol',
+      'es.promise',
+      'es.promise.finally',
+      'es.array.iterator',
+      'es.object.assign'
+    ],
+    renderLegacyChunks: true,
+    modernPolyfills: true
+  })
 }
 
 function getBuildDate (): string {

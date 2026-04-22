@@ -5,6 +5,7 @@ import {
 import { useSocketStore } from '@app/composables/useSocketStore.ts'
 import type { StatusResource } from '@app/types'
 import { isMobile } from '@app/utils/helpers.ts'
+import { useEventListener } from '@vueuse/core'
 
 let isInitialized = false
 
@@ -29,17 +30,16 @@ export function initAppSocket (): void {
   socket.on('reconnect_failed', () => isDead.value = true)
 
   if (isMobile()) {
-    window.addEventListener('app:stop', () => {
+    useEventListener(window, 'app:stop', () => {
       if (socket.connected) {
         socket.disconnect()
       }
     })
 
-    window.addEventListener('app:start', () => {
+    useEventListener(window, 'app:start', () => {
       if (socket.disconnected) {
         socket.connect()
       }
     })
   }
-
 }

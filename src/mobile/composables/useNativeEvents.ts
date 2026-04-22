@@ -4,6 +4,7 @@ import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { Native } from '@mobile/bridge/native.ts'
 import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
+import { useEventListener } from '@vueuse/core'
 
 export function useNativeEvents (): {
   updateBackgroundNative: () => void
@@ -17,7 +18,7 @@ export function useNativeEvents (): {
   /**
    * Android events
    */
-  window.addEventListener('app:resume', () => updateBackgroundNative)
+  useEventListener(window, 'app:start', () => updateBackgroundNative)
 
   // Watch background for changes
   watch(() => background.color, updateBackgroundNative)

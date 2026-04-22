@@ -25,9 +25,7 @@
     }, 750)
   }
 
-  watch(listeners, () => triggerBlink)
-  watch(reactions, () => triggerBlink)
-  watch(song, () => triggerBlink)
+  watch([listeners, reactions, song], triggerBlink)
 </script>
 
 <style lang="scss">

@@ -61,6 +61,7 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
+import { useEventListener } from '@vueuse/core'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, showSongInfo } = useWindows()
@@ -72,15 +73,17 @@ const artwork = computed(() => {
 })
 
 // Register events
-window.addEventListener('player:playing', (e: Event) =>
-    setState((e as CustomEvent).detail ? PlayerState.PLAYING : PlayerState.IDLE)
-)
-window.addEventListener('player:buffering', () =>
-    setState(PlayerState.LOADING)
-)
-window.addEventListener('player:sleeptime', (e: Event) =>
-    updateSleepTime((e as CustomEvent).detail)
-)
+useEventListener(window, 'player:playing', (e: CustomEvent) => {
+  setState(e.detail ? PlayerState.PLAYING : PlayerState.IDLE)
+})
+
+useEventListener(window, 'player:buffering', () => {
+  setState(PlayerState.LOADING)
+})
+
+useEventListener(window, 'player:sleeptime', (e: CustomEvent) => {
+  updateSleepTime(e.detail)
+})
 
 function openSongInfo (): void {
   if (song.id) {

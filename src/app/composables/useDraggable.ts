@@ -1,5 +1,6 @@
 import { onBeforeUnmount, ref, type Ref, type UnwrapRef } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useEventListener } from '@vueuse/core'
 
 const SNAP_SIZE = 15
 
@@ -33,8 +34,8 @@ export function useDraggable (windowRef: Ref<HTMLElement | null>, winId: string)
     startWindowPositionX = openedWindows.value[winId]!.x
     startWindowPositionY = openedWindows.value[winId]!.y
 
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
+    useEventListener(window, 'mousemove', handleMouseMove)
+    useEventListener(window, 'mouseup', handleMouseUp)
   }
 
   /**

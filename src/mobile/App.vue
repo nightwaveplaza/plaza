@@ -25,6 +25,7 @@ import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
 import { initAppSocket } from '@app/services/initAppSocket.ts'
+import { useEventListener } from '@vueuse/core'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
@@ -42,8 +43,8 @@ useThemeColor()
 initAppSocket()
 
 // Register windows events
-window.addEventListener('window:open', (e: Event) => {
-  const name = (e as CustomEvent).detail
+useEventListener(window, 'window:open', (e: CustomEvent) => {
+  const name = e.detail
   if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
     openWindow(Win.USER_LOGIN)
     return
@@ -51,7 +52,7 @@ window.addEventListener('window:open', (e: Event) => {
   openWindow(name)
 })
 
-window.addEventListener('window:close', (e: Event) => closeWindow((e as CustomEvent).detail))
+useEventListener(window, 'window:close', (e: CustomEvent) => closeWindow(e.detail))
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value

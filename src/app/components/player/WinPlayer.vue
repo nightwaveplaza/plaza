@@ -80,14 +80,14 @@ import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 
-const { volume, setVolume } = useVolumeControl()
+const { volume } = useVolumeControl()
 const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
 const { song } = useNowPlayingStatus()
 
 const { t } = useI18n()
 const { openWindow, showSongInfo } = useWindows()
 const { isSigned } = useAuth()
-const { state, setState, sleepTime } = usePlayerPlayback()
+const { state, sleepTime } = usePlayerPlayback()
 
 const time = ref<InstanceType<typeof WinPlayerTime>>()
 const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
@@ -111,9 +111,13 @@ watch(volume, (newVolume) => {
   time.value!.showText(t('win.player.volume', { volume: newVolume }))
 })
 
+function setVolume(vol: number) {
+  volume.value = vol
+}
+
 function play (): void {
   if (state.value === PlayerState.IDLE) {
-    setState(PlayerState.LOADING)
+    state.value = PlayerState.LOADING
     playAudio()
   } else {
     stopAudio()

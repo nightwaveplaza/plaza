@@ -66,7 +66,7 @@ import { useEventListener } from '@vueuse/core'
 const { t } = useI18n()
 const { openWindow, closeWindow, showSongInfo } = useWindows()
 const { song } = useNowPlayingStatus()
-const { state, setState, sleepTime, setSleepTime, updateSleepTime } = usePlayerPlayback()
+const { state, sleepTime, setSleepTime, updateSleepTime } = usePlayerPlayback()
 
 const artwork = computed(() => {
   return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
@@ -74,11 +74,11 @@ const artwork = computed(() => {
 
 // Register events
 useEventListener(window, 'player:playing', (e: CustomEvent) => {
-  setState(e.detail ? PlayerState.PLAYING : PlayerState.IDLE)
+  state.value = e.detail ? PlayerState.PLAYING : PlayerState.IDLE
 })
 
 useEventListener(window, 'player:buffering', () => {
-  setState(PlayerState.LOADING)
+  state.value = PlayerState.LOADING
 })
 
 useEventListener(window, 'player:sleeptime', (e: CustomEvent) => {

@@ -69,13 +69,13 @@
 <script setup lang="ts">
 import { computed, inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { prefs } from '@app/utils/prefs.ts'
 import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
 import { useSongsApi } from '@app/composables/api'
 import { useUserFavoritesApi } from '@app/composables/api'
 import type { ApiError } from '@app/composables/api/useApi.ts'
+import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 
 const { t } = useI18n()
 const { showAlert } = useWindows()
@@ -101,6 +101,7 @@ const playText = computed(() => isPlaying.value
 
 const { getSong } = useSongsApi()
 const { fetch, data: song } = getSong()
+const { volume } = useVolumeControl()
 
 async function fetchSong (): Promise<void> {
   try {
@@ -131,8 +132,7 @@ async function favoriteSong (): Promise<void> {
 }
 
 function getVolume (): number {
-  const volume = prefs.get<number>('volume', 100)
-  return volume / 100
+  return volume.value / 100
 }
 
 function play (): void {

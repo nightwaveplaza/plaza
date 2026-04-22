@@ -1,5 +1,4 @@
-import { type Ref, ref, type UnwrapRef } from 'vue'
-import { prefs } from '@app/utils/prefs.ts';
+import { useLocalStorage } from '@vueuse/core'
 
 /**
  * useVolumeControl composable
@@ -13,17 +12,8 @@ import { prefs } from '@app/utils/prefs.ts';
 
 // Initialize volume from local storage with default value of 100 (100% volume)
 // Keep ref outside of export function to not initialize it every time we use this composable
-const volume = ref(prefs.get<number>('volume', 100)); // default to 100
+const volume = useLocalStorage<number>('volume', 100)
 
-export function useVolumeControl(): {
-    volume: Ref<UnwrapRef<number>>
-    setVolume: (newVolume: number) => void
-} {
-    // Updates volume value and immediately persists it to localStorage
-    const setVolume = (newVolume: number): void => {
-        volume.value = newVolume;
-        prefs.save<number>('volume', newVolume);
-    };
-
-    return { volume, setVolume };
+export function useVolumeControl() {
+    return { volume }
 }

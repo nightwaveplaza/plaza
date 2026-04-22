@@ -17,7 +17,7 @@
 
   <!-- Player -->
   <div class="content p-2">
-    <win-player :volume="volume" @update-volume="setVolume" />
+    <win-player />
   </div>
 
   <div class="win-window__statusbar noselect">
@@ -35,18 +35,15 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { isMobile } from '@app/utils/helpers.ts'
-import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 
 const { t } = useI18n()
-const { volume, setVolume } = useVolumeControl()
 const { openWindow } = useWindows()
 const { listeners } = useNowPlayingStatus()
 const { user, isSigned } = useAuth()
-
 </script>
 
 <style lang="scss">

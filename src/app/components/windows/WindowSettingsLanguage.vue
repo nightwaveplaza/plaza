@@ -44,11 +44,11 @@ import { useWindows } from '@app/composables/useWindows.ts'
 
 const { t, te } = useI18n()
 const list = ref<InstanceType<typeof WinList>>()
-const { language, setLanguage } = useAppSettings()
+const { language } = useAppSettings()
 const { closeWindow } = useWindows()
 
 function switchLanguage (lang: string): void {
-  setLanguage(lang)
+  language.value = lang
 }
 
 onMounted(() => {

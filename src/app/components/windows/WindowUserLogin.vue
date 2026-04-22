@@ -79,7 +79,7 @@ import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 const { t } = useI18n()
 const { openWindow, closeWindow, showAlert } = useWindows()
 const { login: loginApi,  token: tokenApi } = useAuthApi()
-const { setUser } = useAuth()
+const { user } = useAuth()
 const { setToken } = useAuthToken()
 const { fetch, isLoading } = isMobile() ? tokenApi() : loginApi()
 
@@ -95,7 +95,7 @@ function login (): void {
   }
 
   fetch(fields).then(res => {
-    setUser(res.data)
+    user.value = res.data
     if (res.token) {
       setToken(res.token)
     }

@@ -154,10 +154,7 @@ import { Win } from '@app/types'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, showAlert } = useWindows()
-const {
-  theme, setTheme, taskbarPosition, setTaskbarPosition, useHls, setUseHls,
-  lowQuality, setLowQuality
-} = useAppSettings()
+const { theme, taskbarPosition, useHls, lowQuality } = useAppSettings()
 const {
   background, fetch: fetchBackgrounds, setColorBackground, setRandomBackground, nextBackground,
   isRandomMode, isColorMode
@@ -186,11 +183,11 @@ function colorSelected (e: Event): void {
 }
 
 function themeSelected (e: Event): void {
-  setTheme((e.target as HTMLSelectElement).value)
+  theme.value = (e.target as HTMLSelectElement).value
 }
 
 function taskbarPositionSelected (e: Event): void {
-  setTaskbarPosition((e.target as HTMLSelectElement).value)
+  taskbarPosition.value = (e.target as HTMLSelectElement).value
 }
 
 function openLanguageSettings (): void {
@@ -199,12 +196,12 @@ function openLanguageSettings (): void {
 }
 
 function qualityChanged (e: Event): void {
-  setLowQuality((e.target as HTMLInputElement).checked)
+  lowQuality.value = (e.target as HTMLInputElement).checked
   showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 
 function hlsChanged (e: Event): void {
-  setUseHls((e.target as HTMLInputElement).checked)
+  useHls.value = (e.target as HTMLInputElement).checked
   showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
 

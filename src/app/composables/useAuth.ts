@@ -1,4 +1,4 @@
-import { computed, type ComputedRef, type Ref, ref, type UnwrapRef } from 'vue'
+import { computed, ref } from 'vue'
 import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
@@ -9,41 +9,25 @@ const { getUser } = useUserApi()
 const user = ref<User|null>(null)
 const resetToken = ref<string|null>(null)
 
-export function useAuth(): {
-  fetchUser: () => void
-  setUser: (user: User) => void
-  unsetUser: () => void
-  user: Ref<UnwrapRef<User | null>>
-  isSigned: ComputedRef<boolean>
-  resetToken: Ref<UnwrapRef<string | null>>
-  setResetToken: (token: string) => void
-} {
+export function useAuth() {
   const { resetReaction } = useReactions()
   const { setToken } = useAuthToken()
+  const isSigned = computed(() => user.value !== null)
 
-  const fetchUser = (): void => {
-    getUser().fetch().then(res => {
+  const fetchUser = async () => {
+    try {
+      const res = await getUser().fetch()
       user.value = res.data
-    }).catch(() => {
-      console.error('Failed to get user.');
-    })
+    } catch (error) {
+      console.error('Failed to get user:', error)
+    }
   }
 
-  const setUser = (_user: User): void => {
-    user.value = _user
-  }
-
-  const unsetUser = (): void => {
+  const unsetUser = () => {
     resetReaction()
     setToken(null)
     user.value = null
   }
 
-  const setResetToken = (token: string): void => {
-    resetToken.value = token
-  }
-
-  const isSigned = computed(() => user.value !== null)
-
-  return { fetchUser, setUser, unsetUser, user, isSigned, resetToken, setResetToken }
+  return { fetchUser, unsetUser, user, isSigned, resetToken }
 }

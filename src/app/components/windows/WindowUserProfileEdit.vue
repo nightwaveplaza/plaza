@@ -54,7 +54,7 @@ import { useAuth } from '@app/composables/useAuth.ts'
 const { t } = useI18n()
 const { showAlert, closeWindow, openWindow } = useWindows()
 const { updateProfile } = useUserApi()
-const { user, setUser } = useAuth()
+const { user } = useAuth()
 const { isLoading } = updateProfile()
 
 const fields: UserProfileForm = reactive({
@@ -75,7 +75,7 @@ function update (): void {
 
   updateProfile().fetch(fields).then(res => {
     showAlert(t('messages.profile_updated'), t('messages.success'), 'info')
-    setUser(res.data)
+    user.value = res.data
     closeWindow(Win.USER_PROFILE_EDIT)
   }).catch(e => {
     showAlert(e.message, t('errors.error'))

@@ -21,7 +21,7 @@ export function useAudioPlayer(): {
   const { startVisual, stopVisual } = useVisual()
   const { useHls, lowQuality } = useAppSettings()
   const { song, position } = useNowPlayingStatus()
-  const { state, setState, setSleepTime } = usePlayerPlayback()
+  const { state, setSleepTime } = usePlayerPlayback()
 
   let hls: Hls | null = null
   let audio: HTMLAudioElement | null = null
@@ -77,7 +77,7 @@ export function useAudioPlayer(): {
 
     // Start playing
     audio.play().then(() => {
-      setState(PlayerState.PLAYING)
+      state.value = PlayerState.PLAYING
       setMediaSessionActions()
       updateAudioMetadata()
 
@@ -105,7 +105,7 @@ export function useAudioPlayer(): {
     audio = null
 
     // Set current state
-    setState(PlayerState.IDLE)
+    state.value = PlayerState.IDLE
     setSleepTime(0)
 
     document.title = 'Nightwave Plaza - Online Vaporwave Radio'

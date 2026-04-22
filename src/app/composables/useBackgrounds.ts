@@ -1,8 +1,8 @@
-import { computed, type ComputedRef, reactive, type UnwrapNestedRefs } from 'vue'
-import { prefs } from '@app/utils/prefs.ts'
+import { computed } from 'vue'
 import { useBackgroundsApi } from '@app/composables/api'
-import { type BackgroundImage, BackgroundMode, type BackgroundCollection } from '@app/types'
+import { type BackgroundImage, BackgroundMode } from '@app/types'
 import { isMobile } from '@app/utils/helpers.ts'
+import { useLocalStorage } from '@vueuse/core'
 
 /**
  * useBackgrounds composable
@@ -17,29 +17,18 @@ export interface Background {
 }
 
 // Reactive state loaded from persisted preferences
-const background = reactive(prefs.get<Background>('background', {
+const background = useLocalStorage<Background>('background', {
   image: null,
   color: '#008080',
   index: 0,
   mode: BackgroundMode.RANDOM,
-}))
+})
 
 /**
  * Main export function
  * Provides methods for cycling backgrounds and maintaining state
  */
-export function useBackgrounds(): {
-  background: UnwrapNestedRefs<Background>
-  fetch: () => Promise<BackgroundCollection>
-  setRandomBackground: () => void
-  setColorBackground: (color?: string) => void
-  nextBackground: (direction: number) => void
-  isRandomMode: ComputedRef<boolean>
-  isColorMode: ComputedRef<boolean>
-  backgroundImage: ComputedRef<string>
-  backgroundColor: ComputedRef<string>
-  loadRandomBackground: () => void
-} {
+export function useBackgrounds() {
   const { getBackgrounds, getRandomBackground } = useBackgroundsApi()
   const { fetch, data } = getBackgrounds()
   const { fetch: fetchRandomBackground } = getRandomBackground()
@@ -47,39 +36,38 @@ export function useBackgrounds(): {
   // Computed properties
   const backgroundList = computed(() => data.value?.data ?? null)
   const backgroundImage = computed(() =>
-    background.image && background.mode != BackgroundMode.COLOR
-      ? `url('${background.image.src}')`
+    background.value.image && !isColorMode.value
+      ? `url('${background.value.image.src}')`
       : ''
   )
-  const isRandomMode = computed(() => background.mode === BackgroundMode.RANDOM)
-  const isColorMode = computed(() => background.mode === BackgroundMode.COLOR)
-  const backgroundColor = computed(() => isMobile() && !isColorMode.value ? 'transparent' : background.color)
+  const isRandomMode = computed(() => background.value.mode === BackgroundMode.RANDOM)
+  const isColorMode = computed(() => background.value.mode === BackgroundMode.COLOR)
+  const backgroundColor = computed(() =>
+    isMobile() && !isColorMode.value ? 'transparent' : background.value.color
+  )
 
   /**
    * Sets random background from available list
    * Updates state and persists selection
    */
   const setRandomBackground = (): void => {
-    if (!backgroundList.value || backgroundList.value.length == 0) {
-      return
-    }
+    const list = backgroundList.value
+    if (!list?.length) return
 
-    const randomIndex = Math.floor(Math.random() * backgroundList.value.length)
+    const randomIndex = Math.floor(Math.random() * list.length)
 
-    background.mode = BackgroundMode.RANDOM
-    background.index = randomIndex
-    background.image = backgroundList.value[randomIndex]! // must exist
-    saveBackground()
+    background.value.mode = BackgroundMode.RANDOM
+    background.value.index = randomIndex
+    background.value.image = list[randomIndex]!
   }
 
   /**
    * Sets solid color background mode
    * @param color - Hex color string (defaults to teal)
    */
-  const setColorBackground = (color?: string): void => {
-    background.color = color ?? '#008080'
-    background.mode = BackgroundMode.COLOR
-    saveBackground()
+  const setColorBackground = (color: string = '#008080'): void => {
+    background.value.color = color
+    background.value.mode = BackgroundMode.COLOR
   }
 
   /**
@@ -87,36 +75,26 @@ export function useBackgrounds(): {
    * @param direction - 1 for next, -1 for previous
    */
   const nextBackground = (direction: number): void => {
-    if (!backgroundList.value) {
-      return setColorBackground()
-    }
+    const list = backgroundList.value
+    if (!list?.length) return setColorBackground()
 
-    background.index += direction
+    let newIndex = background.value.index + direction
 
-    if (background.index < 0) {
-      background.index = backgroundList.value.length - 1
-    } else if (background.index >= backgroundList.value.length) {
-      background.index = 0
-    }
+    if (newIndex < 0) newIndex = list.length - 1
+    else if (newIndex >= list.length) newIndex = 0
 
-    background.mode = BackgroundMode.SINGLE
-    background.image = backgroundList.value[background.index]!
-    saveBackground()
+    background.value.index = newIndex
+    background.value.mode = BackgroundMode.SINGLE
+    background.value.image = list[newIndex]!
   }
 
-  // Persists current background state to storage
-  const saveBackground = (): void => {
-    prefs.save<Background>('background', background)
-  }
-
-  /**
-   * Fetches new random background from API
-   * Does not change current mode - updates image only
-   */
-  const loadRandomBackground = (): void => {
-    fetchRandomBackground().then(res => {
-      background.image = res.data
-    }).catch(() => {})
+  const loadRandomBackground = async (): Promise<void> => {
+    try {
+      const res = await fetchRandomBackground()
+      background.value.image = res.data
+    } catch (error) {
+      console.error('Failed to load random background', error)
+    }
   }
 
   return {

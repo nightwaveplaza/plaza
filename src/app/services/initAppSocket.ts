@@ -1,7 +1,5 @@
 import { io } from 'socket.io-client'
-import {
-  useNowPlayingStatus,
-} from '@app/composables/player/useNowPlayingStatus'
+import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus'
 import { useSocketStore } from '@app/composables/useSocketStore.ts'
 import type { StatusResource } from '@app/types'
 import { isMobile } from '@app/utils/helpers.ts'

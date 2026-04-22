@@ -21,8 +21,8 @@ export function useNativeEvents (): {
   useEventListener(window, 'app:start', () => updateBackgroundNative)
 
   // Watch background for changes
-  watch(() => background.color, updateBackgroundNative)
-  watch(() => background.image, updateBackgroundNative)
+  watch(() => background.value.color, updateBackgroundNative)
+  watch(() => background.value.image, updateBackgroundNative)
 
   // Watch user token for changes
   watch(() => token.value, t => {
@@ -42,9 +42,9 @@ export function useNativeEvents (): {
 
   function updateBackgroundNative (): void {
     if (typeof AndroidInterface !== 'undefined') {
-      Native.setBackground(isColorMode.value ? 'solid' : background.image!.src)
+      Native.setBackground(isColorMode.value ? 'solid' : background.value.image!.src)
     } else {
-      Native.setBackground(isColorMode.value ? 'solid' : background.image!.video_src)
+      Native.setBackground(isColorMode.value ? 'solid' : background.value.image!.video_src)
     }
   }
 

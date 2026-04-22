@@ -1,4 +1,4 @@
-import { Win, type WindowHeaderButtons } from '@app/types/enums.ts'
+import { type WindowHeaderButtons } from '@app/types/enums.ts'
 import type { StatusResource } from '@app/types/api.ts'
 
 export interface WindowConfig {
@@ -32,23 +32,6 @@ export interface AlertWindowParams {
 
 export interface SongWindowParams {
   songId: string
-}
-
-export type EventBus = {
-  closeWindow: string
-  openWindow: Win
-  onResume: void
-  isBuffering: void
-  isPlaying: boolean
-  sleepTime: number
-  iosCallback: string
-
-  socketConnect: void
-  socketDisconnect: void
-  socketReconnectFailed: void
-  onStatusUpdate: StatusResource
-  onListenersUpdate: number
-  onReactionsUpdate: number
 }
 
 export enum PlayerState {

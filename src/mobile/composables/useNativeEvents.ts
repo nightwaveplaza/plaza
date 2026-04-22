@@ -1,69 +1,23 @@
 import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
-import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
-import { PlayerState, Win } from '@app/types'
 import { Native } from '@mobile/bridge/native.ts'
 import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
-import { eventBus } from '@mobile/emitter.ts'
 
 export function useNativeEvents (): {
   updateBackgroundNative: () => void
 } {
   const i18n = useI18n()
 
-  const { openWindow, closeWindow } = useWindows()
   const { lowQuality, language } = useAppSettings()
   const { background, isColorMode } = useBackgrounds()
-  const { isSigned } = useAuth()
-  const { setState, updateSleepTime } = usePlayerPlayback()
-  const { execute } = useIosCallbacks()
   const { token } = useAuthToken()
 
   /**
    * Android events
    */
-  eventBus.on('onResume', () => updateBackgroundNative)
-
-  /**
-   * Player events
-   */
-  eventBus.on('isPlaying', (playing: boolean) => {
-    setState(playing ? PlayerState.PLAYING : PlayerState.IDLE)
-  })
-  eventBus.on('isBuffering', () => {
-    setState(PlayerState.LOADING)
-  })
-
-  /**
-   * Actions
-   */
-  eventBus.on('closeWindow', (name: string) => {
-    closeWindow(name)
-  })
-
-  eventBus.on('openWindow', (name: Win) => {
-    if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
-      openWindow(Win.USER_LOGIN)
-      return
-    }
-
-    openWindow(name)
-  })
-
-  // Event from onResume if sleep timer is still alive
-  eventBus.on('sleepTime', (time: number) => {
-    updateSleepTime(time)
-  })
-
-  // ios callbacks
-  eventBus.on('iosCallback', (data: string) => {
-    execute(data)
-  })
+  window.addEventListener('app:resume', () => updateBackgroundNative)
 
   // Watch background for changes
   watch(() => background.color, updateBackgroundNative)

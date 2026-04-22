@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 import type { ifcAndroidInterface } from '@app/types/types.ts'
+import type { SocketEventMap } from '@app/types'
 
 declare global {
   interface Window {
-    webkitAudioContext?: typeof AudioContext;
-    emitter: Emitter<EventBus>;
+    webkitAudioContext?: typeof AudioContext
     webkit: {
       messageHandlers: {
         plaza: {

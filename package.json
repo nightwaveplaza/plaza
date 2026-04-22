@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite build",
-    "build": "vue-tsc && vite build",
+    "dev": "vite",
+    "build": "vite build",
+    "build-tsc": "vue-tsc && vite build",
     "preview": "vite preview",
     "watch": "cross-env NODE_ENV=development vite build --watch",
     "lint": "eslint . --ext .vue,.js,.jsx,.mjs,.ts,.tsx,.cts,.mts"
@@ -44,7 +45,6 @@
     "bootstrap": "5.3.8",
     "country-flag-icons": "^1.6.4",
     "hls.js": "^1.6.15",
-    "mitt": "^3.0.1",
     "nouislider": "^15.8.1",
     "simplebar-vue": "^2.4.2",
     "socket.io-client": "^4.8.3",

@@ -10,10 +10,6 @@ import plazaWindows from '@app/components/windows'
 import mobileComponents from '@mobile/components'
 import App from '@mobile/App.vue'
 import { i18n } from '@locales/_i18n.ts'
-import { eventBus } from '@mobile/emitter.ts'
-
-// Register event bus
-window.emitter = eventBus
 
 const app = createApp({
   render: () => h(App)

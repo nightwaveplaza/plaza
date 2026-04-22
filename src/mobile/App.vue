@@ -24,20 +24,34 @@ import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
-import { useStatusUpdater } from '@app/composables/useStatusUpdater.ts'
+import { initAppSocket } from '@app/services/initAppSocket.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
 const { themeName, language } = useAppSettings()
 const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
 const { openNewsIfUpdated } = useNewsPopup()
+const { isSigned } = useAuth()
 
 const { updateBackgroundNative } = useNativeEvents()
 const { song } = useNowPlayingStatus()
 
 // Automatically apply theme color to browser
 useThemeColor()
-useStatusUpdater()
+// Init socket updater
+initAppSocket()
+
+// Register windows events
+window.addEventListener('window:open', (e: Event) => {
+  const name = (e as CustomEvent).detail
+  if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
+    openWindow(Win.USER_LOGIN)
+    return
+  }
+  openWindow(name)
+})
+
+window.addEventListener('window:close', (e: Event) => closeWindow((e as CustomEvent).detail))
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value
@@ -61,6 +75,8 @@ onMounted(() => {
     useAuthToken().setToken(token)
     useAuth().fetchUser()
   })
+
+  Native.onReady()
 })
 
 // waiting for the first status response then check news and open up player

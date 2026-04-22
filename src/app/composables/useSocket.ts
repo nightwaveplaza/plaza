@@ -11,6 +11,7 @@ const socket = ref<Socket | null>(null)
 const isConnected = ref(false)
 const isDead = ref(false)
 const reconnectAttempts = ref(0)
+let isInitialized = false
 
 /**
  * Main composable function
@@ -30,6 +31,9 @@ export function useSocket (): {
    * Initializes the Socket.io instance if not already created.
    */
   function createSocket (): void {
+    if (isInitialized) return
+    isInitialized = true
+
     if (!socket.value) {
       socket.value = io('https://plaza.one', {
         autoConnect: true,

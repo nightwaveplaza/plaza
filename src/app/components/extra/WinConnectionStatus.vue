@@ -4,27 +4,27 @@
 
 <script setup lang="ts">
   import { useSocket } from '@app/composables/useSocket.ts'
-  import { ref, watch } from 'vue'
+  import { ref } from 'vue'
 
   const { onEvent, isConnected } = useSocket()
   const blink = ref(false)
+  let blinkTimer: ReturnType<typeof setTimeout> | null = null
 
-  watch(() => isConnected.value, () => {
-    onEvent('status', () => {_blink()})
-    onEvent('listeners', () => {_blink()})
-    onEvent('reactions', () => {_blink()})
-  }, {
-    once: true
-  })
+  function triggerBlink(): void {
+    blink.value = true
 
-  function _blink(): void {
-    if (!blink.value) {
-      blink.value = true
-      setTimeout(() => {
-        blink.value = false
-      }, 750)
+    if (blinkTimer) {
+      clearTimeout(blinkTimer)
     }
+
+    blinkTimer = setTimeout(() => {
+      blink.value = false
+    }, 750)
   }
+
+  onEvent('status', triggerBlink)
+  onEvent('listeners', triggerBlink)
+  onEvent('reactions', triggerBlink)
 </script>
 
 <style lang="scss">
@@ -38,7 +38,7 @@
     background-size: cover;
     animation: swap-status 1s steps(1) infinite;
     image-rendering: pixelated;
-    
+
     &.connected {
       animation: none;
       background-position: 0 0;

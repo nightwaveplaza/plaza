@@ -25,7 +25,7 @@
     </win-button>
 
     <div class="local-time ms-auto" style="flex: 0 0 90px">
-      <win-connection-status v-if="!isMobile()" /> {{ time }}
+      <win-connection-status /> {{ time }}
     </div>
   </div>
 </template>
@@ -35,7 +35,6 @@ import { onBeforeMount, onMounted, ref } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useAppSettings } from '@app/composables/useAppSettings.ts'
-import { isMobile } from '@app/utils/helpers.ts'
 import { useI18n } from 'vue-i18n'
 import { getWindowIcon } from "@app/utils/icons.ts"
 

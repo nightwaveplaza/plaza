@@ -5,9 +5,7 @@ import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
 import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { useNativeSocket } from '@mobile/composables/useNativeSocket.ts'
-import { PlayerState, type StatusResource, Win } from '@app/types'
+import { PlayerState, Win } from '@app/types'
 import { Native } from '@mobile/bridge/native.ts'
 import { watch } from 'vue'
 import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
@@ -24,25 +22,7 @@ export function useNativeEvents (): {
   const { isSigned } = useAuth()
   const { setState, updateSleepTime } = usePlayerPlayback()
   const { execute } = useIosCallbacks()
-  const { setStatus, setListeners, setReactions } = useNowPlayingStatus()
-  const { onConnect, onDisconnect, onReconnectFailed } = useNativeSocket()
   const { token } = useAuthToken()
-
-  /**
-   * Socket events
-   */
-  eventBus.on('socketConnect', () => {
-    onConnect()
-    //closeWindow(Win.DISCONNECTED)
-  })
-  eventBus.on('socketDisconnect', () => onDisconnect())
-  eventBus.on('socketReconnectFailed', () => {
-    onReconnectFailed()
-    //openWindow(Win.DISCONNECTED)
-  })
-  eventBus.on('onStatusUpdate', (s: StatusResource) => setStatus(s))
-  eventBus.on('onListenersUpdate', (l: number) => setListeners(l))
-  eventBus.on('onReactionsUpdate', (r: number) => setReactions(r))
 
   /**
    * Android events

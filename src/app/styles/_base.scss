@@ -53,6 +53,12 @@ button.d-block, .button.d-block, input.d-block {
   box-sizing: border-box;
 }
 
+.r-pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
 /* MQ */
 @media (max-width: 500px) {
   .win-window {

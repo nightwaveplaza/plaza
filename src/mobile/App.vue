@@ -24,6 +24,7 @@ import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
+import { useStatusUpdater } from '@app/composables/useStatusUpdater.ts'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
@@ -36,6 +37,7 @@ const { song } = useNowPlayingStatus()
 
 // Automatically apply theme color to browser
 useThemeColor()
+useStatusUpdater()
 
 watch(() => language.value, () => {
   i18n.locale.value = language.value

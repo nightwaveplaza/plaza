@@ -1,4 +1,4 @@
-import api from '@app/api/index.ts'
+import api from '@app/api/index.ts';
 import type {
   ResultResource,
   User,
@@ -7,14 +7,20 @@ import type {
   UserRegisterForm,
   UserResource,
   UserStatsResource,
-} from '@app/types'
+} from '@app/types';
 
+// prettier-ignore
 export const userApi = {
-  getUser: () => api.get<UserResource>('v2/users/me').then(res => res.data),
-  getUserStats: () => api.get<UserStatsResource>('v2/users/me/stats').then(res => res.data),
-
-  registerUser: (data: UserRegisterForm) => api.post<User>('v2/users', data).then(res => res.data),
-  updatePassword: (data: UserPasswordForm) => api.put<ResultResource>('v2/users/me/password', data).then(res => res.data),
-  updateProfile: (data: UserProfileForm) => api.put<UserResource>('v2/users/me', data).then(res => res.data),
-  deleteProfile: (data: { current_password: string}) => api.delete('v2/users/me', { data }).then(res => res.data),
-}
+  getUser: () =>
+    api.get<UserResource>('v2/users/me'),
+  getUserStats: () =>
+    api.get<UserStatsResource>('v2/users/me/stats'),
+  registerUser: (data: UserRegisterForm) =>
+    api.post<User>('v2/users', data),
+  updatePassword: (data: UserPasswordForm) =>
+    api.put<ResultResource>('v2/users/me/password', data),
+  updateProfile: (data: UserProfileForm) =>
+    api.put<UserResource>('v2/users/me', data),
+  deleteProfile: (data: { current_password: string }) =>
+    api.delete('v2/users/me', { data }),
+};

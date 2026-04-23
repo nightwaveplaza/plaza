@@ -33,16 +33,16 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useUserFavoritesApi } from '@app/composables/api'
 import { Win } from '@app/types'
 import { useWindows } from '@app/composables/useWindows.ts'
+import { useApi } from '@app/composables/useApi.ts'
+import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
 
 const { t } = useI18n()
 const { closeWindow } = useWindows()
-const { exportFavorites } = useUserFavoritesApi()
-const { isLoading, fetch, data } = exportFavorites()
+const { isLoading, execute, data } = useApi(userFavoritesApi.exportFavorites)
 
 function startExport (): void {
-  fetch()
+  execute()
 }
 </script>

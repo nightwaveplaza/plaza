@@ -144,7 +144,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isMobile } from '@app/utils/helpers.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
@@ -156,7 +156,7 @@ const { t } = useI18n()
 const { openWindow, closeWindow, showAlert } = useWindows()
 const { theme, taskbarPosition, useHls, lowQuality } = useAppSettings()
 const {
-  background, fetch: fetchBackgrounds, setColorBackground, setRandomBackground, nextBackground,
+  background, setColorBackground, setRandomBackground, nextBackground,
   isRandomMode, isColorMode
 } = useBackgrounds()
 
@@ -204,11 +204,6 @@ function hlsChanged (e: Event): void {
   useHls.value = (e.target as HTMLInputElement).checked
   showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
 }
-
-onMounted(() => {
-  // Load background list from server
-  fetchBackgrounds()
-})
 </script>
 
 <style lang="scss">

@@ -31,38 +31,35 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows'
-import { useNewsApi } from '@app/composables/api'
 import { fmtDate } from '@app/utils/timeFormats.ts'
 import { Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { newsApi } from '@app/api/news.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert } = useWindows()
-const { getNews } = useNewsApi()
 const { closeWindow } = useWindows()
 
 const page = ref(1)
-const { isLoading, data: news, fetch, error } = getNews()
+const { isLoading, data: news, execute: getNews } = useApi(newsApi.getNews)
 
 function changePage (newPage: number): void {
   page.value = newPage
   fetchNews()
 }
 
-function fetchNews (): void {
-  fetch({ page: page.value })
-}
-
-watch(() => error.value, (error) => {
-  if (error) {
-    showAlert(error.message, t('errors.error'))
-  }
-  if (!news.value) {
+async function fetchNews (): Promise<void> {
+  try {
+    await getNews({ page: page.value })
+  } catch(e) {
+    showAlert((e as ApiError).message, t('errors.error'))
     closeWindow(Win.NEWS)
   }
-})
+}
 
 onMounted(() => {
   fetchNews()

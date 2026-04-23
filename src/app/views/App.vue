@@ -26,10 +26,11 @@ const router = useRouter()
 const { openedWindows } = useWindows()
 const { themeName, language } = useAppSettings()
 
-const { fetch: fetchBackgrounds, backgroundImage, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
+const { backgroundImage, backgroundColor, initBackground } = useBackgrounds()
 
 // Automatically apply theme color to browser
 useThemeColor()
+initBackground()
 
 // Appearance
 watch(() => language.value, () => {
@@ -48,8 +49,5 @@ onMounted(() => {
   // todo
   i18n.locale.value = language.value
 
-  if (isRandomMode.value) {
-    fetchBackgrounds().then(() => setRandomBackground())
-  }
 })
 </script>

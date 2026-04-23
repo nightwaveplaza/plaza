@@ -33,13 +33,13 @@
 import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuthApi } from '@app/composables/api'
 import { type UserResetForm, Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { authApi } from '@app/api/auth.api.ts'
 
 const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
-const { resetPassword } = useAuthApi()
-const { isLoading, fetch } = resetPassword()
+const { isLoading, execute } = useApi(authApi.resetPassword)
 
 const fields: UserResetForm = reactive({
   email: '',
@@ -51,7 +51,7 @@ function reset (): void {
     return showAlert(t('errors.fields.email_required'), t('errors.error'))
   }
 
-  fetch(fields).then(() => {
+  execute(fields).then(() => {
     showAlert(t('messages.reset_success'), t('messages.success'), 'info')
     closeWindow(Win.USER_RESET)
   }).catch(e => {

@@ -32,32 +32,34 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { authApi } from '@app/api/auth.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { closeWindow, showAlert } = useWindows()
-const { resetPasswordConfirm } = useAuthApi()
-const { isLoading, fetch } = resetPasswordConfirm()
+const { isLoading, execute } = useApi(authApi.resetPasswordConfirm)
 const { resetToken } = useAuth()
 
 const password = ref('')
 const passwordRepeat = ref('')
 
-function change (): void {
+async function change (): Promise<void> {
   try {
     validate()
   } catch (e) {
     return showAlert((e as Error).message, t('errors.error'))
   }
 
-  fetch({ token: resetToken.value!, password: password.value }).then(() => {
+  try {
+    await execute({ token: resetToken.value!, password: password.value })
     showAlert(t('messages.password_changed'), t('messages.success'), 'info')
     closeWindow(Win.USER_RESET_PASSWORD)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
+  } catch (e) {
+    showAlert((e as ApiError).message, t('errors.error'))
+  }
 }
 
 function validate (): void {

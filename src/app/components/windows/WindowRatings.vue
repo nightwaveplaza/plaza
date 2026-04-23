@@ -75,21 +75,21 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import type WinPagination from '@app/components/basic/WinPagination.vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useRatingsApi } from '@app/composables/api'
 import { RatingsRange, Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { ratingsApi } from '@app/api/ratings.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert, showSongInfo, closeWindow } = useWindows()
-const { getRatings } = useRatingsApi()
+const { execute: getRatings, isLoading, data: songs } = useApi(ratingsApi.getRatings)
 
 const page = ref(1)
 const range = ref<RatingsRange>(RatingsRange.OVERTIME)
-const { isLoading, data: songs, fetch, error } = getRatings()
-
 const pagination = ref<InstanceType<typeof WinPagination>>()
 
 function changePage (newPage: number): void {
@@ -102,19 +102,17 @@ function changeRange (newRange: RatingsRange): void {
   pagination.value?.reset()
 }
 
-function fetchRatings (): void {
-  fetch({ range: range.value }, { page: page.value })
+async function fetchRatings (): Promise<void> {
+  try {
+    await getRatings({page: page.value}, range.value)
+  } catch(e) {
+    showAlert((e as ApiError).message, t('errors.error'))
+  }
 }
 
 function pad (n: number): string {
   return n.toString().padStart(3, '0')
 }
-
-watch(() => error.value, (error) => {
-  if (error) {
-    showAlert(error.message, t('errors.error'))
-  }
-})
 
 onMounted(() => {
   fetchRatings()

@@ -24,13 +24,13 @@ import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
 import { initAppSocket } from '@app/services/initAppSocket.ts'
-import { useEventListener } from '@vueuse/core'
+import { useEventListener, watchOnce } from '@vueuse/core'
 import { setApiToken } from '@app/api'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
 const { themeName, language } = useAppSettings()
-const { fetch: fetchBackgrounds, backgroundColor, isRandomMode, setRandomBackground } = useBackgrounds()
+const { backgroundColor, initBackground } = useBackgrounds()
 const { openNewsIfUpdated } = useNewsPopup()
 const { isSigned } = useAuth()
 
@@ -41,6 +41,9 @@ const { song } = useNowPlayingStatus()
 useThemeColor()
 // Init socket updater
 initAppSocket()
+initBackground().then(() => {
+  updateBackgroundNative()
+})
 
 // Register windows events
 useEventListener(window, 'window:open', (e: CustomEvent) => {
@@ -65,12 +68,6 @@ onMounted(() => {
   openWindow(Win.LOADING)
   setTimeout(() => Native.onReady(), 1000) // let loading animation play a bit
 
-  if (isRandomMode.value) {
-    fetchBackgrounds().then(() => setRandomBackground())
-  } else {
-    updateBackgroundNative()
-  }
-
   Native.getAuthToken()!.then((t) => {
     const token = t as string
     setApiToken(token)
@@ -81,11 +78,9 @@ onMounted(() => {
 })
 
 // waiting for the first status response then check news and open up player
-watch(() => song.id, () => {
+watchOnce(() => song.id, () => {
   openWindow(Win.PLAYER)
   closeWindow(Win.LOADING)
   openNewsIfUpdated()
-}, {
-  once: true
 })
 </script>

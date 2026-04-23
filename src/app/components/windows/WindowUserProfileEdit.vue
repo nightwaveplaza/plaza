@@ -47,15 +47,16 @@
 import { onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useUserApi } from '@app/composables/api'
 import { type UserProfileForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { useApi } from '@app/composables/useApi.ts'
+import { userApi } from '@app/api/user.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert, closeWindow, openWindow } = useWindows()
-const { updateProfile } = useUserApi()
 const { user } = useAuth()
-const { isLoading } = updateProfile()
+const { execute: updateProfile, isLoading } = useApi(userApi.updateProfile)
 
 const fields: UserProfileForm = reactive({
   current_password: '',
@@ -68,18 +69,19 @@ function fetchUser (): void {
   fields.username = user.value?.username ?? ''
 }
 
-function update (): void {
+async function update () {
   if (fields.current_password.length === 0) {
     return showAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
-  updateProfile().fetch(fields).then(res => {
-    showAlert(t('messages.profile_updated'), t('messages.success'), 'info')
+  try {
+    const res = await updateProfile(fields)
     user.value = res.data
-    closeWindow(Win.USER_PROFILE_EDIT)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
+  } catch (e) {
+    return showAlert((e as ApiError).message, t('errors.error'))
+  }
+
+  closeWindow(Win.USER_PROFILE_EDIT)
 }
 
 function open (window: Win): void {

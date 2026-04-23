@@ -20,7 +20,11 @@ const instance = axios.create({
   withXSRFToken: true,
 })
 
-instance.interceptors.response.use(response => response, err => interceptError(err))
+// Intercept errors
+instance.interceptors.response.use(
+  response => response,
+  err => interceptError(err)
+)
 
 // Append bearer token for mobile
 instance.interceptors.request.use((config) => {

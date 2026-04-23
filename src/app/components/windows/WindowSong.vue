@@ -72,14 +72,16 @@ import { useI18n } from 'vue-i18n'
 import type { SongWindowParams } from '@app/types/types'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
-import { useSongsApi } from '@app/composables/api'
-import { useUserFavoritesApi } from '@app/composables/api'
-import type { ApiError } from '@app/composables/api/useApi.ts'
 import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
+import { useApi } from '@app/composables/useApi.ts'
+import { songApi } from '@app/api/songs.api.ts'
+import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert } = useWindows()
-const { addFavorite, deleteFavorite } = useUserFavoritesApi()
+const { execute: addFavorite } = useApi(userFavoritesApi.addFavorite)
+const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite)
 const { openedWindows, closeWindow } = useWindows()
 
 const winId: Ref<string> | undefined = inject('windowId')
@@ -99,15 +101,14 @@ const playText = computed(() => isPlaying.value
     : t('win.song.btn_play_preview')
 )
 
-const { getSong } = useSongsApi()
-const { fetch, data: song } = getSong()
+const { execute: getSong, data: song } = useApi(songApi.getSong)
 const { volume } = useVolumeControl()
 
 async function fetchSong (): Promise<void> {
   try {
-    await fetch({id: params.value.songId})
+    await getSong(params.value.songId)
   } catch (e) {
-    showAlert((<ApiError>e).message, t('errors.error'))
+    showAlert((e as ApiError).message, t('errors.error'))
     closeWindow(winId!.value)
   }
 }
@@ -117,13 +118,13 @@ async function favoriteSong (): Promise<void> {
 
   try {
     if (song.value?.current_user?.favorite_id) {
-      await deleteFavorite().fetch({ id: song.value.current_user.favorite_id })
+      await deleteFavorite({ id: song.value.current_user.favorite_id })
     } else {
-      await addFavorite().fetch({ song_id: song.value!.data.id })
+      await addFavorite({ songId: song.value!.data.id })
     }
     await fetchSong()
   } catch (e) {
-    if ((<ApiError>e).code === 401) {
+    if ((e as ApiError).code === 401) {
       showAlert(t('errors.please_sign'), t('errors.error'))
     }
   } finally {

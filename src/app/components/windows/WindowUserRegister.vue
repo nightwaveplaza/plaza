@@ -81,13 +81,12 @@ import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { type UserRegisterForm, Win } from '@app/types'
-import { useUserApi } from '@app/composables/api'
-
+import { useApi } from '@app/composables/useApi.ts'
+import { userApi } from '@app/api/user.api.ts'
 
 const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
-const { registerUser } = useUserApi()
-const { isLoading, fetch } = registerUser()
+const { isLoading, execute: registerUser } = useApi(userApi.registerUser)
 
 const fields: UserRegisterForm = reactive({
   username: '',
@@ -101,7 +100,7 @@ const passwordR = ref('')
 /**
  * User register
  */
-function register (): void {
+async function register () {
   try {
     validate()
   } catch (e) {
@@ -112,15 +111,16 @@ function register (): void {
     return showAlert(t('win.user_register.captcha_fail'), t('errors.error'))
   }
 
-  fetch(fields).then(() => {
+  try {
+    await registerUser(fields)
     showAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
         t('win.user_register.success'), 'info'
     )
     closeWindow(Win.USER_REGISTER)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
+  } catch (e) {
+    showAlert((e as Error).message, t('errors.error'))
+  }
 }
 
 /**

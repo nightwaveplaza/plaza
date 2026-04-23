@@ -57,7 +57,7 @@
   <div class="win-window__statusbar noselect">
     <div class="row gx-0">
       <div class="col-auto cell pe-4 d">
-        {{ history ? t('pagination.pages', {n: history?.meta.last_page}) : '...' }}
+        {{ history ? t('pagination.pages', {n: history.meta.last_page}) : '...' }}
       </div>
       <div class="col cell">
         {{ history ? t('pagination.songs', {n: history.meta.total}) : '...' }}
@@ -68,34 +68,34 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useHistoryApi } from '@app/composables/api'
 import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
-import { Win } from '@app/types'
+import { type HistoryCollection, Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { historyApi } from '@app/api/history.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert, showSongInfo, closeWindow } = useWindows()
-const { getHistory } = useHistoryApi()
+const { execute: getHistory, isLoading } = useApi(historyApi.getHistory)
 
 const page = ref(1)
-const { isLoading, fetch, data: history, error } = getHistory()
+const history = ref<HistoryCollection | null>(null)
 
 function changePage (newPage: number): void {
   page.value = newPage
   fetchHistory()
 }
 
-function fetchHistory (): void {
-  fetch({ page: page.value })
-}
-
-watch(() => error.value, (error) => {
-  if (error) {
-    showAlert(error.message, t('errors.error'))
+async function fetchHistory (): Promise<void> {
+  try {
+    history.value = await getHistory({ page: page.value })
+  } catch (e) {
+    showAlert((e as ApiError).message, t('errors.error'))
   }
-})
+}
 
 onMounted(() => {
   fetchHistory()

@@ -37,14 +37,15 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUserApi } from '@app/composables/api'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { useApi } from '@app/composables/useApi.ts'
+import { userApi } from '@app/api/user.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
-const { deleteProfile } = useUserApi()
-const { isLoading } = deleteProfile()
+const { execute: deleteProfile, isLoading } = useApi(userApi.deleteProfile)
 const { showAlert, closeWindow } = useWindows()
 const { unsetUser } = useAuth()
 
@@ -54,7 +55,7 @@ const fields = reactive({
 
 const deleteConfirm = ref(false)
 
-function deleteAccount(): void {
+async function deleteAccount(): Promise<void> {
   if (deleteConfirm.value === false) {
     return showAlert(t('errors.fields.delete_confirm_required'), t('errors.error'))
   }
@@ -63,12 +64,13 @@ function deleteAccount(): void {
     return showAlert(t('errors.fields.current_password_required'), t('errors.error'))
   }
 
-  deleteProfile().fetch(fields).then(() => {
+  try {
+    await deleteProfile(fields)
     showAlert(t('messages.profile_deleted'), t('messages.success'), 'info')
     unsetUser()
     closeWindow(Win.USER_PROFILE_DELETE)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
+  } catch(e) {
+    showAlert((e as ApiError).message, t('errors.error'))
+  }
 }
 </script>

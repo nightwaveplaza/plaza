@@ -94,16 +94,19 @@
 import { useI18n } from 'vue-i18n'
 import { fmtDate } from '@app/utils/timeFormats.ts'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuthApi, useUserApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
 import { onMounted, ref } from 'vue'
+import { useApi } from '@app/composables/useApi.ts'
+import { authApi } from '@app/api/auth.api.ts'
+import { userApi } from '@app/api/user.api.ts'
 
 const { t } = useI18n()
 const { openWindow, closeWindow } = useWindows()
-const { logout: logoutApi } = useAuthApi()
+const { execute: doLogout } = useApi(authApi.logout)
+const { execute: getUserStats } = useApi(userApi.getUserStats)
+
 const { user, unsetUser } = useAuth()
-const { getUserStats } = useUserApi()
 
 const reactions = ref<number|null>(null)
 const favorites = ref<number|null>(null)
@@ -113,20 +116,20 @@ function open (window: Win): void {
   closeWindow(Win.USER)
 }
 
-function logout (): void {
-  logoutApi().fetch().then().finally(() => {
-    unsetUser()
-    closeWindow(Win.USER)
-  })
+async function logout (): Promise<void> {
+  await doLogout()
+  unsetUser()
+  closeWindow(Win.USER)
 }
 
-onMounted(() => {
-  getUserStats().fetch().then(res => {
+onMounted(async () => {
+  try {
+    const res = await getUserStats()
     reactions.value = res.data.reactions
     favorites.value = res.data.favorites
-  }).catch(() => {
-
-  })
+  } catch(e) {
+    console.log("Failed to get user stats", e)
+  }
 })
 </script>
 

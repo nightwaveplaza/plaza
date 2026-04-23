@@ -1,5 +1,5 @@
 <template>
-  <win-button block :disabled="sending" @click="handleLikeClick">
+  <win-button block :disabled="isLoading" @click="handleLikeClick">
     <i :class="likeIcon" class="i me-1" :style="{color: likeColor}" />
     {{ totalReactions }}
   </win-button>
@@ -10,9 +10,11 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { useReactionsApi } from '@app/composables/api'
 import { useReactions } from '@app/composables/useReactions.ts'
 import { useLocalStorage } from '@vueuse/core'
+import { useApi } from '@app/composables/useApi.ts'
+import { reactionApi } from '@app/api/reaction.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const CL_FAV = '#FFD300'
 const CL_LIKE = '#c12727'
@@ -22,8 +24,7 @@ const { showAlert } = useWindows()
 const { reactions: totalReactions } = useNowPlayingStatus()
 const { reaction, setReaction, isCurrent } = useReactions()
 
-const { sendReaction } = useReactionsApi()
-const { isLoading: sending, fetch: react } = sendReaction()
+const { execute: sendReaction, isLoading } = useApi(reactionApi.sendReaction)
 
 const reactionTip = useLocalStorage('reactionTip', 0)
 
@@ -35,7 +36,7 @@ const likeColor = computed(() => {
 })
 
 async function handleLikeClick() {
-  if (sending.value) return
+  if (isLoading.value) return
 
   if (!isCurrent.value) {
     setReaction(0)
@@ -49,12 +50,13 @@ async function handleLikeClick() {
 
 async function send(score: number) {
   try {
-    const res = await react({ reaction: score })
+    const res = await sendReaction({ reaction: score })
     totalReactions.value = res.reactions
     setReaction(score)
 
     showTip()
-  } catch (err: any) {
+  } catch (e) {
+    const err = e as ApiError
     const msg = err.code === 401 ? t('errors.please_sign') : err.message
     showAlert(msg, t('errors.error'))
   }

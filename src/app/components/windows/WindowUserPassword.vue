@@ -32,15 +32,16 @@
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useUserApi } from '@app/composables/api'
 import { type UserPasswordForm, Win } from '@app/types'
 import { useAuth } from '@app/composables/useAuth.ts'
+import { useApi } from '@app/composables/useApi.ts'
+import { userApi } from '@app/api/user.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert, closeWindow } = useWindows()
-const { updatePassword } = useUserApi()
-const { isLoading, fetch: update } = updatePassword()
 const { unsetUser } = useAuth()
+const { execute: updatePassword, isLoading } = useApi(userApi.deleteProfile)
 
 const fields: UserPasswordForm = reactive({
   current_password: '',
@@ -48,20 +49,22 @@ const fields: UserPasswordForm = reactive({
 })
 const passwordRepeat = ref('')
 
-function change (): void {
+async function change (): Promise<void> {
   try {
     validate()
   } catch (e) {
     return showAlert((e as Error).message, t('errors.error'))
   }
 
-  update(fields).then(() => {
-    unsetUser()
-    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
-    closeWindow(Win.USER_PASSWORD)
-  }).catch(e =>
-      showAlert(e.message, t('errors.error'))
-  )
+  try {
+    await updatePassword(fields)
+  } catch(e) {
+    return showAlert((e as ApiError).message, t('errors.error'))
+  }
+
+  unsetUser()
+  showAlert(t('messages.password_changed'), t('messages.success'), 'info')
+  closeWindow(Win.USER_PASSWORD)
 }
 
 function validate (): void {

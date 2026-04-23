@@ -1,10 +1,11 @@
 import { computed, ref } from 'vue'
-import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
 import { setApiToken } from '@app/api'
+import { useApi } from '@app/composables/useApi.ts'
+import { userApi } from '@app/api/user.api.ts'
 
-const { getUser } = useUserApi()
+const { execute: getUser } = useApi(userApi.getUser)
 
 const user = ref<User|null>(null)
 const resetToken = ref<string|null>(null)
@@ -15,10 +16,10 @@ export function useAuth() {
 
   const fetchUser = async () => {
     try {
-      const res = await getUser().fetch()
+      const res = await getUser()
       user.value = res.data
-    } catch (error) {
-      console.error('Failed to get user:', error)
+    } catch {
+      console.error('Failed to get user')
     }
   }
 

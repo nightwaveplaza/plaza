@@ -77,43 +77,43 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindows } from '@app/composables/useWindows.ts'
 import { fmtDate } from '@app/utils/timeFormats.ts'
-import { useUserFavoritesApi } from '@app/composables/api'
 import { Win } from '@app/types'
+import { useApi } from '@app/composables/useApi.ts'
+import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
+import type { ApiError } from '@app/utils/apiErrorHandler.ts'
 
 const { t } = useI18n()
 const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows()
-const { getFavorites, deleteFavorite } = useUserFavoritesApi()
-const { isLoading, fetch, data: favs, error } = getFavorites()
+const { execute: getFavorites, isLoading, data: favs } = useApi(userFavoritesApi.getFavorites)
+const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite)
 
 const deleted = ref([] as Array<number>)
 const page = ref(1)
 
-function fetchFavorites (): void {
-  fetch({ page: page.value })
+async function fetchFavorites () {
+  try {
+    await getFavorites({ page: page.value })
+  } catch (e) {
+    showAlert((e as ApiError).message, t('errors.error'))
+  }
 }
 
-function changePage (newPage: number): void {
+function changePage (newPage: number) {
   page.value = newPage
   fetchFavorites()
 }
 
-function deleteLike (favoriteId: number): void {
-  deleteFavorite().fetch({ id: favoriteId }).then(() => {
-    deleted.value.push(favoriteId)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
-}
-
-watch(() => error.value, (error) => {
-  if (error) {
-    showAlert(error.message, t('errors.error'))
+async function deleteLike (favoriteId: number) {
+  try {
+    await deleteFavorite({ id: favoriteId })
+  } catch (e) {
+    showAlert((e as ApiError).message, t('errors.error'))
   }
-})
+}
 
 onMounted(() => {
   fetchFavorites()

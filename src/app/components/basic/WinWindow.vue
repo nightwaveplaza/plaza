@@ -12,8 +12,8 @@
       <div
           class="win-window__header noselect"
           :class="{inactive: !isActive}"
-          @dblclick="centerWindow"
-          @mousedown="handleDragStart"
+          @pointerdown.stop="handleDragStart"
+          @touchstart.prevent
       >
         <img
             :src="windowIcon.src"
@@ -42,19 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  type CSSProperties, nextTick,
-  onBeforeMount,
-  onMounted,
-  onUnmounted,
-  provide,
-  type Ref,
-  ref,
-  toRef
-} from 'vue'
+import { computed, type CSSProperties, nextTick, onBeforeMount, provide, type Ref, ref, toRef } from 'vue'
 import { useWindows } from '@app/composables/useWindows.ts'
-import { useDraggable } from '@app/composables/useDraggable.ts'
+import { useDraggableWindow } from '@app/composables/useDraggableWindow.ts'
 import { useI18n } from 'vue-i18n'
 import { WindowHeaderButtons, type WindowState } from '@app/types'
 import { getWindowIcon } from '@app/utils/icons'
@@ -75,7 +65,7 @@ const props = defineProps<{
 provide('windowId', toRef(props, 'id'))
 
 const windowRef = ref<HTMLDivElement | null>(null)
-const { centerWindow, checkBounds, handleDragStart, isCentered } = useDraggable(windowRef, props.id)
+const { centerWindow, isCentered, handleDragStart } = useDraggableWindow(windowRef, props.id)
 
 const windowState: Ref<WindowState> = computed(() => {
   return openedWindows.value[props.id]!
@@ -158,26 +148,9 @@ async function recenter(): Promise<void> {
   if (isCentered.value) {
     centerWindow()
   } else {
-    checkBounds()
+    // checkBounds()
   }
 }
-
-onMounted(() => {
-  isCentered.value = true
-  recenter()
-  window.addEventListener('resize', recenter)
-  window.visualViewport?.addEventListener('resize', recenter)
-
-  // window.matchMedia('(orientation: portrait)').addEventListener('change', () => {
-  //   setTimeout(recenter, 100)
-  //   setTimeout(recenter, 500)
-  // })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', recenter)
-  window.visualViewport?.removeEventListener('resize', recenter)
-})
 
 defineExpose({
   close, pullUp

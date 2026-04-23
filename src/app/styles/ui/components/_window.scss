@@ -31,6 +31,10 @@
     color: var(--window-header-color);
     background: var(--window-header-gradient);
 
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+
     &.inactive {
       background: var(--window-header-gradient-disabled);
     }

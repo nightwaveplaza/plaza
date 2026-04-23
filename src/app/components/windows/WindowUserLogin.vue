@@ -74,13 +74,12 @@ import { useWindows } from '@app/composables/useWindows.ts'
 import { type UserLoginForm, Win } from '@app/types'
 import { useAuthApi } from '@app/composables/api'
 import { useAuth } from '@app/composables/useAuth.ts'
-import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
+import { setApiToken } from '@app/api'
 
 const { t } = useI18n()
 const { openWindow, closeWindow, showAlert } = useWindows()
 const { login: loginApi,  token: tokenApi } = useAuthApi()
 const { user } = useAuth()
-const { setToken } = useAuthToken()
 const { fetch, isLoading } = isMobile() ? tokenApi() : loginApi()
 
 const fields: UserLoginForm = reactive({
@@ -97,7 +96,7 @@ function login (): void {
   fetch(fields).then(res => {
     user.value = res.data
     if (res.token) {
-      setToken(res.token)
+      setApiToken(res.token)
     }
     showAlert(t('messages.auth_success'), t('messages.success'), 'info')
     closeWindow(Win.USER_LOGIN)

@@ -19,13 +19,13 @@ import { useAppSettings } from '@app/composables/useAppSettings.ts'
 import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
 import { useAuth } from '@app/composables/useAuth.ts'
 import { Win } from '@app/types'
-import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
 import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
 import { useThemeColor } from '@app/composables/useThemeColor.ts'
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
 import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
 import { initAppSocket } from '@app/services/initAppSocket.ts'
 import { useEventListener } from '@vueuse/core'
+import { setApiToken } from '@app/api'
 
 const i18n = useI18n()
 const { openWindow, openedWindows, closeWindow } = useWindows()
@@ -73,7 +73,7 @@ onMounted(() => {
 
   Native.getAuthToken()!.then((t) => {
     const token = t as string
-    useAuthToken().setToken(token)
+    setApiToken(token)
     useAuth().fetchUser()
   })
 

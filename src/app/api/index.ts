@@ -1,7 +1,18 @@
 import axios, { AxiosError } from 'axios'
+import { isMobile } from '@app/utils/helpers.ts'
+import { Native } from '@mobile/bridge/native.ts'
 
 const baseURL: string = import.meta.env.VITE_API_URL
 let isTokenRefreshing = false
+
+// Bearer token for mobile
+let bearerToken: string | null = null
+export const setApiToken = (token: string | null) => {
+  if (isMobile()) {
+    bearerToken = token
+    Native.setAuthToken(token)
+  }
+}
 
 const instance = axios.create({
   baseURL,
@@ -10,6 +21,14 @@ const instance = axios.create({
 })
 
 instance.interceptors.response.use(response => response, err => interceptError(err))
+
+// Append bearer token for mobile
+instance.interceptors.request.use((config) => {
+  if (isMobile() && bearerToken) {
+    config.headers['Authorization'] = `Bearer ${bearerToken}`
+  }
+  return config
+})
 
 async function interceptError (err: AxiosError): Promise<void> {
   if (!err.response || !err.config) {

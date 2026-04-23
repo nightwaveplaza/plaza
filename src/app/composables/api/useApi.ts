@@ -2,8 +2,6 @@ import { type Ref, ref, shallowRef, type UnwrapRef } from 'vue'
 import { i18n } from '@locales/_i18n.ts'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import api from '@app/api/index.ts'
-import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
-import { isMobile } from '@app/utils/helpers.ts'
 
 // Error structure for API responses
 export interface ApiError {
@@ -29,7 +27,6 @@ export function useApi<T> (): CallResponse<T> {
   const error = shallowRef<ApiError | null>(null)
   const isLoading = ref(false)
   let controller: AbortController | null = null
-  const { token } = useAuthToken()
 
   // Make API request
   const call = async (config: AxiosRequestConfig): Promise<T> => {
@@ -42,15 +39,10 @@ export function useApi<T> (): CallResponse<T> {
     }
 
     try {
-      const authHeader = isMobile()
-        ? {'Authorization': `Bearer ${token.value}`}
-        : {}
-
       const response = await api.request({
         ...config,
         headers: {
           // 'NP-User-Agent': userAuthStore.agent
-          ...authHeader,
           ...(config.headers ?? {})
         },
         signal: controller?.signal

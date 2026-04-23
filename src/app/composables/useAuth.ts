@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { useUserApi } from '@app/composables/api'
 import type { User } from '@app/types'
 import { useReactions } from '@app/composables/useReactions.ts'
-import { useAuthToken } from '@mobile/composables/useAuthToken.ts'
+import { setApiToken } from '@app/api'
 
 const { getUser } = useUserApi()
 
@@ -11,7 +11,6 @@ const resetToken = ref<string|null>(null)
 
 export function useAuth() {
   const { resetReaction } = useReactions()
-  const { setToken } = useAuthToken()
   const isSigned = computed(() => user.value !== null)
 
   const fetchUser = async () => {
@@ -25,7 +24,7 @@ export function useAuth() {
 
   const unsetUser = () => {
     resetReaction()
-    setToken(null)
+    setApiToken(null)
     user.value = null
   }
 

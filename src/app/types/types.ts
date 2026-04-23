@@ -52,7 +52,7 @@ export interface ifcAndroidInterface {
 
   getAuthToken (): string
 
-  setAuthToken (token: string): void
+  setAuthToken (token: string | null): void
 
   setAudioQuality (quality: boolean): void
 

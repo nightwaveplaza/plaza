@@ -14,7 +14,7 @@ export const Native = {
     : void | Promise<void> => CurrentBridge().socketReconnect(),
   getAuthToken: ()
     : Promise<string> => CurrentBridge().getAuthToken(),
-  setAuthToken: (token: string)
+  setAuthToken: (token: string | null)
     : void | Promise<void> => CurrentBridge().setAuthToken(token),
   setAudioQuality: (lowQuality: boolean)
     : void | Promise<void> => CurrentBridge().setAudioQuality(lowQuality),

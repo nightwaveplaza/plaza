@@ -9,7 +9,7 @@ export const AndroidBridge = {
     : void => AndroidInterface.onReady(),
   socketReconnect: ()
     : void => AndroidInterface.socketReconnect(),
-  setAuthToken: (token: string)
+  setAuthToken: (token: string | null)
     : void => AndroidInterface.setAuthToken(token),
   getAuthToken: ()
     : Promise<string> => Promise.resolve(AndroidInterface.getAuthToken()),

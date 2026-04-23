@@ -10,8 +10,8 @@ export const iOSBridge = {
     : Promise<void> => sendMessage<void>('setSleepTimer', [`${time}`]),
   getAuthToken: ()
     : Promise<string> => sendMessage<string>('getAuthToken', []),
-  setAuthToken: (token: string)
-    : Promise<void> => sendMessage<void>('setAuthToken', [token]),
+  setAuthToken: (token: string | null)
+    : Promise<void> => sendMessage<void>('setAuthToken', [token ?? '']),
   setAudioQuality: (lowQuality: boolean)
     : Promise<void> => sendMessage<void>('setAudioQuality', [`${lowQuality}`]),
   toggleFullscreen: ()

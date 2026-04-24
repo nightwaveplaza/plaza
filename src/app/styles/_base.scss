@@ -8,6 +8,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+  --android-safe-top: 0px;
+  --android-safe-bottom: 0px;
+}
+
 html, body {
   margin: 0;
   padding: 0;

@@ -7,13 +7,13 @@
   background-color: var(--button-bg);
   border-top: 1px solid var(--window-border-left);
   box-shadow: var(--taskbar-shadow);
-  padding: 3px 0 env(safe-area-inset-bottom);
+  padding: 3px 0 max(env(safe-area-inset-bottom), var(--android-safe-bottom));
 
   &.taskbar-top {
     top: 0;
     bottom: auto;
     padding-bottom: 0;
-    padding-top: env(safe-area-inset-top);
+    padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
   }
 
   .divider {

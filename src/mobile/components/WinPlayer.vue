@@ -1,9 +1,10 @@
 <template>
   <div class="row gx-0">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
-      <div class="cover simple-border noselect ratio ratio-1x1"
-           :style="{'background-image': `url('${artwork}')`}"
-           @click="openSongInfo"
+      <div
+        class="cover simple-border noselect ratio ratio-1x1"
+        :style="{ 'background-image': `url('${artwork}')` }"
+        @click="openSongInfo"
       />
     </div>
 
@@ -25,7 +26,7 @@
         </div>
 
         <div class="row gx-0">
-          <div :class="{'col-6': !isPlaying, 'col-4': isPlaying}" class="mb-1 mb-sm-0 pe-2">
+          <div :class="{ 'col-6': !isPlaying, 'col-4': isPlaying }" class="mb-1 mb-sm-0 pe-2">
             <win-button class="player-play" block @click="play">
               {{ playText }}
             </win-button>
@@ -42,9 +43,7 @@
           </div>
 
           <div class="col-3 mb-1 mb-sm-0">
-            <win-button block class="btn-start" @click="openDrawer">
-              &nbsp;
-            </win-button>
+            <win-button block class="btn-start" @click="openDrawer"> &nbsp; </win-button>
           </div>
         </div>
       </div>
@@ -53,126 +52,130 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { Native } from '@mobile/bridge/native'
-import { useI18n } from 'vue-i18n'
-import { PlayerState } from '@app/types/types.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { Win } from '@app/types'
-import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
-import { useEventListener } from '@vueuse/core'
+  import { computed } from 'vue';
+  import { Native } from '@mobile/bridge/native';
+  import { useI18n } from 'vue-i18n';
+  import { PlayerState } from '@app/types/types.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
+  import { Win } from '@app/types';
+  import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
+  import { useEventListener } from '@vueuse/core';
 
-const { t } = useI18n()
-const { openWindow, closeWindow, showSongInfo } = useWindows()
-const { song } = useNowPlayingStatus()
-const { state, sleepTime, setSleepTime, updateSleepTime } = usePlayerPlayback()
+  const { t } = useI18n();
+  const { openWindow, closeWindow, showSongInfo } = useWindows();
+  const { song } = useNowPlayingStatus();
+  const { state, sleepTime, setSleepTime, updateSleepTime } = usePlayerPlayback();
 
-const artwork = computed(() => {
-  return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
-})
+  const artwork = computed(() => {
+    return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg';
+  });
 
-// Register events
-useEventListener(window, 'player:playing', (e: CustomEvent) => {
-  state.value = e.detail ? PlayerState.PLAYING : PlayerState.IDLE
-})
+  // Register events
+  useEventListener(window, 'player:playing', (e: CustomEvent) => {
+    state.value = e.detail ? PlayerState.PLAYING : PlayerState.IDLE;
+  });
 
-useEventListener(window, 'player:buffering', () => {
-  state.value = PlayerState.LOADING
-})
+  useEventListener(window, 'player:buffering', () => {
+    state.value = PlayerState.LOADING;
+  });
 
-useEventListener(window, 'player:sleeptime', (e: CustomEvent) => {
-  updateSleepTime(e.detail)
-})
+  useEventListener(window, 'player:sleeptime', (e: CustomEvent) => {
+    updateSleepTime(e.detail);
+  });
 
-function openSongInfo (): void {
-  if (song.id) {
-    showSongInfo(song.id)
+  function openSongInfo(): void {
+    if (song.id) {
+      showSongInfo(song.id);
+    }
   }
-}
 
-const playText = computed((): string => {
-  switch (state.value) {
-    case PlayerState.LOADING: return t('loading')
-    case PlayerState.PLAYING: return t('win.player.btn_stop')
-    default: return t('win.player.btn_play')
+  const playText = computed((): string => {
+    switch (state.value) {
+      case PlayerState.LOADING:
+        return t('loading');
+      case PlayerState.PLAYING:
+        return t('win.player.btn_stop');
+      default:
+        return t('win.player.btn_play');
+    }
+  });
+
+  const isPlaying = computed(() => state.value === PlayerState.PLAYING);
+  const timerColor = computed(() => (sleepTime.value !== 0 ? '#3455DB' : ''));
+
+  function play(): void {
+    if (state.value === PlayerState.PLAYING) {
+      closeWindow(Win.PLAYER_TIMER);
+      setSleepTime(0);
+    }
+    Native.audioPlay();
   }
-})
 
-const isPlaying = computed(() => state.value === PlayerState.PLAYING)
-const timerColor = computed(() => sleepTime.value !== 0 ? '#3455DB' : '')
-
-function play (): void {
-  if (state.value === PlayerState.PLAYING) {
-    closeWindow(Win.PLAYER_TIMER)
-    setSleepTime(0)
+  function openDrawer(): void {
+    Native.openDrawer();
   }
-  Native.audioPlay()
-}
-
-function openDrawer (): void {
-  Native.openDrawer()
-}
 </script>
 
 <style lang="scss">
-#window-player {
-  .player-artist {
-    margin-top: 2px;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 100%;
+  #window-player {
+    .player-artist {
+      margin-top: 2px;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 100%;
+    }
+
+    .player-title {
+      font-size: 14px;
+      line-height: 100%;
+    }
+
+    .cover {
+      background: #efe6eb;
+      padding: 0;
+      line-height: 0;
+      height: auto;
+      width: 112px;
+      background-size: cover;
+    }
+
+    .cover img {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .player-time-container {
+      margin: 6px 0 3px 0;
+      position: relative;
+    }
+
+    .player-time {
+      position: relative;
+      z-index: 2;
+      line-height: 24px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .player-button i,
+    .player-button span {
+      cursor: pointer;
+    }
   }
 
-  .player-title {
-    font-size: 14px;
-    line-height: 100%;
-  }
+  @media (max-width: 500px) {
+    .cover {
+      width: 100% !important;
+    }
 
-  .cover {
-    background: #efe6eb;
-    padding: 0;
-    line-height: 0;
-    height: auto;
-    width: 112px;
-    background-size: cover;
-  }
+    .player-meta {
+      text-align: center;
+    }
 
-  .cover img {
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
+    #window-player .win-window {
+      width: 90% !important;
+    }
   }
-
-  .player-time-container {
-    margin: 6px 0 3px 0;
-    position: relative;
-  }
-
-  .player-time {
-    position: relative;
-    z-index: 2;
-    line-height: 24px;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .player-button i, .player-button span {
-    cursor: pointer;
-  }
-}
-
-@media (max-width: 500px) {
-  .cover {
-    width: 100% !important;
-  }
-
-  .player-meta {
-    text-align: center;
-  }
-
-  #window-player .win-window {
-    width: 90% !important;
-  }
-}
 </style>

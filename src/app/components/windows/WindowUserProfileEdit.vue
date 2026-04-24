@@ -13,18 +13,18 @@
       <template #content>
         <!-- Username -->
         <label for="username" class="noselect">{{ t('fields.username') }}:</label>
-        <input id="username" v-model="fields.username" class="d-block mb-2" type="text">
+        <input id="username" v-model="fields.username" class="d-block mb-2" type="text" />
 
         <!-- Email -->
         <label for="email" class="noselect">{{ t('fields.email') }}:</label>
-        <input id="email" v-model="fields.email" class="d-block" type="email">
+        <input id="email" v-model="fields.email" class="d-block" type="email" />
       </template>
     </win-group-box>
 
     <win-panel class="mb-3">
       <!-- Current password -->
       <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
-      <input id="password" v-model="fields.current_password" class="d-block" type="password">
+      <input id="password" v-model="fields.current_password" class="d-block" type="password" />
     </win-panel>
 
     <!-- Buttons -->
@@ -44,52 +44,52 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { type UserProfileForm, Win } from '@app/types'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { useApi } from '@app/composables/useApi.ts'
-import { userApi } from '@app/api/user.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { onMounted, reactive } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { type UserProfileForm, Win } from '@app/types';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { userApi } from '@app/api/user.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { showAlert, closeWindow, openWindow } = useWindows()
-const { user } = useAuth()
-const { execute: updateProfile, isLoading } = useApi(userApi.updateProfile)
+  const { t } = useI18n();
+  const { showAlert, closeWindow, openWindow } = useWindows();
+  const { user } = useAuth();
+  const { execute: updateProfile, isLoading } = useApi(userApi.updateProfile);
 
-const fields: UserProfileForm = reactive({
-  current_password: '',
-  email: '',
-  username: ''
-})
+  const fields: UserProfileForm = reactive({
+    current_password: '',
+    email: '',
+    username: '',
+  });
 
-function fetchUser (): void {
-  fields.email = user.value?.email ?? ''
-  fields.username = user.value?.username ?? ''
-}
-
-async function update () {
-  if (fields.current_password.length === 0) {
-    return showAlert(t('errors.fields.current_password_required'), t('errors.error'))
+  function fetchUser(): void {
+    fields.email = user.value?.email ?? '';
+    fields.username = user.value?.username ?? '';
   }
 
-  try {
-    const res = await updateProfile(fields)
-    user.value = res.data
-  } catch (e) {
-    return showAlert((e as ApiError).message, t('errors.error'))
+  async function update() {
+    if (fields.current_password.length === 0) {
+      return showAlert(t('errors.fields.current_password_required'), t('errors.error'));
+    }
+
+    try {
+      const res = await updateProfile(fields);
+      user.value = res.data;
+    } catch (e) {
+      return showAlert((e as ApiError).message, t('errors.error'));
+    }
+
+    closeWindow(Win.USER_PROFILE_EDIT);
   }
 
-  closeWindow(Win.USER_PROFILE_EDIT)
-}
+  function open(window: Win): void {
+    openWindow(window);
+    closeWindow(Win.USER_PROFILE_EDIT);
+  }
 
-function open (window: Win): void {
-  openWindow(window)
-  closeWindow(Win.USER_PROFILE_EDIT)
-}
-
-onMounted(() => {
-  fetchUser()
-})
+  onMounted(() => {
+    fetchUser();
+  });
 </script>

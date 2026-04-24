@@ -1,31 +1,31 @@
 <template>
-  <div class="win-connection-status me-1" :class="{'connected': isConnected, 'on-off': blink}" />
+  <div class="win-connection-status me-1" :class="{ connected: isConnected, 'on-off': blink }" />
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue'
-  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-  import { useSocketStore } from '@app/composables/useSocketStore.ts'
+  import { ref, watch } from 'vue';
+  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
+  import { useSocketStore } from '@app/composables/useSocketStore.ts';
 
-  const { listeners, song, reactions } = useNowPlayingStatus()
-  const { isConnected } = useSocketStore()
+  const { listeners, song, reactions } = useNowPlayingStatus();
+  const { isConnected } = useSocketStore();
 
-  const blink = ref(false)
-  let blinkTimer: ReturnType<typeof setTimeout> | null = null
+  const blink = ref(false);
+  let blinkTimer: ReturnType<typeof setTimeout> | null = null;
 
   function triggerBlink(): void {
-    blink.value = true
+    blink.value = true;
 
     if (blinkTimer) {
-      clearTimeout(blinkTimer)
+      clearTimeout(blinkTimer);
     }
 
     blinkTimer = setTimeout(() => {
-      blink.value = false
-    }, 750)
+      blink.value = false;
+    }, 750);
   }
 
-  watch([listeners, reactions, song], triggerBlink)
+  watch([listeners, reactions, song], triggerBlink);
 </script>
 
 <style lang="scss">

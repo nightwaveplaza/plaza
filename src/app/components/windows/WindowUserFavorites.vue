@@ -6,9 +6,14 @@
           <div v-if="isLoading" class="content-loading noselect" />
           <win-list v-else ref="list" scroll>
             <template v-if="favs?.data && !isLoading">
-              <tr v-for="(f, i) in favs.data" :key="i" :class="{ strike: deleted.includes(f.id) }" class="hover">
+              <tr
+                v-for="(f, i) in favs.data"
+                :key="i"
+                :class="{ strike: deleted.includes(f.id) }"
+                class="hover"
+              >
                 <td class="p-1 ps-0 noselect" style="width: 62px">
-                  <img :src="f.song.artwork_src" alt="artwork">
+                  <img :src="f.song.artwork_src" alt="artwork" />
                 </td>
                 <td class="ps-1 show-info" @click="showSongInfo(f.song.id)">
                   <div class="artist">
@@ -22,13 +27,19 @@
                   </div>
                 </td>
                 <td class="text-center noselect" style="width: 70px">
-                  <a v-if="!deleted.includes(f.id)" class="link favorites-remove"
-                     role="button"
-                     @click="deleteLike(f.id)"
-                  >{{ t('win.user_favorites.remove') }}</a>
+                  <a
+                    v-if="!deleted.includes(f.id)"
+                    class="link favorites-remove"
+                    role="button"
+                    @click="deleteLike(f.id)"
+                    >{{ t('win.user_favorites.remove') }}</a
+                  >
                 </td>
               </tr>
-              <div class="ps__rail-y noselect" style="display: block;top: 0;right: 0;height: 100%;" />
+              <div
+                class="ps__rail-y noselect"
+                style="display: block; top: 0; right: 0; height: 100%"
+              />
             </template>
 
             <div v-else-if="!isLoading" class="favorites-empty noselect">
@@ -67,76 +78,75 @@
   <div class="win-window__statusbar noselect">
     <div class="row gx-0 song-list-statusbar">
       <div class="col-auto cell pe-4 d">
-        {{ t('pagination.pages', {n: favs?.meta.last_page}) }}
+        {{ t('pagination.pages', { n: favs?.meta.last_page }) }}
       </div>
       <div class="col cell">
-        {{ t('pagination.songs', {n: favs?.meta.total}) }}
+        {{ t('pagination.songs', { n: favs?.meta.total }) }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { fmtDate } from '@app/utils/timeFormats.ts'
-import { Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { onMounted, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { fmtDate } from '@app/utils/timeFormats.ts';
+  import { Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { userFavoritesApi } from '@app/api/userFavorites.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows()
-const { execute: getFavorites, isLoading, data: favs } = useApi(userFavoritesApi.getFavorites)
-const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite)
+  const { t } = useI18n();
+  const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows();
+  const { execute: getFavorites, isLoading, data: favs } = useApi(userFavoritesApi.getFavorites);
+  const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite);
 
-const deleted = ref([] as Array<number>)
-const page = ref(1)
+  const deleted = ref([] as Array<number>);
+  const page = ref(1);
 
-async function fetchFavorites () {
-  try {
-    await getFavorites({ page: page.value })
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
+  async function fetchFavorites() {
+    try {
+      await getFavorites({ page: page.value });
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
   }
-}
 
-function changePage (newPage: number) {
-  page.value = newPage
-  fetchFavorites()
-}
-
-async function deleteLike (favoriteId: number) {
-  try {
-    await deleteFavorite({ id: favoriteId })
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
+  function changePage(newPage: number) {
+    page.value = newPage;
+    fetchFavorites();
   }
-}
 
-onMounted(() => {
-  fetchFavorites()
-})
+  async function deleteLike(favoriteId: number) {
+    try {
+      await deleteFavorite({ id: favoriteId });
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
+  }
+
+  onMounted(() => {
+    fetchFavorites();
+  });
 </script>
 
 <style lang="scss">
-#window-user-favorites {
-  .favorites-empty {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    right: 1px;
-    bottom: 1px;
-    padding-top: 15px;
-    text-align: center;
-    background: white;
-  }
+  #window-user-favorites {
+    .favorites-empty {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      right: 1px;
+      bottom: 1px;
+      padding-top: 15px;
+      text-align: center;
+      background: white;
+    }
 
-  .date {
-    font-size: 10px;
-    opacity: 0.8;
+    .date {
+      font-size: 10px;
+      opacity: 0.8;
+    }
   }
-}
 </style>
-

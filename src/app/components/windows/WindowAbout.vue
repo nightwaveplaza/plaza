@@ -2,19 +2,20 @@
   <div class="p-2">
     <div class="row mb-2">
       <div class="col align-self-center text-center">
-        <p class="lead mb-1">
-          Nightwave Plaza
+        <p class="lead mb-1">Nightwave Plaza</p>
+        <p>
+          <i>{{ t('win.about.welcome') }}</i>
         </p>
-        <p><i>{{ t('win.about.welcome') }}</i></p>
       </div>
       <div class="col-auto align-self-center">
-        <img src="@app/assets/img/pc.png" style="width: 70px" alt="">
+        <img src="@app/assets/img/pc.png" style="width: 70px" alt="" />
       </div>
     </div>
 
     <win-panel class="mb-3">
       <p>
-        <strong>{{ t('win.about.contact_info') }}</strong><br>
+        <strong>{{ t('win.about.contact_info') }}</strong
+        ><br />
       </p>
       <i18n-t keypath="win.about.send_enquires" tag="p">
         <template #link>
@@ -29,32 +30,40 @@
       </i18n-t>
 
       <p>
-        <strong>{{ t('win.about.submissions') }}</strong><br>
+        <strong>{{ t('win.about.submissions') }}</strong
+        ><br />
       </p>
       <i18n-t keypath="win.about.submission_form" tag="p" class="mb-2">
         <template #link>
-          <a href="https://plaza.one/submissions" target="_blank">{{ t('win.about.submission_link') }}</a>
+          <a href="https://plaza.one/submissions" target="_blank">{{
+            t('win.about.submission_link')
+          }}</a>
         </template>
       </i18n-t>
 
       <p class="mb-2">
-        <strong>{{ t('win.about.mobile') }}</strong><br>
+        <strong>{{ t('win.about.mobile') }}</strong
+        ><br />
         <a role="button" class="link" @click="openMobile">{{ t('win.about.show_more') }}</a>
       </p>
 
       <p>
-        <strong>{{ t('win.about.useful_links') }}</strong><br>
+        <strong>{{ t('win.about.useful_links') }}</strong
+        ><br />
       </p>
       <p class="mb-2">
-        {{ t('win.about.playlists') }}<br>
+        {{ t('win.about.playlists') }}<br />
         <a href="https://plaza.one/plaza.m3u" target="_blank">M3U (Winamp)</a>
         <a class="ms-3" href="https://plaza.one/plaza.pls" target="_blank">PLS (Foobar2000)</a>
       </p>
       <p>
-        {{ t('win.about.streams') }}<br>
-        <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 / 128kbps)<br>
-        <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus / 96kbps)<br>
-        <a href="http://radio.plaza.one/hls" target="_blank">http://radio.plaza.one/hls</a> (hls / aac)
+        {{ t('win.about.streams') }}<br />
+        <a href="http://radio.plaza.one/mp3" target="_blank">http://radio.plaza.one/mp3</a> (mp3 /
+        128kbps)<br />
+        <a href="http://radio.plaza.one/ogg" target="_blank">http://radio.plaza.one/ogg</a> (opus /
+        96kbps)<br />
+        <a href="http://radio.plaza.one/hls" target="_blank">http://radio.plaza.one/hls</a> (hls /
+        aac)
       </p>
     </win-panel>
 
@@ -79,62 +88,60 @@
 
   <div class="win-window__statusbar noselect">
     <div class="row gx-0">
-      <div class="col cell">
-        {{ t('win.about.version') }}: {{ appVersion }}{{ version }}
-      </div>
+      <div class="col cell">{{ t('win.about.version') }}: {{ appVersion }}{{ version }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { isMobile } from '@app/utils/helpers.ts'
-import { onMounted, ref } from 'vue'
-import { Native } from '@mobile/bridge/native.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { Win } from '@app/types'
+  import { useI18n } from 'vue-i18n';
+  import { isMobile } from '@app/utils/helpers.ts';
+  import { onMounted, ref } from 'vue';
+  import { Native } from '@mobile/bridge/native.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { Win } from '@app/types';
 
-const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
+  const { t } = useI18n();
+  const { openWindow, closeWindow } = useWindows();
 
-const version = __APP_VERSION__ ?? 'n/a'
-const appVersion = ref('')
+  const version = __APP_VERSION__ ?? 'n/a';
+  const appVersion = ref('');
 
-onMounted(() => {
-  if (isMobile()) {
-    Native.getAppVersion().then(version => {
-      appVersion.value = version + ' / '
-    })
+  onMounted(() => {
+    if (isMobile()) {
+      Native.getAppVersion().then(version => {
+        appVersion.value = version + ' / ';
+      });
+    }
+  });
+
+  function openCredits(): void {
+    openWindow(Win.CREDITS);
+    closeWindow(Win.ABOUT);
   }
-})
 
-function openCredits (): void {
-  openWindow(Win.CREDITS)
-  closeWindow(Win.ABOUT)
-}
+  function openNews(): void {
+    openWindow(Win.NEWS);
+    closeWindow(Win.ABOUT);
+  }
 
-function openNews (): void {
-  openWindow(Win.NEWS)
-  closeWindow(Win.ABOUT)
-}
-
-function openMobile (): void {
-  openWindow(Win.MOBILE)
-  closeWindow(Win.ABOUT)
-}
+  function openMobile(): void {
+    openWindow(Win.MOBILE);
+    closeWindow(Win.ABOUT);
+  }
 </script>
 
 <style lang="scss">
-#window-about {
-  p {
-    font-size: 12px;
-    line-height: 150%;
+  #window-about {
+    p {
+      font-size: 12px;
+      line-height: 150%;
 
-    &.lead {
-      font-size: 14px;
-      font-style: italic;
-      font-weight: 700;
+      &.lead {
+        font-size: 14px;
+        font-style: italic;
+        font-weight: 700;
+      }
     }
   }
-}
 </style>

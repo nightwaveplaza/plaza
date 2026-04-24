@@ -5,7 +5,12 @@
         <div class="d-flex mb-1">
           <div class="row gx-0 w-100">
             <div v-if="history?.data" class="col">
-              {{ t('win.history.showing_history', {from: fmtDay(history.date_range.from_date), to: fmtDay(history.date_range.to_date)}) }}
+              {{
+                t('win.history.showing_history', {
+                  from: fmtDay(history.date_range.from_date),
+                  to: fmtDay(history.date_range.to_date),
+                })
+              }}
             </div>
             <div class="col-auto">
               <a href="https://plaza.one/lastfm" target="_blank">Last.fm</a>
@@ -26,7 +31,7 @@
                 </div>
               </td>
               <td class="text-end noselect" style="width: 78px">
-                {{ fmtDay(h.played_at) }}<br>
+                {{ fmtDay(h.played_at) }}<br />
                 {{ fmtTime(h.played_at) }}
               </td>
             </tr>
@@ -57,47 +62,46 @@
   <div class="win-window__statusbar noselect">
     <div class="row gx-0">
       <div class="col-auto cell pe-4 d">
-        {{ history ? t('pagination.pages', {n: history.meta.last_page}) : '...' }}
+        {{ history ? t('pagination.pages', { n: history.meta.last_page }) : '...' }}
       </div>
       <div class="col cell">
-        {{ history ? t('pagination.songs', {n: history.meta.total}) : '...' }}
+        {{ history ? t('pagination.songs', { n: history.meta.total }) : '...' }}
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts'
-import { type HistoryCollection, Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { historyApi } from '@app/api/history.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { onMounted, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts';
+  import { type HistoryCollection, Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { historyApi } from '@app/api/history.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { showAlert, showSongInfo, closeWindow } = useWindows()
-const { execute: getHistory, isLoading } = useApi(historyApi.getHistory)
+  const { t } = useI18n();
+  const { showAlert, showSongInfo, closeWindow } = useWindows();
+  const { execute: getHistory, isLoading } = useApi(historyApi.getHistory);
 
-const page = ref(1)
-const history = ref<HistoryCollection | null>(null)
+  const page = ref(1);
+  const history = ref<HistoryCollection | null>(null);
 
-function changePage (newPage: number): void {
-  page.value = newPage
-  fetchHistory()
-}
-
-async function fetchHistory (): Promise<void> {
-  try {
-    history.value = await getHistory({ page: page.value })
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
+  function changePage(newPage: number): void {
+    page.value = newPage;
+    fetchHistory();
   }
-}
 
-onMounted(() => {
-  fetchHistory()
-})
+  async function fetchHistory(): Promise<void> {
+    try {
+      history.value = await getHistory({ page: page.value });
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
+  }
+
+  onMounted(() => {
+    fetchHistory();
+  });
 </script>

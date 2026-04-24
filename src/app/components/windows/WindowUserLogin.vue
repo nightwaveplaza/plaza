@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-auto d-none d-sm-block pe-3">
-        <img alt="" class="img-key" height="48" src="@app/assets/img/key.png" width="45">
+        <img alt="" class="img-key" height="48" src="@app/assets/img/key.png" width="45" />
       </div>
 
       <div class="col ps-0 pe-2">
@@ -22,7 +22,7 @@
             <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
           </div>
           <div class="col-8 col-sm-5">
-            <input id="username" v-model="fields.username" class="me-0 ms-0 w-100" type="text">
+            <input id="username" v-model="fields.username" class="me-0 ms-0 w-100" type="text" />
           </div>
         </div>
 
@@ -32,7 +32,12 @@
             <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
           </div>
           <div class="col-8 col-sm-5">
-            <input id="password" v-model="fields.password" class="me-0 ms-0 w-100" type="password">
+            <input
+              id="password"
+              v-model="fields.password"
+              class="me-0 ms-0 w-100"
+              type="password"
+            />
           </div>
           <div class="col-2 col-sm-2 ms-2 align-self-center">
             <a role="button" class="link" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
@@ -43,7 +48,7 @@
         <div v-if="!isMobile()" class="row mt-1 gx-0 justify-content-end">
           <div class="col-12 col-sm-8">
             <div class="checkbox">
-              <input id="remember" v-model="fields.remember" type="checkbox">
+              <input id="remember" v-model="fields.remember" type="checkbox" />
               <label for="remember">{{ t('win.user_login.remember_me') }}</label>
             </div>
           </div>
@@ -67,73 +72,74 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { isMobile } from '@app/utils/helpers.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { type UserLoginForm, Win } from '@app/types'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { setApiToken } from '@app/api'
-import { useApi } from '@app/composables/useApi.ts'
-import { authApi } from '@app/api/auth.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { reactive } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { isMobile } from '@app/utils/helpers.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { type UserLoginForm, Win } from '@app/types';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { setApiToken } from '@app/api';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { authApi } from '@app/api/auth.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { openWindow, closeWindow, showAlert } = useWindows()
-const { execute: loginUser, isLoading } = useApi(isMobile() ? authApi.token : authApi.login)
-const { user } = useAuth()
+  const { t } = useI18n();
+  const { openWindow, closeWindow, showAlert } = useWindows();
+  const { execute: loginUser, isLoading } = useApi(isMobile() ? authApi.token : authApi.login);
+  const { user } = useAuth();
 
-const fields: UserLoginForm = reactive({
-  username: '',
-  password: '',
-  remember: false
-})
+  const fields: UserLoginForm = reactive({
+    username: '',
+    password: '',
+    remember: false,
+  });
 
-async function login (): Promise<void> {
-  if (fields.username.length === 0 || fields.password.length === 0) {
-    return showAlert(t('errors.enter_user_pass'), t('errors.error'))
-  }
-
-  try {
-    const res = await loginUser(fields)
-    user.value = res.data
-    if (res.token) {
-      setApiToken(res.token)
+  async function login(): Promise<void> {
+    if (fields.username.length === 0 || fields.password.length === 0) {
+      return showAlert(t('errors.enter_user_pass'), t('errors.error'));
     }
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
+
+    try {
+      const res = await loginUser(fields);
+      user.value = res.data;
+      if (res.token) {
+        setApiToken(res.token);
+      }
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
+
+    showAlert(t('messages.auth_success'), t('messages.success'), 'info');
+    closeWindow(Win.USER_LOGIN);
   }
 
-  showAlert(t('messages.auth_success'), t('messages.success'), 'info')
-  closeWindow(Win.USER_LOGIN)
-}
+  function openRegister(): void {
+    openWindow(Win.USER_REGISTER);
+    closeWindow(Win.USER_LOGIN);
+  }
 
-function openRegister (): void {
-  openWindow(Win.USER_REGISTER)
-  closeWindow(Win.USER_LOGIN)
-}
-
-function openReset (): void {
-  openWindow(Win.USER_RESET)
-  closeWindow(Win.USER_LOGIN)
-}
+  function openReset(): void {
+    openWindow(Win.USER_RESET);
+    closeWindow(Win.USER_LOGIN);
+  }
 </script>
 
 <style lang="scss">
-#window-user-login {
-  .img-key {
-    margin-top: 2px;
-    width: 45px;
-    height: 48px;
-  }
+  #window-user-login {
+    .img-key {
+      margin-top: 2px;
+      width: 45px;
+      height: 48px;
+    }
 
-  .login-buttons button {
-    width: 76px;
-    display: block;
-  }
+    .login-buttons button {
+      width: 76px;
+      display: block;
+    }
 
-  label[for=username]::first-letter, label[for=password]::first-letter {
-    text-decoration: underline;
+    label[for='username']::first-letter,
+    label[for='password']::first-letter {
+      text-decoration: underline;
+    }
   }
-}
 </style>

@@ -1,23 +1,23 @@
-import { resolve } from 'node:path'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv, type UserConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import legacy from '@vitejs/plugin-legacy'
-import type { Plugin } from 'vite'
-import nginxRoutesPlugin from './vite-plugin-nginx-routes'
+import { resolve } from 'node:path';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import legacy from '@vitejs/plugin-legacy';
+import type { Plugin } from 'vite';
+import nginxRoutesPlugin from './vite-plugin-nginx-routes';
 
 export default ({ mode }: { mode: string }): UserConfig => {
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), '');
 
-  const appType = env.VITE_APP
+  const appType = env.VITE_APP;
 
   if (!appType) {
-    throw new Error('VITE_APP is not defined')
+    throw new Error('VITE_APP is not defined');
   }
 
-  const root: string = resolve(__dirname, 'src/' + appType)
-  const minify: boolean = env.NODE_ENV !== 'development'
-  const base: string = env.VITE_APP === 'mobile' ? '' : '/'
+  const root: string = resolve(__dirname, 'src/' + appType);
+  const minify: boolean = env.NODE_ENV !== 'development';
+  const base: string = env.VITE_APP === 'mobile' ? '' : '/';
 
   return defineConfig({
     plugins: [
@@ -26,8 +26,8 @@ export default ({ mode }: { mode: string }): UserConfig => {
       nginxRoutesPlugin({
         routesFile: 'src/app/router/routes.ts',
         outDir: 'dist',
-        mapVar: '$spa_match'
-      })
+        mapVar: '$spa_match',
+      }),
     ],
 
     root,
@@ -41,13 +41,23 @@ export default ({ mode }: { mode: string }): UserConfig => {
       rollupOptions: {
         input: '/index.html',
         output: {
-          manualChunks: (id) => {
-            if (id.includes('hls.js')) {return 'hls'}
-            if (id.includes('node_modules')) {return 'vendor'}
-            if (id.includes('app/styles/ui')) {return 'ui'}
-            if (id.includes('app/styles/app')) {return 'app'}
-            if (id.includes('app/styles/dist')) {return 'dist'}
-          }
+          manualChunks: id => {
+            if (id.includes('hls.js')) {
+              return 'hls';
+            }
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+            if (id.includes('app/styles/ui')) {
+              return 'ui';
+            }
+            if (id.includes('app/styles/app')) {
+              return 'app';
+            }
+            if (id.includes('app/styles/dist')) {
+              return 'dist';
+            }
+          },
         },
       },
       target: ['es2015'],
@@ -72,16 +82,16 @@ export default ({ mode }: { mode: string }): UserConfig => {
       preprocessorOptions: {
         scss: {
           quietDeps: true,
-          silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
-        }
-      }
-    }
-  })
-}
+          silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
+        },
+      },
+    },
+  });
+};
 
-function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
+function getLegacyPlugin(env: NodeJS.ProcessEnv): Plugin[] | null {
   if (env.VITE_APP !== 'mobile' || env.NODE_ENV === 'development') {
-    return null
+    return null;
   }
 
   return legacy({
@@ -91,13 +101,13 @@ function getLegacyPlugin (env: NodeJS.ProcessEnv): Plugin[] | null {
       'es.promise',
       'es.promise.finally',
       'es.array.iterator',
-      'es.object.assign'
+      'es.object.assign',
     ],
     renderLegacyChunks: true,
-    modernPolyfills: true
-  })
+    modernPolyfills: true,
+  });
 }
 
-function getBuildDate (): string {
-  return new Date().toISOString().slice(0, 10).replace(/-/g, '')
+function getBuildDate(): string {
+  return new Date().toISOString().slice(0, 10).replace(/-/g, '');
 }

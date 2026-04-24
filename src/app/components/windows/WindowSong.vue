@@ -6,19 +6,19 @@
           <div class="col">
             <div class="mb-1">
               <div class="noselect">
-                <strong>{{ t('win.song.artist') }}:</strong><br>
+                <strong>{{ t('win.song.artist') }}:</strong><br />
               </div>
               {{ song.data.artist }}
             </div>
             <div class="mb-1">
               <div class="noselect">
-                <strong>{{ t('win.song.album') }}:</strong><br>
+                <strong>{{ t('win.song.album') }}:</strong><br />
               </div>
               {{ song.data.album }}
             </div>
             <div class="mb-2">
               <div class="noselect">
-                <strong>{{ t('win.song.song_title') }}:</strong><br>
+                <strong>{{ t('win.song.song_title') }}:</strong><br />
               </div>
               {{ song.data.title }}
             </div>
@@ -28,8 +28,9 @@
             </div>
           </div>
           <div class="col-5 align-self-center">
-            <div class="artwork simple-border ratio ratio-1x1"
-                 :style="{'background-image': `url('${artwork}')`}"
+            <div
+              class="artwork simple-border ratio ratio-1x1"
+              :style="{ 'background-image': `url('${artwork}')` }"
             />
           </div>
         </div>
@@ -37,14 +38,20 @@
 
       <div class="row mt-2">
         <div class="col-4 pe-1">
-          <audio ref="audio" :src="song.data.preview_src" @pause="onPause" @play="onPlay" @timeupdate="timeUpdated" />
+          <audio
+            ref="audio"
+            :src="song.data.preview_src"
+            @pause="onPause"
+            @play="onPlay"
+            @timeupdate="timeUpdated"
+          />
           <win-button block :disabled="song.data.preview_src === null" @click="play">
             {{ playText }}
           </win-button>
         </div>
         <div class="col-2 ps-0">
           <win-button block :disabled="sending" @click="favoriteSong">
-            <i class="icon-favorite i" :style="{color: favoriteColor }" />
+            <i class="icon-favorite i" :style="{ color: favoriteColor }" />
           </win-button>
         </div>
         <div class="col-auto ms-auto">
@@ -67,126 +74,127 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import type { SongWindowParams } from '@app/types/types'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts'
-import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
-import { useApi } from '@app/composables/useApi.ts'
-import { songApi } from '@app/api/songs.api.ts'
-import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { computed, inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import type { SongWindowParams } from '@app/types/types';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts';
+  import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { songApi } from '@app/api/songs.api.ts';
+  import { userFavoritesApi } from '@app/api/userFavorites.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { showAlert } = useWindows()
-const { execute: addFavorite } = useApi(userFavoritesApi.addFavorite)
-const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite)
-const { openedWindows, closeWindow } = useWindows()
+  const { t } = useI18n();
+  const { showAlert } = useWindows();
+  const { execute: addFavorite } = useApi(userFavoritesApi.addFavorite);
+  const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite);
+  const { openedWindows, closeWindow } = useWindows();
 
-const winId: Ref<string> | undefined = inject('windowId')
+  const winId: Ref<string> | undefined = inject('windowId');
 
-const params = computed(() => openedWindows.value[winId!.value]?.params as SongWindowParams)
+  const params = computed(() => openedWindows.value[winId!.value]?.params as SongWindowParams);
 
-const audio = ref<HTMLAudioElement>()
+  const audio = ref<HTMLAudioElement>();
 
-const isPlaying = ref(false)
-const sending = ref(false)
-const playTimeLeft = ref(0)
-const songLength = computed(() => fmtDuration(song.value?.data.length ?? 0))
-const artwork = computed(() => song.value?.data.artwork_src)
-const favoriteColor = computed(() => song.value?.current_user?.favorite_id ? '#FFD300' : '')
-const playText = computed(() => isPlaying.value
-    ? t('win.song.btn_stop', { time: fmtDuration(playTimeLeft.value) })
-    : t('win.song.btn_play_preview')
-)
+  const isPlaying = ref(false);
+  const sending = ref(false);
+  const playTimeLeft = ref(0);
+  const songLength = computed(() => fmtDuration(song.value?.data.length ?? 0));
+  const artwork = computed(() => song.value?.data.artwork_src);
+  const favoriteColor = computed(() => (song.value?.current_user?.favorite_id ? '#FFD300' : ''));
+  const playText = computed(() =>
+    isPlaying.value
+      ? t('win.song.btn_stop', { time: fmtDuration(playTimeLeft.value) })
+      : t('win.song.btn_play_preview'),
+  );
 
-const { execute: getSong, data: song } = useApi(songApi.getSong)
-const { volume } = useVolumeControl()
+  const { execute: getSong, data: song } = useApi(songApi.getSong);
+  const { volume } = useVolumeControl();
 
-async function fetchSong (): Promise<void> {
-  try {
-    await getSong(params.value.songId)
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
-    closeWindow(winId!.value)
+  async function fetchSong(): Promise<void> {
+    try {
+      await getSong(params.value.songId);
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+      closeWindow(winId!.value);
+    }
   }
-}
 
-async function favoriteSong (): Promise<void> {
-  sending.value = true
+  async function favoriteSong(): Promise<void> {
+    sending.value = true;
 
-  try {
-    if (song.value?.current_user?.favorite_id) {
-      await deleteFavorite({ id: song.value.current_user.favorite_id })
+    try {
+      if (song.value?.current_user?.favorite_id) {
+        await deleteFavorite({ id: song.value.current_user.favorite_id });
+      } else {
+        await addFavorite({ songId: song.value!.data.id });
+      }
+      await fetchSong();
+    } catch (e) {
+      if ((e as ApiError).code === 401) {
+        showAlert(t('errors.please_sign'), t('errors.error'));
+      }
+    } finally {
+      sending.value = false;
+    }
+  }
+
+  function getVolume(): number {
+    return volume.value / 100;
+  }
+
+  function play(): void {
+    if (isPlaying.value) {
+      stop();
     } else {
-      await addFavorite({ songId: song.value!.data.id })
+      audio.value!.volume = getVolume();
+      audio.value!.play();
     }
-    await fetchSong()
-  } catch (e) {
-    if ((e as ApiError).code === 401) {
-      showAlert(t('errors.please_sign'), t('errors.error'))
+  }
+
+  function stop(): void {
+    isPlaying.value = false;
+    audio.value!.pause();
+    audio.value!.currentTime = 0;
+  }
+
+  function onPlay(): void {
+    isPlaying.value = true;
+  }
+
+  function onPause(): void {
+    isPlaying.value = false;
+  }
+
+  function timeUpdated(): void {
+    if (isPlaying.value) {
+      playTimeLeft.value = 30 - audio.value!.currentTime;
     }
-  } finally {
-    sending.value = false
   }
-}
 
-function getVolume (): number {
-  return volume.value / 100
-}
+  onMounted(() => {
+    fetchSong();
+  });
 
-function play (): void {
-  if (isPlaying.value) {
-    stop()
-  } else {
-    audio.value!.volume = getVolume()
-    audio.value!.play()
-  }
-}
-
-function stop (): void {
-  isPlaying.value = false
-  audio.value!.pause()
-  audio.value!.currentTime = 0
-}
-
-function onPlay (): void {
-  isPlaying.value = true
-}
-
-function onPause (): void {
-  isPlaying.value = false
-}
-
-function timeUpdated (): void {
-  if (isPlaying.value) {
-    playTimeLeft.value = 30 - audio.value!.currentTime
-  }
-}
-
-onMounted(() => {
-  fetchSong()
-})
-
-onBeforeUnmount(() => {
-  if (isPlaying.value) {
-    stop()
-    audio.value = undefined
-  }
-})
+  onBeforeUnmount(() => {
+    if (isPlaying.value) {
+      stop();
+      audio.value = undefined;
+    }
+  });
 </script>
 
 <style lang="scss">
-.song-info {
-  .artwork {
-    width: 100%;
-    height: auto;
-    background-size: cover;
-  }
+  .song-info {
+    .artwork {
+      width: 100%;
+      height: auto;
+      background-size: cover;
+    }
 
-  .group-box {
-    line-height: 14px;
+    .group-box {
+      line-height: 14px;
+    }
   }
-}
 </style>

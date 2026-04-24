@@ -8,10 +8,14 @@
       <template #content>
         <div v-if="isColorMode" class="row palette gx-0">
           <div v-for="color in palette" :key="color" class="col-auto">
-            <button class="color" :style="{backgroundColor: color}" @click="setColorBackground(color)" />
+            <button
+              class="color"
+              :style="{ backgroundColor: color }"
+              @click="setColorBackground(color)"
+            />
           </div>
           <div class="col-3">
-            <input class="d-block" :value="background.color" @input="colorSelected">
+            <input class="d-block" :value="background.color" @input="colorSelected" />
           </div>
         </div>
 
@@ -35,22 +39,18 @@
 
         <div class="row gx-0 mt-2 noselect">
           <div class="col-2 pe-1">
-            <win-button block @click="nextBackground(-1)">
-              &lt;
-            </win-button>
+            <win-button block @click="nextBackground(-1)"> &lt; </win-button>
           </div>
           <div class="col-2 pe-1">
-            <win-button block @click="nextBackground(1)">
-              &gt;
-            </win-button>
+            <win-button block @click="nextBackground(1)"> &gt; </win-button>
           </div>
           <div class="col-4 pe-1">
-            <win-button block :class="{active: isRandomMode}" @click="setRandomBackground">
+            <win-button block :class="{ active: isRandomMode }" @click="setRandomBackground">
               {{ t('win.settings.btn_random') }}
             </win-button>
           </div>
           <div class="col-4">
-            <win-button block :class="{active: isColorMode}" @click="setColorBackground">
+            <win-button block :class="{ active: isColorMode }" @click="setColorBackground">
               {{ t('win.settings.btn_solid') }}
             </win-button>
           </div>
@@ -79,7 +79,12 @@
             </div>
             <div class="select">
               <select @change="themeSelected" id="theme-select">
-                <option v-for="item in themes" :key="item[0]" :value="item[0]" :selected="theme === item[0]">
+                <option
+                  v-for="item in themes"
+                  :key="item[0]"
+                  :value="item[0]"
+                  :selected="theme === item[0]"
+                >
                   {{ item[1] }}
                 </option>
               </select>
@@ -92,10 +97,11 @@
 
             <div class="select">
               <select @change="taskbarPositionSelected">
-                <option v-for="item in taskbarPositions"
-                        :key="item[0]"
-                        :value="item[0]"
-                        :selected="taskbarPosition === item[0]"
+                <option
+                  v-for="item in taskbarPositions"
+                  :key="item[0]"
+                  :value="item[0]"
+                  :selected="taskbarPosition === item[0]"
                 >
                   {{ item[1] }}
                 </option>
@@ -114,16 +120,19 @@
       </template>
       <template #content>
         <div class="row">
-          <div class="col-6 align-self-center">
-            {{ t('win.settings.audio_quality') }}:
-          </div>
+          <div class="col-6 align-self-center">{{ t('win.settings.audio_quality') }}:</div>
           <div class="col-6">
             <div class="checkbox mb-1">
-              <input id="low_quality" type="checkbox" :checked="lowQuality" @change="qualityChanged">
+              <input
+                id="low_quality"
+                type="checkbox"
+                :checked="lowQuality"
+                @change="qualityChanged"
+              />
               <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
             </div>
             <div v-if="!isMobile()" class="checkbox">
-              <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged">
+              <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged" />
               <label for="hls_beta">HLS</label>
             </div>
           </div>
@@ -144,84 +153,102 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { isMobile } from '@app/utils/helpers.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useAppSettings } from '@app/composables/useAppSettings.ts'
-import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
-import { Win } from '@app/types'
+  import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { isMobile } from '@app/utils/helpers.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useAppSettings } from '@app/composables/useAppSettings.ts';
+  import { useBackgrounds } from '@app/composables/useBackgrounds.ts';
+  import { Win } from '@app/types';
 
-const { t } = useI18n()
-const { openWindow, closeWindow, showAlert } = useWindows()
-const { theme, taskbarPosition, useHls, lowQuality } = useAppSettings()
-const {
-  background, setColorBackground, setRandomBackground, nextBackground,
-  isRandomMode, isColorMode
-} = useBackgrounds()
+  const { t } = useI18n();
+  const { openWindow, closeWindow, showAlert } = useWindows();
+  const { theme, taskbarPosition, useHls, lowQuality } = useAppSettings();
+  const {
+    background,
+    setColorBackground,
+    setRandomBackground,
+    nextBackground,
+    isRandomMode,
+    isColorMode,
+  } = useBackgrounds();
 
-const palette = [
-  '#ffffff', '#000000', '#c0c0c0', '#808080', '#ff0000', '#800000', '#ffff00', '#808000', '#00ff00',
-  '#008000', '#00ffff', '#008080', '#0000ff', '#000080', '#ff00ff', '#800080',
-]
+  const palette = [
+    '#ffffff',
+    '#000000',
+    '#c0c0c0',
+    '#808080',
+    '#ff0000',
+    '#800000',
+    '#ffff00',
+    '#808000',
+    '#00ff00',
+    '#008000',
+    '#00ffff',
+    '#008080',
+    '#0000ff',
+    '#000080',
+    '#ff00ff',
+    '#800080',
+  ];
 
-const themes = [
-  ['desert', 'Desert'],
-  ['contrast', 'High Contrast'],
-  ['rainy', 'Rainy Day'],
-  ['rose', 'Rose'],
-  ['win98', 'Windows Standard'],
-]
+  const themes = [
+    ['desert', 'Desert'],
+    ['contrast', 'High Contrast'],
+    ['rainy', 'Rainy Day'],
+    ['rose', 'Rose'],
+    ['win98', 'Windows Standard'],
+  ];
 
-const taskbarPositions = computed(() => [
-  ['bottom', t('win.settings.bottom')],
-  ['top', t('win.settings.top')]
-])
+  const taskbarPositions = computed(() => [
+    ['bottom', t('win.settings.bottom')],
+    ['top', t('win.settings.top')],
+  ]);
 
-function colorSelected (e: Event): void {
-  setColorBackground((e.target as HTMLInputElement).value)
-}
+  function colorSelected(e: Event): void {
+    setColorBackground((e.target as HTMLInputElement).value);
+  }
 
-function themeSelected (e: Event): void {
-  theme.value = (e.target as HTMLSelectElement).value
-}
+  function themeSelected(e: Event): void {
+    theme.value = (e.target as HTMLSelectElement).value;
+  }
 
-function taskbarPositionSelected (e: Event): void {
-  taskbarPosition.value = (e.target as HTMLSelectElement).value
-}
+  function taskbarPositionSelected(e: Event): void {
+    taskbarPosition.value = (e.target as HTMLSelectElement).value;
+  }
 
-function openLanguageSettings (): void {
-  openWindow(Win.SETTINGS_LANGUAGE)
-  closeWindow(Win.SETTINGS)
-}
+  function openLanguageSettings(): void {
+    openWindow(Win.SETTINGS_LANGUAGE);
+    closeWindow(Win.SETTINGS);
+  }
 
-function qualityChanged (e: Event): void {
-  lowQuality.value = (e.target as HTMLInputElement).checked
-  showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
-}
+  function qualityChanged(e: Event): void {
+    lowQuality.value = (e.target as HTMLInputElement).checked;
+    showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info');
+  }
 
-function hlsChanged (e: Event): void {
-  useHls.value = (e.target as HTMLInputElement).checked
-  showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info')
-}
+  function hlsChanged(e: Event): void {
+    useHls.value = (e.target as HTMLInputElement).checked;
+    showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info');
+  }
 </script>
 
 <style lang="scss">
-#window-settings {
-  .palette {
-    .color {
-      margin: 2px;
-      width: 20px;
-      height: 20px;
+  #window-settings {
+    .palette {
+      .color {
+        margin: 2px;
+        width: 20px;
+        height: 20px;
 
-      border: 1px solid;
-    }
+        border: 1px solid;
+      }
 
-    input {
-      margin: 2px;
-      height: 20px;
-      line-height: 100%;
+      input {
+        margin: 2px;
+        height: 20px;
+        line-height: 100%;
+      }
     }
   }
-}
 </style>

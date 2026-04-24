@@ -7,7 +7,7 @@
       <div class="col">
         <p class="mb-2">{{ t('win.user_reset.instruction') }}</p>
         <label for="email">{{ t('fields.email') }}:</label>
-        <input id="email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email">
+        <input id="email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email" />
       </div>
     </div>
 
@@ -16,7 +16,12 @@
     <!-- Buttons -->
     <div class="row gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block :disabled="isLoading || fields.captcha_response === ''" class="fw-bold" @click="reset">
+        <win-button
+          block
+          :disabled="isLoading || fields.captcha_response === ''"
+          class="fw-bold"
+          @click="reset"
+        >
           {{ t('win.user_login.btn_reset') }}
         </win-button>
       </div>
@@ -30,32 +35,34 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { type UserResetForm, Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { authApi } from '@app/api/auth.api.ts'
+  import { reactive } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { type UserResetForm, Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { authApi } from '@app/api/auth.api.ts';
 
-const { t } = useI18n()
-const { showAlert, closeWindow } = useWindows()
-const { isLoading, execute } = useApi(authApi.resetPassword)
+  const { t } = useI18n();
+  const { showAlert, closeWindow } = useWindows();
+  const { isLoading, execute } = useApi(authApi.resetPassword);
 
-const fields: UserResetForm = reactive({
-  email: '',
-  captcha_response: '',
-})
+  const fields: UserResetForm = reactive({
+    email: '',
+    captcha_response: '',
+  });
 
-function reset (): void {
-  if (fields.email.length === 0) {
-    return showAlert(t('errors.fields.email_required'), t('errors.error'))
+  function reset(): void {
+    if (fields.email.length === 0) {
+      return showAlert(t('errors.fields.email_required'), t('errors.error'));
+    }
+
+    execute(fields)
+      .then(() => {
+        showAlert(t('messages.reset_success'), t('messages.success'), 'info');
+        closeWindow(Win.USER_RESET);
+      })
+      .catch(e => {
+        showAlert(e.message, t('errors.error'));
+      });
   }
-
-  execute(fields).then(() => {
-    showAlert(t('messages.reset_success'), t('messages.success'), 'info')
-    closeWindow(Win.USER_RESET)
-  }).catch(e => {
-    showAlert(e.message, t('errors.error'))
-  })
-}
 </script>

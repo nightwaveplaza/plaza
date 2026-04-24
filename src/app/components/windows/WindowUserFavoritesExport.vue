@@ -9,7 +9,7 @@
           {{ t('win.user_favorites_export.btn_export') }}
         </win-button>
         <template v-else>
-          <img class="mt-1" src="@app/assets/img/hourglass.gif" style="width:32px" alt="">
+          <img class="mt-1" src="@app/assets/img/hourglass.gif" style="width: 32px" alt="" />
         </template>
       </template>
 
@@ -32,17 +32,17 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { Win } from '@app/types'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useApi } from '@app/composables/useApi.ts'
-import { userFavoritesApi } from '@app/api/userFavorites.api.ts'
+  import { useI18n } from 'vue-i18n';
+  import { Win } from '@app/types';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { userFavoritesApi } from '@app/api/userFavorites.api.ts';
 
-const { t } = useI18n()
-const { closeWindow } = useWindows()
-const { isLoading, execute, data } = useApi(userFavoritesApi.exportFavorites)
+  const { t } = useI18n();
+  const { closeWindow } = useWindows();
+  const { isLoading, execute, data } = useApi(userFavoritesApi.exportFavorites);
 
-function startExport (): void {
-  execute()
-}
+  function startExport(): void {
+    execute();
+  }
 </script>

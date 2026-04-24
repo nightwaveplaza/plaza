@@ -2,14 +2,12 @@
   <div class="p-2 noselect">
     <div class="row gx-0">
       <div class="col-sm-4 d-none d-sm-block">
-        <img alt="register" class="img-register" src="@app/assets/img/register.png">
+        <img alt="register" class="img-register" src="@app/assets/img/register.png" />
       </div>
 
       <div class="col-12 col-sm-8 d-flex flex-column">
         <div class="d-flex flex-grow-1 flex-column mb-fix">
-          <p class="lead">
-            {{ t('win.user_register.user_information') }}:
-          </p>
+          <p class="lead">{{ t('win.user_register.user_information') }}:</p>
           <p class="mt-1 mb-2">
             {{ t('win.user_register.please_fill') }}
           </p>
@@ -20,7 +18,13 @@
               <label for="register-username">{{ t('fields.username') }}:</label>
             </div>
             <div class="col-7">
-              <input id="register-username" v-model="fields.username" class="d-block m-0" tabindex="1" type="text">
+              <input
+                id="register-username"
+                v-model="fields.username"
+                class="d-block m-0"
+                tabindex="1"
+                type="text"
+              />
             </div>
           </div>
 
@@ -30,7 +34,13 @@
               <label for="register-password">{{ t('fields.password') }}:</label>
             </div>
             <div class="col-7">
-              <input id="register-password" v-model="fields.password" class="d-block m-0" tabindex="2" type="password">
+              <input
+                id="register-password"
+                v-model="fields.password"
+                class="d-block m-0"
+                tabindex="2"
+                type="password"
+              />
             </div>
           </div>
 
@@ -40,7 +50,13 @@
               <label for="register-password-repeat">{{ t('fields.repeat_password') }}:</label>
             </div>
             <div class="col-7">
-              <input id="register-password-repeat" v-model="passwordR" class="d-block m-0" tabindex="3" type="password">
+              <input
+                id="register-password-repeat"
+                v-model="passwordR"
+                class="d-block m-0"
+                tabindex="3"
+                type="password"
+              />
             </div>
           </div>
 
@@ -50,7 +66,13 @@
               <label for="register-email">{{ t('fields.email') }}:</label>
             </div>
             <div class="col-7">
-              <input id="register-email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email">
+              <input
+                id="register-email"
+                v-model="fields.email"
+                class="d-block m-0"
+                tabindex="4"
+                type="email"
+              />
             </div>
           </div>
         </div>
@@ -60,7 +82,11 @@
         <div class="d-flex flex-grow-0">
           <div class="row gx-0 mt-2 justify-content-between flex-grow-1 mb-fix">
             <div class="col-auto">
-              <win-button class="d-block fw-bold px-3" :disabled="isLoading || fields.captcha_response === ''" @click="register">
+              <win-button
+                class="d-block fw-bold px-3"
+                :disabled="isLoading || fields.captcha_response === ''"
+                @click="register"
+              >
                 {{ t('win.user_register.btn_register') }}
               </win-button>
             </div>
@@ -77,106 +103,107 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { type UserRegisterForm, Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { userApi } from '@app/api/user.api.ts'
+  import { reactive, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { type UserRegisterForm, Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { userApi } from '@app/api/user.api.ts';
 
-const { t } = useI18n()
-const { showAlert, closeWindow } = useWindows()
-const { isLoading, execute: registerUser } = useApi(userApi.registerUser)
+  const { t } = useI18n();
+  const { showAlert, closeWindow } = useWindows();
+  const { isLoading, execute: registerUser } = useApi(userApi.registerUser);
 
-const fields: UserRegisterForm = reactive({
-  username: '',
-  email: '',
-  password: '',
-  captcha_response: '',
-})
+  const fields: UserRegisterForm = reactive({
+    username: '',
+    email: '',
+    password: '',
+    captcha_response: '',
+  });
 
-const passwordR = ref('')
+  const passwordR = ref('');
 
-/**
- * User register
- */
-async function register () {
-  try {
-    validate()
-  } catch (e) {
-    return showAlert((e as Error).message, t('errors.error'))
-  }
+  /**
+   * User register
+   */
+  async function register() {
+    try {
+      validate();
+    } catch (e) {
+      return showAlert((e as Error).message, t('errors.error'));
+    }
 
-  if (fields.captcha_response === '') {
-    return showAlert(t('win.user_register.captcha_fail'), t('errors.error'))
-  }
+    if (fields.captcha_response === '') {
+      return showAlert(t('win.user_register.captcha_fail'), t('errors.error'));
+    }
 
-  try {
-    await registerUser(fields)
-    showAlert(
+    try {
+      await registerUser(fields);
+      showAlert(
         t('win.user_register.welcome', { user: `<strong>${fields.username}</strong>` }),
-        t('win.user_register.success'), 'info'
-    )
-    closeWindow(Win.USER_REGISTER)
-  } catch (e) {
-    showAlert((e as Error).message, t('errors.error'))
-  }
-}
-
-/**
- * Fields validation
- */
-function validate (): void {
-  if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
-    throw new Error(t('errors.fields.username_alphadash'))
+        t('win.user_register.success'),
+        'info',
+      );
+      closeWindow(Win.USER_REGISTER);
+    } catch (e) {
+      showAlert((e as Error).message, t('errors.error'));
+    }
   }
 
-  if (fields.username.length < 4) {
-    throw new Error(t('errors.fields.username_min'))
-  }
+  /**
+   * Fields validation
+   */
+  function validate(): void {
+    if (/[^a-zA-Z0-9-_]+/.test(fields.username)) {
+      throw new Error(t('errors.fields.username_alphadash'));
+    }
 
-  if (fields.username.length > 32) {
-    throw new Error(t('errors.fields.username_max'))
-  }
+    if (fields.username.length < 4) {
+      throw new Error(t('errors.fields.username_min'));
+    }
 
-  if (fields.password!.length < 3) {
-    throw new Error(t('errors.fields.password_min'))
-  }
+    if (fields.username.length > 32) {
+      throw new Error(t('errors.fields.username_max'));
+    }
 
-  if (fields.password !== passwordR.value) {
-    throw new Error(t('errors.fields.password_match'))
+    if (fields.password!.length < 3) {
+      throw new Error(t('errors.fields.password_min'));
+    }
+
+    if (fields.password !== passwordR.value) {
+      throw new Error(t('errors.fields.password_match'));
+    }
   }
-}
 </script>
 
 <style lang="scss">
-#window-user-register {
-  .img-register {
-    margin-top: 2px;
-    width: 120px;
-    height: auto;
-    max-width: 100%;
-  }
+  #window-user-register {
+    .img-register {
+      margin-top: 2px;
+      width: 120px;
+      height: auto;
+      max-width: 100%;
+    }
 
-  button {
-    margin-bottom: 2px;
-  }
+    button {
+      margin-bottom: 2px;
+    }
 
-  p.lead {
-    font-size: 14px !important;
-    font-weight: 700;
-  }
+    p.lead {
+      font-size: 14px !important;
+      font-weight: 700;
+    }
 
-  .img-captcha {
-    width: 100%;
-    height: auto;
-  }
+    .img-captcha {
+      width: 100%;
+      height: auto;
+    }
 
-  label[for=register-username]::first-letter,
-  label[for=register-password]::first-letter,
-  label[for=register-password-repeat]::first-letter,
-  label[for=register-email]::first-letter {
-    text-decoration: underline;
+    label[for='register-username']::first-letter,
+    label[for='register-password']::first-letter,
+    label[for='register-password-repeat']::first-letter,
+    label[for='register-email']::first-letter {
+      text-decoration: underline;
+    }
   }
-}
 </style>

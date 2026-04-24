@@ -1,42 +1,43 @@
-import type { AlertWindowParams, WindowState } from '@app/types'
+import type { AlertWindowParams, WindowState } from '@app/types';
 
-const glob = import.meta.glob(
-  '@app/assets/icons/*.png', { eager: true, import: 'default' },
-) as Record<string, string>
+const glob = import.meta.glob('@app/assets/icons/*.png', {
+  eager: true,
+  import: 'default',
+}) as Record<string, string>;
 
 export interface IconData {
   src: string;
   srcset: string;
 }
 
-const icons: Record<string, IconData> = {}
+const icons: Record<string, IconData> = {};
 
-const tempStore: Record<string, { x1?: string; x2?: string }> = {}
+const tempStore: Record<string, { x1?: string; x2?: string }> = {};
 
 for (const path in glob) {
-  const fileUrl = glob[path]
+  const fileUrl = glob[path];
 
-  const fileName = path.split('/').pop() || ''
+  const fileName = path.split('/').pop() || '';
 
-  let iconName = ''
-  let is2x = false
+  let iconName = '';
+  let is2x = false;
 
   if (fileName.includes('@2x')) {
-    iconName = fileName.replace('@2x.png', '')
-    is2x = true
+    iconName = fileName.replace('@2x.png', '');
+    is2x = true;
   } else {
-    iconName = fileName.replace('.png', '')
-    is2x = false
+    iconName = fileName.replace('.png', '');
+    is2x = false;
   }
 
   if (!tempStore[iconName]) {
-    tempStore[iconName] = {}
+    tempStore[iconName] = {};
   }
 
   if (is2x) {
-    tempStore[iconName]!.x2 = fileUrl
+    tempStore[iconName]!.x2 = fileUrl;
   } else {
-    tempStore[iconName]!.x1 = fileUrl
+    tempStore[iconName]!.x1 = fileUrl;
   }
 }
 
@@ -45,21 +46,21 @@ for (const [name, urls] of Object.entries(tempStore)) {
     icons[name] = {
       src: urls.x1,
       srcset: urls.x2 ? `${urls.x1} 1x, ${urls.x2} 2x` : `${urls.x1} 1x`,
-    }
+    };
   }
 }
 
 const getWindowIcon = (state: WindowState): IconData => {
-  let iconName: string
+  let iconName: string;
 
   if (state.isAlert) {
-    const params = state.params as AlertWindowParams
-    iconName = params.type === 'info' ? 'msg_information' : 'msg_warning'
+    const params = state.params as AlertWindowParams;
+    iconName = params.type === 'info' ? 'msg_information' : 'msg_warning';
   } else {
-    iconName = state.icon ?? 'ball'
+    iconName = state.icon ?? 'ball';
   }
 
-  return icons[iconName] || icons['ball']!
-}
+  return icons[iconName] || icons['ball']!;
+};
 
-export { getWindowIcon }
+export { getWindowIcon };

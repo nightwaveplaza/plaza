@@ -1,9 +1,10 @@
 <template>
   <div class="row gx-0">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0 px-4 px-sm-0">
-      <div class="cover simple-border noselect ratio ratio-1x1"
-           :style="{'background-image': `url('${artwork}')`}"
-           @click="openSongInfo"
+      <div
+        class="cover simple-border noselect ratio ratio-1x1"
+        :style="{ 'background-image': `url('${artwork}')` }"
+        @click="openSongInfo"
       />
     </div>
 
@@ -32,7 +33,7 @@
         <div class="row gx-0">
           <div class="col-8 col-md-7 pe-md-2">
             <div class="row gx-0">
-              <div :class="{'col-8': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying}">
+              <div :class="{ 'col-8': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying }">
                 <win-button class="player-play" block @click="play()">
                   {{ playText }}
                 </win-button>
@@ -68,78 +69,80 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
-import type WinPlayerTime from '@app/components/player/WinPlayerTime.vue'
-import { PlayerState } from '@app/types/types.ts'
-import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts'
-import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { Win } from '@app/types'
-import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts'
+  import { computed, onMounted, ref, watch } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import type WinPlayerTime from '@app/components/player/WinPlayerTime.vue';
+  import { PlayerState } from '@app/types/types.ts';
+  import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts';
+  import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { Win } from '@app/types';
+  import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
 
-const { volume } = useVolumeControl()
-const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer()
-const { song } = useNowPlayingStatus()
+  const { volume } = useVolumeControl();
+  const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer();
+  const { song } = useNowPlayingStatus();
 
-const { t } = useI18n()
-const { openWindow, showSongInfo } = useWindows()
-const { isSigned } = useAuth()
-const { state, sleepTime } = usePlayerPlayback()
+  const { t } = useI18n();
+  const { openWindow, showSongInfo } = useWindows();
+  const { isSigned } = useAuth();
+  const { state, sleepTime } = usePlayerPlayback();
 
-const time = ref<InstanceType<typeof WinPlayerTime>>()
-const canvas = ref<InstanceType<typeof HTMLCanvasElement>>()
+  const time = ref<InstanceType<typeof WinPlayerTime>>();
+  const canvas = ref<InstanceType<typeof HTMLCanvasElement>>();
 
-const artwork = computed(() => {
-  return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg'
-})
+  const artwork = computed(() => {
+    return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg';
+  });
 
-const playText = computed((): string => {
-  switch (state.value) {
-    case PlayerState.LOADING: return t('loading')
-    case PlayerState.PLAYING: return t('win.player.btn_stop')
-    default: return t('win.player.btn_play')
+  const playText = computed((): string => {
+    switch (state.value) {
+      case PlayerState.LOADING:
+        return t('loading');
+      case PlayerState.PLAYING:
+        return t('win.player.btn_stop');
+      default:
+        return t('win.player.btn_play');
+    }
+  });
+
+  const isPlaying = computed(() => state.value === PlayerState.PLAYING);
+  const timerColor = computed(() => (sleepTime.value > 0 ? '#3455DB' : ''));
+
+  watch(volume, newVolume => {
+    time.value!.showText(t('win.player.volume', { volume: newVolume }));
+  });
+
+  function setVolume(vol: number) {
+    volume.value = vol;
   }
-})
 
-const isPlaying = computed(() => state.value === PlayerState.PLAYING)
-const timerColor = computed(() => sleepTime.value > 0 ? '#3455DB' : '')
-
-watch(volume, (newVolume) => {
-  time.value!.showText(t('win.player.volume', { volume: newVolume }))
-})
-
-function setVolume(vol: number) {
-  volume.value = vol
-}
-
-function play (): void {
-  if (state.value === PlayerState.IDLE) {
-    state.value = PlayerState.LOADING
-    playAudio()
-  } else {
-    stopAudio()
+  function play(): void {
+    if (state.value === PlayerState.IDLE) {
+      state.value = PlayerState.LOADING;
+      playAudio();
+    } else {
+      stopAudio();
+    }
   }
-}
 
-function openSongInfo (): void {
-  if (song.id) {
-    showSongInfo(song.id)
+  function openSongInfo(): void {
+    if (song.id) {
+      showSongInfo(song.id);
+    }
   }
-}
 
-function openUserWindow (): void {
-  openWindow(isSigned.value ? Win.USER : Win.USER_LOGIN)
-}
+  function openUserWindow(): void {
+    openWindow(isSigned.value ? Win.USER : Win.USER_LOGIN);
+  }
 
-function openTimerWindow (): void {
-  openWindow(Win.PLAYER_TIMER)
-}
+  function openTimerWindow(): void {
+    openWindow(Win.PLAYER_TIMER);
+  }
 
-onMounted(() => {
-  setVisualCanvas(canvas.value!)
-})
+  onMounted(() => {
+    setVisualCanvas(canvas.value!);
+  });
 </script>
-

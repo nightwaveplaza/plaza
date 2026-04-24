@@ -1,31 +1,31 @@
-import type { BackgroundImage, History, News, Rating, Song, User } from '@app/types/models.ts'
+import type { BackgroundImage, History, News, Rating, Song, User } from '@app/types/models.ts';
 
 interface PaginatedCollection<T> {
   meta: {
-    current_page: number
-    from: number
-    last_page: number
-    path: string
-    per_page: number
-    to: number
-    total: number
-  },
-  data: T[]
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+  data: T[];
 }
 
 interface ApiResource<T> {
-  data: T
+  data: T;
 }
 
 export interface ResultResource {
-  result: string
+  result: string;
 }
 
 /**
  * Backgrounds
  */
 export interface BackgroundCollection {
-  data: BackgroundImage[]
+  data: BackgroundImage[];
 }
 
 export interface BackgroundResponse extends ApiResource<BackgroundImage> {}
@@ -36,19 +36,17 @@ export interface BackgroundResponse extends ApiResource<BackgroundImage> {}
 export interface HistoryCollection extends PaginatedCollection<History> {
   // additional
   date_range: {
-    from_date: number
-    to_date: number
-  }
+    from_date: number;
+    to_date: number;
+  };
 }
 
 /**
  * News
  */
-export interface NewsCollection extends PaginatedCollection<News> {
-}
+export interface NewsCollection extends PaginatedCollection<News> {}
 
-export interface NewsLatestResource extends ApiResource<News> {
-}
+export interface NewsLatestResource extends ApiResource<News> {}
 
 /**
  * Ratings
@@ -60,48 +58,48 @@ export interface RatingsCollection extends PaginatedCollection<Rating> {}
  */
 export interface SongResource extends ApiResource<Song> {
   stats: {
-    likes: string,
-    first_played_at: number | null
-  },
+    likes: string;
+    first_played_at: number | null;
+  };
   current_user?: {
-    favorite_id: number | null
-  }
+    favorite_id: number | null;
+  };
 }
 
 /**
  * Status
  */
 export interface StatusResource {
-  song: Song
-  listeners: number
-  updated_at: number
-  reactions: number
-  position: number
+  song: Song;
+  listeners: number;
+  updated_at: number;
+  reactions: number;
+  position: number;
 }
 
 /**
  * User
  */
 export interface UserResource {
-  data: User,
-  current_reaction: null | number
+  data: User;
+  current_reaction: null | number;
 }
 
 export interface UserStatsResource {
   data: {
-    reactions: number,
-    favorites: number,
-  },
-  current_reaction: null | number
+    reactions: number;
+    favorites: number;
+  };
+  current_reaction: null | number;
 }
 
 export interface UserLoginResource {
-  data: User,
-  token: string | null
+  data: User;
+  token: string | null;
 }
 
 export interface UserFavoritesCollection extends PaginatedCollection<{
-  id: number
-  song: Song,
-  created_at: number
+  id: number;
+  song: Song;
+  created_at: number;
 }> {}

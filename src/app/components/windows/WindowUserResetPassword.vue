@@ -4,11 +4,11 @@
       <div class="col-10 offset-1">
         <!-- New password -->
         <label for="password">{{ t('fields.new_password') }}:</label>
-        <input id="password" v-model="password" class="d-block mb-2" type="password">
+        <input id="password" v-model="password" class="d-block mb-2" type="password" />
 
         <!-- Repeat password -->
         <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
-        <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password">
+        <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password" />
 
         <!-- Buttons -->
         <div class="row mt-2 gx-0 justify-content-between">
@@ -29,46 +29,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { authApi } from '@app/api/auth.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { authApi } from '@app/api/auth.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { closeWindow, showAlert } = useWindows()
-const { isLoading, execute } = useApi(authApi.resetPasswordConfirm)
-const { resetToken } = useAuth()
+  const { t } = useI18n();
+  const { closeWindow, showAlert } = useWindows();
+  const { isLoading, execute } = useApi(authApi.resetPasswordConfirm);
+  const { resetToken } = useAuth();
 
-const password = ref('')
-const passwordRepeat = ref('')
+  const password = ref('');
+  const passwordRepeat = ref('');
 
-async function change (): Promise<void> {
-  try {
-    validate()
-  } catch (e) {
-    return showAlert((e as Error).message, t('errors.error'))
+  async function change(): Promise<void> {
+    try {
+      validate();
+    } catch (e) {
+      return showAlert((e as Error).message, t('errors.error'));
+    }
+
+    try {
+      await execute({ token: resetToken.value!, password: password.value });
+      showAlert(t('messages.password_changed'), t('messages.success'), 'info');
+      closeWindow(Win.USER_RESET_PASSWORD);
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
   }
 
-  try {
-    await execute({ token: resetToken.value!, password: password.value })
-    showAlert(t('messages.password_changed'), t('messages.success'), 'info')
-    closeWindow(Win.USER_RESET_PASSWORD)
-  } catch (e) {
-    showAlert((e as ApiError).message, t('errors.error'))
-  }
-}
+  function validate(): void {
+    if (password.value.length < 3) {
+      throw new Error(t('errors.fields.password_min'));
+    }
 
-function validate (): void {
-  if (password.value.length < 3) {
-    throw new Error(t('errors.fields.password_min'))
+    if (password.value !== passwordRepeat.value) {
+      throw new Error(t('errors.fields.password_match'));
+    }
   }
-
-  if (password.value !== passwordRepeat.value) {
-    throw new Error(t('errors.fields.password_match'))
-  }
-}
 </script>

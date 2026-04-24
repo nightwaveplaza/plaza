@@ -15,7 +15,7 @@
     <win-panel class="p-2 mb-2">
       <div class="row gx-0">
         <div class="col-2 align-self-center noselect">
-          <img src="@app/assets/img/user_card.png" alt="user">
+          <img src="@app/assets/img/user_card.png" alt="user" />
         </div>
         <div class="col ps-2">
           <div class="username mb-1">
@@ -35,18 +35,22 @@
             {{ t('win.user.statistics') }}
           </template>
           <template #content>
-            <table style="width: 100%;">
+            <table style="width: 100%">
               <colgroup>
-                <col style="width: 75px">
-                <col style="width: auto">
+                <col style="width: 75px" />
+                <col style="width: auto" />
               </colgroup>
               <tbody>
                 <tr>
-                  <td><b>{{ t('win.user.likes') }}:</b></td>
+                  <td>
+                    <b>{{ t('win.user.likes') }}:</b>
+                  </td>
                   <td>{{ reactions ?? '...' }}</td>
                 </tr>
                 <tr>
-                  <td><b>{{ t('win.user.favorites') }}:</b></td>
+                  <td>
+                    <b>{{ t('win.user.favorites') }}:</b>
+                  </td>
                   <td>{{ favorites ?? '...' }}</td>
                 </tr>
               </tbody>
@@ -63,7 +67,9 @@
             <table>
               <tbody>
                 <tr>
-                  <td><b>{{ t('win.user.registered') }}:</b></td>
+                  <td>
+                    <b>{{ t('win.user.registered') }}:</b>
+                  </td>
                 </tr>
                 <tr>
                   <td>{{ fmtDate(user?.created_at ?? 0) }}</td>
@@ -91,60 +97,60 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { fmtDate } from '@app/utils/timeFormats.ts'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { Win } from '@app/types'
-import { onMounted, ref } from 'vue'
-import { useApi } from '@app/composables/useApi.ts'
-import { authApi } from '@app/api/auth.api.ts'
-import { userApi } from '@app/api/user.api.ts'
+  import { useI18n } from 'vue-i18n';
+  import { fmtDate } from '@app/utils/timeFormats.ts';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { Win } from '@app/types';
+  import { onMounted, ref } from 'vue';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { authApi } from '@app/api/auth.api.ts';
+  import { userApi } from '@app/api/user.api.ts';
 
-const { t } = useI18n()
-const { openWindow, closeWindow } = useWindows()
-const { execute: doLogout } = useApi(authApi.logout)
-const { execute: getUserStats } = useApi(userApi.getUserStats)
+  const { t } = useI18n();
+  const { openWindow, closeWindow } = useWindows();
+  const { execute: doLogout } = useApi(authApi.logout);
+  const { execute: getUserStats } = useApi(userApi.getUserStats);
 
-const { user, unsetUser } = useAuth()
+  const { user, unsetUser } = useAuth();
 
-const reactions = ref<number|null>(null)
-const favorites = ref<number|null>(null)
+  const reactions = ref<number | null>(null);
+  const favorites = ref<number | null>(null);
 
-function open (window: Win): void {
-  openWindow(window)
-  closeWindow(Win.USER)
-}
-
-async function logout (): Promise<void> {
-  await doLogout()
-  unsetUser()
-  closeWindow(Win.USER)
-}
-
-onMounted(async () => {
-  try {
-    const res = await getUserStats()
-    reactions.value = res.data.reactions
-    favorites.value = res.data.favorites
-  } catch(e) {
-    console.log("Failed to get user stats", e)
+  function open(window: Win): void {
+    openWindow(window);
+    closeWindow(Win.USER);
   }
-})
+
+  async function logout(): Promise<void> {
+    await doLogout();
+    unsetUser();
+    closeWindow(Win.USER);
+  }
+
+  onMounted(async () => {
+    try {
+      const res = await getUserStats();
+      reactions.value = res.data.reactions;
+      favorites.value = res.data.favorites;
+    } catch (e) {
+      console.log('Failed to get user stats', e);
+    }
+  });
 </script>
 
 <style lang="scss">
-#window-user {
-  .username {
-    font-size: 14px;
-    font-weight: 700;
-  }
+  #window-user {
+    .username {
+      font-size: 14px;
+      font-weight: 700;
+    }
 
-  a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
-}
 </style>

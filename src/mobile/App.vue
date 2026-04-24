@@ -1,5 +1,5 @@
 <template>
-  <div :class="themeName" :data-theme="themeName" :style="{backgroundColor}" class="app-desktop">
+  <div :class="themeName" :data-theme="themeName" :style="{ backgroundColor }" class="app-desktop">
     <win-window
       v-for="window in openedWindows"
       :id="window.id"
@@ -11,76 +11,82 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import { Native } from '@mobile/bridge/native'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { useAppSettings } from '@app/composables/useAppSettings.ts'
-import { useBackgrounds } from '@app/composables/useBackgrounds.ts'
-import { useAuth } from '@app/composables/useAuth.ts'
-import { Win } from '@app/types'
-import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts'
-import { useThemeColor } from '@app/composables/useThemeColor.ts'
-import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts'
-import { useNewsPopup } from '@app/composables/useNewsPopup.ts'
-import { initAppSocket } from '@app/services/initAppSocket.ts'
-import { useEventListener, watchOnce } from '@vueuse/core'
-import { setApiToken } from '@app/api'
+  import { onMounted, watch } from 'vue';
+  import { Native } from '@mobile/bridge/native';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useAppSettings } from '@app/composables/useAppSettings.ts';
+  import { useBackgrounds } from '@app/composables/useBackgrounds.ts';
+  import { useAuth } from '@app/composables/useAuth.ts';
+  import { Win } from '@app/types';
+  import { useNativeEvents } from '@mobile/composables/useNativeEvents.ts';
+  import { useThemeColor } from '@app/composables/useThemeColor.ts';
+  import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
+  import { useNewsPopup } from '@app/composables/useNewsPopup.ts';
+  import { initAppSocket } from '@app/services/initAppSocket.ts';
+  import { useEventListener, watchOnce } from '@vueuse/core';
+  import { setApiToken } from '@app/api';
 
-const i18n = useI18n()
-const { openWindow, openedWindows, closeWindow } = useWindows()
-const { themeName, language } = useAppSettings()
-const { backgroundColor, initBackground } = useBackgrounds()
-const { openNewsIfUpdated } = useNewsPopup()
-const { isSigned } = useAuth()
+  const i18n = useI18n();
+  const { openWindow, openedWindows, closeWindow } = useWindows();
+  const { themeName, language } = useAppSettings();
+  const { backgroundColor, initBackground } = useBackgrounds();
+  const { openNewsIfUpdated } = useNewsPopup();
+  const { isSigned } = useAuth();
 
-const { updateBackgroundNative } = useNativeEvents()
-const { song } = useNowPlayingStatus()
+  const { updateBackgroundNative } = useNativeEvents();
+  const { song } = useNowPlayingStatus();
 
-// Automatically apply theme color to browser
-useThemeColor()
-// Init socket updater
-initAppSocket()
-initBackground().then(() => {
-  updateBackgroundNative()
-})
+  // Automatically apply theme color to browser
+  useThemeColor();
+  // Init socket updater
+  initAppSocket();
+  initBackground().then(() => {
+    updateBackgroundNative();
+  });
 
-// Register windows events
-useEventListener(window, 'window:open', (e: CustomEvent) => {
-  const name = e.detail
-  if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
-    openWindow(Win.USER_LOGIN)
-    return
-  }
-  openWindow(name)
-})
+  // Register windows events
+  useEventListener(window, 'window:open', (e: CustomEvent) => {
+    const name = e.detail;
+    if ((name === 'user-favorites' || name === 'user') && !isSigned.value) {
+      openWindow(Win.USER_LOGIN);
+      return;
+    }
+    openWindow(name);
+  });
 
-useEventListener(window, 'window:close', (e: CustomEvent) => closeWindow(e.detail))
+  useEventListener(window, 'window:close', (e: CustomEvent) => closeWindow(e.detail));
 
-watch(() => language.value, () => {
-  i18n.locale.value = language.value
-})
+  watch(
+    () => language.value,
+    () => {
+      i18n.locale.value = language.value;
+    },
+  );
 
-onMounted(() => {
-  // todo
-  i18n.locale.value = language.value
+  onMounted(() => {
+    // todo
+    i18n.locale.value = language.value;
 
-  openWindow(Win.LOADING)
-  setTimeout(() => Native.onReady(), 1000) // let loading animation play a bit
+    openWindow(Win.LOADING);
+    setTimeout(() => Native.onReady(), 1000); // let loading animation play a bit
 
-  Native.getAuthToken()!.then((t) => {
-    const token = t as string
-    setApiToken(token)
-    useAuth().fetchUser()
-  })
+    Native.getAuthToken()!.then(t => {
+      const token = t as string;
+      setApiToken(token);
+      useAuth().fetchUser();
+    });
 
-  Native.onReady()
-})
+    Native.onReady();
+  });
 
-// waiting for the first status response then check news and open up player
-watchOnce(() => song.id, () => {
-  openWindow(Win.PLAYER)
-  closeWindow(Win.LOADING)
-  openNewsIfUpdated()
-})
+  // waiting for the first status response then check news and open up player
+  watchOnce(
+    () => song.id,
+    () => {
+      openWindow(Win.PLAYER);
+      closeWindow(Win.LOADING);
+      openNewsIfUpdated();
+    },
+  );
 </script>

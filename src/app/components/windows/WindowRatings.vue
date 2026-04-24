@@ -4,13 +4,25 @@
       <div class="d-flex flex-column h-100">
         <!-- Range buttons -->
         <div class="d-flex mb-1">
-          <win-button :class="{ active: range === RatingsRange.OVERTIME }" class="songs-range me-1" @click="changeRange(RatingsRange.OVERTIME)">
+          <win-button
+            :class="{ active: range === RatingsRange.OVERTIME }"
+            class="songs-range me-1"
+            @click="changeRange(RatingsRange.OVERTIME)"
+          >
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
-          <win-button :class="{ active: range === RatingsRange.MONTHLY }" class="songs-range me-1" @click="changeRange(RatingsRange.MONTHLY)">
+          <win-button
+            :class="{ active: range === RatingsRange.MONTHLY }"
+            class="songs-range me-1"
+            @click="changeRange(RatingsRange.MONTHLY)"
+          >
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
-          <win-button :class="{ active: range === RatingsRange.WEEKLY }" class="songs-range me-0" @click="changeRange(RatingsRange.WEEKLY)">
+          <win-button
+            :class="{ active: range === RatingsRange.WEEKLY }"
+            class="songs-range me-0"
+            @click="changeRange(RatingsRange.WEEKLY)"
+          >
             {{ t('win.ratings.btn_weekly') }}
           </win-button>
         </div>
@@ -64,75 +76,74 @@
   <div class="win-window__statusbar noselect">
     <div class="row gx-0">
       <div class="col-auto cell pe-4 d">
-        {{ songs ? t('pagination.pages', {n: songs?.meta.last_page}) : '...' }}
+        {{ songs ? t('pagination.pages', { n: songs?.meta.last_page }) : '...' }}
       </div>
       <div class="col cell">
-        {{ songs ? t('pagination.songs', {n: songs.meta.total}) : '...' }}
+        {{ songs ? t('pagination.songs', { n: songs.meta.total }) : '...' }}
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import type WinPagination from '@app/components/basic/WinPagination.vue'
-import { useI18n } from 'vue-i18n'
-import { useWindows } from '@app/composables/useWindows.ts'
-import { RatingsRange, Win } from '@app/types'
-import { useApi } from '@app/composables/useApi.ts'
-import { ratingsApi } from '@app/api/ratings.api.ts'
-import type { ApiError } from '@app/utils/apiErrorHandler.ts'
+  import { onMounted, ref } from 'vue';
+  import type WinPagination from '@app/components/basic/WinPagination.vue';
+  import { useI18n } from 'vue-i18n';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { RatingsRange, Win } from '@app/types';
+  import { useApi } from '@app/composables/useApi.ts';
+  import { ratingsApi } from '@app/api/ratings.api.ts';
+  import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-const { t } = useI18n()
-const { showAlert, showSongInfo, closeWindow } = useWindows()
-const { execute: getRatings, isLoading, data: songs } = useApi(ratingsApi.getRatings)
+  const { t } = useI18n();
+  const { showAlert, showSongInfo, closeWindow } = useWindows();
+  const { execute: getRatings, isLoading, data: songs } = useApi(ratingsApi.getRatings);
 
-const page = ref(1)
-const range = ref<RatingsRange>(RatingsRange.OVERTIME)
-const pagination = ref<InstanceType<typeof WinPagination>>()
+  const page = ref(1);
+  const range = ref<RatingsRange>(RatingsRange.OVERTIME);
+  const pagination = ref<InstanceType<typeof WinPagination>>();
 
-function changePage (newPage: number): void {
-  page.value = newPage
-  fetchRatings()
-}
-
-function changeRange (newRange: RatingsRange): void {
-  range.value = newRange
-  pagination.value?.reset()
-}
-
-async function fetchRatings (): Promise<void> {
-  try {
-    await getRatings({page: page.value}, range.value)
-  } catch(e) {
-    showAlert((e as ApiError).message, t('errors.error'))
+  function changePage(newPage: number): void {
+    page.value = newPage;
+    fetchRatings();
   }
-}
 
-function pad (n: number): string {
-  return n.toString().padStart(3, '0')
-}
+  function changeRange(newRange: RatingsRange): void {
+    range.value = newRange;
+    pagination.value?.reset();
+  }
 
-onMounted(() => {
-  fetchRatings()
-})
+  async function fetchRatings(): Promise<void> {
+    try {
+      await getRatings({ page: page.value }, range.value);
+    } catch (e) {
+      showAlert((e as ApiError).message, t('errors.error'));
+    }
+  }
+
+  function pad(n: number): string {
+    return n.toString().padStart(3, '0');
+  }
+
+  onMounted(() => {
+    fetchRatings();
+  });
 </script>
 
 <style lang="scss">
-#window-ratings {
-  .win-list {
-    table {
-      .icon-heart {
-        text-shadow: none;
-        opacity: 0.8;
-        color: #B22222;
+  #window-ratings {
+    .win-list {
+      table {
+        .icon-heart {
+          text-shadow: none;
+          opacity: 0.8;
+          color: #b22222;
 
-        &:before {
-          font-size: 11px;
+          &:before {
+            font-size: 11px;
+          }
         }
       }
     }
   }
-}
 </style>

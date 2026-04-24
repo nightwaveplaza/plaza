@@ -1,13 +1,13 @@
 export enum BackgroundMode {
   RANDOM,
   SINGLE,
-  COLOR
+  COLOR,
 }
 
 export enum RatingsRange {
   OVERTIME = 'overtime',
   WEEKLY = 'weekly',
-  MONTHLY = 'monthly'
+  MONTHLY = 'monthly',
 }
 
 export enum Win {
@@ -34,11 +34,11 @@ export enum Win {
   USER_PROFILE_DELETE = 'user-profile-delete',
   USER_REGISTER = 'user-register',
   USER_RESET = 'user-reset',
-  USER_RESET_PASSWORD = 'user-reset-password'
+  USER_RESET_PASSWORD = 'user-reset-password',
 }
 
 export enum WindowHeaderButtons {
   BTN_MINIMIZE = 'minimize',
   BTN_MAXIMIZE = 'maximize',
-  BTN_CLOSE = 'close'
+  BTN_CLOSE = 'close',
 }

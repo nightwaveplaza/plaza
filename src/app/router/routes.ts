@@ -1,8 +1,8 @@
-import Index from '@app/views/Index.vue'
-import ResetPassword from '@app/views/ResetPassword.vue'
-import UserRegister from '@app/views/UserRegister.vue'
-import SupportUs from '@app/views/SupportUs.vue'
-import PageNotFound from '@app/views/PageNotFound.vue'
+import Index from '@app/views/Index.vue';
+import ResetPassword from '@app/views/ResetPassword.vue';
+import UserRegister from '@app/views/UserRegister.vue';
+import SupportUs from '@app/views/SupportUs.vue';
+import PageNotFound from '@app/views/PageNotFound.vue';
 
 export default [
   {
@@ -29,10 +29,10 @@ export default [
   {
     path: '/404',
     name: '404',
-    component: PageNotFound
+    component: PageNotFound,
   },
   {
-     path: '/:pathMatch(.*)*',
-     component: PageNotFound
-  }
-]
+    path: '/:pathMatch(.*)*',
+    component: PageNotFound,
+  },
+];

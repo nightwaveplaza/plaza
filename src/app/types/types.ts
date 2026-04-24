@@ -1,72 +1,72 @@
-import { type WindowHeaderButtons } from '@app/types/enums.ts'
+import { type WindowHeaderButtons } from '@app/types/enums.ts';
 
 export interface WindowConfig {
-  width: number,
-  height?: number,
+  width: number;
+  height?: number;
 
-  titleKey?: string,
-  title?: string,
+  titleKey?: string;
+  title?: string;
 
-  headerButtons?: WindowHeaderButtons[],
-  isAlert?: boolean,
-  icon?: string
+  headerButtons?: WindowHeaderButtons[];
+  isAlert?: boolean;
+  icon?: string;
 }
 
 export interface WindowState extends WindowConfig {
-  id: string,
-  component: string,
+  id: string;
+  component: string;
 
-  x: number,
-  y: number,
-  isMinimized: boolean,
-  zIndex: number,
+  x: number;
+  y: number;
+  isMinimized: boolean;
+  zIndex: number;
 
-  params?: AlertWindowParams | SongWindowParams,
+  params?: AlertWindowParams | SongWindowParams;
 }
 
 export interface AlertWindowParams {
-  type: string,
-  text: string
+  type: string;
+  text: string;
 }
 
 export interface SongWindowParams {
-  songId: string
+  songId: string;
 }
 
 export enum PlayerState {
   IDLE = 0,
   LOADING = 1,
-  PLAYING = 2
+  PLAYING = 2,
 }
 
 export interface ifcAndroidInterface {
-  audioPlay (): void
+  audioPlay(): void;
 
-  audioStop (): void
+  audioStop(): void;
 
-  setSleepTimer (time: number): void
+  setSleepTimer(time: number): void;
 
-  onReady (): void
+  onReady(): void;
 
-  socketReconnect (): void
+  socketReconnect(): void;
 
-  getAuthToken (): string
+  getAuthToken(): string;
 
-  setAuthToken (token: string | null): void
+  setAuthToken(token: string | null): void;
 
-  setAudioQuality (quality: boolean): void
+  setAudioQuality(quality: boolean): void;
 
-  toggleFullscreen (): void
+  toggleFullscreen(): void;
 
-  openDrawer (): void
+  openDrawer(): void;
 
-  getUserAgent (): string
+  getUserAgent(): string;
 
-  getAppVersion (): string
+  getAppVersion(): string;
 
-  setBackground (background: string): void
+  setBackground(background: string): void;
 
-  setLanguage (lang: string): void
+  setLanguage(lang: string): void;
 
-  setThemeColor (color: string): void
+  setThemeColor(color: string): void;
 }

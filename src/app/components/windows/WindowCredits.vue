@@ -6,7 +6,9 @@
           <b>Nightwave Plaza</b>
         </template>
         <template #author>
-          <a href="https://discordapp.com/users/104038869388775424" target="_blank">Alexander Morozov</a>
+          <a href="https://discordapp.com/users/104038869388775424" target="_blank">
+            Alexander Morozov
+          </a>
         </template>
       </i18n-t>
 
@@ -25,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { Win } from '@app/types'
-import { useWindows } from '@app/composables/useWindows.ts'
+  import { useI18n } from 'vue-i18n';
+  import { Win } from '@app/types';
+  import { useWindows } from '@app/composables/useWindows.ts';
 
-const { closeWindow } = useWindows()
-const { t } = useI18n()
+  const { closeWindow } = useWindows();
+  const { t } = useI18n();
 </script>

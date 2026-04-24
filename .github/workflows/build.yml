@@ -39,14 +39,14 @@ jobs:
           # 251-dev -> 251
           JSON_VERSION=$(echo $RAW_VERSION | awk -F'-' '{print $1}')
           echo "JSON_VERSION=$JSON_VERSION" >> $GITHUB_ENV
-          echo "::notice::Json version JSON_VERSION"
+          echo "::notice::Json version $JSON_VERSION"
           # If 251-dev -> dev manifest
           if [[ "$RAW_VERSION" == *-* ]]; then
             echo "MANIFEST_FILE=dev-manifest.json" >> $GITHUB_ENV
           else
             echo "MANIFEST_FILE=update-manifest.json" >> $GITHUB_ENV
           fi
-          echo "::notice::Manifest file MANIFEST_FILE"
+          echo "::notice::Manifest file $MANIFEST_FILE"
 
       # --- BUILD MOBILE ---
       - name: Build mobile target
@@ -63,14 +63,6 @@ jobs:
           cd ..
 
       # --- UPLOAD RELEASE TO S3 ---
-      - name: Install MinIO client
-        run: |
-          curl https://dl.min.io/client/mc/release/linux-amd64/mc \
-          --create-dirs \
-          -o $HOME/minio-binaries/mc
-          chmod +x $HOME/minio-binaries/mc
-          echo "$HOME/minio-binaries" >> $GITHUB_PATH
-
       - name: Upload to MinIO
         run: |
           aws s3 cp build-mobile-${{ env.APP_VERSION }}.zip \

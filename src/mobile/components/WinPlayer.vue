@@ -109,7 +109,7 @@
       closeWindow(Win.PLAYER_TIMER);
       setSleepTime(0);
     }
-    Native.audioPlay();
+    Native.playAudio();
   }
 
   function openDrawer(): void {

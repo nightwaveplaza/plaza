@@ -2,8 +2,8 @@ import * as uuid from 'uuid';
 import { useIosCallbacks } from '@mobile/composables/useIosCallbacks.ts';
 
 export const iOSBridge = {
-  audioPlay: (): Promise<void> => sendMessage<void>('audioPlay', []),
-  audioStop: (): Promise<void> => sendMessage<void>('audioStop', []),
+  playAudio: (): Promise<void> => sendMessage<void>('playAudio', []),
+  stopAudio: (): Promise<void> => sendMessage<void>('stopAudio', []),
   setSleepTimer: (time: number): Promise<void> => sendMessage<void>('setSleepTimer', [`${time}`]),
   getAuthToken: (): Promise<string> => sendMessage<string>('getAuthToken', []),
   setAuthToken: (token: string | null): Promise<void> =>

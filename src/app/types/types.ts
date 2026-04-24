@@ -40,9 +40,9 @@ export enum PlayerState {
 }
 
 export interface ifcAndroidInterface {
-  audioPlay(): void;
+  playAudio(): void;
 
-  audioStop(): void;
+  stopAudio(): void;
 
   setSleepTimer(time: number): void;
 

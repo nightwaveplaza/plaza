@@ -1,6 +1,6 @@
 export const AndroidBridge = {
-  audioPlay: (): void => AndroidInterface.audioPlay(),
-  audioStop: (): void => AndroidInterface.audioStop(),
+  playAudio: (): void => AndroidInterface.playAudio(),
+  stopAudio: (): void => AndroidInterface.stopAudio(),
   setSleepTimer: (time: number): void => AndroidInterface.setSleepTimer(time),
   onReady: (): void => AndroidInterface.onReady(),
   socketReconnect: (): void => AndroidInterface.socketReconnect(),

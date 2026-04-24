@@ -2,8 +2,8 @@ import { AndroidBridge } from './android-bridge';
 import { iOSBridge } from './ios-bridge.js';
 
 export const Native = {
-  audioPlay: (): void | Promise<void> => CurrentBridge().audioPlay(),
-  audioStop: (): void | Promise<void> => CurrentBridge().audioStop(),
+  playAudio: (): void | Promise<void> => CurrentBridge().playAudio(),
+  stopAudio: (): void | Promise<void> => CurrentBridge().stopAudio(),
   setSleepTimer: (sleepTime: number): void | Promise<void> =>
     CurrentBridge().setSleepTimer(sleepTime),
   onReady: (): void | Promise<void> => CurrentBridge().onReady(),

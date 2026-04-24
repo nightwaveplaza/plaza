@@ -9,8 +9,6 @@ import {
 
 // prettier-ignore
 export const authApi = {
-  csrf: () =>
-    api.post<ResultResource>('/auth/csrf-cookie'),
   login: (data: UserLoginForm) =>
     api.post<UserLoginResource>('v2/auth/login', data),
   token: (data: UserLoginForm) =>

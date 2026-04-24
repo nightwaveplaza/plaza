@@ -1,10 +1,9 @@
 import { nextTick, onMounted, ref, type Ref } from 'vue';
 import { useWindows } from '@app/composables/useWindows.ts';
 import { useEventListener } from '@vueuse/core';
-import { isMobile } from '@app/utils/helpers.ts';
 
 // Snap threshold depends on pointer precision (touch vs mouse)
-const SNAP_SIZE = isMobile() ? 5 : 15;
+const SNAP_SIZE = 5;
 const DOUBLE_CLICK_DELAY = 300;
 
 export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: string) {

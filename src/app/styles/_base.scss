@@ -9,33 +9,31 @@
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
-  //background: #008080 no-repeat fixed center center;
-  //background-repeat: no-repeat;
-  //background-attachment: fixed;
-  //background-position: center center;
-  //background-size: cover;
-  min-height: 100%;
+body {
   color: #070707;
   font-family: Tahoma, Verdana, Segoe, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
   font-size: 11px;
-  position: relative;
-  overflow: hidden;
-}
-
-#app {
-  height: 100%;
-  width: 100%;
 }
 
 .app-desktop {
   height: 100%;
   width: 100%;
+  overflow: hidden;
   background-color: teal;
   background-repeat: no-repeat;
   background-position: center center;

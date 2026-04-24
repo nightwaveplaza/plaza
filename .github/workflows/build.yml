@@ -31,7 +31,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Set Version Variable
-        run:
+        run: |
           # app-v251-dev -> 251-dev
           RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
           echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV

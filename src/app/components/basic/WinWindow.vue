@@ -13,7 +13,6 @@
         class="win-window__header noselect"
         :class="{ inactive: !isActive }"
         @pointerdown.stop="handleDragStart"
-        @touchstart.prevent
       >
         <img :src="windowIcon.src" :srcset="windowIcon.srcset" width="16" height="16" alt="icon" />
         {{ windowTitle }}

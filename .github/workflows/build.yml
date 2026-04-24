@@ -3,14 +3,18 @@ name: Build View Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'app-v*'
+      - 'app-v*-dev'
+      - 'web-v*'
 
 env:
   VITE_API_URL: https://api.plaza.one
   VITE_TURNSTILE_KEY: ${{ secrets.TURNSTILE_KEY }}
 
 jobs:
-  build:
+  # OTA-deploy
+  build-mobile-ota:
+    if: startsWith(github.ref_name, 'app-')
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +31,19 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Set Version Variable
-        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+        run:
+          # app-v251-dev -> 251-dev
+          RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
+          echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV
+          # 251-dev -> 251
+          JSON_VERSION=$(echo $RAW_VERSION | awk -F'-' '{print $1}')
+          echo "JSON_VERSION=$JSON_VERSION" >> $GITHUB_ENV
+          # If 251-dev -> dev manifest
+          if [[ "$RAW_VERSION" == *-* ]]; then
+            echo "MANIFEST_FILE=dev-manifest.json" >> $GITHUB_ENV
+          else
+            echo "MANIFEST_FILE=update-manifest.json" >> $GITHUB_ENV
+          fi
 
       # --- BUILD APP ---
       - name: Build app target
@@ -43,33 +59,12 @@ jobs:
           VITE_APP=mobile yarn build
           mv dist dist-mobile
 
-      # --- ZIP APP ---
-      #- name: Zip app build
-      #  run: |
-      #    cd dist-app
-      #    zip -r ../build-app-${{ env.APP_VERSION }}.zip .
-      #    cd ..
-
       # --- ZIP MOBILE ---
       - name: Zip mobile build
         run: |
           cd dist-mobile
           zip -r ../build-mobile-${{ env.APP_VERSION }}.zip .
           cd ..
-
-      # --- CREATE RELEASE ---
-      #- name: Create GitHub Release
-      #  uses: softprops/action-gh-release@v2
-      #  with:
-      #    tag_name: v${{ github.event.inputs.version }}
-      #    name: v${{ github.event.inputs.version }}
-      #    draft: false
-      #    prerelease: false
-      #    files: |
-      #      build-app-${{ github.event.inputs.version }}.zip
-      #      build-mobile-${{ github.event.inputs.version }}.zip
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # --- UPLOAD RELEASE TO S3 ---
       - name: Install MinIO client
@@ -100,7 +95,7 @@ jobs:
           MIN_ANDROID=$(jq -r '.min_android_version' version_manifest.json)
           
           # Download manifest file
-          mc cp gh-deploy/${{ secrets.MINIO_BUCKET }}/update-manifest.json ./manifest.json || echo '{"versions":[]}' > manifest.json
+          mc cp gh-deploy/${{ secrets.MINIO_BUCKET }}/${{ env.MANIFEST_FILE }} ./manifest.json || echo '{"versions":[]}' > manifest.json
           
           # Set download url
           DOWNLOAD_URL="${{ secrets.MINIO_ENDPOINT }}/${{ secrets.MINIO_BUCKET }}/${{ env.APP_VERSION }}/build-mobile-${{ env.APP_VERSION }}.zip"
@@ -110,7 +105,7 @@ jobs:
           
           # Update manifest for new version
           jq --arg av "$MIN_ANDROID" \
-             --arg vv "${{ env.APP_VERSION }}" \
+             --arg vv "${{ env.JSON_VERSION }}" \
              --arg url "$DOWNLOAD_URL" \
              --arg hash "$FILE_HASH" \
              '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
@@ -118,6 +113,6 @@ jobs:
              manifest.json > new_manifest.json
           
           # Upload new manifest
-          mc cp new_manifest.json gh-deploy/${{ secrets.MINIO_BUCKET }}/update-manifest.json
+          mc cp new_manifest.json gh-deploy/${{ secrets.MINIO_BUCKET }}/${{ env.MANIFEST_FILE }}
         env:
           MINIO_BUCKET: ${{ secrets.MINIO_BUCKET }}

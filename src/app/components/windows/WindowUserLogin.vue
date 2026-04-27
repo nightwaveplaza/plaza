@@ -107,6 +107,7 @@
       }
     } catch (e) {
       showAlert((e as ApiError).message, t('errors.error'));
+      return;
     }
 
     showAlert(t('messages.auth_success'), t('messages.success'), 'info');

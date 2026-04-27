@@ -12,7 +12,7 @@
   &.taskbar-top {
     top: 0;
     bottom: auto;
-    padding-bottom: 0;
+    padding-bottom: 3px;
     padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
   }
 

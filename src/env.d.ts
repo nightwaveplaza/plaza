@@ -4,10 +4,10 @@ import type { ifcAndroidInterface } from '@app/types/types.ts';
 declare global {
   interface Window {
     webkitAudioContext?: typeof AudioContext;
-    webkit: {
-      messageHandlers: {
-        plaza: {
-          postMessage: { (data: { name: string; args: Array<string>; callbackId: string }): void };
+    webkit?: {
+      messageHandlers?: {
+        ios_app?: {
+          postMessage: (message: { method: string; args: any[] }) => Promise<any>;
         };
       };
     };

@@ -79,6 +79,7 @@ jobs:
         run: |
           # Get min android version
           MIN_ANDROID=$(jq -r '.min_android_version' version_manifest.json)
+          MIN_IOS=$(jq -r '.min_ios_version' version_manifest.json)
           
           # Download manifest file
           aws s3 cp s3://${{ env.MINIO_BUCKET }}/${{ env.MANIFEST_FILE }} ./manifest.json \
@@ -92,11 +93,12 @@ jobs:
           
           # Update manifest for new version
           jq --arg av "$MIN_ANDROID" \
+             --arg iv "$MIN_IOS" \
              --arg vv "${{ env.JSON_VERSION }}" \
              --arg url "$DOWNLOAD_URL" \
              --arg hash "$FILE_HASH" \
-             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
-              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
+             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .min_ios == ($iv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
+              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "min_ios": ($iv|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
              manifest.json > new_manifest.json
           
           # Upload new manifest

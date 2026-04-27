@@ -1,3 +1,4 @@
 {
-  "min_android_version": 244
+  "min_android_version": 244,
+  "min_ios_version": 10
 }

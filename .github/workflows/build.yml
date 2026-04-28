@@ -36,12 +36,15 @@ jobs:
           RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
           echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV
           echo "::notice::Raw version $RAW_VERSION"
+          
           # 251-dev -> 251
           JSON_VERSION=$(echo $RAW_VERSION | awk -F'-' '{print $1}')
           echo "JSON_VERSION=$JSON_VERSION" >> $GITHUB_ENV
           echo "::notice::Json version $JSON_VERSION"
+          
           # If 251-dev -> dev manifest
           if [[ "$RAW_VERSION" == *-* ]]; then
+            echo "IS_DEV=true" >> $GITHUB_ENV
             echo "MANIFEST_FILE=dev-manifest.json" >> $GITHUB_ENV
           else
             echo "MANIFEST_FILE=update-manifest.json" >> $GITHUB_ENV
@@ -81,9 +84,13 @@ jobs:
           MIN_ANDROID=$(jq -r '.min_android_version' version_manifest.json)
           MIN_IOS=$(jq -r '.min_ios_version' version_manifest.json)
           
-          # Download manifest file
-          aws s3 cp s3://${{ env.MINIO_BUCKET }}/${{ env.MANIFEST_FILE }} ./manifest.json \
-            --endpoint-url ${{ env.MINIO_ENDPOINT }} || echo '{"versions":[]}' > manifest.json
+          if [ "${{ env.IS_DEV }}" == "true" ]; then
+            ANDROID_MANIFEST="dev-manifest-android.json"
+            IOS_MANIFEST="dev-manifest-ios.json"
+          else
+            ANDROID_MANIFEST="manifest-android.json"
+            IOS_MANIFEST="manifest-ios.json"
+          fi
           
           # Set download url
           DOWNLOAD_URL="${{ env.MINIO_ENDPOINT }}/${{ env.MINIO_BUCKET }}/${{ env.APP_VERSION }}/build-mobile-${{ env.APP_VERSION }}.zip"
@@ -91,19 +98,36 @@ jobs:
           # Calculate hash
           FILE_HASH=$(sha256sum build-mobile-${{ env.APP_VERSION }}.zip | awk '{ print $1 }')
           
-          # Update manifest for new version
+          # Update Android manifest
+          aws s3 cp s3://${{ env.MINIO_BUCKET }}/$ANDROID_MANIFEST ./android.json \
+            --endpoint-url ${{ env.MINIO_ENDPOINT }} || echo '{"versions":[]}' > android.json
+          
           jq --arg av "$MIN_ANDROID" \
-             --arg iv "$MIN_IOS" \
              --arg vv "${{ env.JSON_VERSION }}" \
              --arg url "$DOWNLOAD_URL" \
              --arg hash "$FILE_HASH" \
-             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .min_ios == ($iv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
-              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "min_ios": ($iv|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
-             manifest.json > new_manifest.json
+             '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
+              if ($new_list | any(.min_android == ($av|tonumber))) then .versions = $new_list else .versions += [{"min_android": ($av|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
+             android.json > new_android.json
           
-          # Upload new manifest
-          aws s3 cp new_manifest.json s3://${{ env.MINIO_BUCKET }}/${{ env.MANIFEST_FILE }} \
+          aws s3 cp new_android.json s3://${{ env.MINIO_BUCKET }}/$ANDROID_MANIFEST \
             --endpoint-url ${{ env.MINIO_ENDPOINT }}
+          
+          # Update iOS manifest
+          aws s3 cp s3://${{ env.MINIO_BUCKET }}/$IOS_MANIFEST ./ios.json \
+            --endpoint-url ${{ env.MINIO_ENDPOINT }} || echo '{"versions":[]}' > ios.json
+          
+          jq --arg iv "$MIN_IOS" \
+             --arg vv "${{ env.JSON_VERSION }}" \
+             --arg url "$DOWNLOAD_URL" \
+             --arg hash "$FILE_HASH" \
+             '(.versions | map(if .min_ios == ($iv|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 
+              if ($new_list | any(.min_ios == ($iv|tonumber))) then .versions = $new_list else .versions += [{"min_ios": ($iv|tonumber), "view_version": ($vv|tonumber), "url": $url, "sha256": $hash}] end' \
+             ios.json > new_ios.json
+          
+          aws s3 cp new_ios.json s3://${{ env.MINIO_BUCKET }}/$IOS_MANIFEST \
+            --endpoint-url ${{ env.MINIO_ENDPOINT }}
+
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}

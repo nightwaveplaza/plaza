@@ -1,14 +1,13 @@
 <template>
   <div class="win-taskbar d-flex flex-nowrap" :class="{ 'taskbar-top': taskbarPosition === 'top' }">
-    <div style="flex: 0 0 10px">
+    <div class="flex-shrink-0">
       <div class="divider mx-1" />
     </div>
 
     <win-button
       v-for="window in openedWindows"
       :key="window.id"
-      class="me-1"
-      style="flex: 1 1 auto"
+      class="me-1 flex-grow-1"
       :class="{ active: activeWindow === window.id && !window.isMinimized }"
       @click="toggleMinimize(window.id)"
     >
@@ -25,8 +24,9 @@
       </div>
     </win-button>
 
-    <div class="local-time ms-auto" style="flex: 0 0 90px">
-      <win-connection-status /> {{ time }}
+    <div class="local-time ms-auto flex-shrink-0 d-flex align-items-center">
+      <win-connection-status />
+      <div class="px-2">{{ time }}</div>
     </div>
   </div>
 </template>

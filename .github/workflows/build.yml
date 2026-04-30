@@ -27,6 +27,14 @@ jobs:
           node-version: 20
           cache: yarn
 
+      - name: Setup Crowdin CLI
+        uses: crowdin/setup-crowdin@v1
+
+      - name: Pull latest translations
+        run: crowdin pull
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 

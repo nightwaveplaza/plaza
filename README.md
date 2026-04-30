@@ -1,5 +1,4 @@
-[![Translation status](http://weblate.plaza.one/widget/nightwave-plaza/plaza-app/svg-badge.svg)](http://weblate.plaza.one/engage/nightwave-plaza/)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9602ea59d4d3486f9e041830761bfe47)](https://app.codacy.com/gh/nightwaveplaza/plaza/dashboard)
+[![Crowdin](https://badges.crowdin.net/nightwave-plaza/localized.svg)](https://crowdin.com/project/nightwave-plaza)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.x-339933?logo=node.js&logoColor=white)
 ![Vue](https://img.shields.io/badge/vue-3.x-42b883?logo=vue.js&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-7.x-646cff?logo=vite&logoColor=white)
@@ -45,5 +44,5 @@ It is intended to be embedded inside the native Android / iOS applications and d
 
 ## 🌍 Translations
 
-Localization is managed via Weblate:
-http://weblate.plaza.one/engage/nightwave-plaza/
+Localization is managed via Crowdin. You can help translate the application into your language here:
+https://crowdin.com/project/nightwave-plaza

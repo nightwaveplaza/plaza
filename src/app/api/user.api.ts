@@ -22,5 +22,5 @@ export const userApi = {
   updateProfile: (data: UserProfileForm) =>
     api.put<UserResource>('v2/users/me', data),
   deleteProfile: (data: { current_password: string }) =>
-    api.delete('v2/users/me', { data }),
+    api.delete('v2/users/me', data),
 };

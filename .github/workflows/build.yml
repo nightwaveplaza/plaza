@@ -28,7 +28,7 @@ jobs:
           cache: yarn
 
       - name: Setup Crowdin CLI
-        uses: crowdin/setup-crowdin@v1
+        run: npm i -g @crowdin/cli
 
       - name: Pull latest translations
         run: crowdin pull

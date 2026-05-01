@@ -5,9 +5,9 @@
         <span class="small">
           <template v-if="!needsInteractive">▶</template><template v-else>▼</template>&nbsp;
         </span>
-        <a class="link" role="button" @click="needsInteractive = !needsInteractive"
-          >Security check...</a
-        >
+        <a class="link" role="button" @click="needsInteractive = !needsInteractive">{{
+          t('fields.security_check')
+        }}</a>
       </div>
       <div class="col align-self-center">
         <win-loading-bar v-if="model === ''" :height="20" />
@@ -36,6 +36,8 @@
 <script setup lang="ts">
   import VueTurnstile from 'vue-turnstile';
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 
   const turnstileKey = import.meta.env.VITE_TURNSTILE_KEY;
 

@@ -159,13 +159,6 @@
       "warn4": "— Recovery is not possible.",
       "warn5": "— You can register again with the same username and email address (if available)."
     },
-    "disconnected": {
-      "title": "Connection Lost",
-      "connection_lost": "Connection to our servers has been lost...",
-      "click_button": "Click the button below to reconnect.",
-      "trying": "Attempting to reconnect...",
-      "btn_reconnect": "Reconnect"
-    },
     "user_favorites_export": {
       "btn_export": "Export",
       "title": "Export Favorites",
@@ -219,7 +212,8 @@
     "repeat_password": "Repeat Password",
     "username": "Username",
     "email": "Email",
-    "user_details": "User Details"
+    "user_details": "User Details",
+    "security_check": "Security check..."
   },
   "loading": "Loading…",
   "messages": {

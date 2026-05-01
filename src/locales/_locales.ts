@@ -1,11 +1,12 @@
+import ca from '@locales/ca.json';
+import de from '@locales/de.json';
 import en from '@locales/en.json';
 import es from '@locales/es.json';
-import ru from '@locales/ru.json';
-import de from '@locales/de.json';
 import it from '@locales/it.json';
-import ca from '@locales/ca.json';
 import ja from '@locales/ja.json';
 import pt_BR from '@locales/pt_BR.json';
+import ru from '@locales/ru.json';
+import tr from '@locales/tr.json';
 import zh_Hant from '@locales/zh_Hant.json';
 
 interface JSONValue {
@@ -25,5 +26,6 @@ export default {
   ja: ja,
   'pt-BR': pt_BR,
   ru: ru,
+  tr: tr,
   'zh-Hant': zh_Hant,
 } as LocaleArray;

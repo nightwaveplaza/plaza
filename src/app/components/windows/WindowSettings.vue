@@ -122,19 +122,17 @@
         <div class="row">
           <div class="col-6 align-self-center">{{ t('win.settings.audio_quality') }}:</div>
           <div class="col-6">
-            <div class="checkbox mb-1">
-              <input
-                id="low_quality"
-                type="checkbox"
-                :checked="lowQuality"
-                @change="qualityChanged"
-              />
-              <label for="low_quality">{{ t('win.settings.low_quality') }}</label>
-            </div>
-            <div v-if="!isMobile()" class="checkbox">
-              <input id="hls_beta" type="checkbox" :checked="useHls" @change="hlsChanged" />
-              <label for="hls_beta">HLS</label>
-            </div>
+            <win-checkbox v-model="lowQuality" class="mb-1" @update:model-value="qualityChanged">
+              {{ t('win.settings.low_quality') }}
+            </win-checkbox>
+            <win-checkbox
+              v-if="!isMobile()"
+              v-model="useHls"
+              class="mb-1"
+              @update:model-value="qualityChanged"
+            >
+              HLS
+            </win-checkbox>
           </div>
         </div>
       </template>
@@ -227,13 +225,7 @@
     closeWindow(Win.SETTINGS);
   }
 
-  function qualityChanged(e: Event): void {
-    lowQuality.value = (e.target as HTMLInputElement).checked;
-    showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info');
-  }
-
-  function hlsChanged(e: Event): void {
-    useHls.value = (e.target as HTMLInputElement).checked;
+  function qualityChanged(): void {
     showAlert(t('win.settings.quality_changed'), t('messages.saved'), 'info');
   }
 </script>

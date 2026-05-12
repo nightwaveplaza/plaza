@@ -9,10 +9,12 @@ import WinGroupBox from '@app/components/basic/WinGroupBox.vue';
 import WinPanel from '@app/components/basic/WinPanel.vue';
 import WinMenuAction from '@app/components/basic/WinMenuAction.vue';
 import WinLoadingBar from '@app/components/basic/WinLoadingBar.vue';
+import WinCheckbox from '@app/components/basic/WinCheckbox.vue';
 
 export default {
   install: (Vue: App): void => {
     Vue.component('WinButton', WinButton);
+    Vue.component('WinCheckbox', WinCheckbox);
     Vue.component('WinGroupBox', WinGroupBox);
     Vue.component('WinList', WinList);
     Vue.component('WinLoadingBar', WinLoadingBar);

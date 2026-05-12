@@ -10,10 +10,9 @@
       <p>{{ t('win.user_profile_delete.warn5') }}</p>
     </win-memo>
 
-    <div class="checkbox mb-3">
-      <input id="remember" v-model="deleteConfirm" type="checkbox" />
-      <label for="remember">{{ t('win.user_profile_delete.understand') }}</label>
-    </div>
+    <win-checkbox v-model="deleteConfirm" class="mb-3">
+      {{ t('win.user_profile_delete.understand') }}
+    </win-checkbox>
 
     <win-panel class="mb-3">
       <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>

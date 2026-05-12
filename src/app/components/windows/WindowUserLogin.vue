@@ -47,10 +47,9 @@
         <!-- Remember -->
         <div v-if="!isMobile()" class="row mt-1 gx-0 justify-content-end">
           <div class="col-12 col-sm-8">
-            <div class="checkbox">
-              <input id="remember" v-model="fields.remember" type="checkbox" />
-              <label for="remember">{{ t('win.user_login.remember_me') }}</label>
-            </div>
+            <win-checkbox v-model="fields.remember">
+              {{ t('win.user_login.remember_me') }}
+            </win-checkbox>
           </div>
         </div>
       </div>

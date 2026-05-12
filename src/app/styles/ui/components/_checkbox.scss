@@ -1,49 +1,38 @@
-.checkbox {
-  label {
-    display: inline;
-    line-height: 100%;
+@import "../mixins";
+@import "../variables";
+
+.win-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    display: none;
   }
 
-  input {
-    vertical-align: top;
-    margin: 0 3px 0 0;
+  .checkmark {
+    @include d3-content;
     width: 13px;
     height: 13px;
+    position: relative;
+    cursor: pointer;
+  }
 
+  input:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 13px;
+    height: 13px;
+    background-image: url('@app/styles/ui/icons/checkmark.svg');
+    background-size: 13px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
 
-    & + label {
-      cursor: pointer;
-    }
-
-    &:not(checked) {
-      position: absolute;
-      opacity: 0;
-    }
-
-    &:not(checked) + label {
-      position: relative;
-      padding: 0 0 0 17px;
-    }
-
-    &:not(checked) + label:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 13px;
-      height: 13px;
-      background: url('@app/styles/ui/icons/checkbox.png');
-      background-size: 13px;
-    }
-
-    &:checked + label:before {
-      background: url('@app/styles/ui/icons/checkbox-active.png');
-      background-size: 13px
-    }
-
-    &:focus + label:before {
-      box-shadow: none;
-      outline: 0;
-    }
+  .label-text {
+    cursor: pointer;
   }
 }

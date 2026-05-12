@@ -76,8 +76,6 @@
       setApiToken(token);
       useAuth().fetchUser();
     });
-
-    Native.onReady();
   });
 
   // waiting for the first status response then check news and open up player

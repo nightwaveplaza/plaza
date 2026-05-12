@@ -4,11 +4,16 @@ import { isMobile } from '@app/utils/helpers.ts';
 import { Native } from '@mobile/bridge/native.ts';
 
 const themeColors = {
-  win98: '#c0c0c0',
   contrast: '#000000',
+  contrast_2: '#000000',
+  contrast_w: '#ffffff',
+  desert: '#d5ccbb',
+  lilac: '#aea8d9',
   rainy: '#8098b0',
   rose: '#cfafb7',
-  desert: '#d5ccbb',
+  slate: '#9db9c8',
+  spruce: '#a2c8a9',
+  win98: '#c0c0c0',
 };
 
 export function useThemeColor(): void {

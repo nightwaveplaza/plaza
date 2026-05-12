@@ -78,7 +78,7 @@
               {{ t('win.settings.theme') }}
             </div>
             <div class="select">
-              <select @change="themeSelected" id="theme-select">
+              <select id="theme-select" @change="themeSelected">
                 <option
                   v-for="item in themes"
                   :key="item[0]"

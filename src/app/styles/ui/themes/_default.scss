@@ -1,6 +1,6 @@
 :root {
   --color: #000000;
-  --color-disabled: #8a8a8a;
+  --color-disabled: #808080;
   --color-link: #0645AD;
 
   --input-bg: #ffffff;
@@ -10,6 +10,7 @@
   --button-border-right: #000000;
   --button-border-active: #000000;
 
+  // right, top, bottom, left
   --button-shadow:
           inset -1px 0px 0 0 #808080,
           inset -1px 1px 0 0 #dfdfdf,
@@ -22,15 +23,19 @@
 
   --window-border-left: #dfdfdf;
   --window-border-right: #000000;
+
+  // right, top, bottom, left
   --window-shadow:
           inset -1px 0px 0 0 #808080,
           inset -1px 1px 0 0 #ffffff,
           inset -1px -1px 0 0 #808080,
-          inset 0px 0px 0 1px #ffffff;
+          inset 0px 0px 0 1px #ffffff
+;
 
   --window-header-color: #ffffff;
+  --window-header-color-inactive: #c0c0c0;
   --window-header-gradient: linear-gradient(to right, #000080, #1084d0);
-  --window-header-gradient-disabled: linear-gradient(to right, #808080, #c0c0c0);
+  --window-header-gradient-inactive: linear-gradient(to right, #808080, #c0c0c0);
   --window-header-button-max: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='0' y='0' width='1' height='9' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='0' y='0' width='9' height='2' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='8' y='0' width='1' height='9' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3Crect x='0' y='8' width='9' height='1' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3C/svg%3E");
   --window-header-button-min: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='1' y='7' width='6' height='2' style='fill: rgb(0, 0, 0);'%3E%3C/rect%3E%3C/svg%3E");
   --window-header-button-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' width='9' height='9'%3E%3Cline style='stroke: rgb(0, 0, 0);' x1='1' y1='1' x2='8' y2='8'%3E%3C/line%3E%3Cline style='stroke: rgb(0, 0, 0);' x1='8' y1='1' x2='1' y2='8'%3E%3C/line%3E%3C/svg%3E");

@@ -1,0 +1,52 @@
+div[data-theme="theme-slate"] {
+  --color: #000000;
+  --color-disabled: #558097;
+  --color-link: #558097;
+
+  --input-bg: #ffffff;
+
+  --button-bg: #9db9c8;
+  --button-border-left: #cedce3;
+  --button-border-right: #000000;
+  --button-border-active: #000000;
+
+  --button-shadow:
+          inset -1px 0px 0 0 #558097,
+          inset -1px 1px 0 0 #9db9c8,
+          inset -1px -1px 0 0 #558097,
+          inset 0px 0px 0 1px #9db9c8
+;
+  --button-active-shadow:
+          inset 0 0 0 1px #558097
+;
+
+  --window-border-left: #9db9c8;
+  --window-border-right: #000000;
+  --window-shadow:
+          inset -1px 0px 0 0 #558097,
+          inset -1px 1px 0 0 #cedce3,
+          inset -1px -1px 0 0 #558097,
+          inset 0px 0px 0 1px #cedce3;
+
+  --window-header-color: #ffffff;
+  --window-header-gradient: linear-gradient(to right, #558097, #7da8bf);
+  --window-header-gradient-inactive: linear-gradient(to right, #808080, #a3a3a3);
+
+  --forms-border-left: #558097;
+  --forms-border-right: #cedce3;
+  --forms-shadow:
+          inset -1px 0px 0 0 #cedce3,
+          inset -1px 1px 0 0 #000000,
+          inset -1px -1px 0 0 #9db9c8,
+          inset 0px 0px 0 1px #000000;
+
+  --taskbar-font-color: #000000;
+  --taskbar-shadow: inset 0 1px 0 0 #cedce3;
+  --taskbar-btn-dots-bg: #cedce3 !important;
+  --taskbar-btn-shadow:
+          inset -1px 0px 0 0 #9db9c8,
+          inset -1px 1px 0 0 #558097,
+          inset -1px -1px 0 0 #9db9c8,
+          inset 0px 0px 0 1px #558097
+;
+}

@@ -194,9 +194,14 @@
 
   const themes = [
     ['desert', 'Desert'],
-    ['contrast', 'High Contrast'],
+    ['lilac', 'Lilac'],
+    ['contrast', 'High Contrast #1'],
+    ['contrast-2', 'High Contrast #2'],
+    ['contrast-w', 'High Contrast White'],
     ['rainy', 'Rainy Day'],
     ['rose', 'Rose'],
+    ['slate', 'Slate'],
+    ['spruce', 'Spruce'],
     ['win98', 'Windows Standard'],
   ];
 

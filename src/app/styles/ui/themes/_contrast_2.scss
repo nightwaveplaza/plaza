@@ -1,5 +1,5 @@
-div[data-theme="theme-contrast"] {
-  --color: #ffffff;
+div[data-theme="theme-contrast-2"] {
+  --color: #00ff00;
   --color-disabled: #808080;
   --color-link: #ffff00;
 
@@ -28,10 +28,10 @@ div[data-theme="theme-contrast"] {
           inset -1px -1px 0 0 #808080,
           inset 0px 0px 0 1px #c0c0c0;
 
-  --window-header-color: #ffffff;
-  --window-header-color-inactive: #000000;
-  --window-header-gradient: linear-gradient(to right, #0000ff, #0000ff);
-  --window-header-gradient-inactive: linear-gradient(to right, #00ffff, #00ffff);
+  --window-header-color: #000000;
+  --window-header-color-inactive: #ffffff;
+  --window-header-gradient: linear-gradient(to right, #00ffff, #00ffff);
+  --window-header-gradient-inactive: linear-gradient(to right, #0000ff, #0000ff);
   --window-header-button-max: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='0' y='0' width='1' height='9' style='fill: rgb(255, 255, 255);'%3E%3C/rect%3E%3Crect x='0' y='0' width='9' height='2' style='fill: rgb(255, 255, 255);'%3E%3C/rect%3E%3Crect x='8' y='0' width='1' height='9' style='fill: rgb(255, 255, 255);'%3E%3C/rect%3E%3Crect x='0' y='8' width='9' height='1' style='fill: rgb(255, 255, 255);'%3E%3C/rect%3E%3C/svg%3E");
   --window-header-button-min: url("data:image/svg+xml,%3Csvg viewBox='0 0 9 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3C/defs%3E%3Crect x='1' y='7' width='6' height='2' style='fill: rgb(255, 255, 255);'%3E%3C/rect%3E%3C/svg%3E");
   --window-header-button-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' width='9' height='9'%3E%3Cline style='stroke: rgb(255, 255, 255);' x1='1' y1='1' x2='8' y2='8'%3E%3C/line%3E%3Cline style='stroke: rgb(255, 255, 255);' x1='8' y1='1' x2='1' y2='8'%3E%3C/line%3E%3C/svg%3E");
@@ -46,7 +46,7 @@ div[data-theme="theme-contrast"] {
 
   --taskbar-font-color: #ffffff;
 
-  --taskbar-shadow: inset 0 1px 0 0 #00ffff;
+  --taskbar-shadow: inset 0 1px 0 0 #0000ff;
   --taskbar-btn-dots-bg: #000000 !important;
   --taskbar-btn-shadow:
           inset -1px 0px 0 0 #ffffff,

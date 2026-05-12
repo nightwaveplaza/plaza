@@ -3,6 +3,7 @@
 
 input, .win-input {
   @include d3-content;
+  color: inherit !important;
 
   line-height: 16px;
   padding: 2px;

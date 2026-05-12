@@ -1,6 +1,6 @@
 div[data-theme="theme-rose"] {
   --color: #000000;
-  --color-disabled: #8a8a8a;
+  --color-disabled: #9f6070;
   --color-link: #0645AD;
 
   --input-bg: #ffffff;
@@ -29,8 +29,9 @@ div[data-theme="theme-rose"] {
           inset 0px 0px 0 1px #e7d8dc;
 
   --window-header-color: #ffffff;
-  --window-header-gradient: linear-gradient(to right, #9f6070, #ac848d);
-  --window-header-gradient-disabled: linear-gradient(to right, #a0a0a4, #c8c8ca);
+  --window-header-color-inactive: #606068;
+  --window-header-gradient: linear-gradient(to right, #9f6070, #c78898);
+  --window-header-gradient-inactive: linear-gradient(to right, #a0a0a4, #f8f9fc);
 
   --forms-border-left: #9f6070;
   --forms-border-right: #e7d8dc;

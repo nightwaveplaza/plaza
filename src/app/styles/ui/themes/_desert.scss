@@ -1,6 +1,6 @@
 div[data-theme="theme-desert"] {
   --color: #000000;
-  --color-disabled: #8a8a8a;
+  --color-disabled: #a28d68;
   --color-link: #0645AD;
 
   --input-bg: #ffffff;
@@ -29,8 +29,9 @@ div[data-theme="theme-desert"] {
           inset 0px 0px 0 1px #eae6dd;
 
   --window-header-color: #ffffff;
-  --window-header-gradient: linear-gradient(to right, #008080, #00abab);
-  --window-header-gradient-disabled: linear-gradient(to right, #a28d68, #d5ccbb);
+  --window-header-color-inactive: #ffffff;
+  --window-header-gradient: linear-gradient(to right, #008080, #2eb2b2);
+  --window-header-gradient-inactive: linear-gradient(to right, #a28d68, #c9ba9b);
 
   --forms-border-left: #a28d68;
   --forms-border-right: #ede6dc;

@@ -29,8 +29,9 @@ div[data-theme="theme-rainy"] {
           inset 0px 0px 0 1px #bed0dc;
 
   --window-header-color: #ffffff;
-  --window-header-gradient: linear-gradient(to right, #4f647f, #677b9f);
-  --window-header-gradient-disabled: linear-gradient(to right, #808080, #808080);
+  --window-header-color-inactive: #c1ccd9;
+  --window-header-gradient: linear-gradient(to right, #4f647f, #778ca7);
+  --window-header-gradient-inactive: linear-gradient(to right, #808080, #a3a3a3);
 
   --forms-border-left: #4e657c;
   --forms-border-right: #c0ccd8;

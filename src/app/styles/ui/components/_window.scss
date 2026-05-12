@@ -36,7 +36,8 @@
     -webkit-user-select: none;
 
     &.inactive {
-      background: var(--window-header-gradient-disabled);
+      color: var(--window-header-color-inactive);
+      background: var(--window-header-gradient-inactive);
     }
 
     img {

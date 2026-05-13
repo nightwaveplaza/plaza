@@ -88,7 +88,7 @@
         </win-button>
       </div>
       <div class="col-4">
-        <win-button block @click="closeWindow(Win.USER)">
+        <win-button class="d-block" @click="closeWindow(Win.USER)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

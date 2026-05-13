@@ -20,12 +20,12 @@
     <!-- Buttons -->
     <div class="row mt-2 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block class="fw-bold" :disabled="isLoading" @click="change">
+        <win-button class="d-block fw-bold" :disabled="isLoading" @click="change">
           {{ t('buttons.change') }}
         </win-button>
       </div>
       <div class="col-4">
-        <win-button block @click="closeWindow(Win.USER_PASSWORD)">
+        <win-button class="d-block" @click="closeWindow(Win.USER_PASSWORD)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

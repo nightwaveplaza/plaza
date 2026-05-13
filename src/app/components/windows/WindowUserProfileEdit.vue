@@ -30,12 +30,12 @@
     <!-- Buttons -->
     <div class="row mt-3 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block :disabled="isLoading" class="fw-bold" @click="update">
+        <win-button :disabled="isLoading" class="d-block fw-bold" @click="update">
           {{ t('buttons.save') }}
         </win-button>
       </div>
       <div class="col-4">
-        <win-button block @click="closeWindow(Win.USER_PROFILE_EDIT)">
+        <win-button class="d-block" @click="closeWindow(Win.USER_PROFILE_EDIT)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

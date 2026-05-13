@@ -13,10 +13,10 @@
 
       <div class="row gx-0 mt-3">
         <div class="col-2 pe-1">
-          <win-button block @click="add(-10)"> -10 </win-button>
+          <win-button class="d-block" @click="add(-10)"> -10 </win-button>
         </div>
         <div class="col-2 pe-1">
-          <win-button block @click="add(-5)"> -5 </win-button>
+          <win-button class="d-block" @click="add(-5)"> -5 </win-button>
         </div>
         <div class="col-4 pe-1">
           <input
@@ -27,10 +27,10 @@
           />
         </div>
         <div class="col-2 pe-1">
-          <win-button block @click="add(5)"> +5 </win-button>
+          <win-button class="d-block" @click="add(5)"> +5 </win-button>
         </div>
         <div class="col-2">
-          <win-button block @click="add(10)"> +10 </win-button>
+          <win-button class="d-block" @click="add(10)"> +10 </win-button>
         </div>
       </div>
     </div>
@@ -38,12 +38,12 @@
     <!-- Buttons -->
     <div class="row mt-3 gx-0 justify-content-between">
       <div class="col-6">
-        <win-button block class="fw-bold" @click="start()">
+        <win-button class="d-block fw-bold" @click="start()">
           {{ btnText }}
         </win-button>
       </div>
       <div class="col-4">
-        <win-button block @click="closeWindow(Win.PLAYER_TIMER)">
+        <win-button class="d-block" @click="closeWindow(Win.PLAYER_TIMER)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

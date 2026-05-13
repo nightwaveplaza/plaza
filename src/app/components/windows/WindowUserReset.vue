@@ -17,16 +17,15 @@
     <div class="row gx-0 justify-content-between">
       <div class="col-6">
         <win-button
-          block
           :disabled="isLoading || fields.captcha_response === ''"
-          class="fw-bold"
+          class="d-block fw-bold"
           @click="reset"
         >
           {{ t('win.user_login.btn_reset') }}
         </win-button>
       </div>
       <div class="col-4">
-        <win-button block @click="closeWindow(Win.USER_RESET)">
+        <win-button class="d-block" @click="closeWindow(Win.USER_RESET)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

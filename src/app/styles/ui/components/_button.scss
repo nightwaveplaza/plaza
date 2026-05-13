@@ -4,16 +4,28 @@
   @include d3-object;
   @include font;
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
   text-align: center;
-  line-height: 120%;
+  line-height: 16px;
   outline: none !important;
-  padding: 4px;
+  padding: 3px 6px;
   cursor: pointer;
   box-sizing: border-box;
-  display: inline-block;
   text-decoration: none !important;
   margin: 0;
   color: inherit;
+
+  &__icon {
+    height: 16px;
+    width: auto;
+    display: block;
+    line-height: 0;
+    cursor: pointer;
+  }
 
   i {
     cursor: pointer;
@@ -27,6 +39,11 @@
   &:disabled {
     color: var(--color-disabled);
     text-shadow: 1px 1px white;
+
+    &__icon {
+      opacity: 0.5;
+      filter: grayscale(100%);
+    }
   }
 
   &:active:enabled, &.active {

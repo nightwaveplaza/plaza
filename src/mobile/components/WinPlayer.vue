@@ -27,13 +27,13 @@
 
         <div class="row gx-0">
           <div :class="{ 'col-6': !isPlaying, 'col-4': isPlaying }" class="mb-1 mb-sm-0 pe-2">
-            <win-button class="player-play" block @click="play">
+            <win-button class="d-block player-play" @click="play">
               {{ playText }}
             </win-button>
           </div>
 
           <div v-if="isPlaying" class="col-2 mb-1 mb-sm-0 pe-2">
-            <win-button block @click="openWindow(Win.PLAYER_TIMER)">
+            <win-button class="d-block" @click="openWindow(Win.PLAYER_TIMER)">
               <i :style="{ color: timerColor }" class="i icon-clock" />
             </win-button>
           </div>
@@ -43,7 +43,7 @@
           </div>
 
           <div class="col-3 mb-1 mb-sm-0">
-            <win-button block class="btn-start" @click="openDrawer"> &nbsp; </win-button>
+            <win-button class="d-block btn-start" @click="openDrawer"> &nbsp; </win-button>
           </div>
         </div>
       </div>

@@ -12,6 +12,11 @@ import plazaPlayerDesktop from '@app/components/player/desktop.ts';
 import plazaWindows from '@app/components/windows';
 import App from '@app/views/App.vue';
 
+// Fix button active state on iOS
+if ('ontouchstart' in document.documentElement) {
+  document.body.addEventListener('touchstart', () => {}, { passive: true });
+}
+
 const app = createApp({
   render: () => h(App),
 });

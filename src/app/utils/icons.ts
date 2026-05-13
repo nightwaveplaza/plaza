@@ -60,7 +60,11 @@ const getWindowIcon = (state: WindowState): IconData => {
     iconName = state.icon ?? 'ball';
   }
 
+  return getIcon(iconName);
+};
+
+const getIcon = (iconName: string): IconData => {
   return icons[iconName] || icons['ball']!;
 };
 
-export { getWindowIcon };
+export { getWindowIcon, getIcon };

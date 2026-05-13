@@ -3,22 +3,3 @@
 @import "@app/styles/pagination.scss";
 @import "@app/styles/utils.scss";
 
-.btn-start {
-
-  min-width: 40px;
-  margin-left: 4px;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  cursor: pointer !important;;
-
-  img {
-    height: 19px;
-    width: 19px;
-    cursor: pointer !important;
-  }
-
-  .title, strong {
-
-    cursor: pointer !important;
-  }
-}

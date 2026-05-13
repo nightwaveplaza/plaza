@@ -39,18 +39,26 @@
 
         <div class="row gx-0 mt-2 noselect">
           <div class="col-2 pe-1">
-            <win-button block @click="nextBackground(-1)"> &lt; </win-button>
+            <win-button class="d-block" @click="nextBackground(-1)"> &lt; </win-button>
           </div>
           <div class="col-2 pe-1">
-            <win-button block @click="nextBackground(1)"> &gt; </win-button>
+            <win-button class="d-block" @click="nextBackground(1)"> &gt; </win-button>
           </div>
           <div class="col-4 pe-1">
-            <win-button block :class="{ active: isRandomMode }" @click="setRandomBackground">
+            <win-button
+              class="d-block"
+              :class="{ active: isRandomMode }"
+              @click="setRandomBackground"
+            >
               {{ t('win.settings.btn_random') }}
             </win-button>
           </div>
           <div class="col-4">
-            <win-button block :class="{ active: isColorMode }" @click="setColorBackground">
+            <win-button
+              class="d-block"
+              :class="{ active: isColorMode }"
+              @click="setColorBackground"
+            >
               {{ t('win.settings.btn_solid') }}
             </win-button>
           </div>

@@ -45,12 +45,12 @@
             @play="onPlay"
             @timeupdate="timeUpdated"
           />
-          <win-button block :disabled="song.data.preview_src === null" @click="play">
+          <win-button class="d-block" :disabled="song.data.preview_src === null" @click="play">
             {{ playText }}
           </win-button>
         </div>
         <div class="col-2 ps-0">
-          <win-button block :disabled="sending" @click="favoriteSong">
+          <win-button class="d-block" :disabled="sending" @click="favoriteSong">
             <i class="icon-favorite i" :style="{ color: favoriteColor }" />
           </win-button>
         </div>

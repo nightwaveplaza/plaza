@@ -27,7 +27,7 @@
         />
       </div>
       <div class="col-4 ms-auto">
-        <win-button block @click="closeWindow(Win.NEWS)">
+        <win-button class="d-block" @click="closeWindow(Win.NEWS)">
           {{ t('buttons.close') }}
         </win-button>
       </div>

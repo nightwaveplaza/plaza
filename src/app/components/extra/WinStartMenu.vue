@@ -7,19 +7,19 @@
 
       <div class="win-start-menu__items">
         <button class="win-start-menu__item" @click="open(Win.RATINGS)">
-          <img src="@app/assets/icons/winamp@1.5x.png" alt="icon" />
+          <img src="@app/assets/icons/winamp.png" alt="icon" />
           <span>Ratings</span>
         </button>
 
         <button class="win-start-menu__item" @click="open(Win.HISTORY)">
-          <img src="@app/assets/icons/calendar@1.5x.png" alt="icon" />
+          <img src="@app/assets/icons/calendar2.png" alt="icon" />
           <span>Play History</span>
         </button>
 
         <div class="win-start-menu__divider" />
 
         <button class="win-start-menu__item" @click="open(Win.USER_FAVORITES)">
-          <img src="@app/assets/user-bookmarks.png" alt="icon" />
+          <img src="@app/assets/icons/user-bookmarks.png" alt="icon" />
           <span>My Favorites</span>
         </button>
 
@@ -31,12 +31,12 @@
         <div class="win-start-menu__divider" />
 
         <button class="win-start-menu__item" @click="open(Win.SETTINGS)">
-          <img src="@app/assets/icons/settings_gear@1.5x.png" alt="icon" />
+          <img src="@app/assets/icons/settings_gear2.png" alt="icon" />
           <span>Settings</span>
         </button>
 
         <button class="win-start-menu__item" @click="open(Win.ABOUT)">
-          <img src="@app/assets/icons/help_question_mark@1.5x.png" alt="icon" />
+          <img src="@app/assets/icons/help_question_mark2.png" alt="icon" />
           <span>About</span>
         </button>
 

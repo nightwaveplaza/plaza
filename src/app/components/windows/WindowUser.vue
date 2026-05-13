@@ -102,12 +102,13 @@
   import { useWindows } from '@app/composables/useWindows.ts';
   import { useAuth } from '@app/composables/useAuth.ts';
   import { Win } from '@app/types';
-  import { onMounted, ref } from 'vue';
+  import { onBeforeMount, onMounted, ref } from 'vue';
   import { useApi } from '@app/composables/useApi.ts';
   import { authApi } from '@app/api/auth.api.ts';
   import { userApi } from '@app/api/user.api.ts';
 
   const { t } = useI18n();
+  const { isSigned } = useAuth();
   const { openWindow, closeWindow } = useWindows();
   const { execute: doLogout } = useApi(authApi.logout);
   const { execute: getUserStats } = useApi(userApi.getUserStats);
@@ -127,6 +128,13 @@
     unsetUser();
     closeWindow(Win.USER);
   }
+
+  onBeforeMount(() => {
+    if (!isSigned.value) {
+      closeWindow(Win.USER);
+      openWindow(Win.USER_LOGIN);
+    }
+  });
 
   onMounted(async () => {
     try {

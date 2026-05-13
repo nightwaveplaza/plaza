@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 9999;
   padding: 3px 0 max(env(safe-area-inset-bottom), var(--android-safe-bottom), 2px);
   background-color: var(--button-bg);
   border-top: 1px solid var(--window-border-left);

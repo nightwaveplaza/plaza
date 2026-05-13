@@ -1,0 +1,100 @@
+@import "../mixins";
+
+.win-start-menu {
+  @include d3-window;
+
+  position: absolute;
+  bottom: 30px;
+  left: 3px;
+  flex-direction: column;
+  z-index: 9998;
+  min-width: 178px;
+
+  transform: translateY(100%);
+  transition: none;
+  will-change: transform;
+
+  &.is-open {
+    transform: translateY(0);
+    transition: transform 0.15s ease-out;
+  }
+
+  &__inner {
+    padding: 2px;
+    display: flex;
+    flex-grow: 1;
+  }
+
+  &__sidebar {
+    background: linear-gradient(to bottom, #000000, #0c00f0);
+    width: 22px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 2px;
+
+    img {
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+  }
+
+  &__items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 6px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--color);
+    cursor: pointer;
+
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background-color: var(--bg-selected);
+      color: var(--color-selected);
+    }
+
+    img {
+      margin-right: 9px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img, span {
+      cursor: pointer !important;
+    }
+  }
+
+  &__divider {
+    height: 2px;
+    margin: 4px 4px;
+    border-top: 1px solid var(--forms-border-left);
+    border-bottom: 1px solid var(--forms-border-right);
+  }
+}
+
+
+
+
+
+
+
+
+

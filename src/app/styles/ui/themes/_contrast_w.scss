@@ -1,9 +1,9 @@
 div[data-theme="theme-contrast_w"] {
   --color: #000000;
   --color-disabled: #808080;
-  --color-link: #0645AD;
+  --color-link: #0645ad;
 
-  --input-bg: #ffffff;
+  --bg-selected: #000000;
 
   --button-bg: #ffffff;
   --button-border-left: #c0c0c0;
@@ -33,6 +33,7 @@ div[data-theme="theme-contrast_w"] {
   --window-header-gradient: linear-gradient(to right, #000000, #000000);
   --window-header-gradient-inactive: linear-gradient(to right, #ffffff, #ffffff);
 
+  --input-bg: #ffffff;
   --forms-border-left: #808080;
   --forms-border-right: #c0c0c0;
   --forms-shadow:

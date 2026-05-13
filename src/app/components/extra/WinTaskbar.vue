@@ -1,5 +1,9 @@
 <template>
+  <win-start-menu />
+
   <div class="win-taskbar d-flex flex-nowrap" :class="{ 'taskbar-top': taskbarPosition === 'top' }">
+    <!--    <win-start-button class="d-none d-sm-inline" :class="{ active: isOpen }" />-->
+
     <div class="flex-shrink-0">
       <div class="divider mx-1" />
     </div>
@@ -38,8 +42,10 @@
   import { useAppSettings } from '@app/composables/useAppSettings.ts';
   import { useI18n } from 'vue-i18n';
   import { getWindowIcon } from '@app/utils/icons.ts';
+  import { useStartMenu } from '@app/composables/useStartMenu.ts';
 
   const { toggleMinimize, openedWindows, activeWindow } = useWindows();
+  const { isOpen } = useStartMenu();
   const { taskbarPosition } = useAppSettings();
   const { t } = useI18n();
 

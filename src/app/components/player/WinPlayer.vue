@@ -51,7 +51,7 @@
           <div class="col-4 col-md-5">
             <div class="row gx-0">
               <div class="col-6">
-                <win-button block @click="openUserWindow()">
+                <win-button block @click="openWindow(Win.USER)">
                   <i class="i icon-user me-0" />
                 </win-button>
               </div>
@@ -132,10 +132,6 @@
     if (song.id) {
       showSongInfo(song.id);
     }
-  }
-
-  function openUserWindow(): void {
-    openWindow(isSigned.value ? Win.USER : Win.USER_LOGIN);
   }
 
   function openTimerWindow(): void {

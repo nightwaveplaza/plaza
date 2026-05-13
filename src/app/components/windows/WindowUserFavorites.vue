@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onBeforeMount, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
   import { fmtDate } from '@app/utils/timeFormats.ts';
@@ -96,8 +96,10 @@
   import { useApi } from '@app/composables/useApi.ts';
   import { userFavoritesApi } from '@app/api/userFavorites.api.ts';
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
+  import { useAuth } from '@app/composables/useAuth.ts';
 
   const { t } = useI18n();
+  const { isSigned } = useAuth();
   const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows();
   const { execute: getFavorites, isLoading, data: favs } = useApi(userFavoritesApi.getFavorites);
   const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite);
@@ -125,6 +127,13 @@
       showAlert((e as ApiError).message, t('errors.error'));
     }
   }
+
+  onBeforeMount(() => {
+    if (!isSigned.value) {
+      closeWindow(Win.USER);
+      openWindow(Win.USER_LOGIN);
+    }
+  });
 
   onMounted(() => {
     fetchFavorites();

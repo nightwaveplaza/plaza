@@ -1,5 +1,5 @@
 <template>
-  <win-start-menu />
+  <win-start-menu :class="{ 'is-top': taskbarPosition === 'top' }" />
 
   <div class="win-taskbar d-flex flex-nowrap" :class="{ 'taskbar-top': taskbarPosition === 'top' }">
     <win-start-button

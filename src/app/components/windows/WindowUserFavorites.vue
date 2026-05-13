@@ -130,7 +130,7 @@
 
   onBeforeMount(() => {
     if (!isSigned.value) {
-      closeWindow(Win.USER);
+      closeWindow(Win.USER_FAVORITES);
       openWindow(Win.USER_LOGIN);
     }
   });

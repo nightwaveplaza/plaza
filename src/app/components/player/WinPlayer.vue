@@ -51,6 +51,7 @@
               </div>
             </div>
           </div>
+
           <div class="col-4 col-md-5">
             <div class="row gx-1 d-none d-sm-flex">
               <div class="col-6">

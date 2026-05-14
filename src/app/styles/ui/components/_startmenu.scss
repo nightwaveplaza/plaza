@@ -1,29 +1,12 @@
 @import "../mixins";
 
-.win-start-menu-wrapper {
+.win-start-menu {
   position: absolute;
   left: 3px;
-  bottom: 30px;
+  bottom: 100%;
   top: auto;
   z-index: 9999;
 
-  &.is-top {
-    bottom: auto;
-    top: 30px;
-    padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
-    padding-bottom: 0;
-
-    .win-start-menu__mask {
-      justify-content: flex-start;
-    }
-
-    .win-start-menu {
-      align-content: start;
-    }
-  }
-}
-
-.win-start-menu {
   display: grid;
 
   align-content: end;

@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9998;
+  z-index: 9997;
   background-color: var(--button-bg);
   padding-bottom: max(env(safe-area-inset-bottom), var(--android-safe-bottom));
 
@@ -17,6 +17,20 @@
       border-bottom: 1px solid var(--window-border-left) !important;
       box-shadow: inset 0 -1px 0 0 var(--taskbar-shadow-color) !important;
     }
+
+    .win-start-menu {
+      top: 100%;
+      bottom: auto;
+      align-content: start;
+    }
+
+    .win-start-menu__mask {
+      justify-content: flex-start;
+    }
+
+    .win-start-menu {
+      align-content: start;
+    }
   }
 }
 
@@ -27,7 +41,7 @@
   box-shadow: inset 0 1px 0 0 var(--taskbar-shadow-color);
 
   position: relative;
-  z-index: 9999;
+  z-index: 9998;
 
   .divider {
     height: 100%;

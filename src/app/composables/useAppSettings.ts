@@ -19,14 +19,10 @@ function getDefaultLanguage(): string {
   return 'en';
 }
 
-function getDefaultTaskbarPosition(): string {
-  return /iPad|iPhone/i.test(window.navigator.userAgent) ? 'top' : 'bottom';
-}
-
 const theme = useLocalStorage(PrefKeys.THEME, 'win98');
 const language = useLocalStorage(PrefKeys.LANGUAGE, getDefaultLanguage());
 const lowQuality = useLocalStorage(PrefKeys.LOW_QUALITY, false);
-const taskbarPosition = useLocalStorage(PrefKeys.TASKBAR_POSITION, getDefaultTaskbarPosition());
+const taskbarPosition = useLocalStorage(PrefKeys.TASKBAR_POSITION, 'bottom');
 const useHls = useLocalStorage(PrefKeys.USE_HLS, true);
 
 export function useAppSettings() {

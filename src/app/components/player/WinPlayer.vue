@@ -85,6 +85,7 @@
   import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
   import { isMobile } from '@app/utils/helpers.ts';
   import { useNativeAudioPlayer } from '@app/composables/useNativeAudioPlayer.ts';
+  import { useSleepTimer } from '@app/composables/useSleepTimer.ts';
 
   const { volume } = useVolumeControl();
   const { playAudio, stopAudio, setVisualCanvas } = isMobile()
@@ -94,7 +95,8 @@
 
   const { t } = useI18n();
   const { openWindow, showSongInfo } = useWindows();
-  const { state, sleepTime } = usePlayerPlayback();
+  const { state } = usePlayerPlayback();
+  const { sleepTime } = useSleepTimer();
 
   const time = !isMobile() ? ref<InstanceType<typeof WinPlayerTime>>() : undefined;
   const canvas = !isMobile() ? ref<InstanceType<typeof HTMLCanvasElement>>() : undefined;

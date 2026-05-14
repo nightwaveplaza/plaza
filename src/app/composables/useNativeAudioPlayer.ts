@@ -1,8 +1,8 @@
 import { Native } from '@mobile/bridge/native.ts';
-import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
+import { useSleepTimer } from '@app/composables/useSleepTimer.ts';
 
 export function useNativeAudioPlayer() {
-  const { sleepTime } = usePlayerPlayback();
+  const { sleepTime } = useSleepTimer();
 
   const playAudio = () => {
     Native.playAudio();

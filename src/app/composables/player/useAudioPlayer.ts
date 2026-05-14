@@ -6,6 +6,7 @@ import { useVisual } from '@app/composables/player/useVisual.ts';
 import { useAppSettings } from '@app/composables/useAppSettings.ts';
 import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
 import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
+import { useSleepTimer } from '@app/composables/useSleepTimer.ts';
 
 /**
  * useAudioPlayer composable
@@ -21,7 +22,8 @@ export function useAudioPlayer(): {
   const { startVisual, stopVisual } = useVisual();
   const { useHls, lowQuality } = useAppSettings();
   const { song, position } = useNowPlayingStatus();
-  const { state, setSleepTime } = usePlayerPlayback();
+  const { state } = usePlayerPlayback();
+  const { sleepTime } = useSleepTimer();
 
   let hls: Hls | null = null;
   let audio: HTMLAudioElement | null = null;
@@ -76,7 +78,7 @@ export function useAudioPlayer(): {
     audio.addEventListener('pause', onAudioPauseEvent);
 
     // Set timer to 0
-    setSleepTime(0);
+    sleepTime.value = 0;
 
     // Start playing
     audio.play().then(() => {
@@ -109,7 +111,7 @@ export function useAudioPlayer(): {
 
     // Set current state
     state.value = PlayerState.IDLE;
-    setSleepTime(0);
+    sleepTime.value = 0;
 
     document.title = 'Nightwave Plaza - Online Vaporwave Radio';
   };

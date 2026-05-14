@@ -57,12 +57,12 @@
   import { useNumberOnly } from '@app/utils/helpers.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
   import { Win } from '@app/types';
-  import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
   import { fmtDuration } from '@app/utils/timeFormats.ts';
+  import { useSleepTimer } from '@app/composables/useSleepTimer.ts';
 
   const { t } = useI18n();
   const { closeWindow, showAlert } = useWindows();
-  const { sleepTime, setSleepTime } = usePlayerPlayback();
+  const { sleepTime } = useSleepTimer();
 
   const minutes = ref(20);
   const now = ref(Date.now());
@@ -81,9 +81,9 @@
 
   function start(): void {
     if (active.value) {
-      setSleepTime(0);
+      sleepTime.value = 0;
     } else {
-      setSleepTime(Date.now() + minutes.value * 60 * 1000);
+      sleepTime.value = Date.now() + minutes.value * 60 * 1000;
       showAlert(
         t('win.player_timer.alert', { minutes: minutes.value }),
         t('win.player_timer.timer_set'),

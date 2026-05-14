@@ -1,9 +1,12 @@
 {
-  "menu": {
+  "start_menu": {
     "about": "About",
     "ratings": "Ratings",
     "play_history": "Play History",
-    "support_us": "Support Us"
+    "support_us": "Support Us",
+    "my_favorites": "My Favorites",
+    "my_profile": "My Profile",
+    "settings": "Settings"
   },
   "win": {
     "settings": {

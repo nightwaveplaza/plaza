@@ -2,16 +2,16 @@
   <!-- Menu -->
   <win-menu class="d-none d-sm-block">
     <win-menu-action @click="openWindow(Win.ABOUT)">
-      {{ t('menu.about') }}
+      {{ t('start_menu.about') }}
     </win-menu-action>
     <win-menu-action @click="openWindow(Win.HISTORY)">
-      {{ t('menu.play_history') }}
+      {{ t('start_menu.play_history') }}
     </win-menu-action>
     <win-menu-action @click="openWindow(Win.RATINGS)">
-      {{ t('menu.ratings') }}
+      {{ t('start_menu.ratings') }}
     </win-menu-action>
     <win-menu-action @click="openWindow(Win.SUPPORT)">
-      {{ t('menu.support_us') }}
+      {{ t('start_menu.support_us') }}
     </win-menu-action>
   </win-menu>
 

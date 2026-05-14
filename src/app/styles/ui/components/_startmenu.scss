@@ -3,7 +3,7 @@
 .win-start-menu {
   position: absolute;
   left: 3px;
-  bottom: 100%;
+  bottom: calc(100% - 4px);
   top: auto;
   z-index: 9999;
 

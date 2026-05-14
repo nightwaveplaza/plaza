@@ -14,7 +14,8 @@
     padding-bottom: 0;
 
     .win-taskbar {
-      border-bottom: 1px solid var(--window-border-left) !important;
+      border-top: none;
+      border-bottom: 1px solid var(--button-bg) !important;
       box-shadow: inset 0 -1px 0 0 var(--taskbar-shadow-color) !important;
     }
 
@@ -37,7 +38,7 @@
 .win-taskbar {
   padding: 3px;
   background-color: var(--button-bg);
-  border-top: 1px solid var(--window-border-left);
+  border-top: 1px solid var(--button-bg);
   box-shadow: inset 0 1px 0 0 var(--taskbar-shadow-color);
 
   position: relative;

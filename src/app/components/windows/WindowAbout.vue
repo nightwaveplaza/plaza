@@ -69,12 +69,12 @@
 
     <div class="row buttons gx-0 w-100">
       <div class="col-auto">
-        <win-button class="px-4 me-2" @click="openCredits">
+        <win-button class="px-3 me-2" @click="openCredits">
           {{ t('win.about.btn_credits') }}
         </win-button>
       </div>
       <div class="col-auto">
-        <win-button class="px-4 me-2" @click="openNews">
+        <win-button class="px-3 me-2" @click="openNews">
           {{ t('win.about.btn_news') }}
         </win-button>
       </div>

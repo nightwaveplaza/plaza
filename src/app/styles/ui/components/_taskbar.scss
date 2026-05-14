@@ -7,23 +7,15 @@
   background-color: var(--button-bg);
   padding-bottom: max(env(safe-area-inset-bottom), var(--android-safe-bottom));
 
-
   &.is-top {
     top: 0;
     bottom: auto;
     padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
+    padding-bottom: 0;
 
     .win-taskbar {
-      border-top: none !important;
       border-bottom: 1px solid var(--window-border-left) !important;
       box-shadow: inset 0 -1px 0 0 var(--taskbar-shadow-color) !important;
-    }
-
-    .win-start-menu {
-      bottom: auto;
-      top: 28px;
-      padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
-      transform: translateY(-100%);
     }
   }
 }

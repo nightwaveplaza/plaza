@@ -1,4 +1,8 @@
 <template>
+  <div class="win-start-menu-wrapper noselect" :class="{ 'is-top': taskbarPosition === 'top' }">
+    <win-start-menu class="noselect" />
+  </div>
+
   <div class="win-taskbar-wrapper noselect" :class="{ 'is-top': taskbarPosition === 'top' }">
     <div class="win-taskbar d-flex flex-nowrap noselect">
       <win-start-button
@@ -26,8 +30,6 @@
         <div class="px-2">{{ time }}</div>
       </div>
     </div>
-
-    <win-start-menu class="noselect" />
   </div>
 </template>
 

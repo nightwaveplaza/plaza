@@ -1,29 +1,58 @@
 @import "../mixins";
-.win-start-menu {
-  @include d3-window;
 
+.win-start-menu-wrapper {
   position: absolute;
+  left: 3px;
   bottom: 30px;
   top: auto;
-  left: 3px;
-  z-index: 9997;
+  z-index: 9999;
 
-  flex-direction: column;
+  &.is-top {
+    bottom: auto;
+    top: 30px;
+    padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
+    padding-bottom: 0;
+
+    .win-start-menu__mask {
+      justify-content: flex-start;
+    }
+
+    .win-start-menu {
+      align-content: start;
+    }
+  }
+}
+
+.win-start-menu {
+  display: grid;
+
+  align-content: end;
+
+  grid-template-rows: 0fr;
+  transition: none;
+
   min-width: 178px;
 
-  transform: translateY(100%);
-  transition: none;
-  will-change: transform;
-
   &.is-open {
-    transform: translateY(0) !important;
-    transition: transform 0.15s ease-out;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.15s ease-out;
+  }
+
+  &__mask {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   &__inner {
+    @include d3-window;
     padding: 2px;
+
     display: flex;
-    flex-grow: 1;
+    width: 100%;
+    flex-shrink: 0;
   }
 
   &__sidebar {

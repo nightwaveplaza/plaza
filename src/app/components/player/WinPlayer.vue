@@ -1,6 +1,6 @@
 <template>
   <div class="row gx-0">
-    <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0 px-4 px-sm-0">
+    <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
       <div
         class="cover simple-border noselect ratio ratio-1x1"
         :style="{ 'background-image': `url('${artwork}')` }"
@@ -18,14 +18,17 @@
         </div>
 
         <div class="row my-1 my-sm-2 py-1 gx-0 noselect">
-          <div class="col-12 col-md-7 pe-0 pe-md-2">
+          <div
+            class="col-12 col-md-7 pe-0 pe-md-2"
+            :class="{ 'col-md-7': !isMobile(), 'pe-md-2': !isMobile(), 'col-md-6': isMobile() }"
+          >
             <div class="text-field p-0 m-0 player-time-container">
-              <canvas ref="canvas" class="player-visual" />
+              <canvas v-if="!isMobile()" ref="canvas" class="player-visual" />
               <win-player-time ref="time" @stop-by-timer="stopAudio" />
             </div>
           </div>
 
-          <div class="col col-md-5 d-none d-md-block position-relative">
+          <div v-if="!isMobile()" class="col col-md-5 d-none d-md-block position-relative">
             <win-player-volume :volume="volume" @update-volume="setVolume" />
           </div>
         </div>
@@ -78,21 +81,23 @@
   import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
   import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
-  import { useAuth } from '@app/composables/useAuth.ts';
   import { Win } from '@app/types';
   import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
+  import { isMobile } from '@app/utils/helpers.ts';
+  import { useNativeAudioPlayer } from '@app/composables/useNativeAudioPlayer.ts';
 
   const { volume } = useVolumeControl();
-  const { playAudio, stopAudio, setVisualCanvas } = useAudioPlayer();
+  const { playAudio, stopAudio, setVisualCanvas } = isMobile()
+    ? useNativeAudioPlayer()
+    : useAudioPlayer();
   const { song } = useNowPlayingStatus();
 
   const { t } = useI18n();
   const { openWindow, showSongInfo } = useWindows();
-  const { isSigned } = useAuth();
   const { state, sleepTime } = usePlayerPlayback();
 
-  const time = ref<InstanceType<typeof WinPlayerTime>>();
-  const canvas = ref<InstanceType<typeof HTMLCanvasElement>>();
+  const time = !isMobile() ? ref<InstanceType<typeof WinPlayerTime>>() : undefined;
+  const canvas = !isMobile() ? ref<InstanceType<typeof HTMLCanvasElement>>() : undefined;
 
   const artwork = computed(() => {
     return song.artwork_src ?? 'https://i.plaza.one/artwork_dead.jpg';
@@ -111,10 +116,6 @@
 
   const isPlaying = computed(() => state.value === PlayerState.PLAYING);
   const timerColor = computed(() => (sleepTime.value > 0 ? '#3455DB' : ''));
-
-  watch(volume, newVolume => {
-    time.value!.showText(t('win.player.volume', { volume: newVolume }));
-  });
 
   function setVolume(vol: number) {
     volume.value = vol;
@@ -140,6 +141,12 @@
   }
 
   onMounted(() => {
-    setVisualCanvas(canvas.value!);
+    if (!isMobile()) {
+      setVisualCanvas(canvas!.value!);
+
+      watch(volume, newVolume => {
+        time!.value!.showText(t('win.player.volume', { volume: newVolume }));
+      });
+    }
   });
 </script>

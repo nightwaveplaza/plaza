@@ -1,23 +1,38 @@
 import { PlayerState } from '@app/types/types.ts';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Native } from '@mobile/bridge/native.ts';
 import { isMobile } from '@app/utils/helpers.ts';
+import { useEventListener } from '@vueuse/core';
 
 const state = ref(PlayerState.IDLE);
 const sleepTime = ref(0);
 
+let playerNativeEventRegistered = false;
+
 export function usePlayerPlayback() {
-  const setSleepTime = (t: number): void => {
-    sleepTime.value = t;
+  // Register mobile specific events
+  if (isMobile() && !playerNativeEventRegistered) {
+    useEventListener(window, 'player:playing', (e: CustomEvent) => {
+      state.value = e.detail ? PlayerState.PLAYING : PlayerState.IDLE;
+    });
 
-    if (isMobile()) {
-      Native.setSleepTimer(t);
-    }
-  };
+    useEventListener(window, 'player:buffering', () => {
+      state.value = PlayerState.LOADING;
+    });
 
-  const updateSleepTime = (t: number): void => {
-    sleepTime.value = t;
-  };
+    useEventListener(window, 'player:sleeptime', (e: CustomEvent) => {
+      sleepTime.value = e.detail;
+    });
 
-  return { state, sleepTime, setSleepTime, updateSleepTime };
+    watch(
+      () => sleepTime.value,
+      (t: number) => {
+        Native.setSleepTimer(t);
+      },
+    );
+
+    playerNativeEventRegistered = true;
+  }
+
+  return { state, sleepTime };
 }

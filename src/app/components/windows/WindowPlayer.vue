@@ -1,6 +1,6 @@
 <template>
   <!-- Menu -->
-  <win-menu v-if="!isMobile()">
+  <win-menu class="d-none d-sm-block">
     <win-menu-action @click="openWindow(Win.ABOUT)">
       {{ t('menu.about') }}
     </win-menu-action>
@@ -34,7 +34,6 @@
 
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
-  import { isMobile } from '@app/utils/helpers.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
   import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
   import { useAuth } from '@app/composables/useAuth.ts';

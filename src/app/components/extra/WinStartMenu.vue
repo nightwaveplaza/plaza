@@ -1,51 +1,49 @@
 <template>
-  <div class="win-start-menu-wrapper">
-    <div ref="startMenuRef" class="win-start-menu noselect" :class="{ 'is-open': isOpen }">
-      <div class="win-start-menu__inner">
-        <div class="win-start-menu__sidebar">
-          <img src="@app/assets/start-logo.svg" class="sidebar-logo" alt="Nightwave Plaza" />
-        </div>
+  <div ref="startMenuRef" class="win-start-menu noselect" :class="{ 'is-open': isOpen }">
+    <div class="win-start-menu__inner">
+      <div class="win-start-menu__sidebar">
+        <img src="@app/assets/start-logo.svg" class="sidebar-logo" alt="Nightwave Plaza" />
+      </div>
 
-        <div class="win-start-menu__items">
-          <button class="win-start-menu__item" @click="open(Win.RATINGS)">
-            <img src="@app/assets/icons/winamp.png" alt="icon" />
-            <span>{{ t('start_menu.ratings') }}</span>
-          </button>
+      <div class="win-start-menu__items">
+        <button class="win-start-menu__item" @click="open(Win.RATINGS)">
+          <img src="@app/assets/icons/winamp.png" alt="icon" />
+          <span>{{ t('start_menu.ratings') }}</span>
+        </button>
 
-          <button class="win-start-menu__item" @click="open(Win.HISTORY)">
-            <img src="@app/assets/icons/calendar2.png" alt="icon" />
-            <span>{{ t('start_menu.play_history') }}</span>
-          </button>
+        <button class="win-start-menu__item" @click="open(Win.HISTORY)">
+          <img src="@app/assets/icons/calendar2.png" alt="icon" />
+          <span>{{ t('start_menu.play_history') }}</span>
+        </button>
 
-          <div class="win-start-menu__divider" />
+        <div class="win-start-menu__divider" />
 
-          <button class="win-start-menu__item" @click="open(Win.USER_FAVORITES)">
-            <img src="@app/assets/icons/user-bookmarks.png" alt="icon" />
-            <span>{{ t('start_menu.my_favorites') }}</span>
-          </button>
+        <button class="win-start-menu__item" @click="open(Win.USER_FAVORITES)">
+          <img src="@app/assets/icons/user-bookmarks.png" alt="icon" />
+          <span>{{ t('start_menu.my_favorites') }}</span>
+        </button>
 
-          <button class="win-start-menu__item" @click="open(Win.USER)">
-            <img src="@app/assets/icons/user_computer@2x.png" alt="icon" />
-            <span>{{ t('start_menu.my_profile') }}</span>
-          </button>
+        <button class="win-start-menu__item" @click="open(Win.USER)">
+          <img src="@app/assets/icons/user_computer@2x.png" alt="icon" />
+          <span>{{ t('start_menu.my_profile') }}</span>
+        </button>
 
-          <div class="win-start-menu__divider" />
+        <div class="win-start-menu__divider" />
 
-          <button class="win-start-menu__item" @click="open(Win.SETTINGS)">
-            <img src="@app/assets/icons/settings_gear2.png" alt="icon" />
-            <span>{{ t('start_menu.settings') }}</span>
-          </button>
+        <button class="win-start-menu__item" @click="open(Win.SETTINGS)">
+          <img src="@app/assets/icons/settings_gear2.png" alt="icon" />
+          <span>{{ t('start_menu.settings') }}</span>
+        </button>
 
-          <button class="win-start-menu__item" @click="open(Win.ABOUT)">
-            <img src="@app/assets/icons/help_question_mark2.png" alt="icon" />
-            <span>{{ t('start_menu.about') }}</span>
-          </button>
+        <button class="win-start-menu__item" @click="open(Win.ABOUT)">
+          <img src="@app/assets/icons/help_question_mark2.png" alt="icon" />
+          <span>{{ t('start_menu.about') }}</span>
+        </button>
 
-          <button class="win-start-menu__item" @click="open(Win.SUPPORT)">
-            <img src="@app/assets/icons/ball@2x.png" alt="icon" />
-            <span>{{ t('start_menu.support_us') }}</span>
-          </button>
-        </div>
+        <button class="win-start-menu__item" @click="open(Win.SUPPORT)">
+          <img src="@app/assets/icons/ball@2x.png" alt="icon" />
+          <span>{{ t('start_menu.support_us') }}</span>
+        </button>
       </div>
     </div>
   </div>

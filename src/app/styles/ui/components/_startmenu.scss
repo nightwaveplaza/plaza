@@ -1,26 +1,12 @@
 @import "../mixins";
+.win-start-menu {
+  @include d3-window;
 
-.win-start-menu-wrapper {
   position: absolute;
   bottom: 30px;
   top: auto;
   left: 3px;
-  z-index: 9998;
-  padding-bottom: max(env(safe-area-inset-bottom), var(--android-safe-bottom));
-
-  &.is-top {
-    bottom: auto;
-    top: 28px;
-    padding-top: max(env(safe-area-inset-top), var(--android-safe-top));
-
-    .win-start-menu {
-      transform: translateY(-100%);
-    }
-  }
-}
-
-.win-start-menu {
-  @include d3-window;
+  z-index: 9997;
 
   flex-direction: column;
   min-width: 178px;

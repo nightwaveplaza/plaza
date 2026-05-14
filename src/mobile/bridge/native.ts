@@ -37,6 +37,5 @@ export const Native = {
 
 const CurrentBridge = (): typeof AndroidBridge | typeof iOSBridge => {
   const isAndroid = typeof AndroidInterface !== 'undefined';
-  console.log(isAndroid);
   return isAndroid ? AndroidBridge : iOSBridge;
 };

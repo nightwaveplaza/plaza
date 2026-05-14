@@ -32,6 +32,10 @@
     line-height: 11px;
   }
 
+  span {
+    cursor: pointer;
+  }
+
   &:enabled {
     color: var(--color);
   }

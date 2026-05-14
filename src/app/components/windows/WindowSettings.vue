@@ -148,7 +148,7 @@
     <!-- /App Settings -->
 
     <div class="d-flex justify-content-between">
-      <win-button class="px-2" @click="openLanguageSettings">
+      <win-button class="px-2" @click="openLanguageSettings" icon="world">
         {{ t('win.settings.language') }}
       </win-button>
       <win-button class="px-4" @click="closeWindow(Win.SETTINGS)">

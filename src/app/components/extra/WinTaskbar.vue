@@ -44,7 +44,7 @@
   const time = ref('0:00 PM');
 
   function getNow(): void {
-    time.value = new Date().toLocaleString(i18n.global.locale.value as Intl.LocalesArgument, {
+    time.value = new Date().toLocaleString(i18n.global.locale as Intl.LocalesArgument, {
       hour: 'numeric',
       minute: 'numeric',
     });

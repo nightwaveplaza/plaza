@@ -7,22 +7,24 @@ export function fmtDuration(seconds: number) {
 }
 
 export function fmtDay(timestamp: number) {
-  return new Date(timestamp * 1e3).toLocaleString(
-    i18n.global.locale.value as Intl.LocalesArgument,
-    { month: 'short', day: 'numeric' },
-  );
+  return new Date(timestamp * 1e3).toLocaleString(i18n.global.locale as Intl.LocalesArgument, {
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 export function fmtDate(timestamp: number) {
-  return new Date(timestamp * 1e3).toLocaleString(
-    i18n.global.locale.value as Intl.LocalesArgument,
-    { month: 'short', day: 'numeric', year: 'numeric' },
-  );
+  return new Date(timestamp * 1e3).toLocaleString(i18n.global.locale as Intl.LocalesArgument, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 export function fmtTime(timestamp: number) {
-  return new Date(timestamp * 1e3).toLocaleString(
-    i18n.global.locale.value as Intl.LocalesArgument,
-    { hour: 'numeric', minute: 'numeric', hour12: false },
-  );
+  return new Date(timestamp * 1e3).toLocaleString(i18n.global.locale as Intl.LocalesArgument, {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  });
 }

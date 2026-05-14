@@ -52,7 +52,6 @@
   import { ref, watch } from 'vue';
   import { useWindows } from '@app/composables/useWindows.ts';
   import { Win } from '@app/types';
-  import { onClickOutside } from '@vueuse/core';
   import { useStartMenu } from '@app/composables/useStartMenu.ts';
 
   const { isOpen, closeMenu } = useStartMenu();
@@ -85,14 +84,4 @@
       document.removeEventListener('pointerdown', handleOutsideClick, true);
     }
   });
-
-  onClickOutside(
-    startMenuRef,
-    () => {
-      if (isOpen.value) closeMenu();
-    },
-    {
-      ignore: ['.btn-start'],
-    },
-  );
 </script>

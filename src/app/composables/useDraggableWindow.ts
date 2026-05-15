@@ -1,6 +1,7 @@
 import { nextTick, onMounted, ref, type Ref } from 'vue';
 import { useWindows } from '@app/composables/useWindows.ts';
 import { useEventListener } from '@vueuse/core';
+import { isMobile } from '@app/utils/helpers.ts';
 
 // Snap threshold depends on pointer precision (touch vs mouse)
 const SNAP_SIZE = 5;
@@ -134,31 +135,26 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
 
   // Viewport Adjustments
   let lastW = window.innerWidth;
-  let lastH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
   let resizeTimeout: ReturnType<typeof setTimeout>;
 
   const handleResize = (): void => {
     clearTimeout(resizeTimeout);
 
-    // Debounce to wait for Android orientation animation to finish
     resizeTimeout = setTimeout(() => {
       const currentW = window.innerWidth;
-      const currentH = window.visualViewport?.height ?? window.innerHeight;
 
-      const isOrientationChange = currentW !== lastW;
-      // Ignore vertical layout jumps caused by virtual keyboards
-      const isKeyboardToggle = !isOrientationChange && Math.abs(currentH - lastH) > 250;
+      // Calculate coordinates only when width changed (orientation)
+      if (isMobile() && currentW === lastW) {
+        return;
+      }
 
-      if (!isKeyboardToggle) {
-        if (isCentered.value) {
-          centerWindow();
-        } else {
-          clampToBounds();
-        }
+      if (isCentered.value) {
+        centerWindow();
+      } else {
+        clampToBounds();
       }
 
       lastW = currentW;
-      lastH = currentH;
     }, 150);
   };
 

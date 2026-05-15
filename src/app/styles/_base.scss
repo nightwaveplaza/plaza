@@ -11,6 +11,7 @@
 :root {
   --android-safe-top: 0px;
   --android-safe-bottom: 0px;
+  --safe-top: max(env(safe-area-inset-top), var(--android-safe-top));
 }
 
 html, body {

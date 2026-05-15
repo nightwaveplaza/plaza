@@ -19,7 +19,15 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
     startY = 0,
     winStartX = 0,
     winStartY = 0,
-    lastPointerDownTime = 0;
+    lastPointerDownTime = 0,
+    safeTop = 0;
+
+  // This is for Safari
+  const updateInsets = () => {
+    const sat = getComputedStyle(document.documentElement).getPropertyValue('--safe-top');
+    const matches = sat.match(/\d+(\.\d+)?/g);
+    safeTop = matches ? Math.max(...matches.map(Number)) : 0;
+  };
 
   // Window positioning
   const centerWindow = (): void => {
@@ -32,7 +40,7 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
     const nextX = viewportW / 2 - el.offsetWidth / 2;
     const nextY = viewportH / 2 - el.offsetHeight / 2;
 
-    moveTo(winId, Math.max(0, nextX), Math.max(0, nextY));
+    moveTo(winId, Math.max(0, nextX), Math.max(safeTop, nextY));
     isCentered.value = true;
   };
 
@@ -53,7 +61,7 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
     if (nextX + rect.width > viewportW) nextX = Math.max(0, viewportW - rect.width);
     if (nextY + rect.height > viewportH) nextY = Math.max(0, viewportH - rect.height);
     if (nextX < 0) nextX = 0;
-    if (nextY < 0) nextY = 0;
+    if (nextY < safeTop) nextY = safeTop;
 
     if (nextX !== winState.x || nextY !== winState.y) {
       moveTo(winId, nextX, nextY);
@@ -108,7 +116,7 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
     if (nextX < SNAP_SIZE) nextX = 0;
     else if (nextX + rect.width > viewportW - SNAP_SIZE) nextX = viewportW - rect.width;
 
-    if (nextY < SNAP_SIZE) nextY = 0;
+    if (nextY < SNAP_SIZE) nextY = safeTop;
     else if (nextY + rect.height > viewportH - SNAP_SIZE) nextY = viewportH - rect.height;
 
     moveTo(winId, nextX, nextY);
@@ -127,6 +135,7 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
     } catch {
       console.log('Failed to release pointer');
     }
+    clampToBounds();
   };
 
   useEventListener(window, 'pointermove', handlePointerMove, { passive: false });
@@ -148,6 +157,8 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
         return;
       }
 
+      updateInsets();
+
       if (isCentered.value) {
         centerWindow();
       } else {
@@ -165,6 +176,7 @@ export function useDraggableWindow(windowRef: Ref<HTMLElement | null>, winId: st
 
   onMounted(async () => {
     await nextTick();
+    updateInsets();
     centerWindow();
   });
 

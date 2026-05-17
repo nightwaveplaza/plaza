@@ -5,7 +5,7 @@ import type { ResultResource, UserFavoritesCollection } from '@app/types';
 export const userFavoritesApi = {
   getFavorites: (data: { page: number }) =>
     api.get<UserFavoritesCollection>('v2/users/me/favorites', { ...data }),
-  addFavorite: (data: { songId: string }) =>
+  addFavorite: (data: { song_id: string }) =>
     api.post<ResultResource>('/v2/users/me/favorites', { ...data }),
   deleteFavorite: (data: { id: number }) =>
     api.delete<ResultResource>(`v2/users/me/favorites/${data.id}`),

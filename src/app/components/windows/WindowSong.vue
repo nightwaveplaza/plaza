@@ -128,7 +128,7 @@
       if (song.value?.current_user?.favorite_id) {
         await deleteFavorite({ id: song.value.current_user.favorite_id });
       } else {
-        await addFavorite({ songId: song.value!.data.id });
+        await addFavorite({ song_id: song.value!.data.id });
       }
       await fetchSong();
     } catch (e) {

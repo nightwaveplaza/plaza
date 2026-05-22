@@ -1,70 +1,81 @@
 <template>
-  <div class="noselect">
-    <div class="row gx-0 p-2">
-      <div class="col-12 d-block d-sm-none mb-3 p-0">
-        {{ t('win.user_login.type_username') }}
-      </div>
+  <div class="p-2 noselect">
+    <div class="row">
+      <!-- Login -->
+      <div class="col">
+        <div class="row">
+          <div class="col-12 col-sm-auto">
+            <div class="row mb-3">
+              <div class="col-auto">
+                <img alt="" class="img-key" height="48" width="45" src="@app/assets/img/key.png" />
+              </div>
+              <!-- For small screens -->
+              <div class="d-flex d-sm-none col align-self-center">
+                {{ t('win.user_login.type_username') }}
+              </div>
+            </div>
+          </div>
 
-      <div class="col-auto d-none d-sm-block pe-3">
-        <img alt="" class="img-key" height="48" src="@app/assets/img/key.png" width="45" />
-      </div>
+          <div class="col">
+            <div class="d-grid gap-2">
+              <!-- For large screens -->
+              <div class="d-none d-sm-flex pb-1">
+                {{ t('win.user_login.type_username') }}
+              </div>
 
-      <div class="col ps-0 pe-2">
-        <div class="row gx-0 d-none d-sm-block mb-2">
-          <div class="col-12">
-            {{ t('win.user_login.type_username') }}
-          </div>
-        </div>
+              <!-- Username -->
+              <div class="row">
+                <div class="col-12 col-sm-5 align-self-center">
+                  <label class="mt-0" for="username"> {{ t('fields.username') }}: </label>
+                </div>
+                <div class="col">
+                  <input id="username" v-model="fields.username" class="d-block" type="text" />
+                </div>
+              </div>
 
-        <!-- Username -->
-        <div class="row gx-0">
-          <div class="col-8 col-sm-4 align-self-center">
-            <label class="mt-0" for="username">{{ t('fields.username') }}:</label>
-          </div>
-          <div class="col-8 col-sm-5">
-            <input id="username" v-model="fields.username" class="me-0 ms-0 w-100" type="text" />
-          </div>
-        </div>
+              <!-- Password -->
+              <div class="row">
+                <div class="col-12 col-sm-5 align-self-center">
+                  <label class="mt-0" for="password"> {{ t('fields.password') }}: </label>
+                </div>
+                <div class="col">
+                  <input id="password" v-model="fields.password" class="d-block" type="password" />
+                </div>
+              </div>
 
-        <!-- Password -->
-        <div class="row mt-1 gx-0">
-          <div class="col-8 col-sm-4 align-self-center">
-            <label class="mt-0" for="password">{{ t('fields.password') }}:</label>
-          </div>
-          <div class="col-8 col-sm-5">
-            <input
-              id="password"
-              v-model="fields.password"
-              class="me-0 ms-0 w-100"
-              type="password"
-            />
-          </div>
-          <div class="col-2 col-sm-2 ms-2 align-self-center">
-            <a role="button" class="link" @click="openReset">{{ t('win.user_login.btn_reset') }}</a>
-          </div>
-        </div>
+              <div class="row justify-content-between">
+                <!-- Remember Me -->
+                <div v-if="!isMobile()" class="col-auto col-sm-12 offset-sm-5">
+                  <win-checkbox v-model="fields.remember">
+                    {{ t('win.user_login.remember_me') }}
+                  </win-checkbox>
+                </div>
 
-        <!-- Remember -->
-        <div v-if="!isMobile()" class="row mt-1 gx-0 justify-content-end">
-          <div class="col-12 col-sm-8">
-            <win-checkbox v-model="fields.remember">
-              {{ t('win.user_login.remember_me') }}
-            </win-checkbox>
+                <!-- Forgot password -->
+                <div class="col-auto col-sm-12 offset-sm-5 mt-sm-1">
+                  <a role="button" class="link" @click="openReset">
+                    {{ t('win.user_login.btn_forgot_password') }}
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Buttons -->
-      <div class="col-auto col-sm-2 p-0 login-buttons">
-        <win-button :disabled="isLoading" class="mb-2 fw-bold" @click="login">
-          {{ t('win.user_login.btn_sign_in') }}
-        </win-button>
-        <win-button class="mb-2" @click="openRegister">
-          {{ t('win.user_login.btn_register') }}
-        </win-button>
-        <win-button @click="closeWindow(Win.USER_LOGIN)">
-          {{ t('buttons.cancel') }}
-        </win-button>
+      <div class="col-sm-3 mt-3 mt-sm-0">
+        <div class="d-flex flex-row flex-sm-column gap-2">
+          <win-button :disabled="isLoading" class="fw-bold d-block" @click="login">
+            {{ t('win.user_login.btn_sign_in') }}
+          </win-button>
+          <win-button class="d-block" @click="openRegister">
+            {{ t('win.user_login.btn_register') }}
+          </win-button>
+          <win-button class="d-block" @click="closeWindow(Win.USER_LOGIN)">
+            {{ t('buttons.cancel') }}
+          </win-button>
+        </div>
       </div>
     </div>
   </div>
@@ -127,15 +138,14 @@
 <style lang="scss">
   #window-user-login {
     .img-key {
-      margin-top: 2px;
       width: 45px;
       height: 48px;
     }
 
-    .login-buttons button {
-      width: 76px;
-      display: block;
-    }
+    //.login-buttons button {
+    //  width: 76px;
+    //  display: block;
+    //}
 
     label[for='username']::first-letter,
     label[for='password']::first-letter {

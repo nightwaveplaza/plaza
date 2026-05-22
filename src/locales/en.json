@@ -116,7 +116,8 @@
       "btn_sign_in": "Log In",
       "remember_me": "Remember Me",
       "title": "Log In",
-      "type_username": "Enter your username and password to sign in to Nightwave Plaza."
+      "type_username": "Type a user name and password to log on to Nightwave Plaza.",
+      "btn_forgot_password": "Forgot password?"
     },
     "news": {
       "title": "News"
@@ -160,7 +161,7 @@
       "warn2": "— Immediate deletion.",
       "warn3": "— All your data will be completely deleted.",
       "warn4": "— Recovery is not possible.",
-      "warn5": "— You can register again with the same username and email address (if available)."
+      "warn5": "— You can register again with the same user name and email address (if available)."
     },
     "user_favorites_export": {
       "btn_export": "Export",
@@ -183,26 +184,26 @@
     "error": "Error",
     "user_fetch": "Failed to retrieve user data.",
     "server": "Internal server error.",
-    "enter_user_pass": "Please enter a username and password.",
+    "enter_user_pass": "Please enter a user name and password.",
     "fields": {
       "email_email": "Invalid email address.",
       "email_required": "Email is required.",
-      "username_min": "Username is too short.",
-      "username_max": "Username is too long.",
+      "username_min": "User name is too short.",
+      "username_max": "User name is too long.",
       "password_match": "Passwords do not match.",
       "email_unique": "User with this email is already registered.",
-      "username_required": "Please enter a username.",
+      "username_required": "Please enter a user name.",
       "password_required": "Password is required.",
       "current_password_invalid": "Incorrect current password.",
       "captcha_invalid": "Invalid captcha response.",
       "password_min": "Password is too short.",
       "current_password_required": "Current password is required.",
-      "username_unique": "Username is already taken.",
-      "username_alphadash": "Username may only contain letters, numbers, and underscores.",
+      "username_unique": "User name is already taken.",
+      "username_alphadash": "User name may only contain letters, numbers, and underscores.",
       "delete_confirm_required": "You must confirm account deletion."
     },
     "network_fail": "Network is unavailable.",
-    "invalid_user_password": "Invalid username or password.",
+    "invalid_user_password": "Invalid user name or password.",
     "user_not_found": "User not found.",
     "song_not_found": "Song not found.",
     "please_sign": "Please sign in to your Nightwave Plaza account to access this feature.",
@@ -213,7 +214,7 @@
     "new_password": "New Password",
     "password": "Password",
     "repeat_password": "Repeat Password",
-    "username": "Username",
+    "username": "User name",
     "email": "Email",
     "user_details": "User Details",
     "security_check": "Security check..."

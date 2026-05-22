@@ -1,0 +1,72 @@
+@import "../mixins";
+
+.win-tabs {
+  position: relative;
+
+  button {
+    border-radius: 3px 3px 0 0;
+    border-bottom: none;
+    margin-bottom: -2px;
+    padding-bottom: 5px;
+
+    position: relative;
+    top: 2px;
+    z-index: 9900;
+
+    &.is-active {
+      z-index: 9902;
+      top: 0;
+
+      &::after {
+        margin-right: -1px;
+        border-left: 1px var(--window-border-left) solid;
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--button-bg);
+        z-index: 1;
+      }
+    }
+
+    // overflow left and right tabs
+    &:not(:first-child):not(:last-child) {
+      &.is-active {
+        margin-left: -3px;
+        margin-right: -3px;
+
+        &::after {
+          border-left: none;
+          margin-left: -1px;
+        }
+      }
+    }
+
+    // overflow right tab
+    &:first-child {
+      &.is-active {
+        margin-right: -2px;
+      }
+    }
+
+    // overflow left tab
+    &:last-child {
+      &.is-active {
+        margin-left: -2px;
+
+        &::after {
+          border-left: none;
+          margin-left: -1px;
+        }
+      }
+    }
+  }
+
+  &__panel {
+    @include d3-object;
+    position: relative;
+    z-index: 9901;
+  }
+}

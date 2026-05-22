@@ -10,6 +10,8 @@ import WinPanel from '@app/components/basic/WinPanel.vue';
 import WinMenuAction from '@app/components/basic/WinMenuAction.vue';
 import WinLoadingBar from '@app/components/basic/WinLoadingBar.vue';
 import WinCheckbox from '@app/components/basic/WinCheckbox.vue';
+import WinTab from '@app/components/basic/WinTab.vue';
+import WinTabs from '@app/components/basic/WinTabs.vue';
 
 export default {
   install: (Vue: App): void => {
@@ -23,6 +25,8 @@ export default {
     Vue.component('WinMenuAction', WinMenuAction);
     Vue.component('WinPagination', WinPagination);
     Vue.component('WinPanel', WinPanel);
+    Vue.component('WinTab', WinTab);
+    Vue.component('WinTabs', WinTabs);
     Vue.component('WinWindow', WinWindow);
   },
 };

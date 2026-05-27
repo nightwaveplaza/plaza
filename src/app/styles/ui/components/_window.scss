@@ -13,15 +13,7 @@
     padding: 2px;
   }
 
-  .content, .win-window__content {
-    padding: 3px;
-    margin: 1px 1px 0 1px;
-    border: 1px solid var(--forms-border-left);
-    border-right-color: var(--forms-border-right);
-    border-bottom-color: var(--forms-border-right);
-  }
-
-  .win-window__header {
+  &__header {
     margin: 1px;
     padding: 2px;
     position: relative;

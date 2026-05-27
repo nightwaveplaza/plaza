@@ -74,7 +74,7 @@
 
   function validate(): void {
     if (fields.current_password.length === 0) {
-      throw new Error(t('errors.enter_current_password'));
+      throw new Error(t('errors.fields.current_password_invalid'));
     }
 
     if (fields.password!.length < 3) {

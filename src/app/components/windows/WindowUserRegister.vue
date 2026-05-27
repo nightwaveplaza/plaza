@@ -133,10 +133,6 @@
       return showAlert((e as Error).message, t('errors.error'));
     }
 
-    if (fields.captcha_response === '') {
-      return showAlert(t('win.user_register.captcha_fail'), t('errors.error'));
-    }
-
     try {
       await registerUser(fields);
       showAlert(

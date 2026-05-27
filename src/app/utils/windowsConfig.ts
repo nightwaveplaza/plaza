@@ -3,7 +3,7 @@ import { Win, type WindowConfig, WindowHeaderButtons } from '@app/types';
 export const registry: Record<Win, WindowConfig> = {
   [Win.ABOUT]: {
     titleKey: 'win.about.title',
-    width: 380,
+    width: 350,
     icon: 'help_question_mark',
   },
   [Win.ALERT]: {

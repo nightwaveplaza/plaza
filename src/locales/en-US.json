@@ -143,16 +143,13 @@
       "alert": "Playback will stop in {minutes} minute(s).",
       "stop": "Stop Timer"
     },
-    "mobile": {
-      "description": "Official Android and iOS apps are available. Please download them and let Nightwave Plaza show you the past through the music of the future."
-    },
     "user_profile_edit": {
       "title": "Edit Profile"
     },
     "user_profile_delete": {
       "title": "Delete Account",
       "understand": "I understand, delete my account.",
-      "warn1": "This action will permanently delete your Nightwave Plaza account.",
+      "warn1": "This action will permanently delete your Nightwave Plaza account.",
       "warn2": "— Account will be deleted immediately.",
       "warn3": "— All your data will be lost forever.",
       "warn4": "— Account recovery is not possible.",

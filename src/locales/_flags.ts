@@ -2,16 +2,16 @@ import { BR, DE, US, RU, ES, IT, JP, TW, TR } from 'country-flag-icons/string/3x
 import CA from './flags/catalonia';
 
 export default {
-  en: US,
-  de: DE,
+  'ca-ES': CA,
+  'de-DE': DE,
+  'en-US': US,
+  'es-ES': ES,
   'pt-BR': BR,
-  ru: RU,
-  es: ES,
-  it: IT,
-  ca: CA,
-  ja: JP,
-  tr: TR,
-  'zh-Hant': TW,
+  'it-IT': IT,
+  'ja-JP': JP,
+  'ru-RU': RU,
+  'tr-TR': TR,
+  'zh-TW': TW,
 } as {
   [key: string]: string;
 };

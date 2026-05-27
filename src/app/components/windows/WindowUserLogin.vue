@@ -17,7 +17,7 @@
           </div>
 
           <div class="col">
-            <div class="d-grid gap-2">
+            <div class="d-grid gap-1">
               <!-- For large screens -->
               <div class="d-none d-sm-flex pb-1">
                 {{ t('win.user_login.type_username') }}

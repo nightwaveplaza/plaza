@@ -16,7 +16,7 @@
   </win-menu>
 
   <!-- Player -->
-  <div class="content p-2">
+  <div class="player-container p-2">
     <win-player />
   </div>
 
@@ -47,6 +47,14 @@
 
 <style lang="scss">
   #window-player {
+    .player-container {
+      padding: 3px;
+      margin: 1px 1px 0 1px;
+      border: 1px solid var(--forms-border-left);
+      border-right-color: var(--forms-border-right);
+      border-bottom-color: var(--forms-border-right);
+    }
+
     .player-artist {
       margin-top: 2px;
       font-weight: 700;

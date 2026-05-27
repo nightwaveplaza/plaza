@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-2 ps-2 pe-2">
+  <div class="p-2">
     <win-memo>
       <i18n-t keypath="win.credits.created_by" tag="p" class="mb-2">
         <template #app>
@@ -18,7 +18,8 @@
         </template>
       </i18n-t>
     </win-memo>
-    <div class="text-center my-2">
+
+    <div class="text-center mt-2">
       <win-button class="px-4" @click="closeWindow(Win.CREDITS)">
         {{ t('buttons.close') }}
       </win-button>

@@ -153,7 +153,7 @@
       "title": "Delete Account",
       "understand": "I understand, delete my account.",
       "warn1": "This action will permanently delete your Nightwave Plaza account.",
-      "warn2": "— This action is immediate.",
+      "warn2": "— Account will be deleted immediately.",
       "warn3": "— All your data will be lost forever.",
       "warn4": "— Account recovery is not possible.",
       "warn5": "— You can register again with the same user name and email (if available)."

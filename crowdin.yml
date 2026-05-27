@@ -3,6 +3,6 @@ base_path: "."
 preserve_hierarchy: true
 
 files:
-  - source: src/locales/en_US.json
-    translation: src/locales/%locale_with_underscore%.json
+  - source: src/locales/en-US.json
+    translation: src/locales/%locale%.json
     dest: "/Nightwave Plaza App/NightwavePlaza.json"

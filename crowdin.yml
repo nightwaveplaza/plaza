@@ -3,18 +3,6 @@ base_path: "."
 preserve_hierarchy: true
 
 files:
-  - source: src/locales/en.json
-    translation: src/locales/%two_letters_code%.json
+  - source: src/locales/en_US.json
+    translation: src/locales/%locale_with_underscore%.json
     dest: "/Nightwave Plaza App/NightwavePlaza.json"
-
-    "languages_mapping": {
-      "two_letters_code": {
-        "pt-BR": "pt_BR",
-        "zh-TW": "zh_Hant"
-      }
-    }
-
-    ignore:
-      - '\Nightwave Plaza Android\**'
-      - '\Nightwave Plaza iOS\**'
-

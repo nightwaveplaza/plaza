@@ -1,6 +1,6 @@
 import ca from '@locales/ca.json';
 import de from '@locales/de.json';
-import en from '@locales/en.json';
+import en from '@locales/en_US.json';
 import es from '@locales/es.json';
 import it from '@locales/it.json';
 import ja from '@locales/ja.json';

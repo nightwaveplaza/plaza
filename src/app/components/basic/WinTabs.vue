@@ -4,6 +4,7 @@
       <win-button
         v-for="tab in tabs"
         :key="tab.name"
+        class="win-tabs__button"
         :class="{ 'is-active': activeTab === tab.name }"
         @click="activeTab = tab.name"
       >

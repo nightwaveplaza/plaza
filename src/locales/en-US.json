@@ -1,8 +1,4 @@
 {
-  "project": {
-    "name": "Nightwave Plaza",
-    "author": "Alexander Morozov"
-  },
   "start_menu": {
     "about": "About",
     "ratings": "Ratings",

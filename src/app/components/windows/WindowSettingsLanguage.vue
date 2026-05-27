@@ -18,7 +18,7 @@
         v-if="te('win.settings_language.translation_author_name')"
         keypath="win.settings_language.translation_by"
         tag="p"
-        class="mb-1"
+        class="mb-2"
       >
         <template #author>
           <a :href="t('win.settings_language.translation_author_link')" target="_blank">
@@ -26,11 +26,14 @@
           </a>
         </template>
       </i18n-t>
-      <i18n-t keypath="win.settings_language.help" tag="p">
-        <template #link>
-          <br /><a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
-        </template>
-      </i18n-t>
+
+      <p>{{ t('win.settings_language.want_to_help') }}</p>
+
+      <p class="mb-0">
+        <a href="https://translate.plaza.one" target="_blank">{{
+          t('win.settings_language.crowdin_project')
+        }}</a>
+      </p>
     </win-panel>
 
     <div class="text-center mt-3">

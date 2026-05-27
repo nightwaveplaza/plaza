@@ -47,7 +47,7 @@
       "credits": {
         "created_by": "{nightwave_plaza} website and apps are created and maintained by {author}.",
         "music_backgrounds": "All music and backgrounds belong to their respective authors.",
-        "content_by": "Musical content is provided by artists and labels. If you have any copyright concerns, please send a mail to {email}."
+        "content_by": "Musical content is provided by artists and labels. If you have any copyright concerns, please send an email to {email}."
       }
     },
     "history": {
@@ -71,7 +71,8 @@
     "settings_language": {
       "select": "Select Language",
       "title": "Language Selection",
-      "help": "Want to help translate Nightwave Plaza? {link}",
+      "want_to_help": "Want to help translate Nightwave Plaza?",
+      "crowdin_project": "Join our Crowdin project!",
       "translation_author_name": "mr. plaza",
       "translation_author_link": "https://plaza.one",
       "translation_by": "Translation provided by {author}."
@@ -124,7 +125,7 @@
     },
     "user_register": {
       "btn_register": "Register",
-      "please_fill": "Please complete all required fields in the registration form.",
+      "please_fill": "Please fill out all required fields.",
       "success": "Registration Successful",
       "title": "Registration",
       "welcome": "Welcome to Nightwave Plaza, {user}!",
@@ -151,11 +152,11 @@
     "user_profile_delete": {
       "title": "Delete Account",
       "understand": "I understand, delete my account.",
-      "warn1": "This action will completely delete your Nightwave Plaza account.",
-      "warn2": "— Immediate deletion.",
-      "warn3": "— All your data will be completely deleted.",
-      "warn4": "— Recovery is not possible.",
-      "warn5": "— You can register again with the same user name and email address (if available)."
+      "warn1": "This action will permanently delete your Nightwave Plaza account.",
+      "warn2": "— This action is immediate.",
+      "warn3": "— All your data will be lost forever.",
+      "warn4": "— Account recovery is not possible.",
+      "warn5": "— You can register again with the same user name and email (if available)."
     },
     "user_favorites_export": {
       "btn_export": "Export",

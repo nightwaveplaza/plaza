@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <i18n-t keypath="win.settings.bg_notice" tag="p" class="mt-2 noselect">
+        <i18n-t keypath="win.settings.bg_notice" tag="p" class="mt-2 mb-0 noselect">
           <template #link>
             <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
           </template>

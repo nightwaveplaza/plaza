@@ -88,11 +88,8 @@
     },
     "support": {
       "title": "Support Us",
-      "title2": "Love Nightwave Plaza?",
-      "go_to_site": "Visit Nightwave Plaza Website",
-      "boosty": "Support on Boosty",
       "thanks": "Thank you for your donations. All contributions go directly toward funding the station.",
-      "rewards": "Support the radio station and future updates by donating via Boosty to receive special Discord rewards!"
+      "description": "{nightwave_plaza} is a free, non-commercial radio station funded by listeners. To support our ongoing server hosting and maintenance, please select a platform below."
     },
     "user": {
       "btn_logout": "Log Out",

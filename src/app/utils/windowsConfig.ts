@@ -70,7 +70,7 @@ export const registry: Record<Win, WindowConfig> = {
   },
   [Win.SUPPORT]: {
     titleKey: 'win.support.title',
-    width: 450,
+    width: 380,
     icon: 'smiley',
   },
   [Win.USER]: {

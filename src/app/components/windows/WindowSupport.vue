@@ -1,31 +1,52 @@
 <template>
-  <div class="p-2">
-    <p class="lead mt-2 mb-3 text-center">
-      <b>{{ t('win.support.title2') }}</b>
-    </p>
-
-    <win-panel>
-      <div class="row">
-        <div class="col text-center">
-          <p class="mb-1">
-            {{ t('win.support.rewards') }}
-          </p>
-          <a href="https://boosty.to/nightwaveplaza">{{ t('win.support.boosty') }}</a>
-        </div>
-        <div class="col-4 align-content-center">
-          <a href="https://boosty.to/nightwaveplaza" target="_blank">
-            <img class="img-fluid w-100" alt="boosty" src="@app/assets/img/boosty.png" />
-          </a>
-        </div>
+  <div class="p-3">
+    <div class="row mb-3">
+      <div class="col-auto align-content-center pe-1">
+        <img src="@app/assets/img/plaza.png" style="width: 64px" class="simple-border" alt="" />
       </div>
-    </win-panel>
+      <div class="col">
+        <i18n-t keypath="win.support.description" tag="p" class="mb-0">
+          <template #nightwave_plaza>
+            <strong>Nightwave Plaza</strong>
+          </template>
+        </i18n-t>
+      </div>
+    </div>
 
-    <p class="mt-3 text-center">
+    <WinGroupBox class="mb-3">
+      <template #title> Select Platform </template>
+      <template #content>
+        <WinMemo>
+          <div class="row gx-0 my-2">
+            <div class="col text-center">
+              <a href="https://www.patreon.com/nightwaveplaza" target="_blank" class="app-link">
+                <img src="@app/assets/img/patreon.png" class="app-icon" alt="" /><br />
+                Patreon
+              </a>
+            </div>
+            <div class="col text-center">
+              <a href="https://boosty.to/nightwaveplaza" target="_blank" class="app-link">
+                <img src="@app/assets/img/boosty.png" class="app-icon" alt="" /><br />
+                Boosty
+              </a>
+            </div>
+            <div class="col text-center">
+              <a href="https://www.paypal.com/paypalme/potatoru" target="_blank" class="app-link">
+                <img src="@app/assets/img/paypal.png" class="app-icon" alt="" /><br />
+                PayPal
+              </a>
+            </div>
+          </div>
+        </WinMemo>
+      </template>
+    </WinGroupBox>
+
+    <p class="mt-3">
       <b>{{ t('win.support.thanks') }}</b>
     </p>
 
-    <div class="text-center mt-3">
-      <win-button class="mx-auto px-4" @click="closeWindow(Win.SUPPORT)">
+    <div class="mt-3 text-end">
+      <win-button class="px-4" @click="closeWindow(Win.SUPPORT)">
         {{ t('buttons.close') }}
       </win-button>
     </div>
@@ -43,18 +64,13 @@
 
 <style lang="scss">
   #window-support {
-    p.lead {
-      font-size: 14px !important;
-      line-height: 14px;
+    .app-icon {
+      width: 40px;
+      height: auto;
     }
 
-    .address {
-      font-family: monospace;
-      word-break: break-all;
-
-      &:hover {
-        cursor: pointer;
-      }
+    .app-link {
+      text-decoration: none;
     }
   }
 </style>

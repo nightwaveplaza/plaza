@@ -1,18 +1,18 @@
 .win-group-box {
-  .win-group-box__body {
+  &__body {
     border: 1px solid var(--forms-border-left);
     box-shadow: var(--window-shadow);
     border-right-color: var(--forms-border-right);
     border-bottom-color: var(--forms-border-right);
   }
 
-  .win-group-box__label {
+  &__label {
     position: relative;
     height: 5px;
 
     span {
       position: absolute;
-      top: -2px;
+      top: 0;
       left: 8px;
       z-index: 5;
       background-color: var(--button-bg);

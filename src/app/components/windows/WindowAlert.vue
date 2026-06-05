@@ -1,16 +1,16 @@
 <template>
   <div class="p-2">
-    <div class="row gx-0">
-      <div class="col-auto text-center align-self-center">
-        <div class="alert-icon" :class="params.type" />
+    <div class="row mb-2">
+      <div class="col-3 align-self-center pe-2">
+        <div class="alert-icon mx-auto" :class="params.type" />
       </div>
-      <div class="col align-self-center">
-        <p class="ps-2" style="line-height: 125%" v-html="params.text" />
+      <div class="col ps-0 align-self-center">
+        <p class="mb-0 lh-sm" v-html="params.text" />
       </div>
     </div>
 
     <div class="text-center">
-      <win-button class="mt-2 mx-auto px-4" @click="closeWindow(winId!)">
+      <win-button class="px-4" @click="closeWindow(winId!)">
         {{ t('buttons.ok') }}
       </win-button>
     </div>

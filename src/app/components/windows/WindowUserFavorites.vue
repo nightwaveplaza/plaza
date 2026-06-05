@@ -16,14 +16,16 @@
                   <img :src="f.song.artwork_src" alt="artwork" />
                 </td>
                 <td class="ps-1 show-info" @click="showSongInfo(f.song.id)">
-                  <div class="artist">
-                    {{ f.song.artist }}
-                  </div>
+                  <p class="mb-0">
+                    <strong>{{ f.song.artist }}</strong>
+                  </p>
                   <div class="title">
-                    {{ f.song.title }}
+                    <p class="mb-0">{{ f.song.title }}</p>
                   </div>
                   <div class="date">
-                    <i>{{ fmtDate(f.created_at) }}</i>
+                    <p class="mb-0">
+                      <i>{{ fmtDate(f.created_at) }}</i>
+                    </p>
                   </div>
                 </td>
                 <td class="text-center" style="width: 70px">

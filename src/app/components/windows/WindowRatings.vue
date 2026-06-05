@@ -35,13 +35,13 @@
               <td style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
-              <td class="py-1 show-info" @click="showSongInfo(s.song.id)">
-                <div class="artist">
-                  {{ s.song.artist }}
-                </div>
-                <div class="title">
+              <td class="ps-1 py-1 show-info" @click="showSongInfo(s.song.id)">
+                <p class="mb-0">
+                  <strong>{{ s.song.artist }}</strong>
+                </p>
+                <p class="mb-0">
                   {{ s.song.title }}
-                </div>
+                </p>
               </td>
               <td class="text-end nowrap" style="width: 57px">
                 {{ s.likes }}<i class="i icon-like ms-1" style="color: #c12727" />

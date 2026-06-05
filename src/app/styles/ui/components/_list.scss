@@ -32,7 +32,7 @@
         }
 
         &.show-info {
-          cursor: pointer;
+          cursor: pointer !important;
 
           &:hover {
             text-decoration: underline;
@@ -41,11 +41,6 @@
           div {
             cursor: pointer;
           }
-        }
-
-        .artist {
-          margin-bottom: 1px;
-          font-weight: 700;
         }
 
         img {

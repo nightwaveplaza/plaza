@@ -11,7 +11,9 @@
               </div>
               <!-- For small screens -->
               <div class="d-flex d-sm-none col align-self-center">
-                {{ t('win.user_login.type_username') }}
+                <p>
+                  {{ t('win.user_login.type_username') }}
+                </p>
               </div>
             </div>
           </div>
@@ -20,13 +22,15 @@
             <div class="d-grid gap-1">
               <!-- For large screens -->
               <div class="d-none d-sm-flex pb-1">
-                {{ t('win.user_login.type_username') }}
+                <p>
+                  {{ t('win.user_login.type_username') }}
+                </p>
               </div>
 
               <!-- Username -->
               <div class="row">
                 <div class="col-12 col-sm-5 align-self-center">
-                  <label class="mt-0" for="username"> {{ t('fields.username') }}: </label>
+                  <label class="mb-1 mb-sm-0" for="username"> {{ t('fields.username') }}: </label>
                 </div>
                 <div class="col">
                   <input id="username" v-model="fields.username" class="d-block" type="text" />
@@ -36,26 +40,24 @@
               <!-- Password -->
               <div class="row">
                 <div class="col-12 col-sm-5 align-self-center">
-                  <label class="mt-0" for="password"> {{ t('fields.password') }}: </label>
+                  <label for="password" class="mb-1 mb-sm-0"> {{ t('fields.password') }}: </label>
                 </div>
                 <div class="col">
                   <input id="password" v-model="fields.password" class="d-block" type="password" />
                 </div>
               </div>
 
-              <div class="row justify-content-between">
-                <!-- Remember Me -->
-                <div v-if="!isMobile()" class="col-auto col-sm-12 offset-sm-5">
-                  <win-checkbox v-model="fields.remember">
-                    {{ t('win.user_login.remember_me') }}
-                  </win-checkbox>
-                </div>
-
-                <!-- Forgot password -->
-                <div class="col-auto col-sm-12 offset-sm-5 mt-sm-1">
+              <div class="row mt-1 align-items-center">
+                <div class="col-auto col-sm-5 text-sm-start">
                   <a role="button" class="link" @click="openReset">
                     {{ t('win.user_login.btn_forgot_password') }}
                   </a>
+                </div>
+
+                <div v-if="!isMobile()" class="col order-first order-sm-last">
+                  <win-checkbox v-model="fields.remember">
+                    {{ t('win.user_login.remember_me') }}
+                  </win-checkbox>
                 </div>
               </div>
             </div>
@@ -146,6 +148,11 @@
     //  width: 76px;
     //  display: block;
     //}
+
+    .link {
+      display: block;
+      padding-bottom: 2px;
+    }
 
     label[for='username']::first-letter,
     label[for='password']::first-letter {

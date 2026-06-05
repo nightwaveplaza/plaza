@@ -18,7 +18,6 @@
         v-if="te('win.settings_language.translation_author_name')"
         keypath="win.settings_language.translation_by"
         tag="p"
-        class="mb-2"
       >
         <template #author>
           <a :href="t('win.settings_language.translation_author_link')" target="_blank">
@@ -27,7 +26,7 @@
         </template>
       </i18n-t>
 
-      <p>{{ t('win.settings_language.want_to_help') }}</p>
+      <p class="mb-1">{{ t('win.settings_language.want_to_help') }}</p>
 
       <p class="mb-0">
         <a href="https://translate.plaza.one" target="_blank">{{

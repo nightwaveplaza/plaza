@@ -3,11 +3,11 @@
     <div class="row gx-0">
       <div class="col-10 offset-1">
         <!-- New password -->
-        <label for="password">{{ t('fields.new_password') }}:</label>
+        <label for="password" class="mb-1">{{ t('fields.new_password') }}:</label>
         <input id="password" v-model="password" class="d-block mb-2" type="password" />
 
         <!-- Repeat password -->
-        <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
+        <label for="password_repeat" class="mb-1">{{ t('fields.repeat_password') }}:</label>
         <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password" />
 
         <!-- Buttons -->

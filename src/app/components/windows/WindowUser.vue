@@ -19,7 +19,7 @@
         </div>
         <div class="col ps-2">
           <div class="username mb-1">
-            {{ user?.username }}
+            <p class="mb-0">{{ user?.username }}</p>
           </div>
           <div class="text-muted">
             {{ user?.email }}
@@ -45,7 +45,9 @@
                   <td>
                     <b>{{ t('win.user.likes') }}:</b>
                   </td>
-                  <td>{{ reactions ?? '...' }}</td>
+                  <td>
+                    {{ reactions ?? '...' }}
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -159,6 +161,10 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    td {
+      line-height: 150%;
     }
   }
 </style>

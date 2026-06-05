@@ -130,13 +130,13 @@
         <div class="row">
           <div class="col-6 align-self-center">{{ t('win.settings.audio_quality') }}:</div>
           <div class="col-6">
-            <win-checkbox v-model="lowQuality" class="mb-1" @update:model-value="qualityChanged">
+            <win-checkbox v-model="lowQuality" class="mb-2" @update:model-value="qualityChanged">
               {{ t('win.settings.low_quality') }}
             </win-checkbox>
             <win-checkbox
               v-if="!isMobile()"
               v-model="useHls"
-              class="mb-1"
+              class="mb-0"
               @update:model-value="qualityChanged"
             >
               HLS
@@ -148,7 +148,7 @@
     <!-- /App Settings -->
 
     <div class="d-flex justify-content-between">
-      <win-button class="px-2" @click="openLanguageSettings" icon="world">
+      <win-button class="px-2" icon="world" @click="openLanguageSettings">
         {{ t('win.settings.language') }}
       </win-button>
       <win-button class="px-4" @click="closeWindow(Win.SETTINGS)">

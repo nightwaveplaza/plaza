@@ -6,7 +6,7 @@
       </div>
       <div class="col">
         <p class="mb-2">{{ t('win.user_reset.instruction') }}</p>
-        <label for="email">{{ t('fields.email') }}:</label>
+        <label for="email" class="mb-1">{{ t('fields.email') }}:</label>
         <input id="email" v-model="fields.email" class="d-block m-0" tabindex="4" type="email" />
       </div>
     </div>

@@ -4,24 +4,23 @@
       <win-panel>
         <div class="row mt-0">
           <div class="col is-selectable">
-            <div class="mb-1">
+            <p class="mb-1">
               <strong>{{ t('win.song.artist') }}:</strong><br />
               {{ song.data.artist }}
-            </div>
-            <div class="mb-1">
+            </p>
+            <p class="mb-1">
               <strong>{{ t('win.song.album') }}:</strong><br />
-
               {{ song.data.album }}
-            </div>
-            <div class="mb-2">
+            </p>
+            <p class="mb-2">
               <strong>{{ t('win.song.song_title') }}:</strong><br />
 
               {{ song.data.title }}
-            </div>
-            <div>
+            </p>
+            <p>
               <i class="i icon-clock" /> {{ songLength }} &nbsp;
               <i class="i icon-like" style="color: #c12727" /> {{ song.stats.likes }}
-            </div>
+            </p>
           </div>
           <div class="col-5 align-self-center">
             <div

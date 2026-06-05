@@ -2,7 +2,7 @@
   <div class="py-2 px-2">
     <win-panel class="mb-3">
       <!-- Current password -->
-      <label for="current_password">{{ t('fields.current_password') }}:</label>
+      <label for="current_password" class="mb-1">{{ t('fields.current_password') }}:</label>
       <input
         id="current_password"
         v-model="fields.current_password"
@@ -10,10 +10,10 @@
         type="password"
       />
       <!-- New password password -->
-      <label for="password">{{ t('fields.new_password') }}:</label>
+      <label for="password" class="mb-1">{{ t('fields.new_password') }}:</label>
       <input id="password" v-model="fields.password" class="d-block mb-2" type="password" />
       <!-- Repeat password -->
-      <label for="password_repeat">{{ t('fields.repeat_password') }}:</label>
+      <label for="password_repeat" class="mb-1">{{ t('fields.repeat_password') }}:</label>
       <input id="password_repeat" v-model="passwordRepeat" class="d-block" type="password" />
     </win-panel>
 

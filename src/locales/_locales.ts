@@ -7,6 +7,7 @@ import ja_JP from '@locales/ja-JP.json';
 import pt_BR from '@locales/pt-BR.json';
 import ru_RU from '@locales/ru-RU.json';
 import tr_TR from '@locales/tr-TR.json';
+import uk_UA from '@locales/uk-UA.json';
 import zh_TW from '@locales/zh-TW.json';
 
 interface JSONValue {
@@ -27,5 +28,6 @@ export default {
   'pt-BR': pt_BR,
   'ru-RU': ru_RU,
   'tr-TR': tr_TR,
+  'uk-UA': uk_UA,
   'zh-TW': zh_TW,
 } as LocaleArray;

@@ -57,7 +57,7 @@
           <template #content>
             <p class="mb-0">
               {{ t('win.about.submission_form') }}
-              <a href="https://plaza.one/submissions" target="_blank">
+              <a href="https://plaza.one/submissions" target="_blank" class="text-nowrap">
                 https://plaza.one/submissions
               </a>
             </p>

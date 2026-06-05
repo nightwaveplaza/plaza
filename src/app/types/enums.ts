@@ -15,7 +15,6 @@ export enum Win {
   ALERT = 'alert',
   HISTORY = 'history',
   LOADING = 'loading',
-  MOBILE = 'mobile',
   NEWS = 'news',
   PLAYER = 'player',
   PLAYER_TIMER = 'player-timer',

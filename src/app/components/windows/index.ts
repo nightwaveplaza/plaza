@@ -14,7 +14,6 @@ import WindowUserLogin from '@app/components/windows/WindowUserLogin.vue';
 import WindowUserPassword from '@app/components/windows/WindowUserPassword.vue';
 import WindowUserRegister from '@app/components/windows/WindowUserRegister.vue';
 import WindowUserReset from '@app/components/windows/WindowUserReset.vue';
-import WindowMobile from '@app/components/windows/WindowMobile.vue';
 import WindowPlayer from '@app/components/windows/WindowPlayer.vue';
 import WindowSupport from '@app/components/windows/WindowSupport.vue';
 import WindowUserResetPassword from '@app/components/windows/WindowUserResetPassword.vue';
@@ -29,7 +28,6 @@ export default {
     Vue.component('WindowAlert', WindowAlert);
     Vue.component('WindowHistory', WindowHistory);
     Vue.component('WindowLoading', WindowLoading);
-    Vue.component('WindowMobile', WindowMobile);
     Vue.component('WindowNews', WindowNews);
     Vue.component('WindowPlayer', WindowPlayer);
     Vue.component('WindowPlayerTimer', WindowPlayerTimer);

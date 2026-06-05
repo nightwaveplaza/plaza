@@ -22,11 +22,6 @@ export const registry: Record<Win, WindowConfig> = {
     width: 220,
     headerButtons: [],
   },
-  [Win.MOBILE]: {
-    title: 'Nightwave Plaza Mobile',
-    width: 340,
-    icon: 'modem',
-  },
   [Win.NEWS]: {
     titleKey: 'win.news.title',
     width: 350,

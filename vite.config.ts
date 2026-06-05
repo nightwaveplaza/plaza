@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 import legacy from '@vitejs/plugin-legacy';
 import type { Plugin } from 'vite';
 import nginxRoutesPlugin from './vite-plugin-nginx-routes';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 export default ({ mode }: { mode: string }): UserConfig => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -21,13 +22,20 @@ export default ({ mode }: { mode: string }): UserConfig => {
 
   return defineConfig({
     plugins: [
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: tag => tag.startsWith('altcha-'),
+          },
+        },
+      }),
       getLegacyPlugin(env),
       nginxRoutesPlugin({
         routesFile: 'src/app/router/routes.ts',
         outDir: 'dist',
         mapVar: '$spa_match',
       }),
+      basicSsl(),
     ],
 
     root,

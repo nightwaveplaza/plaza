@@ -1627,6 +1627,11 @@
     "@typescript-eslint/types" "8.53.1"
     eslint-visitor-keys "^4.2.1"
 
+"@vitejs/plugin-basic-ssl@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-2.3.0.tgz#f505b1c197d8cb4fd6e213a78847574ecc51e2f9"
+  integrity sha512-bdyo8rB3NnQbikdMpHaML9Z1OZPBu6fFOBo+OtxsBlvMJtysWskmBcnbIDhUqgC8tcxNv/a+BcV5U+2nQMm1OQ==
+
 "@vitejs/plugin-legacy@^7.2.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-legacy/-/plugin-legacy-7.2.1.tgz#7c6427f51ec3b17765aa6937ae65233b7f7b029b"
@@ -1834,6 +1839,13 @@ alien-signals@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/alien-signals/-/alien-signals-3.1.2.tgz#26e623e3ed81e401df1a7c503f726e2288a4fa02"
   integrity sha512-d9dYqZTS90WLiU0I5c6DHj/HcKkF8ZyGN3G5x8wSbslulz70KOxaqCT0hQCo9KOyhVqzqGojvNdJXoTumZOtcw==
+
+altcha@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/altcha/-/altcha-3.0.11.tgz#0a2f01152d2340e5e7b6ae160b3178fbd5fe8af6"
+  integrity sha512-DFhLDJIL37UfRdgYliSBSpCaYySVztOL8Z5V5KuxmaVa5JUgIapvoUiQrIFbn38cPtZBs5j3izMtglpcZFWCMA==
+  dependencies:
+    hash-wasm "^4.12.0"
 
 ansi-styles@^4.1.0:
   version "4.3.0"
@@ -2586,6 +2598,11 @@ has-tostringtag@^1.0.2:
   integrity sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==
   dependencies:
     has-symbols "^1.0.3"
+
+hash-wasm@^4.12.0:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/hash-wasm/-/hash-wasm-4.12.0.tgz#f9f1a9f9121e027a9acbf6db5d59452ace1ef9bb"
+  integrity sha512-+/2B2rYLb48I/evdOIhP+K/DD2ca2fgBjp6O+GBEnCDk2e4rpeXIK8GvIyRPjTezgmWn9gmKwkQjjx6BtqDHVQ==
 
 hasown@^2.0.2:
   version "2.0.2"

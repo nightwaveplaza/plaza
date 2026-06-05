@@ -20,37 +20,40 @@
         />
       </div>
     </div>
-    <vue-turnstile
-      v-show="needsInteractive"
-      v-model="model"
-      :site-key="turnstileKey"
-      size="flexible"
-      appearance="always"
-      class="mt-2 lh-1"
-      @before-interactive="onBeforeInteractive"
-      @error="onError"
-    />
+
+    <div v-show="needsInteractive" class="mt-1">
+      <altcha-widget @statechange="onStateChange" @expired="onExpired" />
+    </div>
   </win-panel>
 </template>
 
 <script setup lang="ts">
-  import VueTurnstile from 'vue-turnstile';
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { State } from 'altcha/types';
   const { t } = useI18n();
-
-  const turnstileKey = import.meta.env.VITE_TURNSTILE_KEY;
 
   const model = defineModel<string>({ default: '' });
 
   const needsInteractive = ref(false);
 
-  function onError(error: number) {
+  function onExpired() {
+    model.value = '';
     needsInteractive.value = true;
-    console.error(error);
   }
 
-  function onBeforeInteractive() {
-    needsInteractive.value = true;
-  }
+  const onStateChange = (ev: CustomEvent | Event) => {
+    if ('detail' in ev) {
+      const { payload, state } = ev.detail;
+      if (state === State.ERROR) {
+        needsInteractive.value = true;
+      }
+
+      if (State.VERIFIED && payload) {
+        model.value = payload;
+      } else {
+        model.value = '';
+      }
+    }
+  };
 </script>

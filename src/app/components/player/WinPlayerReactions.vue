@@ -1,6 +1,5 @@
 <template>
-  <win-button class="d-block" :disabled="isLoading" @click="handleLikeClick">
-    <i :class="likeIcon" class="i me-1" :style="{ color: likeColor }" />
+  <win-button class="w-100" :disabled="isLoading" :icon="icon" @click="handleLikeClick">
     {{ totalReactions }}
   </win-button>
 </template>
@@ -16,9 +15,6 @@
   import { reactionApi } from '@app/api/reaction.api.ts';
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
-  const CL_FAV = '#FFD300';
-  const CL_LIKE = '#c12727';
-
   const { t } = useI18n();
   const { showAlert } = useWindows();
   const { reactions: totalReactions } = useNowPlayingStatus();
@@ -28,11 +24,10 @@
 
   const reactionTip = useLocalStorage('reactionTip', 0);
 
-  const likeIcon = computed(() => (reaction.value.rate > 1 ? 'icon-favorite' : 'icon-like'));
-  const likeColor = computed(() => {
-    if (!isCurrent.value) return '';
-    const colors: Record<number, string> = { 1: CL_LIKE, 2: CL_FAV };
-    return colors[reaction.value.rate] ?? '';
+  const icon = computed(() => {
+    if (!isCurrent.value) return 'heart_gray';
+    const colors: Record<number, string> = { 1: 'heart', 2: 'star' };
+    return colors[reaction.value.rate] ?? 'heart_gray';
   });
 
   async function handleLikeClick() {

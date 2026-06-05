@@ -36,17 +36,17 @@
         <div class="row gx-1">
           <div class="col-8 col-md-7 pe-md-2">
             <div class="row gx-1">
-              <div :class="{ 'col-8': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying }">
-                <win-button class="d-block player-play" @click="play()">
+              <div :class="{ 'col-7': !isPlaying, 'col-md-5': isPlaying, 'col-5': isPlaying }">
+                <win-button class="w-100 player-play" @click="play()">
                   {{ playText }}
                 </win-button>
               </div>
               <div v-if="isPlaying" class="col-3">
-                <win-button class="d-block" @click="openTimerWindow">
+                <win-button class="w-100" @click="openTimerWindow">
                   <i :style="{ color: timerColor }" class="i icon-clock" />
                 </win-button>
               </div>
-              <div class="col-4">
+              <div class="col-5">
                 <win-player-reactions />
               </div>
             </div>
@@ -55,14 +55,10 @@
           <div class="col-4 col-md-5">
             <div class="row gx-1 d-none d-sm-flex">
               <div class="col-6">
-                <win-button class="d-block" @click="openWindow(Win.USER)">
-                  <i class="i icon-user me-0" />
-                </win-button>
+                <win-button class="w-100" icon="person" @click="openWindow(Win.USER)" />
               </div>
               <div class="col-6">
-                <win-button class="d-block" @click="openWindow(Win.SETTINGS)">
-                  <i class="i icon-cog me-0" />
-                </win-button>
+                <win-button class="w-100" icon="gears" @click="openWindow(Win.SETTINGS)" />
               </div>
             </div>
             <win-start-button class="d-inline-flex w-100 d-sm-none" />

@@ -3,23 +3,19 @@
     <div v-if="song">
       <win-panel>
         <div class="row mt-0">
-          <div class="col">
+          <div class="col is-selectable">
             <div class="mb-1">
-              <div>
-                <strong>{{ t('win.song.artist') }}:</strong><br />
-              </div>
+              <strong>{{ t('win.song.artist') }}:</strong><br />
               {{ song.data.artist }}
             </div>
             <div class="mb-1">
-              <div>
-                <strong>{{ t('win.song.album') }}:</strong><br />
-              </div>
+              <strong>{{ t('win.song.album') }}:</strong><br />
+
               {{ song.data.album }}
             </div>
             <div class="mb-2">
-              <div>
-                <strong>{{ t('win.song.song_title') }}:</strong><br />
-              </div>
+              <strong>{{ t('win.song.song_title') }}:</strong><br />
+
               {{ song.data.title }}
             </div>
             <div>

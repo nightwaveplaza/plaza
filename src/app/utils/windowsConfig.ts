@@ -11,11 +11,6 @@ export const registry: Record<Win, WindowConfig> = {
     isAlert: true,
     icon: 'msg_warning',
   },
-  [Win.CREDITS]: {
-    titleKey: 'win.credits.title',
-    width: 420,
-    icon: 'msg_information',
-  },
   [Win.HISTORY]: {
     titleKey: 'win.history.title',
     width: 400,

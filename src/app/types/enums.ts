@@ -13,7 +13,6 @@ export enum RatingsRange {
 export enum Win {
   ABOUT = 'about',
   ALERT = 'alert',
-  CREDITS = 'credits',
   HISTORY = 'history',
   LOADING = 'loading',
   MOBILE = 'mobile',

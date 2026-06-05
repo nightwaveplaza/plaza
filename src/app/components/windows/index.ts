@@ -1,7 +1,6 @@
 import type { App } from 'vue';
 import WindowAbout from '@app/components/windows/WindowAbout.vue';
 import WindowAlert from '@app/components/windows/WindowAlert.vue';
-import WindowCredits from '@app/components/windows/WindowCredits.vue';
 import WindowHistory from '@app/components/windows/WindowHistory.vue';
 import WindowLoading from '@app/components/windows/WindowLoading.vue';
 import WindowNews from '@app/components/windows/WindowNews.vue';
@@ -28,7 +27,6 @@ export default {
   install: (Vue: App): void => {
     Vue.component('WindowAbout', WindowAbout);
     Vue.component('WindowAlert', WindowAlert);
-    Vue.component('WindowCredits', WindowCredits);
     Vue.component('WindowHistory', WindowHistory);
     Vue.component('WindowLoading', WindowLoading);
     Vue.component('WindowMobile', WindowMobile);

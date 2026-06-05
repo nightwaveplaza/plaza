@@ -6,21 +6,21 @@
         <div class="d-flex mb-1">
           <win-button
             :class="{ active: range === RatingsRange.OVERTIME }"
-            class="songs-range me-1"
+            class="me-1 px-2"
             @click="changeRange(RatingsRange.OVERTIME)"
           >
             {{ t('win.ratings.btn_overtime') }}
           </win-button>
           <win-button
             :class="{ active: range === RatingsRange.MONTHLY }"
-            class="songs-range me-1"
+            class="me-1 px-2"
             @click="changeRange(RatingsRange.MONTHLY)"
           >
             {{ t('win.ratings.btn_monthly') }}
           </win-button>
           <win-button
             :class="{ active: range === RatingsRange.WEEKLY }"
-            class="songs-range me-0"
+            class="me-0 px-2"
             @click="changeRange(RatingsRange.WEEKLY)"
           >
             {{ t('win.ratings.btn_weekly') }}

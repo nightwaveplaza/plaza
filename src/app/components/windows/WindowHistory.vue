@@ -27,16 +27,18 @@
           <win-list v-else scroll>
             <tr v-for="h in history?.data" :key="h.song.id">
               <td class="pe-1 py-1 show-info" @click="showSongInfo(h.song.id)">
-                <div class="artist">
-                  {{ h.song.artist }}
-                </div>
-                <div class="title">
+                <p class="mb-0">
+                  <strong>{{ h.song.artist }}</strong>
+                </p>
+                <p class="mb-0">
                   {{ h.song.title }}
-                </div>
+                </p>
               </td>
               <td class="text-end" style="width: 78px">
-                {{ fmtDay(h.played_at) }}<br />
-                {{ fmtTime(h.played_at) }}
+                <p class="mb-0">
+                  {{ fmtDay(h.played_at) }}<br />
+                  {{ fmtTime(h.played_at) }}
+                </p>
               </td>
             </tr>
           </win-list>

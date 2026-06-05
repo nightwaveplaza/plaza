@@ -10,7 +10,7 @@
   >
     <div class="inner" :class="{ 'd-flex flex-column h-100': windowState.height }">
       <div
-        class="win-window__header noselect"
+        class="win-window__header"
         :class="{ inactive: !isActive }"
         @pointerdown.stop="handleDragStart"
       >

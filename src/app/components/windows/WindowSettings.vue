@@ -37,7 +37,7 @@
           </p>
         </win-memo>
 
-        <div class="row gx-0 mt-2 noselect">
+        <div class="row gx-0 mt-2">
           <div class="col-2 pe-1">
             <win-button class="d-block" @click="nextBackground(-1)"> &lt; </win-button>
           </div>
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <i18n-t keypath="win.settings.bg_notice" tag="p" class="mt-2 mb-0 noselect">
+        <i18n-t keypath="win.settings.bg_notice" tag="p" class="mt-2 mb-0">
           <template #link>
             <a href="mailto:mail@plaza.one">{{ t('win.settings.let_us_know') }}</a>
           </template>

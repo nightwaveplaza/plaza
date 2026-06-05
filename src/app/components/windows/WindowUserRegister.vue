@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 noselect">
+  <div class="p-2">
     <div class="row gx-0">
       <div class="col-sm-4 d-none d-sm-block">
         <img alt="register" class="img-register" src="@app/assets/img/register.png" />

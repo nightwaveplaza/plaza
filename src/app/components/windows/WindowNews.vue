@@ -17,7 +17,7 @@
     </win-memo>
 
     <!-- Buttons -->
-    <div class="row mt-2 gx-0 noselect">
+    <div class="row mt-2 gx-0">
       <div class="col">
         <win-pagination
           v-if="news && news.meta.total > 0"

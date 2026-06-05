@@ -1,5 +1,5 @@
 <template>
-  <label class="win-checkbox noselect">
+  <label class="win-checkbox">
     <input v-model="checked" type="checkbox" />
     <span class="checkmark me-1"></span>
     <span class="label-text"><slot /></span>

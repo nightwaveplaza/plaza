@@ -12,18 +12,18 @@
       </template>
       <template #content>
         <!-- Username -->
-        <label for="username" class="noselect">{{ t('fields.username') }}:</label>
+        <label for="username">{{ t('fields.username') }}:</label>
         <input id="username" v-model="fields.username" class="d-block mb-2" type="text" />
 
         <!-- Email -->
-        <label for="email" class="noselect">{{ t('fields.email') }}:</label>
+        <label for="email">{{ t('fields.email') }}:</label>
         <input id="email" v-model="fields.email" class="d-block" type="email" />
       </template>
     </win-group-box>
 
     <win-panel class="mb-3">
       <!-- Current password -->
-      <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
+      <label for="password">{{ t('fields.current_password') }}:</label>
       <input id="password" v-model="fields.current_password" class="d-block" type="password" />
     </win-panel>
 

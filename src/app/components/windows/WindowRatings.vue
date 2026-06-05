@@ -32,7 +32,7 @@
           <div v-if="isLoading" class="content-loading" />
           <win-list v-if="!isLoading && songs" scroll>
             <tr v-for="(s, i) in songs.data" :key="i" class="hover">
-              <td class="noselect" style="width: 25px">
+              <td style="width: 25px">
                 {{ pad((page - 1) * songs.meta.per_page + i + 1) }}
               </td>
               <td class="py-1 show-info" @click="showSongInfo(s.song.id)">
@@ -43,7 +43,7 @@
                   {{ s.song.title }}
                 </div>
               </td>
-              <td class="text-end noselect nowrap" style="width: 57px">
+              <td class="text-end nowrap" style="width: 57px">
                 {{ s.likes }}<i class="i icon-like ms-1" style="color: #c12727" />
               </td>
             </tr>
@@ -73,7 +73,7 @@
     </div>
   </div>
 
-  <div class="win-window__statusbar noselect">
+  <div class="win-window__statusbar">
     <div class="row gx-0">
       <div class="col-auto cell pe-4 d">
         {{ songs ? t('pagination.pages', { n: songs?.meta.last_page }) : '...' }}

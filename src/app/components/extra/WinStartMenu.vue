@@ -1,5 +1,5 @@
 <template>
-  <div ref="startMenuRef" class="win-start-menu noselect" :class="{ 'is-open': isOpen }">
+  <div ref="startMenuRef" class="win-start-menu" :class="{ 'is-open': isOpen }">
     <div class="win-start-menu__mask">
       <div class="win-start-menu__inner">
         <div class="win-start-menu__sidebar">

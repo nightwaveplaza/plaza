@@ -3,7 +3,7 @@
     <div class="p-2 h-100">
       <div class="d-flex flex-column h-100">
         <div class="d-flex flex-grow-1 align-items-stretch">
-          <div v-if="isLoading" class="content-loading noselect" />
+          <div v-if="isLoading" class="content-loading" />
           <win-list v-else ref="list" scroll>
             <template v-if="favs?.data && !isLoading">
               <tr
@@ -12,7 +12,7 @@
                 :class="{ strike: deleted.includes(f.id) }"
                 class="hover"
               >
-                <td class="p-1 ps-0 noselect" style="width: 62px">
+                <td class="p-1 ps-0" style="width: 62px">
                   <img :src="f.song.artwork_src" alt="artwork" />
                 </td>
                 <td class="ps-1 show-info" @click="showSongInfo(f.song.id)">
@@ -26,7 +26,7 @@
                     <i>{{ fmtDate(f.created_at) }}</i>
                   </div>
                 </td>
-                <td class="text-center noselect" style="width: 70px">
+                <td class="text-center" style="width: 70px">
                   <a
                     v-if="!deleted.includes(f.id)"
                     class="link favorites-remove"
@@ -36,13 +36,10 @@
                   >
                 </td>
               </tr>
-              <div
-                class="ps__rail-y noselect"
-                style="display: block; top: 0; right: 0; height: 100%"
-              />
+              <div class="ps__rail-y" style="display: block; top: 0; right: 0; height: 100%" />
             </template>
 
-            <div v-else-if="!isLoading" class="favorites-empty noselect">
+            <div v-else-if="!isLoading" class="favorites-empty">
               <i18n-t keypath="win.user_favorites.list_empty" tag="i">
                 <template #icon>
                   <i class="i icon-like" />
@@ -75,7 +72,7 @@
     </div>
   </div>
 
-  <div class="win-window__statusbar noselect">
+  <div class="win-window__statusbar">
     <div class="row gx-0 song-list-statusbar">
       <div class="col-auto cell pe-4 d">
         {{ t('pagination.pages', { n: favs?.meta.last_page }) }}

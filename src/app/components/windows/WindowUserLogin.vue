@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 noselect">
+  <div class="p-2">
     <div class="row">
       <!-- Login -->
       <div class="col">

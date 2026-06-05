@@ -20,7 +20,7 @@
     <win-player />
   </div>
 
-  <div class="win-window__statusbar noselect">
+  <div class="win-window__statusbar">
     <div class="row gx-0">
       <div class="col cell">
         {{ t('win.player.listeners', { listeners }) }}

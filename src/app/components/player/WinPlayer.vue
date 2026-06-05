@@ -2,14 +2,14 @@
   <div class="row gx-0">
     <div class="col-12 col-sm-auto align-self-center mb-2 mb-sm-0">
       <div
-        class="cover simple-border noselect ratio ratio-1x1"
+        class="cover simple-border ratio ratio-1x1"
         :style="{ 'background-image': `url('${artwork}')` }"
         @click="openSongInfo"
       />
     </div>
 
     <div class="col-12 col-sm">
-      <div class="player-meta ps-sm-2">
+      <div class="player-meta ps-sm-2 is-selectable">
         <div class="player-artist track-artist mb-2">
           {{ song.artist }}
         </div>
@@ -17,7 +17,7 @@
           {{ song.title }}
         </div>
 
-        <div class="row my-1 my-sm-2 py-1 gx-0 noselect">
+        <div class="row my-1 my-sm-2 py-1 gx-0">
           <div
             class="col-12 col-md-7 pe-0 pe-md-2"
             :class="{ 'col-md-7': !isMobile(), 'pe-md-2': !isMobile(), 'col-md-6': isMobile() }"

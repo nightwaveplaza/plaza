@@ -2,9 +2,9 @@
   <div class="p-2">
     <win-list scroll>
       <tr v-for="(lang, n) in _locales" :key="n" class="hover">
-        <td class="p-2 lang-icon noselect" v-html="_flags[n]" />
+        <td class="p-2 lang-icon" v-html="_flags[n]" />
         <td
-          class="noselect show-info"
+          class="show-info"
           :class="{ selected: n === language }"
           @click="switchLanguage(<string>n)"
         >

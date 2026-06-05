@@ -1,8 +1,8 @@
 <template>
-  <div class="win-taskbar-wrapper noselect" :class="{ 'is-top': taskbarPosition === 'top' }">
-    <win-start-menu class="noselect" />
+  <div class="win-taskbar-wrapper" :class="{ 'is-top': taskbarPosition === 'top' }">
+    <win-start-menu />
 
-    <div class="win-taskbar d-flex flex-nowrap noselect">
+    <div class="win-taskbar d-flex flex-nowrap">
       <win-start-button
         class="d-none d-sm-inline-flex"
         style="min-width: 65px; justify-content: center"

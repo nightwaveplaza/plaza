@@ -19,7 +19,7 @@
         <WinGroupBox class="mb-3">
           <template #title> {{ t('win.about.contact_info') }} </template>
           <template #content>
-            <table>
+            <table class="is-selectable">
               <tbody>
                 <tr>
                   <td style="width: 54px">Email:</td>

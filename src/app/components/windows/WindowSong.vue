@@ -5,19 +5,19 @@
         <div class="row mt-0">
           <div class="col">
             <div class="mb-1">
-              <div class="noselect">
+              <div>
                 <strong>{{ t('win.song.artist') }}:</strong><br />
               </div>
               {{ song.data.artist }}
             </div>
             <div class="mb-1">
-              <div class="noselect">
+              <div>
                 <strong>{{ t('win.song.album') }}:</strong><br />
               </div>
               {{ song.data.album }}
             </div>
             <div class="mb-2">
-              <div class="noselect">
+              <div>
                 <strong>{{ t('win.song.song_title') }}:</strong><br />
               </div>
               {{ song.data.title }}
@@ -66,7 +66,7 @@
     </div>
   </div>
 
-  <div v-if="song" class="statusbar row gx-0 noselect">
+  <div v-if="song" class="statusbar row gx-0">
     <div v-if="song.stats.first_played_at" class="col cell">
       {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
     </div>

@@ -45,6 +45,12 @@ body {
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 p {

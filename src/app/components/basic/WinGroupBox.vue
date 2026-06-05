@@ -1,6 +1,6 @@
 <template>
   <div class="win-group-box">
-    <div class="win-group-box__label noselect">
+    <div class="win-group-box__label">
       <span><slot name="title" /></span>
     </div>
     <div class="win-group-box__body p-2">

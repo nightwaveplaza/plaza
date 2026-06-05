@@ -30,7 +30,7 @@
                   {{ h.song.title }}
                 </div>
               </td>
-              <td class="text-end noselect" style="width: 78px">
+              <td class="text-end" style="width: 78px">
                 {{ fmtDay(h.played_at) }}<br />
                 {{ fmtTime(h.played_at) }}
               </td>
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div class="win-window__statusbar noselect">
+  <div class="win-window__statusbar">
     <div class="row gx-0">
       <div class="col-auto cell pe-4 d">
         {{ history ? t('pagination.pages', { n: history.meta.last_page }) : '...' }}

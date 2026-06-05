@@ -15,7 +15,7 @@
     </win-checkbox>
 
     <win-panel class="mb-3">
-      <label for="password" class="noselect">{{ t('fields.current_password') }}:</label>
+      <label for="password">{{ t('fields.current_password') }}:</label>
       <input id="password" v-model="fields.current_password" class="d-block" type="password" />
     </win-panel>
 

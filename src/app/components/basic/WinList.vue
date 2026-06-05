@@ -1,11 +1,11 @@
 <template>
   <div ref="list" class="win-list" :class="{ scroll }">
     <simplebar v-if="scroll" ref="scrollbar" data-simplebar-auto-hide="false">
-      <table class="hover">
+      <table class="hover is-selectable">
         <slot />
       </table>
     </simplebar>
-    <table v-else class="hover">
+    <table v-else class="hover is-selectable">
       <slot />
     </table>
   </div>

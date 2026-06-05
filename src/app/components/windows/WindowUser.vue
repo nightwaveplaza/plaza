@@ -14,7 +14,7 @@
   <div class="p-2">
     <win-panel class="p-2 mb-2">
       <div class="row gx-0">
-        <div class="col-2 align-self-center noselect">
+        <div class="col-2 align-self-center">
           <img src="@app/assets/img/user_card.png" alt="user" />
         </div>
         <div class="col ps-2">
@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div class="row noselect justify-content-between">
+    <div class="row justify-content-between">
       <div class="col">
         <win-button class="px-3" @click="openWindow(Win.USER_FAVORITES)">
           {{ t('win.user_favorites.title') }}

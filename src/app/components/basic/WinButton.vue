@@ -1,5 +1,5 @@
 <template>
-  <button class="win-button noselect" :disabled="disabled" @click="emit('click')">
+  <button class="win-button" :disabled="disabled" @click="emit('click')">
     <img
       v-if="icon"
       :src="btnIcon.src"

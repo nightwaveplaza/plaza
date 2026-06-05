@@ -14,7 +14,7 @@
     </div>
 
     <WinGroupBox class="mb-3">
-      <template #title> Select Platform </template>
+      <template #title> {{ t('win.support.select_platform') }} </template>
       <template #content>
         <WinMemo>
           <div class="row gx-0 my-2">

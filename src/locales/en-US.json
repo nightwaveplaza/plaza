@@ -89,7 +89,8 @@
     "support": {
       "title": "Support Us",
       "thanks": "Thank you for your donations. All contributions go directly toward funding the station.",
-      "description": "{nightwave_plaza} is a free, non-commercial radio station funded by listeners. To support our ongoing server hosting and maintenance, please select a platform below."
+      "description": "{nightwave_plaza} is a free, non-commercial radio station funded by listeners. To support our ongoing server hosting and maintenance, please select a platform below.",
+      "select_platform": "Select Platform"
     },
     "user": {
       "btn_logout": "Log Out",

@@ -46,7 +46,7 @@
                   <i :style="{ color: timerColor }" class="i icon-clock" />
                 </win-button>
               </div>
-              <div class="col-5">
+              <div :class="{ 'col-5': !isPlaying, 'col-4': isPlaying }">
                 <win-player-reactions />
               </div>
             </div>

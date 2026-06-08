@@ -2,19 +2,19 @@ name: Build View Release
 
 on:
   push:
+    branches:
+      - master
     tags:
       - 'app-v*'
-      - 'app-v*-dev'
       - 'web-v*'
 
 env:
   VITE_API_URL: https://api.plaza.one
-  VITE_TURNSTILE_KEY: ${{ secrets.TURNSTILE_KEY }}
 
 jobs:
   # OTA-deploy
   build-mobile-ota:
-    if: startsWith(github.ref_name, 'app-')
+    if: startsWith(github.ref_name, 'app-') || github.ref_name == 'master'
     runs-on: ubuntu-latest
 
     steps:
@@ -40,24 +40,16 @@ jobs:
 
       - name: Set Version Variable
         run: |
-          # app-v251-dev -> 251-dev
-          RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
-          echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV
-          echo "::notice::Raw version $RAW_VERSION"
-          
-          # 251-dev -> 251
-          JSON_VERSION=$(echo $RAW_VERSION | awk -F'-' '{print $1}')
-          echo "JSON_VERSION=$JSON_VERSION" >> $GITHUB_ENV
-          echo "::notice::Json version $JSON_VERSION"
-          
-          # If 251-dev -> dev manifest
-          if [[ "$RAW_VERSION" == *-* ]]; then
-            echo "IS_DEV=true" >> $GITHUB_ENV
-            echo "MANIFEST_FILE=dev-manifest.json" >> $GITHUB_ENV
+          if [[ "${{ github.ref }}" == refs/tags/app-v* ]]; then
+            RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
+            echo "IS_DEV=false" >> $GITHUB_ENV
+            echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV
+            echo "::notice::Raw version $RAW_VERSION"
+            echo "S3_PATH=$RAW_VERSION/build-mobile-$RAW_VERSION.zip" >> $GITHUB_ENV
           else
-            echo "MANIFEST_FILE=update-manifest.json" >> $GITHUB_ENV
-          fi
-          echo "::notice::Manifest file $MANIFEST_FILE"
+            echo "IS_DEV=true" >> $GITHUB_ENV
+            echo "APP_VERSION=snapshot" >> $GITHUB_ENV
+            echo "S3_PATH=dev/build-mobile-snapshot.zip" >> $GITHUB_ENV
 
       # --- BUILD MOBILE ---
       - name: Build mobile target
@@ -77,7 +69,7 @@ jobs:
       - name: Upload to MinIO
         run: |
           aws s3 cp build-mobile-${{ env.APP_VERSION }}.zip \
-            s3://${{ env.MINIO_BUCKET }}/${{ env.APP_VERSION }}/build-mobile-${{ env.APP_VERSION }}.zip \
+            s3://${{ env.MINIO_BUCKET }}/${{ env.S3_PATH }}.zip \
             --endpoint-url ${{ env.MINIO_ENDPOINT }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
@@ -87,18 +79,14 @@ jobs:
           MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
 
       - name: Update version manifest
+        if: env.IS_DEV == 'false'
         run: |
           # Get min android version
           MIN_ANDROID=$(jq -r '.min_android_version' version_manifest.json)
           MIN_IOS=$(jq -r '.min_ios_version' version_manifest.json)
           
-          if [ "${{ env.IS_DEV }}" == "true" ]; then
-            ANDROID_MANIFEST="dev-manifest-android.json"
-            IOS_MANIFEST="dev-manifest-ios.json"
-          else
-            ANDROID_MANIFEST="manifest-android.json"
-            IOS_MANIFEST="manifest-ios.json"
-          fi
+          ANDROID_MANIFEST="manifest-android.json"
+          IOS_MANIFEST="manifest-ios.json"
           
           # Set download url
           DOWNLOAD_URL="${{ env.MINIO_ENDPOINT }}/${{ env.MINIO_BUCKET }}/${{ env.APP_VERSION }}/build-mobile-${{ env.APP_VERSION }}.zip"
@@ -126,7 +114,7 @@ jobs:
             --endpoint-url ${{ env.MINIO_ENDPOINT }} || echo '{"versions":[]}' > ios.json
           
           jq --arg iv "$MIN_IOS" \
-             --arg vv "${{ env.JSON_VERSION }}" \
+             --arg vv "${{ env.APP_VERSION }}" \
              --arg url "$DOWNLOAD_URL" \
              --arg hash "$FILE_HASH" \
              '(.versions | map(if .min_ios == ($iv|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 

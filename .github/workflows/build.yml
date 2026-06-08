@@ -72,7 +72,7 @@ jobs:
       - name: Upload to MinIO
         run: |
           aws s3 cp build-mobile-${{ env.APP_VERSION }}.zip \
-            s3://${{ env.MINIO_BUCKET }}/${{ env.S3_PATH }}.zip \
+            s3://${{ env.MINIO_BUCKET }}/${{ env.S3_PATH }} \
             --endpoint-url ${{ env.MINIO_ENDPOINT }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
@@ -102,7 +102,7 @@ jobs:
             --endpoint-url ${{ env.MINIO_ENDPOINT }} || echo '{"versions":[]}' > android.json
           
           jq --arg av "$MIN_ANDROID" \
-             --arg vv "${{ env.JSON_VERSION }}" \
+             --arg vv "${{ env.APP_VERSION }}" \
              --arg url "$DOWNLOAD_URL" \
              --arg hash "$FILE_HASH" \
              '(.versions | map(if .min_android == ($av|tonumber) then .view_version = ($vv|tonumber) | .url = $url | .sha256 = $hash else . end)) as $new_list | 

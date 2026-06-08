@@ -41,15 +41,18 @@ jobs:
       - name: Set Version Variable
         run: |
           if [[ "${{ github.ref }}" == refs/tags/app-v* ]]; then
+            echo "::notice::Production build selected"
             RAW_VERSION=$(echo ${{ github.ref_name }} | sed 's/app-v//')
             echo "IS_DEV=false" >> $GITHUB_ENV
             echo "APP_VERSION=$RAW_VERSION" >> $GITHUB_ENV
-            echo "::notice::Raw version $RAW_VERSION"
             echo "S3_PATH=$RAW_VERSION/build-mobile-$RAW_VERSION.zip" >> $GITHUB_ENV
+            echo "::notice::Raw version $RAW_VERSION"
           else
+            echo "::notice::Snapshot build selected"
             echo "IS_DEV=true" >> $GITHUB_ENV
             echo "APP_VERSION=snapshot" >> $GITHUB_ENV
             echo "S3_PATH=dev/build-mobile-snapshot.zip" >> $GITHUB_ENV
+          fi
 
       # --- BUILD MOBILE ---
       - name: Build mobile target

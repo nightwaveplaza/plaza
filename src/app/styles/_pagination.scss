@@ -1,6 +1,4 @@
 .pagination {
-  width: 100px;
-
   button {
     line-height: 13px;
 
@@ -14,6 +12,7 @@
   }
 
   input {
+    width: 34px;
     line-height: 17px;
     text-align:center;
     -moz-appearance: textfield;

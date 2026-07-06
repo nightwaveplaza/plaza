@@ -222,7 +222,9 @@
   },
   "pagination": {
     "pages": "Pages: {n}",
-    "songs": "Songs: {n}"
+    "songs": "Songs: {n}",
+    "go": "Go",
+    "go_to_page": "Go to {n}"
   },
   "name": "English"
 }

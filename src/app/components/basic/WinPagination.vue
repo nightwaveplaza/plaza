@@ -27,8 +27,8 @@
       />
     </div>
     <div v-if="isDirty" class="col-auto ps-1">
-      <win-button class="d-block px-2" :disabled="props.disabled || !isValidDraft" @click="goToPage">
-        {{ t('pagination.go') }}
+      <win-button class="d-block px-3" :disabled="props.disabled || !isValidDraft" @click="goToPage">
+        {{ goLabel }}
       </win-button>
     </div>
   </div>
@@ -63,6 +63,10 @@
   const isValidDraft = computed(() => {
     const value = Number(page.value);
     return Number.isInteger(value) && value >= 1 && value <= props.pages;
+  });
+  const goLabel = computed(() => {
+    const value = Number(page.value);
+    return Number.isFinite(value) ? t('pagination.go_to_page', { n: value }) : t('pagination.go');
   });
 
   function commit(newPage: number): void {

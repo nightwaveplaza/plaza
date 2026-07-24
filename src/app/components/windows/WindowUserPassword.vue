@@ -46,7 +46,7 @@
   const { t } = useI18n();
   const { showAlert, closeWindow } = useWindows();
   const { unsetUser } = useAuth();
-  const { execute: updatePassword, isLoading } = useApi(userApi.deleteProfile);
+  const { execute: updatePassword, isLoading } = useApi(userApi.updatePassword);
 
   const fields: UserPasswordForm = reactive({
     current_password: '',

@@ -6,7 +6,6 @@ on:
       - master
     tags:
       - 'app-v*'
-      - 'web-v*'
 
 env:
   VITE_API_URL: https://api.plaza.one

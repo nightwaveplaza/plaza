@@ -1,4 +1,4 @@
-import { BR, DE, US, RU, ES, IT, JP, TW, TR, UA } from 'country-flag-icons/string/3x2';
+import { BR, DE, US, RU, ES, IT, JP, TW, TR, UA, FR } from 'country-flag-icons/string/3x2';
 import CA from './flags/catalonia';
 
 export default {
@@ -6,6 +6,7 @@ export default {
   'de-DE': DE,
   'en-US': US,
   'es-ES': ES,
+  'fr-FR': FR,
   'pt-BR': BR,
   'it-IT': IT,
   'ja-JP': JP,

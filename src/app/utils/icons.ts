@@ -19,8 +19,8 @@ for (const path in glob) {
 
   const fileName = path.split('/').pop() || '';
 
-  let iconName = '';
-  let is2x = false;
+  let iconName: string;
+  let is2x: boolean;
 
   if (fileName.includes('@2x')) {
     iconName = fileName.replace('@2x.png', '');

@@ -65,9 +65,10 @@ async function interceptError(err: AxiosError): Promise<void> {
 
 export default {
   get: <T>(url: string, params?: Record<string, unknown>): Promise<T> =>
-    instance.get<unknown, T>(url, { params }),
-  post: <T, D = unknown>(url: string, data?: D): Promise<T> => instance.post<unknown, T>(url, data),
-  put: <T, D = unknown>(url: string, data?: D): Promise<T> => instance.put<unknown, T>(url, data),
+    instance.get(url, { params }) as Promise<T>,
+  post: <T, D = unknown>(url: string, data?: D): Promise<T> =>
+    instance.post(url, data) as Promise<T>,
+  put: <T, D = unknown>(url: string, data?: D): Promise<T> => instance.put(url, data) as Promise<T>,
   delete: <T, D = unknown>(url: string, data?: D): Promise<T> =>
-    instance.delete<unknown, T>(url, { data }),
+    instance.delete(url, { data }) as Promise<T>,
 };

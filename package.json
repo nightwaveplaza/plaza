@@ -22,7 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
-    "@vitejs/plugin-legacy": "^7.2.1",
+    "@vitejs/plugin-legacy": "^8.2.3",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
@@ -40,7 +40,7 @@
     "terser": "^5.46.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1",
-    "vite": "^7.3.1",
+    "vite": "^8.2.2",
     "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^3.2.2"
   },

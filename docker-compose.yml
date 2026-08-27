@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        VITE_APP: app
+        VITE_API_URL: ${VITE_API_URL:-https://api.plaza.one}
+    image: app-plaza:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped

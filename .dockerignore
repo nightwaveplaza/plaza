@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+www
+.git
+.github
+.idea
+.env
+*.log
+yarn-error.log

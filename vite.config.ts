@@ -4,7 +4,6 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import legacy from '@vitejs/plugin-legacy';
 import type { Plugin } from 'vite';
-import nginxRoutesPlugin from './vite-plugin-nginx-routes';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 
 export default ({ mode }: { mode: string }): UserConfig => {
@@ -30,11 +29,6 @@ export default ({ mode }: { mode: string }): UserConfig => {
         },
       }),
       getLegacyPlugin(env),
-      nginxRoutesPlugin({
-        routesFile: 'src/app/router/routes.ts',
-        outDir: 'dist',
-        mapVar: '$spa_match',
-      }),
       basicSsl(),
     ],
 

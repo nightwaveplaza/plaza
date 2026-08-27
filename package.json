@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "nginx-routes": "node scripts/generate-nginx-routes.mjs",
     "build-tsc": "vue-tsc && vite build",
     "preview": "vite preview",
     "watch": "cross-env NODE_ENV=development vite build --watch",

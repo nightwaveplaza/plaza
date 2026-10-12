@@ -26,16 +26,13 @@ jobs:
           node-version: 22
           cache: yarn
 
-      - name: Setup Crowdin CLI
-        run: npm i -g @crowdin/cli
-
-      - name: Pull latest translations
-        run: crowdin pull
-        env:
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Pull latest translations
+        run: yarn crowdin pull
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Set Version Variable
         run: |

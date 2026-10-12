@@ -830,6 +830,54 @@
     "@babel/helper-string-parser" "^8.0.0"
     "@babel/helper-validator-identifier" "^8.0.4"
 
+"@crowdin/cli-darwin-arm64@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-darwin-arm64/-/cli-darwin-arm64-5.3.0.tgz#5ffdc18c0c6ce269d321f67804051a4e9dbea7d4"
+  integrity sha512-SPapOiqXLzHmi+xEwIA0ld0GIBT6pKGXy3QvihhWFVHrBdQTpTcrEN6tFWC1+UFnD069nDA49ZW7WTR8FV93vQ==
+
+"@crowdin/cli-darwin-x64@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-darwin-x64/-/cli-darwin-x64-5.3.0.tgz#ac7f0b974fb7c87d61d97f9987ae5656c535f308"
+  integrity sha512-ZkkCXcDQBcSAGHnaHnI1NaddCSXcWZCBCevKThjoJ4Sk+y54gJe/YnlOugZrl4RXvjJr7mpbh2QmJxTl8sQ8sw==
+
+"@crowdin/cli-linux-arm64-musl@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-linux-arm64-musl/-/cli-linux-arm64-musl-5.3.0.tgz#d24360fd1385cbab7acdbd1122da6999ea82389d"
+  integrity sha512-4NH98a/qgqVx9ydR9skFg8kDLXuLgssRp5rqghEhekgmbS2MWLm+aR9Kii30v2ateci9MirJMgaUi0B0F7m8ZQ==
+
+"@crowdin/cli-linux-arm64@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-linux-arm64/-/cli-linux-arm64-5.3.0.tgz#e8f0e289b025d13ad78dff20a208feda83bd2601"
+  integrity sha512-hygG99NgyQDJ8mNA4UCyvqmJ8209h2TRJQB3aA6na1F7ITuaMceJ5wYrrlxCteQAKJ7Tebu0tPP3AyBs4AHf/A==
+
+"@crowdin/cli-linux-x64-musl@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-linux-x64-musl/-/cli-linux-x64-musl-5.3.0.tgz#5706d1922d2ea3db4c9e9350d59907ca6e2104e4"
+  integrity sha512-4lP/MO/4KSTZuoB0YIKqzzwY9wmDK4uqggAycRGPs6kyUD6qcyd6JeiFZO0Bi2YFNf8115LPRE3YDGh4EGF3pQ==
+
+"@crowdin/cli-linux-x64@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-linux-x64/-/cli-linux-x64-5.3.0.tgz#afef0b9fb29de31309453c0a24ba7db5c0087b97"
+  integrity sha512-046w21yHd0qiY2qziKbL69r27HXwA6oBrUEnYCzkPmjfUR/JFcQRhKae/jxWLxx8tymobR1W3mUhPc+vP5ZBcA==
+
+"@crowdin/cli-win32-x64@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli-win32-x64/-/cli-win32-x64-5.3.0.tgz#bd9b824a539df8f79a113b651750c0082e073bbb"
+  integrity sha512-Ce1QU5g0cilhBHb5DEt2wBCobZa8LPtveVna+n7tAjl5qE5sun1Tq7I7NPSKpslEe6jBrF+BCA4Ci0XPg4TErQ==
+
+"@crowdin/cli@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli/-/cli-5.3.0.tgz#f1fc214fb12af9e59e7652fdbf3d97159372134b"
+  integrity sha512-L4rhTfrChM1nMDNCcbX5twniY4/R1PPts8UMeyqxm7ODMYaglq3jXqlMDLDjO/t8YekiP8Y5MwIQzrclFeZ02Q==
+  optionalDependencies:
+    "@crowdin/cli-darwin-arm64" "5.3.0"
+    "@crowdin/cli-darwin-x64" "5.3.0"
+    "@crowdin/cli-linux-arm64" "5.3.0"
+    "@crowdin/cli-linux-arm64-musl" "5.3.0"
+    "@crowdin/cli-linux-x64" "5.3.0"
+    "@crowdin/cli-linux-x64-musl" "5.3.0"
+    "@crowdin/cli-win32-x64" "5.3.0"
+
 "@epic-web/invariant@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"

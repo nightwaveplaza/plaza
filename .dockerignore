@@ -8,3 +8,6 @@ www
 .env
 *.log
 yarn-error.log
+# Translations come from crowdin pull during build
+src/locales/*.json
+!src/locales/en-US.json

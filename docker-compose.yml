@@ -5,6 +5,7 @@ services:
       args:
         VITE_APP: app
         VITE_API_URL: ${VITE_API_URL:-https://api.plaza.one}
+        CROWDIN_PERSONAL_TOKEN: ${CROWDIN_PERSONAL_TOKEN:?Set CROWDIN_PERSONAL_TOKEN in .env}
     image: app-plaza:latest
     ports:
       - "8061:80"

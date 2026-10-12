@@ -13,6 +13,10 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
+
+# Translations are not in git, pull fresh ones from Crowdin
+ARG CROWDIN_PERSONAL_TOKEN
+RUN yarn crowdin pull
 RUN yarn build
 # Emit the nginx SPA routes map (dist/generated-routes.conf) only for the container
 RUN yarn nginx-routes \

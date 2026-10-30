@@ -1,69 +1,79 @@
 <template>
   <div class="p-2 song-info">
-    <div v-if="song">
-      <win-panel>
-        <div class="row mt-0">
-          <div class="col is-selectable">
-            <p class="mb-1">
-              <strong>{{ t('win.song.artist') }}:</strong><br />
-              {{ song.data.artist }}
-            </p>
-            <p class="mb-1">
-              <strong>{{ t('win.song.album') }}:</strong><br />
-              {{ song.data.album }}
-            </p>
-            <p class="mb-2">
-              <strong>{{ t('win.song.song_title') }}:</strong><br />
-
-              {{ song.data.title }}
-            </p>
-            <p>
-              <i class="i icon-clock" /> {{ songLength }} &nbsp;
-              <i class="i icon-like" style="color: #c12727" /> {{ song.stats.likes }}
-            </p>
-          </div>
-          <div class="col-5 align-self-center">
-            <div
-              class="artwork simple-border ratio ratio-1x1"
-              :style="{ 'background-image': `url('${artwork}')` }"
+    <win-panel>
+      <div class="row mt-0">
+        <div class="col is-selectable">
+          <p class="mb-1">
+            <strong>{{ t('win.song.artist') }}:</strong><br />
+            <span class="song-info__value">{{ song?.data.artist ?? '...' }}</span>
+          </p>
+          <p class="mb-1">
+            <strong>{{ t('win.song.album') }}:</strong><br />
+            <span class="song-info__value">{{ song?.data.album ?? '...' }}</span>
+          </p>
+          <p class="mb-2">
+            <strong>{{ t('win.song.song_title') }}:</strong><br />
+            <span class="song-info__value">{{ song?.data.title ?? '...' }}</span>
+          </p>
+          <p class="mb-0">
+            <i class="i icon-clock" /> {{ song ? songLength : '...' }} &nbsp;
+            <i class="i icon-like" style="color: #c12727" />
+            {{ song?.stats.likes ?? '...' }}
+          </p>
+        </div>
+        <div class="col-5 align-self-center">
+          <div
+            class="artwork simple-border ratio ratio-1x1"
+            :style="artwork ? { backgroundImage: `url('${artwork}')` } : undefined"
+          >
+            <img
+              v-if="!artwork"
+              class="song-info__hourglass"
+              src="@app/assets/img/hourglass.gif"
+              alt=""
             />
           </div>
         </div>
-      </win-panel>
-
-      <div class="row mt-2">
-        <div class="col-4 pe-1">
-          <audio
-            ref="audio"
-            :src="song.data.preview_src"
-            @pause="onPause"
-            @play="onPlay"
-            @timeupdate="timeUpdated"
-          />
-          <win-button class="d-block" :disabled="song.data.preview_src === null" @click="play">
-            {{ playText }}
-          </win-button>
-        </div>
-        <div class="col-2 ps-0">
-          <win-button class="d-block" :disabled="sending" @click="favoriteSong">
-            <i class="icon-favorite i" :style="{ color: favoriteColor }" />
-          </win-button>
-        </div>
-        <div class="col-auto ms-auto">
-          <win-button class="px-4" @click="closeWindow(winId!)">
-            {{ t('buttons.close') }}
-          </win-button>
-        </div>
       </div>
-    </div>
-    <div v-else class="text-center">
-      {{ t('loading') }}
+    </win-panel>
+
+    <div class="row mt-2">
+      <div class="col-4 pe-1">
+        <audio
+          v-if="song"
+          ref="audio"
+          :src="song.data.preview_src"
+          @pause="onPause"
+          @play="onPlay"
+          @timeupdate="timeUpdated"
+        />
+        <win-button
+          class="d-block"
+          :disabled="!song || song.data.preview_src === null"
+          @click="play"
+        >
+          {{ playText }}
+        </win-button>
+      </div>
+      <div class="col-2 ps-0">
+        <win-button class="d-block" :disabled="!song || sending" @click="favoriteSong">
+          <i class="icon-favorite i" :style="{ color: favoriteColor }" />
+        </win-button>
+      </div>
+      <div class="col-auto ms-auto">
+        <win-button class="px-4" @click="closeWindow(winId!)">
+          {{ t('buttons.close') }}
+        </win-button>
+      </div>
     </div>
   </div>
 
-  <div v-if="song" class="statusbar row gx-0">
-    <div v-if="song.stats.first_played_at" class="col cell">
-      {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
+  <div class="statusbar row gx-0">
+    <div class="col cell">
+      <template v-if="song?.stats.first_played_at">
+        {{ t('win.song.first_played') }}: {{ fmtDate(song.stats.first_played_at) }}
+      </template>
+      <template v-else>&nbsp;</template>
     </div>
   </div>
 </template>
@@ -99,11 +109,15 @@
   const songLength = computed(() => fmtDuration(song.value?.data.length ?? 0));
   const artwork = computed(() => song.value?.data.artwork_src);
   const favoriteColor = computed(() => (song.value?.current_user?.favorite_id ? '#FFD300' : ''));
-  const playText = computed(() =>
-    isPlaying.value
+  const playText = computed(() => {
+    if (!song.value) {
+      return t('win.song.btn_play_preview');
+    }
+
+    return isPlaying.value
       ? t('win.song.btn_stop', { time: fmtDuration(playTimeLeft.value) })
-      : t('win.song.btn_play_preview'),
-  );
+      : t('win.song.btn_play_preview');
+  });
 
   const { execute: getSong, data: song } = useApi(songApi.getSong);
   const { volume } = useVolumeControl();
@@ -141,6 +155,10 @@
   }
 
   function play(): void {
+    if (!song.value || !audio.value) {
+      return;
+    }
+
     if (isPlaying.value) {
       stop();
     } else {
@@ -187,6 +205,25 @@
       width: 100%;
       height: auto;
       background-size: cover;
+      background-position: center center;
+    }
+
+    .song-info__value {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .song-info__hourglass {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      width: 32px;
+      height: 32px;
     }
 
     .group-box {

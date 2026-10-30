@@ -5,6 +5,7 @@ import es_ES from '@locales/es-ES.json';
 import fr_FR from '@locales/fr-FR.json';
 import it_IT from '@locales/it-IT.json';
 import ja_JP from '@locales/ja-JP.json';
+import ko_KR from '@locales/ko-KR.json';
 import pt_BR from '@locales/pt-BR.json';
 import ru_RU from '@locales/ru-RU.json';
 import tr_TR from '@locales/tr-TR.json';
@@ -28,6 +29,7 @@ export default {
   'fr-FR': fr_FR,
   'it-IT': it_IT,
   'ja-JP': ja_JP,
+  'ko-KR': ko_KR,
   'pt-BR': pt_BR,
   'ru-RU': ru_RU,
   'tr-TR': tr_TR,

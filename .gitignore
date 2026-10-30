@@ -4,3 +4,4 @@ node_modules
 .env
 www
 dist
+yarn-error.log

@@ -77,6 +77,7 @@
   import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts';
   import { useAudioPlayer } from '@app/composables/player/useAudioPlayer.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
   import { Win } from '@app/types';
   import { usePlayerPlayback } from '@app/composables/player/usePlayerPlayback.ts';
@@ -91,7 +92,8 @@
   const { song } = useNowPlayingStatus();
 
   const { t } = useI18n();
-  const { openWindow, showSongInfo } = useWindows();
+  const { openWindow } = useWindows();
+  const { showSongInfo } = useWindowDialogs();
   const { state } = usePlayerPlayback();
   const { sleepTime } = useSleepTimer();
 

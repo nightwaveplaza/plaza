@@ -27,6 +27,7 @@ export interface WindowState extends WindowConfig {
 export interface AlertWindowParams {
   type: string;
   text: string;
+  title?: string;
 }
 
 export interface SongWindowParams {

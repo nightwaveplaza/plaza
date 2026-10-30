@@ -73,6 +73,7 @@
   import { useI18n } from 'vue-i18n';
   import type { SongWindowParams } from '@app/types/types';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { fmtDate, fmtDuration } from '@app/utils/timeFormats.ts';
   import { useVolumeControl } from '@app/composables/player/useVolumeControl.ts';
   import { useApi } from '@app/composables/useApi.ts';
@@ -81,7 +82,7 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { showAlert } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { execute: addFavorite } = useApi(userFavoritesApi.addFavorite);
   const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite);
   const { openedWindows, closeWindow } = useWindows();

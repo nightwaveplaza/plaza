@@ -7,7 +7,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { useNowPlayingStatus } from '@app/composables/player/useNowPlayingStatus.ts';
   import { useReactions } from '@app/composables/useReactions.ts';
   import { useLocalStorage } from '@vueuse/core';
@@ -16,7 +16,7 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { showAlert } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { reactions: totalReactions } = useNowPlayingStatus();
   const { reaction, setReaction, isCurrent } = useReactions();
 

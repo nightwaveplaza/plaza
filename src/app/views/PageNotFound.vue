@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
-  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
 
-  const { showAlert } = useWindows();
+  const { showAlert } = useWindowDialogs();
 
   onMounted(() => {
     showAlert('Page not found.', '404');

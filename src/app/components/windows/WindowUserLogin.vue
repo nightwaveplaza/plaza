@@ -88,6 +88,7 @@
   import { useI18n } from 'vue-i18n';
   import { isMobile } from '@app/utils/helpers.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { type UserLoginForm, Win } from '@app/types';
   import { useAuth } from '@app/composables/useAuth.ts';
   import { setApiToken } from '@app/api';
@@ -96,7 +97,8 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { openWindow, closeWindow, showAlert } = useWindows();
+  const { openWindow, closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { execute: loginUser, isLoading } = useApi(isMobile() ? authApi.token : authApi.login);
   const { user } = useAuth();
 

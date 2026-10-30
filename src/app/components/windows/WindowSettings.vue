@@ -163,12 +163,14 @@
   import { useI18n } from 'vue-i18n';
   import { isMobile } from '@app/utils/helpers.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { useAppSettings } from '@app/composables/useAppSettings.ts';
   import { useBackgrounds } from '@app/composables/useBackgrounds.ts';
   import { Win } from '@app/types';
 
   const { t } = useI18n();
-  const { openWindow, closeWindow, showAlert } = useWindows();
+  const { openWindow, closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { theme, taskbarPosition, useHls, lowQuality } = useAppSettings();
   const {
     background,

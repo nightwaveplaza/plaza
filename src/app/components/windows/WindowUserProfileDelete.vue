@@ -39,6 +39,7 @@
   import { reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { Win } from '@app/types';
   import { useAuth } from '@app/composables/useAuth.ts';
   import { useApi } from '@app/composables/useApi.ts';
@@ -47,7 +48,8 @@
 
   const { t } = useI18n();
   const { execute: deleteProfile, isLoading } = useApi(userApi.deleteProfile);
-  const { showAlert, closeWindow } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { unsetUser } = useAuth();
 
   const fields = reactive({

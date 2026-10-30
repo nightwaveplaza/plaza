@@ -90,6 +90,7 @@
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { fmtDate } from '@app/utils/timeFormats.ts';
   import { Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
@@ -99,7 +100,8 @@
 
   const { t } = useI18n();
   const { isSigned } = useAuth();
-  const { showAlert, showSongInfo, openWindow, closeWindow } = useWindows();
+  const { openWindow, closeWindow } = useWindows();
+  const { showAlert, showSongInfo } = useWindowDialogs();
   const { execute: getFavorites, isLoading, data: favs } = useApi(userFavoritesApi.getFavorites);
   const { execute: deleteFavorite } = useApi(userFavoritesApi.deleteFavorite);
 

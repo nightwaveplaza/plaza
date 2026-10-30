@@ -106,12 +106,14 @@
   import { reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { type UserRegisterForm, Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
   import { userApi } from '@app/api/user.api.ts';
 
   const { t } = useI18n();
-  const { showAlert, closeWindow } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { isLoading, execute: registerUser } = useApi(userApi.registerUser);
 
   const fields: UserRegisterForm = reactive({

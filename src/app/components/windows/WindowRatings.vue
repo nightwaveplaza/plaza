@@ -90,13 +90,15 @@
   import type WinPagination from '@app/components/basic/WinPagination.vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { RatingsRange, Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
   import { ratingsApi } from '@app/api/ratings.api.ts';
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { showAlert, showSongInfo, closeWindow } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert, showSongInfo } = useWindowDialogs();
   const { execute: getRatings, isLoading, data: songs } = useApi(ratingsApi.getRatings);
 
   const page = ref(1);

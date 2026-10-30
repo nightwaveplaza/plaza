@@ -32,6 +32,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { useAuth } from '@app/composables/useAuth.ts';
   import { Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
@@ -39,7 +40,8 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { closeWindow, showAlert } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { isLoading, execute } = useApi(authApi.resetPasswordConfirm);
   const { resetToken } = useAuth();
 

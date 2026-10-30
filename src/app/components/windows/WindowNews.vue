@@ -38,7 +38,8 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useWindows } from '@app/composables/useWindows';
+  import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { fmtDate } from '@app/utils/timeFormats.ts';
   import { Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
@@ -46,8 +47,8 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { showAlert } = useWindows();
   const { closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
 
   const page = ref(1);
   const { isLoading, data: news, execute: getNews } = useApi(newsApi.getNews);

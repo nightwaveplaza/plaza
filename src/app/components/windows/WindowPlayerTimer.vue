@@ -56,12 +56,14 @@
   import { useI18n } from 'vue-i18n';
   import { useNumberOnly } from '@app/utils/helpers.ts';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { Win } from '@app/types';
   import { fmtDuration } from '@app/utils/timeFormats.ts';
   import { useSleepTimer } from '@app/composables/useSleepTimer.ts';
 
   const { t } = useI18n();
-  const { closeWindow, showAlert } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert } = useWindowDialogs();
   const { sleepTime } = useSleepTimer();
 
   const minutes = ref(20);

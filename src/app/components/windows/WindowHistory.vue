@@ -81,6 +81,7 @@
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useWindows } from '@app/composables/useWindows.ts';
+  import { useWindowDialogs } from '@app/composables/useWindowDialogs.ts';
   import { fmtDay, fmtTime } from '@app/utils/timeFormats.ts';
   import { type HistoryCollection, Win } from '@app/types';
   import { useApi } from '@app/composables/useApi.ts';
@@ -88,7 +89,8 @@
   import type { ApiError } from '@app/utils/apiErrorHandler.ts';
 
   const { t } = useI18n();
-  const { showAlert, showSongInfo, closeWindow } = useWindows();
+  const { closeWindow } = useWindows();
+  const { showAlert, showSongInfo } = useWindowDialogs();
   const { execute: getHistory, isLoading } = useApi(historyApi.getHistory);
 
   const page = ref(1);

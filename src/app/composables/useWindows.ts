@@ -6,10 +6,41 @@ const windows = ref(<Record<string, WindowState>>{});
 const activeWindow = ref('');
 const activeZIndex = ref(100);
 
+function applyInstanceParams(
+  state: WindowState,
+  win: Win,
+  params?: AlertWindowParams | SongWindowParams,
+): void {
+  if (params === undefined) {
+    return;
+  }
+
+  state.params = params;
+
+  if ('title' in params && params.title) {
+    state.title = params.title;
+  } else {
+    state.title = registry[win].title;
+  }
+}
+
+function topVisibleWindowId(): string {
+  const visible = Object.values(windows.value).filter(w => !w.isMinimized);
+  if (visible.length === 0) {
+    return '';
+  }
+
+  let top = visible[0]!;
+  for (const win of visible) {
+    if (win.zIndex > top.zIndex) {
+      top = win;
+    }
+  }
+  return top.id;
+}
+
 /**
- * useWindows composable
- * Shared logic to manage opened windows
- * Uses windowStore as state manager
+ * Shared singleton state for opened desktop windows (stack, geometry, minimize)
  */
 export function useWindows() {
   /**
@@ -25,31 +56,39 @@ export function useWindows() {
   ): void => {
     const winId = id ?? win;
 
+    if (winId in windows.value) {
+      applyInstanceParams(windows.value[winId]!, win, params);
+      restore(winId);
+      return;
+    }
+
     activeZIndex.value++;
 
-    if (winId in windows.value) {
-      restore(winId);
-    } else {
-      windows.value[winId] = {
-        ...registry[win],
-        params,
-        id: winId,
-        x: 0,
-        y: 0,
-        isMinimized: false,
-        zIndex: activeZIndex.value,
-        component: 'window-' + win,
-      };
-      activeWindow.value = winId;
-    }
+    windows.value[winId] = {
+      ...registry[win],
+      params,
+      id: winId,
+      x: 0,
+      y: 0,
+      isMinimized: false,
+      zIndex: activeZIndex.value,
+      component: 'window-' + win,
+    };
+
+    applyInstanceParams(windows.value[winId]!, win, params);
+    activeWindow.value = winId;
   };
 
   const pullUp = (winId?: string): void => {
-    activeWindow.value = winId ?? Object.keys(windows.value).pop() ?? '';
-    activeZIndex.value++;
-    if (activeWindow.value in windows.value) {
-      windows.value[activeWindow.value]!.zIndex = activeZIndex.value;
+    const targetId = winId ?? topVisibleWindowId();
+    if (targetId === '') {
+      activeWindow.value = '';
+      return;
     }
+
+    activeWindow.value = targetId;
+    activeZIndex.value++;
+    windows.value[targetId]!.zIndex = activeZIndex.value;
   };
 
   const closeWindow = (winId: string): void => {
@@ -61,8 +100,14 @@ export function useWindows() {
   };
 
   const minimizeWindow = (winId: string): void => {
-    if (winId in windows.value) {
-      windows.value[winId]!.isMinimized = true;
+    if (!(winId in windows.value)) {
+      return;
+    }
+
+    windows.value[winId]!.isMinimized = true;
+
+    if (activeWindow.value === winId) {
+      activeWindow.value = topVisibleWindowId();
     }
   };
 
@@ -96,17 +141,6 @@ export function useWindows() {
     }
   };
 
-  const showAlert = (text: string, title: string, type = 'warn'): void => {
-    // Window winId must be unique, generate random string for alerts
-    const id = Math.random().toString(36).slice(2, 11);
-    openWindow(Win.ALERT, id, { text, type });
-    windows.value[id]!.title = title;
-  };
-
-  const showSongInfo = (id: string): void => {
-    openWindow(Win.SONG, id, { songId: id });
-  };
-
   return {
     openWindow,
     closeWindow,
@@ -114,8 +148,6 @@ export function useWindows() {
     activeWindow,
     minimizeWindow,
     toggleMinimize,
-    showAlert,
-    showSongInfo,
     pullUp,
     moveTo,
   };

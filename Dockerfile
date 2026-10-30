@@ -6,8 +6,10 @@ WORKDIR /app
 # Vite bakes VITE_* into the bundle at build time, so they must be build args
 ARG VITE_APP=app
 ARG VITE_API_URL=https://api.plaza.one
+ARG VITE_REVERB_APP_ID
 ENV VITE_APP=$VITE_APP \
-    VITE_API_URL=$VITE_API_URL
+    VITE_API_URL=$VITE_API_URL \
+    VITE_REVERB_APP_ID=$VITE_REVERB_APP_ID
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile

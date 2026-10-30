@@ -9,6 +9,7 @@ on:
 
 env:
   VITE_API_URL: https://api.plaza.one
+  VITE_REVERB_APP_ID: ${{ secrets.VITE_REVERB_APP_ID }}
 
 jobs:
   # OTA-deploy

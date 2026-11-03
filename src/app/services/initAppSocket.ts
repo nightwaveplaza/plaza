@@ -55,18 +55,16 @@ export function initAppSocket(): void {
     });
 
   if (isMobile()) {
-    const connection = () => echo.connector.pusher.connection;
-
     useEventListener(window, 'app:stop', () => {
-      if (connection().state === 'connected') {
-        echo.connector.pusher.disconnect();
+      if (echo.connectionStatus() === 'connected') {
+        echo.disconnect();
       }
     });
 
     useEventListener(window, 'app:start', () => {
-      const state = connection().state;
-      if (state !== 'connected' && state !== 'connecting') {
-        echo.connector.pusher.connect();
+      const status = echo.connectionStatus();
+      if (status !== 'connected' && status !== 'connecting') {
+        echo.connect();
       }
     });
   }

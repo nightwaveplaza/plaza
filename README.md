@@ -1,7 +1,10 @@
 [![Crowdin](https://badges.crowdin.net/nightwave-plaza/localized.svg)](https://crowdin.com/project/nightwave-plaza)
-![Node](https://img.shields.io/badge/node-%3E%3D18.x-339933?logo=node.js&logoColor=white)
+![Node](https://img.shields.io/badge/node-%3E%3D20.x-339933?logo=node.js&logoColor=white)
 ![Vue](https://img.shields.io/badge/vue-3.x-42b883?logo=vue.js&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-7.x-646cff?logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-8.x-646cff?logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-5.x-3178c6?logo=typescript&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-1.x-2c8ebb?logo=yarn&logoColor=white)
+[![License](https://img.shields.io/github/license/nightwaveplaza/plaza)](LICENSE)
 
 #  🌃 Nightwave Plaza
 

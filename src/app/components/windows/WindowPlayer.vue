@@ -110,16 +110,14 @@
   }
 
   @media (max-width: 500px) {
-    .cover {
-      width: 100% !important;
+    #window-player .cover {
+      width: 160px;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
     .player-meta {
       text-align: center;
-    }
-
-    #window-player .win-window {
-      width: 90% !important;
     }
   }
 </style>
